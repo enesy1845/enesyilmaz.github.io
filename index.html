@@ -5,277 +5,79 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enes Yilmaz Portfolio</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <style>
-        /* Genel Reset */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        .navbar {
-            padding: 0.8rem 1rem;
-        }
-
-        /* Header / Home Section */
-        .home-section {
-            height: 100vh;
-            position: relative;
-            margin-top: 56px;
-            /* Fixed navbar yüksekliği kadar boşluk */
-            overflow: hidden;
-        }
-
-        /* Three.js Canvas için container */
-        #magic {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        /* Üstüne gelecek overlay metin */
-        .playground {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: #fff;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        .playground .special {
-            font-size: 3rem;
-            font-weight: bold;
-        }
-
-        .playground .minText {
-            font-size: 1.5rem;
-        }
-
-        /* Diğer Bölümler */
-        section {
-            padding: 60px 0;
-        }
-
-        section h2 {
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .card {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .timeline-item h5 {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        footer {
-            margin-top: 2rem;
-            background: #343a40;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar">
         <div class="container">
-            <a class="navbar-brand" href="#home">Enes Yilmaz</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#experience">Experience</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
+            <a href="#" class="brand">Enes Yilmaz</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Header / Home Section (Three.js Etkisiyle) -->
-    <section id="home" class="home-section">
-        <!-- Three.js efektinin render edileceği container -->
-        <div id="magic"></div>
-        <!-- Üst overlay metin -->
-        <div class="playground">
-            <div>
-                <!-- İsteğe bağlı SVG logo eklenebilir -->
-                <h1 class="special">
-                    ENES YILMAZ<br>
-                    <span class="minText">Creative Full Stack Developer</span>
-                </h1>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-overlay">
+            <div class="container header-content">
+                <img src="images/profile.png" alt="Profile" class="profile-img" />
+                <h1>Hello, I'm Enes Yilmaz</h1>
+                <p>Full Stack Python Developer | AI & Machine Learning Practitioner | Web Designer</p>
+                <a href="#about" class="btn">Learn More</a>
             </div>
         </div>
-    </section>
+    </header>
 
     <!-- About Section -->
-    <section id="about" class="bg-light">
+    <section id="about">
         <div class="container">
-            <h2 class="text-center mb-4">About Me</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <p>
-                        I am a versatile software professional with a passion for building impactful digital solutions.
-                        My journey began with .NET training and evolved through various roles—from developing automation
-                        projects with C# and MS SQL to teaching programming and digital data literacy across different
-                        age groups and countries.
-                    </p>
-                    <p>
-                        With hands-on experience in full stack development, I have contributed to projects using Python,
-                        C#, JavaScript, Docker, FastAPI, and Vue.js. My work in web design—leveraging WordPress and
-                        Webflow—has allowed me to bring creative, functional websites to life for international clients.
-                        In addition to my technical roles, I’ve dedicated myself to education, creating comprehensive
-                        curricula and over 500 video tutorials.
-                    </p>
-                    <p>
-                        I bring a holistic approach to problem-solving, combining analytical thinking, empathy, and a
-                        drive for continuous improvement. Whether I’m working on data engineering projects or innovative
-                        full stack applications, I strive to create solutions that are both reliable and
-                        forward-thinking.
-                    </p>
-                </div>
-            </div>
+            <h2>About Me</h2>
+            <p>
+                Buraya kendinizle ilgili açıklayıcı bilgiler ekleyin. Eğitim, deneyim veya ilgi alanlarınızı
+                belirtebilirsiniz.
+            </p>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects">
         <div class="container">
-            <h2 class="text-center mb-4">Projects</h2>
-            <div class="row">
-                <!-- Project 1 -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Project 1" />
-                        <div class="card-body">
-                            <h5 class="card-title">LLM-Based Quiz Application</h5>
-                            <p class="card-text">
-                                A full-stack app integrating Python, FastAPI, Docker, PostgreSQL, Neo4j, and LLM
-                                technologies. This project offers real-time quiz functionalities powered by advanced
-                                language models.
-                            </p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Project 2" />
-                        <div class="card-body">
-                            <h5 class="card-title">End-to-End Data Engineering</h5>
-                            <p class="card-text">
-                                Azure Stream Analytics and a comprehensive data pipeline approach for real-time
-                                analytics. Showcases data ingestion, transformation, and visualization in a cloud
-                                environment.
-                            </p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h2>Projects</h2>
+            <!-- Proje kartlarını buraya ekleyebilirsiniz -->
+            <p>Projelerinizin detaylarını buraya ekleyin.</p>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="bg-light">
+    <section id="experience">
         <div class="container">
-            <h2 class="text-center mb-4">Experience</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="timeline">
-                        <div class="timeline-item mb-4">
-                            <h5>Junior Full Stack Developer – Seller Flash (2022)</h5>
-                            <p>
-                                Developed an Amazon Dropshipping automation project using C#, Vue.js, Docker, and agile
-                                methodologies (Scrum, Jira). Collaborated with cross-functional teams to meet project
-                                milestones.
-                            </p>
-                        </div>
-                        <div class="timeline-item mb-4">
-                            <h5>Freelance Web Designer (2021–2022)</h5>
-                            <p>
-                                Built and maintained websites for UK, Canada, and US clients using WordPress, Webflow,
-                                HTML, CSS, and JavaScript. Created modern, responsive designs aligned with each client's
-                                brand identity.
-                            </p>
-                        </div>
-                        <div class="timeline-item mb-4">
-                            <h5>Software Educator – Blue Akademie & Bilisim School (2020–2024)</h5>
-                            <p>
-                                Taught C#, HTML/CSS, JavaScript, Python, and Machine Learning to diverse age groups.
-                                Developed over 500 video tutorials and designed unique coding challenges for the
-                                Talent14 project.
-                            </p>
-                        </div>
-                        <div class="timeline-item">
-                            <h5>Data Engineering – We’RHERE (2024)</h5>
-                            <p>
-                                Completed an intensive 2.5-month Data Engineering course and executed two major projects
-                                focusing on Azure Stream Analytics and end-to-end data pipelines.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h2>Experience</h2>
+            <!-- Deneyim bilgilerinizi buraya ekleyin -->
+            <p>Çalıştığınız firmalar, aldığınız roller ve projeler hakkında bilgi verebilirsiniz.</p>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2 class="text-center mb-4">Contact</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <p class="text-center mb-4">
-                        Feel free to reach out for job opportunities, collaborations, or any questions.
-                    </p>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <strong>Email:</strong> your.email@example.com
-                        </li>
-                        <li class="list-group-item">
-                            <strong>LinkedIn:</strong>
-                            <a href="https://www.linkedin.com/in/enes-yilmaz-026249286"
-                                target="_blank">linkedin.com/in/enes-yilmaz-026249286</a>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>GitHub:</strong>
-                            <a href="https://github.com/YourUsername" target="_blank">github.com/YourUsername</a>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Phone:</strong> +00 123 456 789
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <h2>Contact</h2>
+            <p>
+                İş veya işbirliği fırsatları için benimle iletişime geçebilirsiniz.
+            </p>
+            <ul class="contact-info">
+                <li><strong>Email:</strong> your.email@example.com</li>
+                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/enes-yilmaz-026249286"
+                        target="_blank">linkedin.com/in/enes-yilmaz-026249286</a></li>
+                <li><strong>GitHub:</strong> <a href="https://github.com/YourUsername"
+                        target="_blank">github.com/YourUsername</a></li>
+                <li><strong>Phone:</strong> +00 123 456 789</li>
+            </ul>
         </div>
     </section>
 
@@ -286,322 +88,7 @@
         </div>
     </footer>
 
-    <!-- Three.js (eski sürüm: r124) ve FontLoader -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/loaders/FontLoader.js"></script>
-
-    <!-- Vertex Shader -->
-    <script type="x-shader/x-vertex" id="vertexshader">
-    attribute float size;
-    attribute vec3 customColor;
-    varying vec3 vColor;
-    void main() {
-      vColor = customColor;
-      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = size * (300.0 / -mvPosition.z);
-      gl_Position = projectionMatrix * mvPosition;
-    }
-  </script>
-
-    <!-- Fragment Shader -->
-    <script type="x-shader/x-fragment" id="fragmentshader">
-    uniform vec3 color;
-    uniform sampler2D pointTexture;
-    varying vec3 vColor;
-    void main() {
-      gl_FragColor = vec4(color * vColor, 1.0);
-      gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
-    }
-  </script>
-
-    <!-- Custom JS: Three.js Particle Effect -->
-    <script>
-        function preload() {
-            const manager = new THREE.LoadingManager();
-            let typo = null;
-            const loader = new THREE.FontLoader(manager);
-            loader.load(
-                'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
-                function (font) {
-                    typo = font;
-                }
-            );
-            const particle = new THREE.TextureLoader(manager).load(
-                'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
-            );
-            manager.onLoad = function () {
-                new Environment(typo, particle);
-            };
-        }
-        if (
-            document.readyState === 'complete' ||
-            (document.readyState !== 'loading' && !document.documentElement.doScroll)
-        ) {
-            preload();
-        } else {
-            document.addEventListener('DOMContentLoaded', preload);
-        }
-
-        class Environment {
-            constructor(font, particle) {
-                this.font = font;
-                this.particle = particle;
-                this.container = document.getElementById('magic');
-                if (!this.container) {
-                    console.error('Container with id "magic" not found.');
-                    return;
-                }
-                this.scene = new THREE.Scene();
-                this.createCamera();
-                this.createRenderer();
-                this.setup();
-                this.bindEvents();
-            }
-            bindEvents() {
-                window.addEventListener('resize', this.onWindowResize.bind(this));
-            }
-            setup() {
-                this.createParticles = new CreateParticles(
-                    this.scene,
-                    this.font,
-                    this.particle,
-                    this.camera,
-                    this.renderer
-                );
-            }
-            render() {
-                if (this.createParticles && typeof this.createParticles.render === 'function') {
-                    this.createParticles.render();
-                }
-                this.renderer.render(this.scene, this.camera);
-            }
-            createCamera() {
-                this.camera = new THREE.PerspectiveCamera(
-                    65,
-                    this.container.clientWidth / this.container.clientHeight,
-                    1,
-                    10000
-                );
-                this.camera.position.set(0, 0, 100);
-            }
-            createRenderer() {
-                this.renderer = new THREE.WebGLRenderer({ antialias: true });
-                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                this.renderer.outputEncoding = THREE.sRGBEncoding;
-                this.container.appendChild(this.renderer.domElement);
-                this.renderer.setAnimationLoop(() => {
-                    this.render();
-                });
-            }
-            onWindowResize() {
-                this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
-                this.camera.updateProjectionMatrix();
-                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-            }
-        }
-
-        class CreateParticles {
-            constructor(scene, font, particleImg, camera, renderer) {
-                this.scene = scene;
-                this.font = font;
-                this.particleImg = particleImg;
-                this.camera = camera;
-                this.renderer = renderer;
-                this.raycaster = new THREE.Raycaster();
-                this.mouse = new THREE.Vector2(-200, 200);
-                this.colorChange = new THREE.Color();
-                this.buttom = false;
-                this.data = {
-                    text: 'ENES\nYILMAZ',
-                    amount: 1500,
-                    particleSize: 1,
-                    particleColor: 0xffffff,
-                    textSize: 50,
-                    area: 250,
-                    ease: 0.05
-                };
-                this.setup();
-                this.bindEvents();
-            }
-            setup() {
-                const geometry = new THREE.PlaneGeometry(
-                    this.visibleWidthAtZDepth(100, this.camera),
-                    this.visibleHeightAtZDepth(100, this.camera)
-                );
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true });
-                this.planeArea = new THREE.Mesh(geometry, material);
-                this.planeArea.visible = false;
-                this.scene.add(this.planeArea);
-                this.createText();
-            }
-            bindEvents() {
-                document.addEventListener('mousedown', this.onMouseDown.bind(this));
-                document.addEventListener('mousemove', this.onMouseMove.bind(this));
-                document.addEventListener('mouseup', this.onMouseUp.bind(this));
-            }
-            onMouseDown(e) {
-                this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-                this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-                const vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.5);
-                vector.unproject(this.camera);
-                const dir = vector.sub(this.camera.position).normalize();
-                const distance = -this.camera.position.z / dir.z;
-                this.currenPosition = this.camera.position.clone().add(dir.multiplyScalar(distance));
-                this.buttom = true;
-                this.data.ease = 0.01;
-            }
-            onMouseUp() {
-                this.buttom = false;
-                this.data.ease = 0.05;
-            }
-            onMouseMove(e) {
-                this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-                this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-            }
-            render() {
-                const time = ((0.001 * performance.now()) % 12) / 12;
-                const zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
-                this.raycaster.setFromCamera(this.mouse, this.camera);
-                const intersects = this.raycaster.intersectObject(this.planeArea);
-                if (intersects.length > 0) {
-                    const pos = this.particles.geometry.attributes.position;
-                    const copy = this.geometryCopy.attributes.position;
-                    const colors = this.particles.geometry.attributes.customColor;
-                    const sizes = this.particles.geometry.attributes.size;
-                    const mx = intersects[0].point.x;
-                    const my = intersects[0].point.y;
-                    for (let i = 0, l = pos.count; i < l; i++) {
-                        const initX = copy.getX(i);
-                        const initY = copy.getY(i);
-                        const initZ = copy.getZ(i);
-                        let px = pos.getX(i);
-                        let py = pos.getY(i);
-                        let pz = pos.getZ(i);
-                        this.colorChange.setHSL(0.5, 1, 1);
-                        colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                        colors.needsUpdate = true;
-                        sizes.array[i] = this.data.particleSize;
-                        sizes.needsUpdate = true;
-                        let dx = mx - px;
-                        let dy = my - py;
-                        const mouseDistance = this.distance(mx, my, px, py);
-                        const f = -this.data.area / (dx * dx + dy * dy);
-                        if (this.buttom) {
-                            const t = Math.atan2(dy, dx);
-                            px -= f * Math.cos(t);
-                            py -= f * Math.sin(t);
-                            this.colorChange.setHSL(0.5 + zigzagTime, 1.0, 0.5);
-                            colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                            colors.needsUpdate = true;
-                            if (px > initX + 70 || px < initX - 70 || py > initY + 70 || py < initY - 70) {
-                                this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                colors.needsUpdate = true;
-                            }
-                        } else {
-                            if (mouseDistance < this.data.area) {
-                                if (i % 5 === 0) {
-                                    const t = Math.atan2(dy, dx);
-                                    px -= 0.03 * Math.cos(t);
-                                    py -= 0.03 * Math.sin(t);
-                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                    colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                    colors.needsUpdate = true;
-                                    sizes.array[i] = this.data.particleSize / 1.2;
-                                    sizes.needsUpdate = true;
-                                } else {
-                                    const t = Math.atan2(dy, dx);
-                                    px += f * Math.cos(t);
-                                    py += f * Math.sin(t);
-                                    pos.setXYZ(i, px, py, pz);
-                                    pos.needsUpdate = true;
-                                    sizes.array[i] = this.data.particleSize * 1.3;
-                                    sizes.needsUpdate = true;
-                                }
-                                if (px > initX + 10 || px < initX - 10 || py > initY + 10 || py < initY - 10) {
-                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                    colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                    colors.needsUpdate = true;
-                                    sizes.array[i] = this.data.particleSize / 1.8;
-                                    sizes.needsUpdate = true;
-                                }
-                            }
-                        }
-                        px += (initX - px) * this.data.ease;
-                        py += (initY - py) * this.data.ease;
-                        pz += (initZ - pz) * this.data.ease;
-                        pos.setXYZ(i, px, py, pz);
-                        pos.needsUpdate = true;
-                    }
-                }
-            }
-            createText() {
-                // Orijinal shapes dizisini değişiklik yapmadan kopyalıyoruz
-                const shapesOriginal = this.font.generateShapes(this.data.text, this.data.textSize);
-                const shapes = [];
-                shapesOriginal.forEach(shape => {
-                    shapes.push(shape);
-                    if (shape.holes && shape.holes.length > 0) {
-                        shape.holes.forEach(hole => shapes.push(hole));
-                    }
-                });
-                const geometry = new THREE.ShapeGeometry(shapes);
-                geometry.computeBoundingBox();
-                const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-                const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
-                geometry.center();
-                let colors = [];
-                let sizes = [];
-                let thePoints = [];
-                shapes.forEach(shape => {
-                    const amountPoints = shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
-                    let points = shape.getSpacedPoints(amountPoints);
-                    points.forEach(pt => {
-                        thePoints.push(new THREE.Vector3(pt.x, pt.y, 0));
-                        colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                        sizes.push(1);
-                    });
-                });
-                let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
-                geoParticles.translate(xMid, yMid, 0);
-                geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
-                geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
-                const material = new THREE.ShaderMaterial({
-                    uniforms: {
-                        color: { value: new THREE.Color(0xffffff) },
-                        pointTexture: { value: this.particleImg }
-                    },
-                    vertexShader: document.getElementById('vertexshader').textContent,
-                    fragmentShader: document.getElementById('fragmentshader').textContent,
-                    blending: THREE.AdditiveBlending,
-                    depthTest: false,
-                    transparent: true
-                });
-                this.particles = new THREE.Points(geoParticles, material);
-                this.scene.add(this.particles);
-                this.geometryCopy = new THREE.BufferGeometry();
-                this.geometryCopy.copy(this.particles.geometry);
-            }
-            visibleHeightAtZDepth(depth, camera) {
-                const cameraOffset = camera.position.z;
-                if (depth < cameraOffset) depth -= cameraOffset;
-                else depth += cameraOffset;
-                const vFOV = (camera.fov * Math.PI) / 180;
-                return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
-            }
-            visibleWidthAtZDepth(depth, camera) {
-                const height = this.visibleHeightAtZDepth(depth, camera);
-                return height * camera.aspect;
-            }
-            distance(x1, y1, x2, y2) {
-                return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
-            }
-        }
-    </script>
-
-    <!-- Bootstrap Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
