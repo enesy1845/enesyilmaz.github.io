@@ -1,15 +1,18 @@
-/* Reset some default spacing */
+/* Reset and body basics */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     scroll-behavior: smooth;
-    /* Smooth scrolling for anchor links */
+    /* Smooth anchor scrolling */
 }
 
-/* Navbar spacing fix */
-.navbar {
-    padding: 0.8rem 1rem;
+/* Cache-busting: simply adding a ?v=1 to the file link in HTML */
+
+/* Navbar brand with Playfair Display font */
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
 }
 
 /* Home Section */
@@ -22,9 +25,11 @@ body {
     text-align: center;
     position: relative;
     margin-top: 56px;
-    /* Offset for the fixed navbar */
+    /* Offset for fixed navbar */
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 /* Profile Image */
@@ -36,25 +41,28 @@ body {
     border: 3px solid #fff;
 }
 
-/* Section titles */
+/* Custom Buttons: round + shadow */
+.btn-custom {
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Section Titles */
 section h2 {
     font-weight: 700;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
 }
 
-/* Card style for projects */
+/* Cards in Portfolio & Experience & Volunteer */
 .card {
+    border: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Timeline styling for Experience Section */
-.timeline-item h5 {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-/* Footer */
+/* Footer styling */
 footer {
     margin-top: 2rem;
 }

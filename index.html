@@ -6,15 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enes Yilmaz Portfolio</title>
 
-    <!-- Cache-busting meta tags -->
+    <!-- Cache-Busting Meta -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
+    <!-- Google Font: Playfair Display (closest match to 'Playwrite Canada') -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom CSS with version query to help with cache busting -->
+    <!-- Custom CSS with versioning for cache-busting -->
     <link rel="stylesheet" href="style.css?v=1" />
 </head>
 
@@ -22,6 +27,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
+            <!-- Logo text in custom font -->
             <a class="navbar-brand" href="#home">Enes Yilmaz</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,14 +35,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <!-- Standard nav links -->
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#projects">Projects</a>
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#volunteer">Volunteer</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
@@ -47,15 +57,24 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Home Section -->
+    <!-- Header / Home Section -->
     <section id="home" class="home-section d-flex align-items-center">
         <div class="container text-center">
-            <img src="images/profile.png?v=1" alt="Profile Photo" class="profile-img mb-3" />
-            <h1 class="mb-3">Hello, I'm Enes Yilmaz</h1>
+            <img src="images/profile.jpg?v=1" alt="Profile Photo" class="profile-img mb-4" />
+            <h1 class="mb-3 fw-bold">Hello, I'm Enes Yilmaz</h1>
             <p class="lead mb-4">
                 Full Stack Python Developer | AI &amp; Machine Learning Practitioner | Web Designer
             </p>
-            <a href="#about" class="btn btn-primary btn-lg">Learn More</a>
+            <!-- Two custom buttons: My Work + LinkedIn -->
+            <div class="d-flex justify-content-center gap-3">
+                <!-- My Work button goes to Portfolio section -->
+                <a href="#portfolio" class="btn btn-custom btn-lg">
+                    My Work
+                </a>
+                <!-- LinkedIn button opens your LinkedIn profile in a new tab -->
+                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286" class="btn btn-custom btn-lg"
+                    target="_blank">in</a>
+            </div>
         </div>
     </section>
     <!-- End Home Section -->
@@ -93,82 +112,166 @@
     </section>
     <!-- End About Section -->
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-4">Projects</h2>
-            <div class="row">
-                <!-- Project 1 -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Project 1" />
+            <h2 class="text-center mb-4">Portfolio</h2>
+            <!-- 3-column card layout -->
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <!-- Card 1 -->
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="5k Consultancy" />
                         <div class="card-body">
-                            <h5 class="card-title">LLM-Based Quiz Application</h5>
+                            <h5 class="card-title">5k Consultancy</h5>
                             <p class="card-text">
-                                A full-stack app integrating Python, FastAPI, Docker, PostgreSQL,
-                                Neo4j, and LLM technologies. This project offers real-time quiz
-                                functionalities powered by advanced language models.
+                                A WordPress site for a consultancy firm based in the UK.
                             </p>
-                            <!-- If you have a live link or GitHub link, add it below -->
-                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://5kconsultancy.co.uk/" class="btn btn-primary w-100" target="_blank">Visit
+                                Website</a>
                         </div>
                     </div>
                 </div>
-                <!-- Project 2 -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Project 2" />
+                <!-- Card 2 -->
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="ILC Language Centre" />
                         <div class="card-body">
-                            <h5 class="card-title">End-to-End Data Engineering</h5>
+                            <h5 class="card-title">ILC Language Centre</h5>
                             <p class="card-text">
-                                Azure Stream Analytics and a comprehensive data pipeline approach
-                                for real-time analytics. Showcases data ingestion, transformation,
-                                and visualization in a cloud environment.
+                                Custom Webflow design for an English language school, reflecting
+                                brand values and an intuitive UX.
                             </p>
-                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://ilcentres.com/" class="btn btn-primary w-100" target="_blank">Visit
+                                Website</a>
                         </div>
                     </div>
                 </div>
-                <!-- Add more projects as needed -->
+                <!-- Card 3 -->
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Snap360 Photography" />
+                        <div class="card-body">
+                            <h5 class="card-title">Snap360 Photography</h5>
+                            <p class="card-text">
+                                A WordPress-based site featuring galleries and client booking.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.snap360photography.com/" class="btn btn-primary w-100"
+                                target="_blank">Visit Website</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top"
+                            alt="Alemdar Creative Studio" />
+                        <div class="card-body">
+                            <h5 class="card-title">Alemdar Creative Studio</h5>
+                            <p class="card-text">
+                                A WordPress site for a graphic designer's portfolio and services.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.yavuzalemdar.com/" class="btn btn-primary w-100" target="_blank">Visit
+                                Website</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Architech" />
+                        <div class="card-body">
+                            <h5 class="card-title">Architech</h5>
+                            <p class="card-text">
+                                A Webflow project for a Canadian firm, focusing on sleek design and
+                                advanced layout features.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.architech.ca/" class="btn btn-primary w-100" target="_blank">Visit
+                                Website</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Quiver Blog" />
+                        <div class="card-body">
+                            <h5 class="card-title">Quiver Blog</h5>
+                            <p class="card-text">
+                                Volunteer site maintenance and updates, improving design and user experience.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://quiver.blog/" class="btn btn-primary w-100" target="_blank">Visit
+                                Website</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    <!-- End Projects Section -->
+    <!-- End Portfolio Section -->
 
     <!-- Experience Section -->
     <section id="experience" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-4">Experience</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="timeline">
-                        <div class="timeline-item mb-4">
-                            <h5>Junior Full Stack Developer – Seller Flash (2022)</h5>
-                            <p>
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Junior Full Stack Developer – Seller Flash (2022)</h5>
+                            <p class="card-text">
                                 Developed an Amazon Dropshipping automation project using C#, Vue.js,
-                                Docker, and agile methodologies (Scrum, Jira). Collaborated with cross-functional
-                                teams to meet project milestones.
+                                Docker, and agile methodologies (Scrum, Jira). Collaborated with
+                                cross-functional teams to meet project milestones.
                             </p>
                         </div>
-                        <div class="timeline-item mb-4">
-                            <h5>Freelance Web Designer (2021–2022)</h5>
-                            <p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Freelance Web Designer (2021–2022)</h5>
+                            <p class="card-text">
                                 Built and maintained websites for UK, Canada, and US clients using
                                 WordPress, Webflow, HTML, CSS, and JavaScript. Created modern,
                                 responsive designs aligned with each client's brand identity.
                             </p>
                         </div>
-                        <div class="timeline-item mb-4">
-                            <h5>Software Educator – Blue Akademie & Bilisim School (2020–2024)</h5>
-                            <p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Software Educator – Blue Akademie & Bilisim School (2020–2024)</h5>
+                            <p class="card-text">
                                 Taught C#, HTML/CSS, JavaScript, Python, and Machine Learning to
                                 diverse age groups. Developed over 500 video tutorials and designed
                                 unique coding challenges for the Talent14 project.
                             </p>
                         </div>
-                        <div class="timeline-item">
-                            <h5>Data Engineering – We’RHERE (2024)</h5>
-                            <p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Engineering – We’RHERE (2024)</h5>
+                            <p class="card-text">
                                 Completed an intensive 2.5-month Data Engineering course and executed
                                 two major projects focusing on Azure Stream Analytics and end-to-end
                                 data pipelines.
@@ -180,6 +283,42 @@
         </div>
     </section>
     <!-- End Experience Section -->
+
+    <!-- Volunteer Section -->
+    <section id="volunteer" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Volunteer Work</h2>
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Global Digital Literacy Initiative</h5>
+                            <p class="card-text">
+                                Organized and taught free digital data literacy and Python courses to
+                                underprivileged youth across multiple countries. Involved in curriculum
+                                design, content creation, mentorship, and coordination with volunteer teams.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">LLM-Based Quiz Application Team</h5>
+                            <p class="card-text">
+                                Contributed to the development of a quiz application with Python, FastAPI,
+                                Docker, PostgreSQL, and Neo4j to extend educational access worldwide.
+                                Collaborated on debugging, feature design, and performance optimizations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Volunteer Section -->
 
     <!-- Contact Section -->
     <section id="contact" class="py-5">
@@ -225,7 +364,7 @@
     <!-- Bootstrap JS + Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS with version query to help with cache busting -->
+    <!-- Custom JS with cache-busting -->
     <script src="script.js?v=1"></script>
 </body>
 
