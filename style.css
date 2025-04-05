@@ -1,72 +1,56 @@
 /* Reset some default spacing */
+html,
 body {
     margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    scroll-behavior: smooth;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    background: #000;
+    /* Dark background */
+    color: #fff;
+    font-size: 10px;
+    /* Slightly small base font, can adjust as needed */
 }
 
-/* Navbar spacing */
-.navbar {
-    padding: 0.8rem 1rem;
-}
-
-/* Header Section */
-.header-section {
-    position: relative;
+/* The container for the 3D magic */
+#magic {
+    position: fixed;
     width: 100%;
     height: 100vh;
-    margin-top: 56px;
-    /* compensate for fixed navbar */
-    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: -9999;
 }
 
-/* Three.js iframe covers entire header section */
-.threejs-iframe {
+/* Overlay container for text or logos */
+.playground {
+    position: fixed;
     width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-/* Home Section (with background bg.jpg) */
-.home-section {
-    /* ensure it fills full screen height minus the navbar, so set min-height if you want more content space */
-    min-height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.3),
-            rgba(0, 0, 0, 0.3)), url('images/bg.jpg') no-repeat center center/cover;
-    color: #fff;
+.bottomPosition {
     text-align: center;
-    position: relative;
+    margin-bottom: 50px;
 }
 
-/* Style the profile image on Home Section */
-.home-section .profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #fff;
+.minText {
+    font-size: 14px;
 }
 
-/* Section Titles */
-section h2 {
-    font-weight: 700;
-    margin-bottom: 1.5rem;
+.logo {
+    width: 50px;
+    height: 50px;
 }
 
-/* Card style for Projects section */
-.card {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Timeline styling in Experience section */
-.timeline-item h5 {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-/* Footer */
-footer {
-    margin-top: 2rem;
+a {
+    color: white;
+    text-decoration: none;
 }
