@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enes Yılmaz Portfolio</title>
 
@@ -12,14 +12,17 @@
     <meta http-equiv="Expires" content="0" />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=IBM+Plex+Sans&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=IBM+Plex+Sans&display=swap"
         rel="stylesheet" />
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css?v=1.0" />
+    <link rel="stylesheet" href="style.css?v=1.2" />
 </head>
 
 <body>
@@ -27,17 +30,32 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand logo-font" href="#">Enes Yılmaz</a>
-            <div>
-                <!-- My Work butonu -->
-                <a href="#portfolio" class="btn btn-outline-light rounded-pill shadow mx-1">
-                    My Work
-                </a>
-                <!-- LinkedIn butonu -->
-                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286" target="_blank"
-                    class="btn btn-primary rounded-pill shadow">
-                    in
-                </a>
+            <a class="navbar-brand logo-font" href="#home">Enes Yılmaz</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#certifications">Certifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#volunteer">Volunteer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#youtube">YouTube</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -46,12 +64,19 @@
     <!-- HEADER -->
     <header id="home" class="header-section d-flex align-items-center text-white">
         <div class="container text-center">
-            <img src="images/profile.png" class="rounded-circle shadow mb-4" alt="profile" width="150"
+            <img src="images/profile.png?v=1.2" class="rounded-circle shadow mb-4" alt="profile" width="150"
                 height="150" />
-            <h1 class="logo-font">Hello, I'm Enes Yılmaz</h1>
-            <p class="lead">
+            <h1>Hello, I'm Enes Yılmaz</h1>
+            <p class="lead mb-4">
                 Full Stack Python Developer | AI &amp; Machine Learning Practitioner | Web Designer
             </p>
+            <a href="#portfolio" class="btn btn-outline-light btn-lg rounded-pill shadow mx-2">
+                My Work
+            </a>
+            <a href="https://www.linkedin.com/in/enes-yilmaz-026249286" target="_blank"
+                class="btn btn-primary btn-lg rounded-pill shadow">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
         </div>
     </header>
     <!-- END HEADER -->
@@ -61,11 +86,10 @@
         <div class="container">
             <h2 class="text-center mb-4">Portfolio</h2>
             <div class="row g-4">
-
                 <!-- 1: ILC Language Centre -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="ILC Language Centre" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/ilc.png" class="card-img-top" alt="ILC Language Centre" />
                         <div class="card-body">
                             <h5 class="card-title">ILC Language Centre</h5>
                             <p class="card-text">
@@ -83,12 +107,12 @@
 
                 <!-- 2: ILC Accommodation -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="ILC Accommodation" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/ilc-acc.png" class="card-img-top" alt="ILC Accommodation" />
                         <div class="card-body">
                             <h5 class="card-title">ILC Accommodation</h5>
                             <p class="card-text">
-                                Additional Webflow website for the same institution’s accommodation services.
+                                Webflow site for their accommodation services, ensuring a seamless brand identity.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -102,12 +126,12 @@
 
                 <!-- 3: Cuix Agency -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Cuix Agency" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/cuix.png" class="card-img-top" alt="Cuix Agency" />
                         <div class="card-body">
                             <h5 class="card-title">Cuix Agency</h5>
                             <p class="card-text">
-                                Freelance work involving Webflow updates and improvements for a Canadian agency.
+                                Freelance project updating and improving a Canadian agency’s Webflow site.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -120,12 +144,12 @@
 
                 <!-- 4: Architech -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Architech" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/architech.png" class="card-img-top" alt="Architech" />
                         <div class="card-body">
                             <h5 class="card-title">Architech (Canada)</h5>
                             <p class="card-text">
-                                Maintained and updated this site under the Cuix Agency contract.
+                                Worked under Cuix Agency to maintain and modernize a tech-focused corporate site.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -139,12 +163,13 @@
 
                 <!-- 5: Yavuz Alemdar -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Yavuz Alemdar" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/yavuzalemdar.png" class="card-img-top" alt="Yavuz Alemdar" />
                         <div class="card-body">
                             <h5 class="card-title">Yavuz Alemdar</h5>
                             <p class="card-text">
-                                One of the three WordPress websites created for a graphic designer in the U.S.
+                                One of three WordPress sites for a US-based graphic designer, balancing aesthetics and
+                                usability.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -158,12 +183,12 @@
 
                 <!-- 6: Snap360 Photography -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Snap360 Photography" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/snap360.png" class="card-img-top" alt="Snap360 Photography" />
                         <div class="card-body">
                             <h5 class="card-title">Snap360 Photography</h5>
                             <p class="card-text">
-                                WordPress project focusing on an elegant display of photography services.
+                                WordPress project highlighting photography services with immersive galleries.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -177,13 +202,12 @@
 
                 <!-- 7: Alemdar Creative Studio -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top"
-                            alt="Alemdar Creative Studio" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/alemdarcreative.png" class="card-img-top" alt="Alemdar Creative Studio" />
                         <div class="card-body">
                             <h5 class="card-title">Alemdar Creative Studio</h5>
                             <p class="card-text">
-                                Additional WordPress website for the same design professional.
+                                Additional WordPress site for the same creative professional’s design portfolio.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -197,12 +221,13 @@
 
                 <!-- 8: 5k Consultancy -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="5k Consultancy" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/5k.png" class="card-img-top" alt="5k Consultancy" />
                         <div class="card-body">
                             <h5 class="card-title">5k Consultancy</h5>
                             <p class="card-text">
-                                WordPress site created for a UK-based consulting firm.
+                                A dynamic WordPress site for a UK-based consulting firm, focusing on professionalism and
+                                clarity.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -216,12 +241,12 @@
 
                 <!-- 9: KlasikTesbih -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Klasiktesbih" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/klasiktesbih.png" class="card-img-top" alt="Klasiktesbih" />
                         <div class="card-body">
                             <h5 class="card-title">KlasikTesbih</h5>
                             <p class="card-text">
-                                A classic WordPress e-commerce style website for a local Turkish brand.
+                                E-commerce style WordPress site for a Turkish brand showcasing classic designs.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -235,12 +260,12 @@
 
                 <!-- 10: Omnitech Academy -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="OmniTech Academy" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/omnitech.png" class="card-img-top" alt="OmniTech Academy" />
                         <div class="card-body">
                             <h5 class="card-title">Omnitech Academy</h5>
                             <p class="card-text">
-                                Responsive WordPress site created for an online training platform.
+                                WordPress site created for an online training platform to accommodate varied courses.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -254,12 +279,12 @@
 
                 <!-- 11: Quiver Blog -->
                 <div class="col-md-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Quiver Blog" />
+                    <div class="card h-100 shadow-sm hover-effect">
+                        <img src="images/quiver.png" class="card-img-top" alt="Quiver Blog" />
                         <div class="card-body">
                             <h5 class="card-title">Quiver Blog</h5>
                             <p class="card-text">
-                                Volunteered updates & UI enhancements for a Norwegian blogger’s website.
+                                Volunteered UI enhancements and maintenance for a Norwegian blogger’s site.
                             </p>
                         </div>
                         <div class="card-footer">
@@ -269,7 +294,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -280,12 +304,16 @@
         <div class="container">
             <h2 class="text-center mb-5">Experience</h2>
             <div class="row g-4">
-
                 <!-- 1: Vektörel Bilişim -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">Vektörel Bilişim (2018)</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/experience/"
+                                    target="_blank">
+                                    Vektörel Bilişim (2018)
+                                </a>
+                            </h5>
                             <p class="card-text">
                                 • Completed a 6-month (.NET) training (180 hours).<br />
                                 • Gained foundational skills in .NET framework, C#, and MS SQL.
@@ -293,122 +321,190 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- 2: Sigara Depoları (2019-2020) -->
+                <!-- 2: AFP-Project (2019-2020) [Sigara Depoları] -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">Sigara Depoları (Part-Time)</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/experience/"
+                                    target="_blank">
+                                    AFP-Project (Part-Time)
+                                </a>
+                            </h5>
                             <p class="card-text">
-                                • Worked 1.5 years on a distribution automation project.<br />
+                                • 1.5 years on a distribution automation project.<br />
                                 • Utilized C# and MS SQL to streamline operations.
                             </p>
                         </div>
                     </div>
                 </div>
-
                 <!-- 3: Blue Akademie (2020-2024) -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">Blue Akademie (2020–2024)</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/experience/"
+                                    target="_blank">
+                                    Blue Akademie (2020–2024)
+                                </a>
+                            </h5>
                             <p class="card-text">
-                                • Taught C#, HTML/CSS, JavaScript, Python, and introductory Machine Learning.<br />
-                                • Prepared and delivered 120+ hours of instructional content for adult and youth
-                                classes.<br />
-                                • Developed extensive video tutorials and updated course materials regularly.
+                                • Taught C#, HTML/CSS, JavaScript, Python, and intro Machine Learning.<br />
+                                • Prepared 120+ hours of training for adults/youth, plus many video tutorials.
                             </p>
                         </div>
                     </div>
                 </div>
-
                 <!-- 4: Seller Flash (2022) -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">Seller Flash (Junior Full Stack)</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/experience/"
+                                    target="_blank">
+                                    Seller Flash (Junior Full Stack)
+                                </a>
+                            </h5>
                             <p class="card-text">
-                                • 6-month project building Amazon Dropshipping automation.<br />
-                                • Used C#, Vue.js, Docker, Scrum, and Jira to deliver on time.
+                                • Built Amazon Dropshipping automation with C#, Vue.js, Docker.<br />
+                                • Followed Scrum and Jira for seamless collaboration.
                             </p>
                         </div>
                     </div>
                 </div>
-
                 <!-- 5: Bilisim School -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">Bilisim School (2021–...)</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/experience/"
+                                    target="_blank">
+                                    Bilisim School (2021–...)
+                                </a>
+                            </h5>
                             <p class="card-text">
-                                • Delivered Python & JavaScript lessons to 8–18-year-olds.<br />
-                                • Created ~500 video tutorials and a unique coding curriculum (Talent14).<br />
-                                • Focused on project-based learning and interactive challenges.
+                                • Delivered Python &amp; JS courses to 8–18-year-olds.<br />
+                                • Created ~500 video tutorials, developed Talent14 coding platform.<br />
+                                • Focused on interactive, project-based learning.
                             </p>
                         </div>
                     </div>
                 </div>
-
                 <!-- 6: We’RHERE (2024) -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">We’RHERE Data Engineering</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/experience/"
+                                    target="_blank">
+                                    We’RHERE Data Engineering
+                                </a>
+                            </h5>
                             <p class="card-text">
-                                • Completed a 2.5-month intense Data Engineering course.<br />
-                                • Led two major projects: Azure Stream Analytics & End-to-End Data Pipelines.<br />
-                                • Built robust streaming and real-time analytics solutions.
+                                • Completed a 2.5-month intensive course.<br />
+                                • Led Azure Stream Analytics &amp; an end-to-end pipeline project.<br />
+                                • Built real-time data streaming solutions.
                             </p>
                         </div>
                     </div>
                 </div>
-
                 <!-- 7: LLM-based Quiz Project -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 hover-effect">
                         <div class="card-body">
-                            <h5 class="card-title">LLM-based Quiz Project</h5>
+                            <h5 class="card-title">
+                                <a href="https://www.linkedin.com/posts/enes-yilmaz-026249286_hafta-13-15-activity-7302240072253198338-Fpuc?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEVyeN4BR-AaMKQw00EGrFjvuONwFvrAI8Y"
+                                    target="_blank">
+                                    LLM-based Quiz Project
+                                </a>
+                            </h5>
                             <p class="card-text">
-                                • Working in a 4-person team with a mentor from the Netherlands.<br />
-                                • Technologies: Python, FastAPI, Docker, PostgreSQL, Neo4j, LLM APIs.<br />
-                                • Goal: A full-stack quiz platform with advanced AI integration.
+                                • 4-person team with a mentor from the Netherlands.<br />
+                                • Stack: Python, FastAPI, Docker, PostgreSQL, Neo4j, LLM APIs.<br />
+                                • Delivers interactive quizzes powered by AI.
                             </p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
     <!-- END EXPERIENCE SECTION -->
 
+    <!-- CERTIFICATIONS SECTION -->
+    <section id="certifications" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Certifications</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <p>View my certifications on LinkedIn.</p>
+                    <a href="https://www.linkedin.com/in/enes-yilmaz-026249286/details/certifications/" target="_blank"
+                        class="btn btn-outline-primary btn-lg rounded-pill shadow">
+                        <i class="fas fa-certificate"></i> View Certifications
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END CERTIFICATIONS SECTION -->
+
     <!-- VOLUNTEER SECTION -->
     <section id="volunteer" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-5">Volunteer Activities</h2>
+            <h2 class="text-center mb-5">Volunteer</h2>
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <p>
-                        <strong>Global Digital Data Literacy:</strong>
-                        Since 2024, I've been volunteering with a network of educators across multiple countries
-                        (Turkey, Germany, the Netherlands, Norway) to teach digital literacy and Python to youth lacking
-                        financial resources. We have organized a team of around 12 software educators, 4 English
-                        teachers, and 30 life coaches to serve nearly 70 students worldwide—completely free of charge.
+                        <strong>Global Digital Data Literacy:</strong><br />
+                        Since 2024, I've been volunteering with a network of educators across Europe (Turkey, Germany,
+                        the Netherlands, Norway), providing free Python and digital literacy courses to youth who lack
+                        financial resources. Our team includes 12 software educators, 4 English teachers, 30 life
+                        coaches, and we’ve reached 70+ students at no cost.
                     </p>
                     <p>
-                        <strong>Quiver Blog (Norway):</strong>
-                        Volunteered to update and maintain the website for Thor Egil, improving UI/UX and ensuring
-                        ongoing site stability.
-                    </p>
-                    <p>
-                        These efforts aim to bridge gaps in digital education, fostering inclusive and accessible
-                        learning for all.
+                        <strong>Quiver Blog (Norway):</strong><br />
+                        Volunteered to update and maintain Thor Egil's blog, enhancing UI/UX and ensuring site
+                        stability.
                     </p>
                 </div>
             </div>
         </div>
     </section>
     <!-- END VOLUNTEER SECTION -->
+
+    <!-- YOUTUBE SECTION -->
+    <section id="youtube" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">YouTube</h2>
+            <div class="row">
+                <div class="col-md-12 text-center mb-4">
+                    <a href="https://www.youtube.com/channel/UCwnYJAJrL6B48D73zvcWdeA" target="_blank"
+                        class="btn btn-danger btn-lg rounded-pill shadow">
+                        <i class="fab fa-youtube"></i> Visit YouTube Channel
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/8tepLsXl1JI" title="YouTube video player"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/vHT6wbO0JKI" title="YouTube video player"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/qZ3CsxFVwPQ" title="YouTube video player"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END YOUTUBE SECTION -->
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="py-5">
@@ -418,19 +514,19 @@
                 <div class="col-md-6">
                     <ul class="list-group text-center">
                         <li class="list-group-item">
-                            <strong>Email:</strong> your.email@example.com
+                            <i class="fas fa-envelope"></i> <strong>Email:</strong> enes.yilmaz1845@gmail.com
                         </li>
                         <li class="list-group-item">
-                            <strong>LinkedIn:</strong>
-                            <a href="https://www.linkedin.com/in/enes-yilmaz-026249286"
-                                target="_blank">linkedin.com/in/enes-yilmaz-026249286</a>
+                            <i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong>
+                            <a href="https://www.linkedin.com/in/enes-yilmaz-026249286" target="_blank">
+                                linkedin.com/in/enes-yilmaz-026249286
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <strong>GitHub:</strong>
-                            <a href="https://github.com/YourUsername" target="_blank">github.com/YourUsername</a>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Phone:</strong> +00 123 456 789
+                            <i class="fab fa-github"></i> <strong>GitHub:</strong>
+                            <a href="https://github.com/enesy1845" target="_blank">
+                                github.com/enesy1845
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -447,10 +543,11 @@
     </footer>
     <!-- END FOOTER -->
 
-    <!-- Bootstrap JS + Popper -->
+    <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="script.js?v=1.0"></script>
+
+    <!-- CUSTOM JS -->
+    <script src="script.js?v=1.2"></script>
 </body>
 
 </html>

@@ -1,53 +1,151 @@
-/* Use the IBM Plex Sans for general text, Playfair Display for the 'logo-font' */
+/* style.css */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #0d9488;
+    --accent-color: #4f46e5;
+    --dark-color: #1e293b;
+    --light-color: #f8fafc;
+}
+
 body {
     font-family: 'IBM Plex Sans', sans-serif;
     scroll-behavior: smooth;
     margin: 0;
     padding-top: 70px;
-    /* To offset the fixed navbar */
+    color: var(--dark-color);
 }
 
 .logo-font {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.8rem;
+    color: white !important;
 }
 
-/* Header (Home) Section */
+/* Header Section */
 .header-section {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6),
-            rgba(0, 0, 0, 0.6)),
-        url('images/bg.jpg?v=1.0') no-repeat center center;
-    background-size: cover;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)),
+        url('images/bg.jpg?v=1.2') center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: white;
 }
 
 /* Buttons */
 .btn {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-light {
+    border: 2px solid white;
+    background: transparent;
 }
 
 .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Portfolio Cards */
+/* Cards */
+.card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: white;
+    transition: transform 0.3s ease;
+}
+
 .card-img-top {
+    height: 220px;
     object-fit: cover;
-    height: 200px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
 }
 
 /* Sections */
-section h2 {
-    text-transform: uppercase;
+section {
+    padding: 5rem 0;
+}
+
+h2 {
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: -0.025em;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(30, 41, 59, 0.95) !important;
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 0 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+/* Contact Section */
+#contact .list-group-item {
+    border: none;
+    background: var(--light-color);
+    margin-bottom: 1rem;
+    border-radius: 0.5rem !important;
+    transition: transform 0.2s ease;
+    padding: 1.5rem;
+}
+
+#contact .list-group-item:hover {
+    transform: translateX(10px);
+}
+
+/* Profile Image */
+.header-section img {
+    border: 4px solid white;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
 /* Footer */
 footer {
-    font-size: 14px;
+    background: var(--dark-color);
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+.list-group-item i {
+    margin-right: 8px;
 }
