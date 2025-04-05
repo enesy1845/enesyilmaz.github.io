@@ -10,12 +10,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
-    <!-- Load an older Three.js version that has THREE.FontLoader globally -->
-    <!-- (r124.0 is just an example; any version before r125 should work) -->
+    <!-- 
+    Use an older Three.js (r124.0) that supports the global THREE.FontLoader 
+    so "loader.load" and "extractPoints" work as expected.
+  -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/loaders/FontLoader.js"></script>
 
-    <!-- Link to our CSS file -->
+    <!-- Link to our custom CSS -->
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -43,17 +45,18 @@
 
     void main() {
       gl_FragColor = vec4(color * vColor, 1.0);
+      // Multiply by the texture so particles are nicely shaped
       gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
     }
   </script>
 
-    <!-- Main Three.js container -->
+    <!-- Main 3D container -->
     <div id="magic"></div>
 
-    <!-- Bottom overlay text/logo -->
+    <!-- Bottom overlay text/logo (optional) -->
     <div class="playground">
         <div class="bottomPosition">
-            <!-- Optional SVG logo -->
+            <!-- Example SVG logo, remove or replace if you don't want it -->
             <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278.8 278.8">
                 <circle fill="#000205" cx="139.4" cy="139.4" r="139.4" />
                 <g fill="none" stroke="#FFF" stroke-width="6.062" stroke-miterlimit="10">
@@ -63,13 +66,14 @@
                 </g>
             </svg>
 
-            <h1 class="special">ENES YILMAZ<br>
+            <h1 class="special">
+                ENES YILMAZ<br>
                 <span class="minText">Creative Full Stack Developer</span>
             </h1>
         </div>
     </div>
 
-    <!-- Link to main JS file -->
+    <!-- Link to our JS logic -->
     <script src="script.js"></script>
 </body>
 

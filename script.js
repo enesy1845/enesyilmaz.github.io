@@ -1,46 +1,55 @@
-/*******************************************************************************
+/****************************************************************************
  * script.js
- * Based on the older CodePen by sanprieto. 
- * This version references THREE@0.124.0 & FontLoader from the global THREE scope.
- * We also increased textSize to 50 to make "ENES YILMAZ" bigger & more centered.
- *******************************************************************************/
+ * 
+ * A Three.js particle text effect using older Three.js (r124) + FontLoader 
+ * for easy global usage. 
+ * 
+ * The text reads "ENES\nYILMAZ" and is bigger & centered. 
+ * 
+ * If you get local file / CORS errors, run a local server 
+ * or host on GitHub Pages.
+ ****************************************************************************/
 
-// Preload the font & texture (the old style using a LoadingManager)
 function preload() {
   const manager = new THREE.LoadingManager();
 
-  manager.onLoad = function() {
-    // Once font & texture load, create the main 3D environment
+  // Once font + texture both load, create environment
+  manager.onLoad = function () {
     new Environment(typo, particle);
   };
 
-  // Load the font via old-school global THREE.FontLoader
+  // Load a JSON font globally with old style THREE.FontLoader
   let typo = null;
   const loader = new THREE.FontLoader(manager);
 
+  // Using Helvetiker from threejs.org or any other .json you want
+  // (Below is a typical example; you can use a custom .json if you prefer)
   loader.load(
-    // Replace this URL with any compatible .json font you like
-    'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json', 
+    'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', 
     function (font) {
       typo = font;
     }
   );
 
-  // Load the particle texture 
+  // Particle texture
   const particle = new THREE.TextureLoader(manager).load(
     'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
   );
 }
 
-// Run preload after DOM is ready
-if (document.readyState === 'complete' ||
-    (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+// Kick off preload after the DOM is ready
+if (
+  document.readyState === 'complete' ||
+  (document.readyState !== 'loading' && !document.documentElement.doScroll)
+) {
   preload();
 } else {
   document.addEventListener('DOMContentLoaded', preload);
 }
 
-/**************************** Environment Setup *******************************/
+/********************************
+ *  Environment Setup
+ ********************************/
 class Environment {
   constructor(font, particle) {
     this.font = font;
@@ -59,7 +68,7 @@ class Environment {
   }
 
   setup() {
-    // Instantiate CreateParticles class
+    // Create the text-based particles
     this.createParticles = new CreateParticles(
       this.scene,
       this.font,
@@ -81,15 +90,18 @@ class Environment {
       1,
       10000
     );
+    // Position camera so text is visible
     this.camera.position.set(0, 0, 100);
   }
 
   createRenderer() {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+    this.renderer.setSize(
+      this.container.clientWidth,
+      this.container.clientHeight
+    );
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputEncoding = THREE.sRGBEncoding;
-
     this.container.appendChild(this.renderer.domElement);
 
     // Continuously animate
@@ -101,12 +113,16 @@ class Environment {
   onWindowResize() {
     this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
     this.camera.updateProjectionMatrix();
-
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+    this.renderer.setSize(
+      this.container.clientWidth,
+      this.container.clientHeight
+    );
   }
 }
 
-/**************************** CreateParticles Class ***************************/
+/********************************
+ *  CreateParticles
+ ********************************/
 class CreateParticles {
   constructor(scene, font, particleImg, camera, renderer) {
     this.scene = scene;
@@ -117,18 +133,18 @@ class CreateParticles {
 
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2(-200, 200);
-
     this.colorChange = new THREE.Color();
-    this.buttom = false;
 
-    // Increase textSize to 50 for bigger letters
-    // Also "amount" can be increased if you want even more particles
+    this.buttom = false; // tracks if mouse is down
+
+    // Increase textSize so it's bigger & easier to see
+    // 'ENES\\nYILMAZ' => two lines
     this.data = {
       text: 'ENES\nYILMAZ',
-      amount: 1500,
+      amount: 1500,         // number of points
       particleSize: 1,
       particleColor: 0xffffff,
-      textSize: 50,   // <-- MAKE TEXT BIGGER
+      textSize: 50,         // bigger letters
       area: 250,
       ease: 0.05
     };
@@ -138,7 +154,7 @@ class CreateParticles {
   }
 
   setup() {
-    // Invisible plane for raycaster
+    // Invisible plane for raycasting
     const geometry = new THREE.PlaneGeometry(
       this.visibleWidthAtZDepth(100, this.camera),
       this.visibleHeightAtZDepth(100, this.camera)
@@ -148,7 +164,7 @@ class CreateParticles {
       transparent: true
     });
     this.planeArea = new THREE.Mesh(geometry, material);
-    this.planeArea.visible = false; // we don't want to see the plane
+    this.planeArea.visible = false;
 
     this.createText();
   }
@@ -159,9 +175,9 @@ class CreateParticles {
     document.addEventListener('mouseup', this.onMouseUp.bind(this));
   }
 
-  onMouseDown(event) {
-    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  onMouseDown(e) {
+    this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
     const vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.5);
     vector.unproject(this.camera);
@@ -178,9 +194,9 @@ class CreateParticles {
     this.data.ease = 0.05;
   }
 
-  onMouseMove(event) {
-    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  onMouseMove(e) {
+    this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   }
 
   render() {
@@ -208,7 +224,7 @@ class CreateParticles {
         let py = pos.getY(i);
         let pz = pos.getZ(i);
 
-        // Default color
+        // default color
         this.colorChange.setHSL(0.5, 1, 1);
         coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
         coulors.needsUpdate = true;
@@ -283,7 +299,7 @@ class CreateParticles {
           }
         }
 
-        // Move point back toward original position
+        // Move points back to original position gradually
         px += (initX - px) * this.data.ease;
         py += (initY - py) * this.data.ease;
         pz += (initZ - pz) * this.data.ease;
@@ -308,7 +324,7 @@ class CreateParticles {
     let geometry = new THREE.ShapeGeometry(shapes);
     geometry.computeBoundingBox();
 
-    // Center the geometry
+    // Center horizontally (and somewhat vertically)
     const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
     const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
     geometry.center();
@@ -316,7 +332,6 @@ class CreateParticles {
     let colors = [];
     let sizes = [];
 
-    // Distribute points along the shape path
     for (let i = 0; i < shapes.length; i++) {
       let shape = shapes[i];
       const amountPoints = shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
@@ -325,15 +340,14 @@ class CreateParticles {
       points.forEach(pt => {
         let a = new THREE.Vector3(pt.x, pt.y, 0);
         thePoints.push(a);
-        // Default color/size
+        // default color
         colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
         sizes.push(1);
       });
     }
 
     let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
-    // Shift to center
-    geoParticles.translate(xMid, yMid, 0);
+    geoParticles.translate(xMid, yMid, 0); // shift to center
 
     geoParticles.setAttribute(
       'customColor',
@@ -359,12 +373,12 @@ class CreateParticles {
     this.particles = new THREE.Points(geoParticles, material);
     this.scene.add(this.particles);
 
-    // Copy geometry so we can restore original positions
+    // Make a copy to revert positions if needed
     this.geometryCopy = new THREE.BufferGeometry();
     this.geometryCopy.copy(this.particles.geometry);
   }
 
-  // Utility: find visible height at a certain z-depth
+  // Calculate visible height at a specific depth
   visibleHeightAtZDepth(depth, camera) {
     const cameraOffset = camera.position.z;
     if (depth < cameraOffset) depth -= cameraOffset;
@@ -374,7 +388,7 @@ class CreateParticles {
     return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
   }
 
-  // Utility: find visible width at a certain z-depth
+  // Calculate visible width at a specific depth
   visibleWidthAtZDepth(depth, camera) {
     const height = this.visibleHeightAtZDepth(depth, camera);
     return height * camera.aspect;

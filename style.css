@@ -9,7 +9,7 @@ body {
     background: #000;
     /* black background */
     color: #fff;
-    font-size: 9px;
+    font-size: 10px;
 }
 
 /* The main 3D canvas container */
@@ -20,10 +20,10 @@ body {
     top: 0;
     left: 0;
     z-index: -9999;
-    /* keep the 3D behind everything else */
+    /* keep the particles behind everything else */
 }
 
-/* Overlay container for text or a logo */
+/* Overlay container for text/logo if desired */
 .playground {
     position: fixed;
     width: 100%;
