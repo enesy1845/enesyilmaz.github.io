@@ -1,29 +1,14 @@
-/****************************************************************************
- * script.js
- * 
- * A Three.js particle text effect using older Three.js (r124) + FontLoader 
- * for easy global usage. 
- * 
- * The text reads "ENES\nYILMAZ" and is bigger & centered. 
- * 
- * If you get local file / CORS errors, run a local server 
- * or host on GitHub Pages.
- ****************************************************************************/
-
 function preload() {
   const manager = new THREE.LoadingManager();
 
-  // Once font + texture both load, create environment
+  // Font ve texture yüklendiğinde Environment nesnesi oluşturuluyor
   manager.onLoad = function () {
     new Environment(typo, particle);
   };
 
-  // Load a JSON font globally with old style THREE.FontLoader
+  // Eski stil THREE.FontLoader ile JSON font yükleniyor
   let typo = null;
   const loader = new THREE.FontLoader(manager);
-
-  // Using Helvetiker from threejs.org or any other .json you want
-  // (Below is a typical example; you can use a custom .json if you prefer)
   loader.load(
     'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', 
     function (font) {
@@ -31,13 +16,13 @@ function preload() {
     }
   );
 
-  // Particle texture
+  // Particle texture yükleniyor
   const particle = new THREE.TextureLoader(manager).load(
     'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
   );
 }
 
-// Kick off preload after the DOM is ready
+// DOM hazır olduktan sonra preload çalıştırılıyor
 if (
   document.readyState === 'complete' ||
   (document.readyState !== 'loading' && !document.documentElement.doScroll)
@@ -47,9 +32,6 @@ if (
   document.addEventListener('DOMContentLoaded', preload);
 }
 
-/********************************
- *  Environment Setup
- ********************************/
 class Environment {
   constructor(font, particle) {
     this.font = font;
@@ -68,7 +50,7 @@ class Environment {
   }
 
   setup() {
-    // Create the text-based particles
+    // Metin tabanlı parçacıkları oluşturuyor
     this.createParticles = new CreateParticles(
       this.scene,
       this.font,
@@ -90,7 +72,7 @@ class Environment {
       1,
       10000
     );
-    // Position camera so text is visible
+    // Metnin görünür olması için kamera pozisyonlandırılıyor
     this.camera.position.set(0, 0, 100);
   }
 
@@ -104,7 +86,7 @@ class Environment {
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.container.appendChild(this.renderer.domElement);
 
-    // Continuously animate
+    // Sürekli animasyon döngüsü
     this.renderer.setAnimationLoop(() => {
       this.render();
     });
@@ -120,9 +102,6 @@ class Environment {
   }
 }
 
-/********************************
- *  CreateParticles
- ********************************/
 class CreateParticles {
   constructor(scene, font, particleImg, camera, renderer) {
     this.scene = scene;
@@ -135,16 +114,15 @@ class CreateParticles {
     this.mouse = new THREE.Vector2(-200, 200);
     this.colorChange = new THREE.Color();
 
-    this.buttom = false; // tracks if mouse is down
+    this.buttom = false; // fare basılı mı kontrolü
 
-    // Increase textSize so it's bigger & easier to see
-    // 'ENES\\nYILMAZ' => two lines
+    // Parçacıkların ayarları
     this.data = {
       text: 'ENES\nYILMAZ',
-      amount: 1500,         // number of points
+      amount: 1500,         // noktaların sayısı
       particleSize: 1,
       particleColor: 0xffffff,
-      textSize: 50,         // bigger letters
+      textSize: 50,         // daha büyük harfler
       area: 250,
       ease: 0.05
     };
@@ -154,7 +132,7 @@ class CreateParticles {
   }
 
   setup() {
-    // Invisible plane for raycasting
+    // Raycasting için görünmez bir düzlem oluşturuluyor
     const geometry = new THREE.PlaneGeometry(
       this.visibleWidthAtZDepth(100, this.camera),
       this.visibleHeightAtZDepth(100, this.camera)
@@ -165,6 +143,7 @@ class CreateParticles {
     });
     this.planeArea = new THREE.Mesh(geometry, material);
     this.planeArea.visible = false;
+    this.scene.add(this.planeArea);
 
     this.createText();
   }
@@ -224,7 +203,7 @@ class CreateParticles {
         let py = pos.getY(i);
         let pz = pos.getZ(i);
 
-        // default color
+        // Varsayılan renk
         this.colorChange.setHSL(0.5, 1, 1);
         coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
         coulors.needsUpdate = true;
@@ -238,7 +217,7 @@ class CreateParticles {
         const f = -this.data.area / (dx * dx + dy * dy);
 
         if (this.buttom) {
-          // If mouse is pressed
+          // Fare basılı ise
           const t = Math.atan2(dy, dx);
           px -= f * Math.cos(t);
           py -= f * Math.sin(t);
@@ -258,7 +237,7 @@ class CreateParticles {
             coulors.needsUpdate = true;
           }
         } else {
-          // Mouse not pressed
+          // Fare basılı değilse
           if (mouseDistance < this.data.area) {
             if (i % 5 === 0) {
               const t = Math.atan2(dy, dx);
@@ -299,7 +278,7 @@ class CreateParticles {
           }
         }
 
-        // Move points back to original position gradually
+        // Noktaları orijinal konumlarına yavaşça geri getirme
         px += (initX - px) * this.data.ease;
         py += (initY - py) * this.data.ease;
         pz += (initZ - pz) * this.data.ease;
@@ -314,7 +293,7 @@ class CreateParticles {
     let thePoints = [];
     let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
 
-    // If shapes have holes, push them too
+    // Eğer şekillerin içi boşluklar varsa, onları da ekle
     shapes.forEach(shape => {
       if (shape.holes && shape.holes.length > 0) {
         shape.holes.forEach(hole => shapes.push(hole));
@@ -324,7 +303,7 @@ class CreateParticles {
     let geometry = new THREE.ShapeGeometry(shapes);
     geometry.computeBoundingBox();
 
-    // Center horizontally (and somewhat vertically)
+    // Yatay (ve dikeyde) ortalamak
     const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
     const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
     geometry.center();
@@ -340,14 +319,14 @@ class CreateParticles {
       points.forEach(pt => {
         let a = new THREE.Vector3(pt.x, pt.y, 0);
         thePoints.push(a);
-        // default color
+        // Varsayılan renk
         colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
         sizes.push(1);
       });
     }
 
     let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
-    geoParticles.translate(xMid, yMid, 0); // shift to center
+    geoParticles.translate(xMid, yMid, 0); // Ortalamak için kaydır
 
     geoParticles.setAttribute(
       'customColor',
@@ -373,22 +352,21 @@ class CreateParticles {
     this.particles = new THREE.Points(geoParticles, material);
     this.scene.add(this.particles);
 
-    // Make a copy to revert positions if needed
+    // Noktaların başlangıç konumlarının kopyası
     this.geometryCopy = new THREE.BufferGeometry();
     this.geometryCopy.copy(this.particles.geometry);
   }
 
-  // Calculate visible height at a specific depth
+  // Belirli bir derinlikte görünür yüksekliği hesaplar
   visibleHeightAtZDepth(depth, camera) {
     const cameraOffset = camera.position.z;
     if (depth < cameraOffset) depth -= cameraOffset;
     else depth += cameraOffset;
-
     const vFOV = (camera.fov * Math.PI) / 180;
     return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
   }
 
-  // Calculate visible width at a specific depth
+  // Belirli bir derinlikte görünür genişliği hesaplar
   visibleWidthAtZDepth(depth, camera) {
     const height = this.visibleHeightAtZDepth(depth, camera);
     return height * camera.aspect;
