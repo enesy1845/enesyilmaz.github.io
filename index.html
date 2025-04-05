@@ -2,335 +2,421 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enes Yilmaz Portfolio</title>
+    <title>Enes Yılmaz Portfolio</title>
 
-    <!-- Cache-Busting Meta -->
+    <!-- Cache busting meta tags -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <!-- Google Font: Playfair Display (closest match to 'Playwrite Canada') -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=IBM+Plex+Sans&display=swap"
+        rel="stylesheet" />
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom CSS with versioning for cache-busting -->
-    <link rel="stylesheet" href="style.css?v=1" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css?v=1.0" />
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
         <div class="container">
-            <!-- Logo text in custom font -->
-            <a class="navbar-brand" href="#home">Enes Yilmaz</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <!-- Standard nav links -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#experience">Experience</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#volunteer">Volunteer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
+            <a class="navbar-brand logo-font" href="#">Enes Yılmaz</a>
+            <div>
+                <!-- My Work butonu -->
+                <a href="#portfolio" class="btn btn-outline-light rounded-pill shadow mx-1">
+                    My Work
+                </a>
+                <!-- LinkedIn butonu -->
+                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286" target="_blank"
+                    class="btn btn-primary rounded-pill shadow">
+                    in
+                </a>
             </div>
         </div>
     </nav>
-    <!-- End Navbar -->
+    <!-- END NAVBAR -->
 
-    <!-- Header / Home Section -->
-    <section id="home" class="home-section d-flex align-items-center">
+    <!-- HEADER -->
+    <header id="home" class="header-section d-flex align-items-center text-white">
         <div class="container text-center">
-            <img src="images/profile.jpg?v=1" alt="Profile Photo" class="profile-img mb-4" />
-            <h1 class="mb-3 fw-bold">Hello, I'm Enes Yilmaz</h1>
-            <p class="lead mb-4">
+            <img src="images/profile.png" class="rounded-circle shadow mb-4" alt="profile" width="150"
+                height="150" />
+            <h1 class="logo-font">Hello, I'm Enes Yılmaz</h1>
+            <p class="lead">
                 Full Stack Python Developer | AI &amp; Machine Learning Practitioner | Web Designer
             </p>
-            <!-- Two custom buttons: My Work + LinkedIn -->
-            <div class="d-flex justify-content-center gap-3">
-                <!-- My Work button goes to Portfolio section -->
-                <a href="#portfolio" class="btn btn-custom btn-lg">
-                    My Work
-                </a>
-                <!-- LinkedIn button opens your LinkedIn profile in a new tab -->
-                <a href="https://www.linkedin.com/in/enes-yilmaz-026249286" class="btn btn-custom btn-lg"
-                    target="_blank">in</a>
-            </div>
         </div>
-    </section>
-    <!-- End Home Section -->
+    </header>
+    <!-- END HEADER -->
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">About Me</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <p>
-                        I am a versatile software professional with a passion for building
-                        impactful digital solutions. My journey began with .NET training and
-                        evolved through various roles—from developing automation projects with C# and
-                        MS SQL to teaching programming and digital data literacy across different
-                        age groups and countries.
-                    </p>
-                    <p>
-                        With hands-on experience in full stack development, I have contributed to
-                        projects using Python, C#, JavaScript, Docker, FastAPI, and Vue.js. My work
-                        in web design—leveraging WordPress and Webflow—has allowed me to bring
-                        creative, functional websites to life for international clients. In addition
-                        to my technical roles, I’ve dedicated myself to education, creating
-                        comprehensive curricula and over 500 video tutorials.
-                    </p>
-                    <p>
-                        I bring a holistic approach to problem-solving, combining analytical thinking,
-                        empathy, and a drive for continuous improvement. Whether I’m working on
-                        data engineering projects or innovative full stack applications, I strive
-                        to create solutions that are both reliable and forward-thinking.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End About Section -->
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-5">
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-4">Portfolio</h2>
-            <!-- 3-column card layout -->
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <!-- Card 1 -->
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="5k Consultancy" />
-                        <div class="card-body">
-                            <h5 class="card-title">5k Consultancy</h5>
-                            <p class="card-text">
-                                A WordPress site for a consultancy firm based in the UK.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://5kconsultancy.co.uk/" class="btn btn-primary w-100" target="_blank">Visit
-                                Website</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="col">
-                    <div class="card h-100">
+            <div class="row g-4">
+
+                <!-- 1: ILC Language Centre -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
                         <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="ILC Language Centre" />
                         <div class="card-body">
                             <h5 class="card-title">ILC Language Centre</h5>
                             <p class="card-text">
-                                Custom Webflow design for an English language school, reflecting
-                                brand values and an intuitive UX.
+                                Webflow-based responsive website for a UK-based language centre.
                             </p>
                         </div>
                         <div class="card-footer">
-                            <a href="https://ilcentres.com/" class="btn btn-primary w-100" target="_blank">Visit
-                                Website</a>
+                            <a href="https://ilcentres.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
                         </div>
                     </div>
                 </div>
-                <!-- Card 3 -->
-                <div class="col">
-                    <div class="card h-100">
+
+                <!-- 2: ILC Accommodation -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="ILC Accommodation" />
+                        <div class="card-body">
+                            <h5 class="card-title">ILC Accommodation</h5>
+                            <p class="card-text">
+                                Additional Webflow website for the same institution’s accommodation services.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.ilcaccommodation.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3: Cuix Agency -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Cuix Agency" />
+                        <div class="card-body">
+                            <h5 class="card-title">Cuix Agency</h5>
+                            <p class="card-text">
+                                Freelance work involving Webflow updates and improvements for a Canadian agency.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.cuix.ca/" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4: Architech -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Architech" />
+                        <div class="card-body">
+                            <h5 class="card-title">Architech (Canada)</h5>
+                            <p class="card-text">
+                                Maintained and updated this site under the Cuix Agency contract.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.architech.ca/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5: Yavuz Alemdar -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Yavuz Alemdar" />
+                        <div class="card-body">
+                            <h5 class="card-title">Yavuz Alemdar</h5>
+                            <p class="card-text">
+                                One of the three WordPress websites created for a graphic designer in the U.S.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.yavuzalemdar.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6: Snap360 Photography -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
                         <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Snap360 Photography" />
                         <div class="card-body">
                             <h5 class="card-title">Snap360 Photography</h5>
                             <p class="card-text">
-                                A WordPress-based site featuring galleries and client booking.
+                                WordPress project focusing on an elegant display of photography services.
                             </p>
                         </div>
                         <div class="card-footer">
-                            <a href="https://www.snap360photography.com/" class="btn btn-primary w-100"
-                                target="_blank">Visit Website</a>
+                            <a href="https://www.snap360photography.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
                         </div>
                     </div>
                 </div>
-                <!-- Card 4 -->
-                <div class="col">
-                    <div class="card h-100">
+
+                <!-- 7: Alemdar Creative Studio -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
                         <img src="https://via.placeholder.com/600x350" class="card-img-top"
                             alt="Alemdar Creative Studio" />
                         <div class="card-body">
                             <h5 class="card-title">Alemdar Creative Studio</h5>
                             <p class="card-text">
-                                A WordPress site for a graphic designer's portfolio and services.
+                                Additional WordPress website for the same design professional.
                             </p>
                         </div>
                         <div class="card-footer">
-                            <a href="https://www.yavuzalemdar.com/" class="btn btn-primary w-100" target="_blank">Visit
-                                Website</a>
+                            <a href="https://www.alemdarcreativestudio.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
                         </div>
                     </div>
                 </div>
-                <!-- Card 5 -->
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Architech" />
+
+                <!-- 8: 5k Consultancy -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="5k Consultancy" />
                         <div class="card-body">
-                            <h5 class="card-title">Architech</h5>
+                            <h5 class="card-title">5k Consultancy</h5>
                             <p class="card-text">
-                                A Webflow project for a Canadian firm, focusing on sleek design and
-                                advanced layout features.
+                                WordPress site created for a UK-based consulting firm.
                             </p>
                         </div>
                         <div class="card-footer">
-                            <a href="https://www.architech.ca/" class="btn btn-primary w-100" target="_blank">Visit
-                                Website</a>
+                            <a href="https://5kconsultancy.co.uk/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
                         </div>
                     </div>
                 </div>
-                <!-- Card 6 -->
-                <div class="col">
-                    <div class="card h-100">
+
+                <!-- 9: KlasikTesbih -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Klasiktesbih" />
+                        <div class="card-body">
+                            <h5 class="card-title">KlasikTesbih</h5>
+                            <p class="card-text">
+                                A classic WordPress e-commerce style website for a local Turkish brand.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="http://klasiktesbih.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10: Omnitech Academy -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="OmniTech Academy" />
+                        <div class="card-body">
+                            <h5 class="card-title">Omnitech Academy</h5>
+                            <p class="card-text">
+                                Responsive WordPress site created for an online training platform.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://omnitechacademy.com/" target="_blank"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11: Quiver Blog -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
                         <img src="https://via.placeholder.com/600x350" class="card-img-top" alt="Quiver Blog" />
                         <div class="card-body">
                             <h5 class="card-title">Quiver Blog</h5>
                             <p class="card-text">
-                                Volunteer site maintenance and updates, improving design and user experience.
+                                Volunteered updates & UI enhancements for a Norwegian blogger’s website.
                             </p>
                         </div>
                         <div class="card-footer">
-                            <a href="https://quiver.blog/" class="btn btn-primary w-100" target="_blank">Visit
-                                Website</a>
+                            <a href="https://quiver.blog/" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                Visit Site
+                            </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
-    <!-- End Portfolio Section -->
+    <!-- END PORTFOLIO SECTION -->
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-5 bg-light">
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-4">Experience</h2>
+            <h2 class="text-center mb-5">Experience</h2>
             <div class="row g-4">
-                <!-- Card 1 -->
+
+                <!-- 1: Vektörel Bilişim -->
                 <div class="col-md-6">
-                    <div class="card h-100">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Junior Full Stack Developer – Seller Flash (2022)</h5>
+                            <h5 class="card-title">Vektörel Bilişim (2018)</h5>
                             <p class="card-text">
-                                Developed an Amazon Dropshipping automation project using C#, Vue.js,
-                                Docker, and agile methodologies (Scrum, Jira). Collaborated with
-                                cross-functional teams to meet project milestones.
+                                • Completed a 6-month (.NET) training (180 hours).<br />
+                                • Gained foundational skills in .NET framework, C#, and MS SQL.
                             </p>
                         </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
+
+                <!-- 2: Sigara Depoları (2019-2020) -->
                 <div class="col-md-6">
-                    <div class="card h-100">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Freelance Web Designer (2021–2022)</h5>
+                            <h5 class="card-title">Sigara Depoları (Part-Time)</h5>
                             <p class="card-text">
-                                Built and maintained websites for UK, Canada, and US clients using
-                                WordPress, Webflow, HTML, CSS, and JavaScript. Created modern,
-                                responsive designs aligned with each client's brand identity.
+                                • Worked 1.5 years on a distribution automation project.<br />
+                                • Utilized C# and MS SQL to streamline operations.
                             </p>
                         </div>
                     </div>
                 </div>
-                <!-- Card 3 -->
+
+                <!-- 3: Blue Akademie (2020-2024) -->
                 <div class="col-md-6">
-                    <div class="card h-100">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Software Educator – Blue Akademie & Bilisim School (2020–2024)</h5>
+                            <h5 class="card-title">Blue Akademie (2020–2024)</h5>
                             <p class="card-text">
-                                Taught C#, HTML/CSS, JavaScript, Python, and Machine Learning to
-                                diverse age groups. Developed over 500 video tutorials and designed
-                                unique coding challenges for the Talent14 project.
+                                • Taught C#, HTML/CSS, JavaScript, Python, and introductory Machine Learning.<br />
+                                • Prepared and delivered 120+ hours of instructional content for adult and youth
+                                classes.<br />
+                                • Developed extensive video tutorials and updated course materials regularly.
                             </p>
                         </div>
                     </div>
                 </div>
-                <!-- Card 4 -->
+
+                <!-- 4: Seller Flash (2022) -->
                 <div class="col-md-6">
-                    <div class="card h-100">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Data Engineering – We’RHERE (2024)</h5>
+                            <h5 class="card-title">Seller Flash (Junior Full Stack)</h5>
                             <p class="card-text">
-                                Completed an intensive 2.5-month Data Engineering course and executed
-                                two major projects focusing on Azure Stream Analytics and end-to-end
-                                data pipelines.
+                                • 6-month project building Amazon Dropshipping automation.<br />
+                                • Used C#, Vue.js, Docker, Scrum, and Jira to deliver on time.
                             </p>
                         </div>
                     </div>
                 </div>
+
+                <!-- 5: Bilisim School -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Bilisim School (2021–...)</h5>
+                            <p class="card-text">
+                                • Delivered Python & JavaScript lessons to 8–18-year-olds.<br />
+                                • Created ~500 video tutorials and a unique coding curriculum (Talent14).<br />
+                                • Focused on project-based learning and interactive challenges.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6: We’RHERE (2024) -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">We’RHERE Data Engineering</h5>
+                            <p class="card-text">
+                                • Completed a 2.5-month intense Data Engineering course.<br />
+                                • Led two major projects: Azure Stream Analytics & End-to-End Data Pipelines.<br />
+                                • Built robust streaming and real-time analytics solutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7: LLM-based Quiz Project -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">LLM-based Quiz Project</h5>
+                            <p class="card-text">
+                                • Working in a 4-person team with a mentor from the Netherlands.<br />
+                                • Technologies: Python, FastAPI, Docker, PostgreSQL, Neo4j, LLM APIs.<br />
+                                • Goal: A full-stack quiz platform with advanced AI integration.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
-    <!-- End Experience Section -->
+    <!-- END EXPERIENCE SECTION -->
 
-    <!-- Volunteer Section -->
-    <section id="volunteer" class="py-5">
+    <!-- VOLUNTEER SECTION -->
+    <section id="volunteer" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4">Volunteer Work</h2>
-            <div class="row g-4">
-                <!-- Card 1 -->
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Global Digital Literacy Initiative</h5>
-                            <p class="card-text">
-                                Organized and taught free digital data literacy and Python courses to
-                                underprivileged youth across multiple countries. Involved in curriculum
-                                design, content creation, mentorship, and coordination with volunteer teams.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">LLM-Based Quiz Application Team</h5>
-                            <p class="card-text">
-                                Contributed to the development of a quiz application with Python, FastAPI,
-                                Docker, PostgreSQL, and Neo4j to extend educational access worldwide.
-                                Collaborated on debugging, feature design, and performance optimizations.
-                            </p>
-                        </div>
-                    </div>
+            <h2 class="text-center mb-5">Volunteer Activities</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p>
+                        <strong>Global Digital Data Literacy:</strong>
+                        Since 2024, I've been volunteering with a network of educators across multiple countries
+                        (Turkey, Germany, the Netherlands, Norway) to teach digital literacy and Python to youth lacking
+                        financial resources. We have organized a team of around 12 software educators, 4 English
+                        teachers, and 30 life coaches to serve nearly 70 students worldwide—completely free of charge.
+                    </p>
+                    <p>
+                        <strong>Quiver Blog (Norway):</strong>
+                        Volunteered to update and maintain the website for Thor Egil, improving UI/UX and ensuring
+                        ongoing site stability.
+                    </p>
+                    <p>
+                        These efforts aim to bridge gaps in digital education, fostering inclusive and accessible
+                        learning for all.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
-    <!-- End Volunteer Section -->
+    <!-- END VOLUNTEER SECTION -->
 
-    <!-- Contact Section -->
+    <!-- CONTACT SECTION -->
     <section id="contact" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">Contact</h2>
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <p class="text-center mb-4">
-                        Feel free to reach out for job opportunities, collaborations, or any
-                        questions.
-                    </p>
-                    <ul class="list-group">
+                    <ul class="list-group text-center">
                         <li class="list-group-item">
                             <strong>Email:</strong> your.email@example.com
                         </li>
@@ -351,21 +437,20 @@
             </div>
         </div>
     </section>
-    <!-- End Contact Section -->
+    <!-- END CONTACT SECTION -->
 
-    <!-- Footer -->
-    <footer class="py-3 bg-dark text-light text-center">
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white text-center py-3">
         <div class="container">
-            <p class="mb-0">&copy; 2025 Enes Yilmaz. All Rights Reserved.</p>
+            <p class="m-0">&copy; 2025 Enes Yılmaz. All Rights Reserved.</p>
         </div>
     </footer>
-    <!-- End Footer -->
+    <!-- END FOOTER -->
 
-    <!-- Bootstrap JS + Popper.js -->
+    <!-- Bootstrap JS + Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom JS with cache-busting -->
-    <script src="script.js?v=1"></script>
+    <!-- Custom JS -->
+    <script src="script.js?v=1.0"></script>
 </body>
 
 </html>

@@ -1,68 +1,53 @@
-/* Reset and body basics */
+/* Use the IBM Plex Sans for general text, Playfair Display for the 'logo-font' */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     scroll-behavior: smooth;
-    /* Smooth anchor scrolling */
+    margin: 0;
+    padding-top: 70px;
+    /* To offset the fixed navbar */
 }
 
-/* Cache-busting: simply adding a ?v=1 to the file link in HTML */
-
-/* Navbar brand with Playfair Display font */
-.navbar-brand {
+.logo-font {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
 }
 
-/* Home Section */
-.home-section {
-    min-height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.3),
-            rgba(0, 0, 0, 0.3)),
-        url("images/bg.jpg?v=1") no-repeat center center/cover;
-    color: #fff;
-    text-align: center;
-    position: relative;
-    margin-top: 56px;
-    /* Offset for fixed navbar */
+/* Header (Home) Section */
+.header-section {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.6)),
+        url('images/bg.jpg?v=1.0') no-repeat center center;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    text-align: center;
 }
 
-/* Profile Image */
-.home-section .profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+/* Buttons */
+.btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Portfolio Cards */
+.card-img-top {
     object-fit: cover;
-    border: 3px solid #fff;
+    height: 200px;
 }
 
-/* Custom Buttons: round + shadow */
-.btn-custom {
-    border-radius: 50px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-}
-
-/* Section Titles */
+/* Sections */
 section h2 {
-    font-weight: 700;
-    margin-bottom: 1.5rem;
     text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-/* Cards in Portfolio & Experience & Volunteer */
-.card {
-    border: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Footer styling */
+/* Footer */
 footer {
-    margin-top: 2rem;
+    font-size: 14px;
 }
