@@ -10,11 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
-    <!-- THREE.js from a CDN -->
+    <!-- THREE.js & FontLoader -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/examples/js/loaders/FontLoader.js"></script>
 
-    <!-- Reference to external CSS -->
+    <!-- Link to our style.css -->
     <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
 
     <!-- Vertex Shader -->
     <script type="x-shader/x-vertex" id="vertexshader">
@@ -38,36 +42,35 @@
 
     void main() {
       gl_FragColor = vec4(color * vColor, 1.0);
+      // Multiply by the texture so the points show as round particles.
       gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
     }
   </script>
-</head>
 
-<body>
-    <!-- The Three.js drawing surface -->
+    <!-- Main 3D Container -->
     <div id="magic"></div>
 
-    <!-- Optional overlay with your name/role (like a heading or logo) -->
+    <!-- Bottom Overlay (logo & text) -->
     <div class="playground">
         <div class="bottomPosition">
-            <!-- If you don't have a logo, remove this SVG or replace it with your own -->
-            <!--
-      <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278.8 278.8">
-        <circle fill="#000205" cx="139.4" cy="139.4" r="139.4"/>
-        <g fill="none" stroke="#FFF" stroke-width="6.062" stroke-miterlimit="10">
-          <path d="M214 183.4l-74.6 43.1-75.5-43.6V95.8l75.5-43.5 75.4 43.5v59.8l-11.3 6.5z"/>
-          <path d="M139.4 226.5l-18.8-38.2 18.8 10.8 75.4-43.5M63.9 95.8l75.3 43.6 75.6-43.6M139.2 139.4v59.7"/>
-        </g>
-      </svg>
-      -->
+            <!-- Optional Logo -->
+            <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278.8 278.8">
+                <circle fill="#000205" cx="139.4" cy="139.4" r="139.4" />
+                <g fill="none" stroke="#FFF" stroke-width="6.062" stroke-miterlimit="10">
+                    <path d="M214 183.4l-74.6 43.1-75.5-43.6V95.8l75.5-43.5 75.4 43.5v59.8l-11.3 6.5z" />
+                    <path
+                        d="M139.4 226.5l-18.8-38.2 18.8 10.8 75.4-43.5M63.9 95.8l75.3 43.6 75.6-43.6M139.2 139.4v59.7" />
+                </g>
+            </svg>
 
-            <h1 class="special">ENES YILMAZ<br>
-                <span class="minText">Full Stack Developer</span>
+            <h1 class="special">
+                ENES YILMAZ <br />
+                <span class="minText">Creative Full Stack Developer</span>
             </h1>
         </div>
     </div>
 
-    <!-- Script reference for our main logic -->
+    <!-- Link to our script.js -->
     <script src="script.js"></script>
 </body>
 

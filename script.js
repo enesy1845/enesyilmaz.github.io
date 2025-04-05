@@ -1,32 +1,36 @@
-// script.js
+/***********************************************************************
+ * script.js
+ * Original code from: https://codepen.io/sanprieto/pen/XWNjBdb
+ * Adjusted to display "ENES\nYILMAZ" instead of "FUTURE\nIS NOW"
+ * and updated references for local usage (THREE.js + FontLoader from CDN).
+ **********************************************************************/
 
-// Preload function for font and particle texture
+// 1. Preload function loads the font & particle texture
 const preload = () => {
   let manager = new THREE.LoadingManager();
-  manager.onLoad = function() {
-    // Once everything is loaded, we create our environment
-    new Environment(typo, particle);
+
+  // Triggered once everything (font & texture) is loaded
+  manager.onLoad = function () {
+    const environment = new Environment(typo, particle);
   };
 
-  let typo = null;
+  // Load the font
+  var typo = null;
   const loader = new THREE.FontLoader(manager);
-
-  // Load a JSON-based font
-  // You can swap the URL for any other .json font you have
   loader.load(
-    'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
-    function(font) {
+    'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json', 
+    function (font) {
       typo = font;
     }
   );
 
-  // Load a particle texture
+  // Load the particle texture
   const particle = new THREE.TextureLoader(manager).load(
     'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
   );
 };
 
-// Make sure we run preload after DOM is ready
+// Only run preload after DOM is ready
 if (
   document.readyState === 'complete' ||
   (document.readyState !== 'loading' && !document.documentElement.doScroll)
@@ -36,6 +40,7 @@ if (
   document.addEventListener('DOMContentLoaded', preload);
 }
 
+// 2. Scene/Environment Setup
 class Environment {
   constructor(font, particle) {
     this.font = font;
@@ -54,6 +59,7 @@ class Environment {
   }
 
   setup() {
+    // Create our custom 'CreateParticles' object
     this.createParticles = new CreateParticles(
       this.scene,
       this.font,
@@ -64,6 +70,7 @@ class Environment {
   }
 
   render() {
+    // Render the Three.js scene repeatedly
     this.createParticles.render();
     this.renderer.render(this.scene, this.camera);
   }
@@ -79,16 +86,17 @@ class Environment {
   }
 
   createRenderer() {
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(
       this.container.clientWidth,
       this.container.clientHeight
     );
+
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.container.appendChild(this.renderer.domElement);
 
-    // Use setAnimationLoop to continuously render
+    // Animate continuously
     this.renderer.setAnimationLoop(() => {
       this.render();
     });
@@ -105,6 +113,7 @@ class Environment {
   }
 }
 
+// 3. Create the Particles that form the text
 class CreateParticles {
   constructor(scene, font, particleImg, camera, renderer) {
     this.scene = scene;
@@ -115,12 +124,12 @@ class CreateParticles {
 
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2(-200, 200);
+
     this.colorChange = new THREE.Color();
     this.buttom = false;
 
-    // Customize the text here
+    // Key settings: changed text from "FUTURE\nIS NOW" to "ENES\nYILMAZ"
     this.data = {
-      // The text to be displayed in 3D particles (includes new line for multiple lines)
       text: 'ENES\nYILMAZ',
       amount: 1500,
       particleSize: 1,
@@ -135,7 +144,7 @@ class CreateParticles {
   }
 
   setup() {
-    // An invisible plane area for raycaster
+    // We add an invisible plane for the raycaster
     const geometry = new THREE.PlaneGeometry(
       this.visibleWidthAtZDepth(100, this.camera),
       this.visibleHeightAtZDepth(100, this.camera)
@@ -207,6 +216,7 @@ class CreateParticles {
         let py = pos.getY(i);
         let pz = pos.getZ(i);
 
+        // Default color
         this.colorChange.setHSL(0.5, 1, 1);
         coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
         coulors.needsUpdate = true;
@@ -220,7 +230,7 @@ class CreateParticles {
         const f = -this.data.area / (dx * dx + dy * dy);
 
         if (this.buttom) {
-          // If user is pressing mouse
+          // Mouse is pressed
           const t = Math.atan2(dy, dx);
           px -= f * Math.cos(t);
           py -= f * Math.sin(t);
@@ -229,6 +239,7 @@ class CreateParticles {
           coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
           coulors.needsUpdate = true;
 
+          // Check if user pulled a particle too far
           if (
             px > initX + 70 ||
             px < initX - 70 ||
@@ -240,7 +251,7 @@ class CreateParticles {
             coulors.needsUpdate = true;
           }
         } else {
-          // If user is not pressing mouse
+          // Mouse is not pressed
           if (mouseDistance < this.data.area) {
             if (i % 5 === 0) {
               const t = Math.atan2(dy, dx);
@@ -265,6 +276,7 @@ class CreateParticles {
               size.needsUpdate = true;
             }
 
+            // If they get far from the initial X/Y
             if (
               px > initX + 10 ||
               px < initX - 10 ||
@@ -281,7 +293,7 @@ class CreateParticles {
           }
         }
 
-        // Move points back to original position gradually
+        // Move points back to original positions
         px += (initX - px) * this.data.ease;
         py += (initY - py) * this.data.ease;
         pz += (initZ - pz) * this.data.ease;
@@ -293,20 +305,19 @@ class CreateParticles {
   }
 
   createText() {
-    const thePoints = [];
-    const shapes = this.font.generateShapes(this.data.text, this.data.textSize);
+    let thePoints = [];
+    let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
 
-    // Gather holes if any
-    shapes.forEach(s => {
-      if (s.holes && s.holes.length > 0) {
-        s.holes.forEach(h => shapes.push(h));
+    // Include holes if they exist
+    shapes.forEach((shape) => {
+      if (shape.holes && shape.holes.length > 0) {
+        shape.holes.forEach((hole) => shapes.push(hole));
       }
     });
 
     let geometry = new THREE.ShapeGeometry(shapes);
     geometry.computeBoundingBox();
 
-    // Center the shapes
     const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
     const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
     geometry.center();
@@ -314,23 +325,25 @@ class CreateParticles {
     let colors = [];
     let sizes = [];
 
-    // Distribute points across shape outlines
-    for (let q = 0; q < shapes.length; q++) {
-      let shape = shapes[q];
+    // Distribute points along shape outlines
+    for (let x = 0; x < shapes.length; x++) {
+      let shape = shapes[x];
+      // If shape.type is 'Path', reduce the number of points
       const amountPoints =
         shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
       let points = shape.getSpacedPoints(amountPoints);
 
-      points.forEach(element => {
-        let a = new THREE.Vector3(element.x, element.y, 0);
+      points.forEach((element) => {
+        const a = new THREE.Vector3(element.x, element.y, 0);
         thePoints.push(a);
-        // Default color + size for each point
+        // Default color + size
         colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
         sizes.push(1);
       });
     }
 
     let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
+    // Shift to center
     geoParticles.translate(xMid, yMid, 0);
 
     geoParticles.setAttribute(
@@ -357,24 +370,28 @@ class CreateParticles {
     this.particles = new THREE.Points(geoParticles, material);
     this.scene.add(this.particles);
 
-    // Make a copy for reference to revert points
+    // Make a copy so we can revert particles to original positions
     this.geometryCopy = new THREE.BufferGeometry();
     this.geometryCopy.copy(this.particles.geometry);
   }
 
+  // Utility: visible height at a certain depth
   visibleHeightAtZDepth(depth, camera) {
     const cameraOffset = camera.position.z;
     if (depth < cameraOffset) depth -= cameraOffset;
     else depth += cameraOffset;
+
     const vFOV = (camera.fov * Math.PI) / 180;
     return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
   }
 
+  // Utility: visible width at a certain depth
   visibleWidthAtZDepth(depth, camera) {
     const height = this.visibleHeightAtZDepth(depth, camera);
     return height * camera.aspect;
   }
 
+  // Distance formula for mouse/particle interactions
   distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
   }
