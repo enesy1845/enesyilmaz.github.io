@@ -1,0 +1,54 @@
+/* Reset some default spacing */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* Navbar spacing fix */
+.navbar {
+    padding: 0.8rem 1rem;
+}
+
+/* Home Section */
+.home-section {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    margin-top: 56px;
+    /* To compensate the fixed navbar height */
+}
+
+.home-section .profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+}
+
+/* Section Titles */
+section h2 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* Card style for projects */
+.card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Timeline styling for Experience Section */
+.timeline-item h5 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Footer */
+footer {
+    margin-top: 2rem;
+}
