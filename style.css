@@ -6,11 +6,13 @@ body {
     height: 100%;
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
-    color: white;
+    background: #000;
+    /* black background */
+    color: #fff;
     font-size: 9px;
 }
 
-/* The main container where Three.js renders */
+/* The main 3D canvas container */
 #magic {
     position: fixed;
     width: 100%;
@@ -18,10 +20,10 @@ body {
     top: 0;
     left: 0;
     z-index: -9999;
-    /* Puts the canvas behind everything else */
+    /* keep the 3D behind everything else */
 }
 
-/* The overlay that holds the bottom text/logo */
+/* Overlay container for text or a logo */
 .playground {
     position: fixed;
     width: 100%;
@@ -30,7 +32,6 @@ body {
     left: 0;
 
     display: flex;
-    flex-wrap: nowrap;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
@@ -43,12 +44,6 @@ body {
 
 .minText {
     font-size: 14px;
-}
-
-a {
-    color: white;
-    font-size: 12px;
-    text-decoration: none;
 }
 
 .logo {

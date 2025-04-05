@@ -1,46 +1,46 @@
-/***********************************************************************
+/*******************************************************************************
  * script.js
- * Original code from: https://codepen.io/sanprieto/pen/XWNjBdb
- * Adjusted to display "ENES\nYILMAZ" instead of "FUTURE\nIS NOW"
- * and updated references for local usage (THREE.js + FontLoader from CDN).
- **********************************************************************/
+ * Based on the older CodePen by sanprieto. 
+ * This version references THREE@0.124.0 & FontLoader from the global THREE scope.
+ * We also increased textSize to 50 to make "ENES YILMAZ" bigger & more centered.
+ *******************************************************************************/
 
-// 1. Preload function loads the font & particle texture
-const preload = () => {
-  let manager = new THREE.LoadingManager();
+// Preload the font & texture (the old style using a LoadingManager)
+function preload() {
+  const manager = new THREE.LoadingManager();
 
-  // Triggered once everything (font & texture) is loaded
-  manager.onLoad = function () {
-    const environment = new Environment(typo, particle);
+  manager.onLoad = function() {
+    // Once font & texture load, create the main 3D environment
+    new Environment(typo, particle);
   };
 
-  // Load the font
-  var typo = null;
+  // Load the font via old-school global THREE.FontLoader
+  let typo = null;
   const loader = new THREE.FontLoader(manager);
+
   loader.load(
+    // Replace this URL with any compatible .json font you like
     'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json', 
     function (font) {
       typo = font;
     }
   );
 
-  // Load the particle texture
+  // Load the particle texture 
   const particle = new THREE.TextureLoader(manager).load(
     'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
   );
-};
+}
 
-// Only run preload after DOM is ready
-if (
-  document.readyState === 'complete' ||
-  (document.readyState !== 'loading' && !document.documentElement.doScroll)
-) {
+// Run preload after DOM is ready
+if (document.readyState === 'complete' ||
+    (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
   preload();
 } else {
   document.addEventListener('DOMContentLoaded', preload);
 }
 
-// 2. Scene/Environment Setup
+/**************************** Environment Setup *******************************/
 class Environment {
   constructor(font, particle) {
     this.font = font;
@@ -59,7 +59,7 @@ class Environment {
   }
 
   setup() {
-    // Create our custom 'CreateParticles' object
+    // Instantiate CreateParticles class
     this.createParticles = new CreateParticles(
       this.scene,
       this.font,
@@ -70,7 +70,6 @@ class Environment {
   }
 
   render() {
-    // Render the Three.js scene repeatedly
     this.createParticles.render();
     this.renderer.render(this.scene, this.camera);
   }
@@ -86,34 +85,28 @@ class Environment {
   }
 
   createRenderer() {
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(
-      this.container.clientWidth,
-      this.container.clientHeight
-    );
-
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputEncoding = THREE.sRGBEncoding;
+
     this.container.appendChild(this.renderer.domElement);
 
-    // Animate continuously
+    // Continuously animate
     this.renderer.setAnimationLoop(() => {
       this.render();
     });
   }
 
   onWindowResize() {
-    this.camera.aspect =
-      this.container.clientWidth / this.container.clientHeight;
+    this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(
-      this.container.clientWidth,
-      this.container.clientHeight
-    );
+
+    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
   }
 }
 
-// 3. Create the Particles that form the text
+/**************************** CreateParticles Class ***************************/
 class CreateParticles {
   constructor(scene, font, particleImg, camera, renderer) {
     this.scene = scene;
@@ -128,13 +121,14 @@ class CreateParticles {
     this.colorChange = new THREE.Color();
     this.buttom = false;
 
-    // Key settings: changed text from "FUTURE\nIS NOW" to "ENES\nYILMAZ"
+    // Increase textSize to 50 for bigger letters
+    // Also "amount" can be increased if you want even more particles
     this.data = {
       text: 'ENES\nYILMAZ',
       amount: 1500,
       particleSize: 1,
       particleColor: 0xffffff,
-      textSize: 16,
+      textSize: 50,   // <-- MAKE TEXT BIGGER
       area: 250,
       ease: 0.05
     };
@@ -144,7 +138,7 @@ class CreateParticles {
   }
 
   setup() {
-    // We add an invisible plane for the raycaster
+    // Invisible plane for raycaster
     const geometry = new THREE.PlaneGeometry(
       this.visibleWidthAtZDepth(100, this.camera),
       this.visibleHeightAtZDepth(100, this.camera)
@@ -154,7 +148,7 @@ class CreateParticles {
       transparent: true
     });
     this.planeArea = new THREE.Mesh(geometry, material);
-    this.planeArea.visible = false;
+    this.planeArea.visible = false; // we don't want to see the plane
 
     this.createText();
   }
@@ -173,9 +167,7 @@ class CreateParticles {
     vector.unproject(this.camera);
     const dir = vector.sub(this.camera.position).normalize();
     const distance = -this.camera.position.z / dir.z;
-    this.currenPosition = this.camera.position
-      .clone()
-      .add(dir.multiplyScalar(distance));
+    this.currenPosition = this.camera.position.clone().add(dir.multiplyScalar(distance));
 
     this.buttom = true;
     this.data.ease = 0.01;
@@ -230,7 +222,7 @@ class CreateParticles {
         const f = -this.data.area / (dx * dx + dy * dy);
 
         if (this.buttom) {
-          // Mouse is pressed
+          // If mouse is pressed
           const t = Math.atan2(dy, dx);
           px -= f * Math.cos(t);
           py -= f * Math.sin(t);
@@ -239,7 +231,6 @@ class CreateParticles {
           coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
           coulors.needsUpdate = true;
 
-          // Check if user pulled a particle too far
           if (
             px > initX + 70 ||
             px < initX - 70 ||
@@ -251,7 +242,7 @@ class CreateParticles {
             coulors.needsUpdate = true;
           }
         } else {
-          // Mouse is not pressed
+          // Mouse not pressed
           if (mouseDistance < this.data.area) {
             if (i % 5 === 0) {
               const t = Math.atan2(dy, dx);
@@ -276,7 +267,6 @@ class CreateParticles {
               size.needsUpdate = true;
             }
 
-            // If they get far from the initial X/Y
             if (
               px > initX + 10 ||
               px < initX - 10 ||
@@ -293,7 +283,7 @@ class CreateParticles {
           }
         }
 
-        // Move points back to original positions
+        // Move point back toward original position
         px += (initX - px) * this.data.ease;
         py += (initY - py) * this.data.ease;
         pz += (initZ - pz) * this.data.ease;
@@ -308,16 +298,17 @@ class CreateParticles {
     let thePoints = [];
     let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
 
-    // Include holes if they exist
-    shapes.forEach((shape) => {
+    // If shapes have holes, push them too
+    shapes.forEach(shape => {
       if (shape.holes && shape.holes.length > 0) {
-        shape.holes.forEach((hole) => shapes.push(hole));
+        shape.holes.forEach(hole => shapes.push(hole));
       }
     });
 
     let geometry = new THREE.ShapeGeometry(shapes);
     geometry.computeBoundingBox();
 
+    // Center the geometry
     const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
     const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
     geometry.center();
@@ -325,18 +316,16 @@ class CreateParticles {
     let colors = [];
     let sizes = [];
 
-    // Distribute points along shape outlines
-    for (let x = 0; x < shapes.length; x++) {
-      let shape = shapes[x];
-      // If shape.type is 'Path', reduce the number of points
-      const amountPoints =
-        shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
+    // Distribute points along the shape path
+    for (let i = 0; i < shapes.length; i++) {
+      let shape = shapes[i];
+      const amountPoints = shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
       let points = shape.getSpacedPoints(amountPoints);
 
-      points.forEach((element) => {
-        const a = new THREE.Vector3(element.x, element.y, 0);
+      points.forEach(pt => {
+        let a = new THREE.Vector3(pt.x, pt.y, 0);
         thePoints.push(a);
-        // Default color + size
+        // Default color/size
         colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
         sizes.push(1);
       });
@@ -370,12 +359,12 @@ class CreateParticles {
     this.particles = new THREE.Points(geoParticles, material);
     this.scene.add(this.particles);
 
-    // Make a copy so we can revert particles to original positions
+    // Copy geometry so we can restore original positions
     this.geometryCopy = new THREE.BufferGeometry();
     this.geometryCopy.copy(this.particles.geometry);
   }
 
-  // Utility: visible height at a certain depth
+  // Utility: find visible height at a certain z-depth
   visibleHeightAtZDepth(depth, camera) {
     const cameraOffset = camera.position.z;
     if (depth < cameraOffset) depth -= cameraOffset;
@@ -385,13 +374,12 @@ class CreateParticles {
     return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
   }
 
-  // Utility: visible width at a certain depth
+  // Utility: find visible width at a certain z-depth
   visibleWidthAtZDepth(depth, camera) {
     const height = this.visibleHeightAtZDepth(depth, camera);
     return height * camera.aspect;
   }
 
-  // Distance formula for mouse/particle interactions
   distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
   }

@@ -10,11 +10,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
-    <!-- THREE.js & FontLoader -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.142.0/examples/js/loaders/FontLoader.js"></script>
+    <!-- Load an older Three.js version that has THREE.FontLoader globally -->
+    <!-- (r124.0 is just an example; any version before r125 should work) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/loaders/FontLoader.js"></script>
 
-    <!-- Link to our style.css -->
+    <!-- Link to our CSS file -->
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -42,18 +43,17 @@
 
     void main() {
       gl_FragColor = vec4(color * vColor, 1.0);
-      // Multiply by the texture so the points show as round particles.
       gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
     }
   </script>
 
-    <!-- Main 3D Container -->
+    <!-- Main Three.js container -->
     <div id="magic"></div>
 
-    <!-- Bottom Overlay (logo & text) -->
+    <!-- Bottom overlay text/logo -->
     <div class="playground">
         <div class="bottomPosition">
-            <!-- Optional Logo -->
+            <!-- Optional SVG logo -->
             <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278.8 278.8">
                 <circle fill="#000205" cx="139.4" cy="139.4" r="139.4" />
                 <g fill="none" stroke="#FFF" stroke-width="6.062" stroke-miterlimit="10">
@@ -63,14 +63,13 @@
                 </g>
             </svg>
 
-            <h1 class="special">
-                ENES YILMAZ <br />
+            <h1 class="special">ENES YILMAZ<br>
                 <span class="minText">Creative Full Stack Developer</span>
             </h1>
         </div>
     </div>
 
-    <!-- Link to our script.js -->
+    <!-- Link to main JS file -->
     <script src="script.js"></script>
 </body>
 
