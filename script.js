@@ -1,12 +1,18 @@
+/******************************************************************************
+ * script.js
+ * 
+ * Three.js particle text effect for "ENES YILMAZ"
+ * Kullanılan Three.js versiyonu: r124.0
+ *****************************************************************************/
+
 function preload() {
   const manager = new THREE.LoadingManager();
 
-  // Font ve texture yüklendiğinde Environment nesnesi oluşturuluyor
+  // Font ve texture yüklendiğinde ortamı başlat
   manager.onLoad = function () {
     new Environment(typo, particle);
   };
 
-  // Eski stil THREE.FontLoader ile JSON font yükleniyor
   let typo = null;
   const loader = new THREE.FontLoader(manager);
   loader.load(
@@ -16,13 +22,11 @@ function preload() {
     }
   );
 
-  // Particle texture yükleniyor
   const particle = new THREE.TextureLoader(manager).load(
     'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
   );
 }
 
-// DOM hazır olduktan sonra preload çalıştırılıyor
 if (
   document.readyState === 'complete' ||
   (document.readyState !== 'loading' && !document.documentElement.doScroll)
@@ -32,6 +36,9 @@ if (
   document.addEventListener('DOMContentLoaded', preload);
 }
 
+/********************************
+ *  Environment Setup
+ ********************************/
 class Environment {
   constructor(font, particle) {
     this.font = font;
@@ -50,7 +57,6 @@ class Environment {
   }
 
   setup() {
-    // Metin tabanlı parçacıkları oluşturuyor
     this.createParticles = new CreateParticles(
       this.scene,
       this.font,
@@ -61,7 +67,9 @@ class Environment {
   }
 
   render() {
-    this.createParticles.render();
+    if (this.createParticles) {
+      this.createParticles.render();
+    }
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -72,7 +80,7 @@ class Environment {
       1,
       10000
     );
-    // Metnin görünür olması için kamera pozisyonlandırılıyor
+    // Kamera, yazıyı gösterecek şekilde konumlandırıldı
     this.camera.position.set(0, 0, 100);
   }
 
@@ -86,7 +94,7 @@ class Environment {
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.container.appendChild(this.renderer.domElement);
 
-    // Sürekli animasyon döngüsü
+    // Sürekli animasyon
     this.renderer.setAnimationLoop(() => {
       this.render();
     });
@@ -102,6 +110,9 @@ class Environment {
   }
 }
 
+/********************************
+ *  CreateParticles Class
+ ********************************/
 class CreateParticles {
   constructor(scene, font, particleImg, camera, renderer) {
     this.scene = scene;
@@ -114,15 +125,13 @@ class CreateParticles {
     this.mouse = new THREE.Vector2(-200, 200);
     this.colorChange = new THREE.Color();
 
-    this.buttom = false; // fare basılı mı kontrolü
-
-    // Parçacıkların ayarları
+    this.buttom = false; // Mouse basılı mı?
     this.data = {
       text: 'ENES\nYILMAZ',
-      amount: 1500,         // noktaların sayısı
+      amount: 1500,
       particleSize: 1,
       particleColor: 0xffffff,
-      textSize: 50,         // daha büyük harfler
+      textSize: 50,
       area: 250,
       ease: 0.05
     };
@@ -132,7 +141,7 @@ class CreateParticles {
   }
 
   setup() {
-    // Raycasting için görünmez bir düzlem oluşturuluyor
+    // Raycast için görünmez düzlem oluşturuluyor
     const geometry = new THREE.PlaneGeometry(
       this.visibleWidthAtZDepth(100, this.camera),
       this.visibleHeightAtZDepth(100, this.camera)
@@ -203,7 +212,7 @@ class CreateParticles {
         let py = pos.getY(i);
         let pz = pos.getZ(i);
 
-        // Varsayılan renk
+        // Varsayılan renk ayarlanıyor
         this.colorChange.setHSL(0.5, 1, 1);
         coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
         coulors.needsUpdate = true;
@@ -217,7 +226,6 @@ class CreateParticles {
         const f = -this.data.area / (dx * dx + dy * dy);
 
         if (this.buttom) {
-          // Fare basılı ise
           const t = Math.atan2(dy, dx);
           px -= f * Math.cos(t);
           py -= f * Math.sin(t);
@@ -237,7 +245,6 @@ class CreateParticles {
             coulors.needsUpdate = true;
           }
         } else {
-          // Fare basılı değilse
           if (mouseDistance < this.data.area) {
             if (i % 5 === 0) {
               const t = Math.atan2(dy, dx);
@@ -278,7 +285,7 @@ class CreateParticles {
           }
         }
 
-        // Noktaları orijinal konumlarına yavaşça geri getirme
+        // Noktalar orijinal konumlarına yavaşça döndürülüyor
         px += (initX - px) * this.data.ease;
         py += (initY - py) * this.data.ease;
         pz += (initZ - pz) * this.data.ease;
@@ -293,17 +300,19 @@ class CreateParticles {
     let thePoints = [];
     let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
 
-    // Eğer şekillerin içi boşluklar varsa, onları da ekle
+    // Dizi üzerinde doğrudan değişiklik yerine, boşaltılarak delik (hole) içeren şekiller ayrı diziye ekleniyor
+    let shapesWithHoles = [];
     shapes.forEach(shape => {
+      shapesWithHoles.push(shape);
       if (shape.holes && shape.holes.length > 0) {
-        shape.holes.forEach(hole => shapes.push(hole));
+        shape.holes.forEach(hole => shapesWithHoles.push(hole));
       }
     });
+    shapes = shapesWithHoles;
 
     let geometry = new THREE.ShapeGeometry(shapes);
     geometry.computeBoundingBox();
 
-    // Yatay (ve dikeyde) ortalamak
     const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
     const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
     geometry.center();
@@ -311,22 +320,24 @@ class CreateParticles {
     let colors = [];
     let sizes = [];
 
-    for (let i = 0; i < shapes.length; i++) {
-      let shape = shapes[i];
+    shapes.forEach(shape => {
       const amountPoints = shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
-      let points = shape.getSpacedPoints(amountPoints);
-
+      let points = [];
+      if (typeof shape.getSpacedPoints === 'function') {
+        points = shape.getSpacedPoints(amountPoints);
+      } else if (typeof shape.getPoints === 'function') {
+        points = shape.getPoints();
+      }
       points.forEach(pt => {
         let a = new THREE.Vector3(pt.x, pt.y, 0);
         thePoints.push(a);
-        // Varsayılan renk
         colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
         sizes.push(1);
       });
-    }
+    });
 
     let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
-    geoParticles.translate(xMid, yMid, 0); // Ortalamak için kaydır
+    geoParticles.translate(xMid, yMid, 0);
 
     geoParticles.setAttribute(
       'customColor',
@@ -352,21 +363,22 @@ class CreateParticles {
     this.particles = new THREE.Points(geoParticles, material);
     this.scene.add(this.particles);
 
-    // Noktaların başlangıç konumlarının kopyası
+    // Geometri kopyası, ileride pozisyonları geri yüklemek için
     this.geometryCopy = new THREE.BufferGeometry();
     this.geometryCopy.copy(this.particles.geometry);
   }
 
-  // Belirli bir derinlikte görünür yüksekliği hesaplar
+  // Belirli bir derinlikte görünen yükseklik hesaplama
   visibleHeightAtZDepth(depth, camera) {
     const cameraOffset = camera.position.z;
     if (depth < cameraOffset) depth -= cameraOffset;
     else depth += cameraOffset;
+
     const vFOV = (camera.fov * Math.PI) / 180;
     return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
   }
 
-  // Belirli bir derinlikte görünür genişliği hesaplar
+  // Belirli bir derinlikte görünen genişlik hesaplama
   visibleWidthAtZDepth(depth, camera) {
     const height = this.visibleHeightAtZDepth(depth, camera);
     return height * camera.aspect;

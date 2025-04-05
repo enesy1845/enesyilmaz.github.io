@@ -14,15 +14,16 @@ body {
 /* Home Section */
 .home-section {
     height: 100vh;
-    /* Arka plan resmini kaldırarak three.js efektinin görünmesi sağlanıyor */
-    /* background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover; */
+    background: linear-gradient(rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
     color: #fff;
     text-align: center;
     position: relative;
     margin-top: 56px;
-    /* Fixed navbar yüksekliğini telafi etmek için */
+    /* Fixed navbar yüksekliğini dengelemek için */
 }
 
+/* Profile Image */
 .home-section .profile-img {
     width: 150px;
     height: 150px;
@@ -53,13 +54,25 @@ footer {
     margin-top: 2rem;
 }
 
-/* Three.js container styling */
+/* Three.js effect container (arka plan) */
 #magic {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     z-index: -1;
-    /* İçeriklerin arkasında */
+}
+
+/* Playground overlay (varsa) */
+.playground {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
 }
