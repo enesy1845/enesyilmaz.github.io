@@ -1,6 +1,6 @@
 /* style.css */
 :root {
-    --primary-color: #2563eb;
+    --primary-color: #71b7fb;
     --secondary-color: #0d9488;
     --accent-color: #4f46e5;
     --dark-color: #1e293b;
@@ -15,16 +15,17 @@ body {
     color: var(--dark-color);
 }
 
+
 .logo-font {
-    font-family: 'Shadows Into Light', cursive;
-    font-size: 1.8rem;
-    color: white !important;
-}
+        font-family: 'Pacifico', cursive;
+        font-size: 1.8rem;
+        color: white !important;
+    }
 
 /* Header Section */
 .header-section {
     height: 100vh;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)),
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85)),
         url('images/bg.jpg?v=1.2') center/cover;
     display: flex;
     align-items: center;
@@ -66,6 +67,7 @@ body {
 }
 
 .card-img-top {
+    width: 100%;
     height: 220px;
     object-fit: cover;
     transition: transform 0.3s ease;
