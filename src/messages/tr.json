@@ -1,0 +1,78 @@
+{
+  "site": {
+    "name": "Enes Yilmaz",
+    "role": "Yazılım Geliştirici",
+    "description": "Kod, düşünce ve zanaat için çok dilli bir portfolyo temeli."
+  },
+  "navigation": {
+    "home": "Ana sayfa",
+    "work": "İşler",
+    "notes": "Notlar",
+    "atelier": "Atölye",
+    "about": "Hakkında",
+    "contact": "İletişim"
+  },
+  "accessibility": {
+    "skipToContent": "İçeriğe geç",
+    "mainNavigation": "Ana gezinme",
+    "languageSwitcher": "Dil seç",
+    "currentLanguage": "Geçerli dil",
+    "footerNavigation": "Alt bilgi gezinmesi"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norsk",
+    "tr": "Türkçe"
+  },
+  "pages": {
+    "home": {
+      "heading": "Enes Yilmaz",
+      "description": "Yazılım geliştirici. Bu temel, kod, düşünce ve zanaat için çok dilli bir portfolyoya dönüşecek.",
+      "metaTitle": "Enes Yilmaz - Yazılım Geliştirici",
+      "metaDescription": "Düşünülmüş sistemler geliştiren yazılım geliştirici Enes Yilmaz için çok dilli portfolyo temeli."
+    },
+    "work": {
+      "heading": "İşler",
+      "description": "Seçilmiş işler, proje içerik modeli hazır olduğunda eklenecek.",
+      "metaTitle": "İşler",
+      "metaDescription": "Enes Yilmaz tarafından yapılan seçilmiş yazılım ve web projeleri için gelecekteki koleksiyon."
+    },
+    "notes": {
+      "heading": "Notlar",
+      "description": "Teknik ve düşünsel notlar gelecekteki içerik sistemiyle eklenecek.",
+      "metaTitle": "Notlar",
+      "metaDescription": "Teknik yazılar ve düşünsel denemeler için gelecekteki not arşivi."
+    },
+    "atelier": {
+      "heading": "Atölye",
+      "description": "Zanaat ve süreç yazıları daha sonraki bir içerik aşamasında eklenecek.",
+      "metaTitle": "Atölye",
+      "metaDescription": "Zanaat, süreç ve yaratıcı işler için gelecekteki alan."
+    },
+    "about": {
+      "heading": "Hakkında",
+      "description": "Daha kapsamlı profesyonel anlatı, içerik temeli hazır olduğunda yazılacak.",
+      "metaTitle": "Hakkında",
+      "metaDescription": "Enes Yilmaz için gelecekteki profesyonel profil."
+    },
+    "contact": {
+      "heading": "İletişim",
+      "description": "Tam iletişim deneyimi bilinçli olarak sade tutulurken iletişim bağlantıları kullanılabilir.",
+      "metaTitle": "İletişim",
+      "metaDescription": "Enes Yilmaz ile herkese açık profesyonel bağlantılar üzerinden iletişim kurun."
+    }
+  },
+  "contact": {
+    "email": "E-posta",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "Tüm hakları saklıdır."
+  },
+  "notFound": {
+    "heading": "Sayfa bulunamadı",
+    "description": "İstenen sayfa bu dilde mevcut değil.",
+    "homeLink": "İngilizce ana sayfaya git"
+  }
+}

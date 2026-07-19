@@ -608,19 +608,25 @@ Do not claim outcomes that cannot be supported.
 
 ## 16. Content languages
 
-The site interface should initially use English.
+The site must support English, Norwegian Bokmal, and Turkish from the architecture foundation.
 
-Content may later be written in:
+Use these public locale identifiers:
 
-- English
-- Norwegian
-- Turkish
+- `en` for English
+- `no` for Norwegian Bokmal
+- `tr` for Turkish
 
-Do not implement full internationalization until explicitly requested.
+English is the initial default locale.
 
-Individual notes may retain their original language and display a language label.
+Multilingual architecture begins in Phase 1. The site interface must eventually be fully translated across all supported locales, and all public language routing must remain stable.
 
-Do not create machine-generated translations merely to fill language versions.
+Individual editorial content, such as notes or atelier entries, may remain available only in its original language when a real translation is not available. Missing translations must be handled explicitly through content state, fallback copy, or route behavior. Do not silently present untranslated content as translated.
+
+Do not create machine-generated placeholder translations merely to fill language versions.
+
+Locale-aware SEO is mandatory. Every localized public page must support correct canonical URLs, alternate-language metadata, and stable locale-prefixed paths.
+
+Do not use `nb` in public URLs unless a later architecture decision explicitly changes the agreed URL strategy.
 
 ---
 

@@ -1,0 +1,78 @@
+{
+  "site": {
+    "name": "Enes Yilmaz",
+    "role": "Programvareutvikler",
+    "description": "Et flerspråklig portfoliofundament for kode, tanke og håndverk."
+  },
+  "navigation": {
+    "home": "Hjem",
+    "work": "Arbeid",
+    "notes": "Notater",
+    "atelier": "Atelier",
+    "about": "Om",
+    "contact": "Kontakt"
+  },
+  "accessibility": {
+    "skipToContent": "Gå til innhold",
+    "mainNavigation": "Hovednavigasjon",
+    "languageSwitcher": "Velg språk",
+    "currentLanguage": "Gjeldende språk",
+    "footerNavigation": "Bunnnavigasjon"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norsk",
+    "tr": "Türkçe"
+  },
+  "pages": {
+    "home": {
+      "heading": "Enes Yilmaz",
+      "description": "Programvareutvikler. Dette fundamentet skal bli en flerspråklig portfolio for kode, tanke og håndverk.",
+      "metaTitle": "Enes Yilmaz - Programvareutvikler",
+      "metaDescription": "Et flerspråklig portfoliofundament for Enes Yilmaz, en programvareutvikler som bygger gjennomtenkte systemer."
+    },
+    "work": {
+      "heading": "Arbeid",
+      "description": "Utvalgt arbeid legges til når prosjektmodellen er klar.",
+      "metaTitle": "Arbeid",
+      "metaDescription": "En fremtidig samling av utvalgte programvare- og webprosjekter av Enes Yilmaz."
+    },
+    "notes": {
+      "heading": "Notater",
+      "description": "Tekniske og reflekterende notater legges til gjennom det fremtidige innholdssystemet.",
+      "metaTitle": "Notater",
+      "metaDescription": "Et fremtidig notatarkiv for teknisk skriving og reflekterende tekster."
+    },
+    "atelier": {
+      "heading": "Atelier",
+      "description": "Håndverk og prosess legges til i en senere innholdsfase.",
+      "metaTitle": "Atelier",
+      "metaDescription": "Et fremtidig rom for håndverk, prosess og kreativt arbeid."
+    },
+    "about": {
+      "heading": "Om",
+      "description": "En fyldigere profesjonell fortelling skrives når innholdsgrunnlaget er klart.",
+      "metaTitle": "Om",
+      "metaDescription": "En fremtidig profesjonell profil for Enes Yilmaz."
+    },
+    "contact": {
+      "heading": "Kontakt",
+      "description": "Kontaktlenker er tilgjengelige mens den fulle kontaktopplevelsen holdes bevisst enkel.",
+      "metaTitle": "Kontakt",
+      "metaDescription": "Kontakt Enes Yilmaz gjennom offentlige profesjonelle lenker."
+    }
+  },
+  "contact": {
+    "email": "E-post",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "Alle rettigheter forbeholdt."
+  },
+  "notFound": {
+    "heading": "Siden finnes ikke",
+    "description": "Den forespurte siden finnes ikke på dette språket.",
+    "homeLink": "Gå til engelsk forside"
+  }
+}

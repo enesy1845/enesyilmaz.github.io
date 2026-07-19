@@ -109,6 +109,31 @@ Directories should be created only when they contain real files required by the 
 
 ## Next.js App Router Architecture
 
+Phase 1 updates the public route plan to use locale prefixes from the beginning:
+
+```text
+/en
+/no
+/tr
+/en/work
+/no/work
+/tr/work
+/en/notes
+/no/notes
+/tr/notes
+/en/atelier
+/no/atelier
+/tr/atelier
+/en/about
+/no/about
+/tr/about
+/en/contact
+/no/contact
+/tr/contact
+```
+
+The root `/` redirects to `/en`. Route segments remain stable across locales during Phase 1.
+
 The future app should use Next.js App Router with route groups for layout organization. Public URLs should remain stable, lowercase, and content-oriented:
 
 ```text

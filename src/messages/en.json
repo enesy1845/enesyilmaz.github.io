@@ -1,0 +1,78 @@
+{
+  "site": {
+    "name": "Enes Yilmaz",
+    "role": "Software Developer",
+    "description": "A multilingual portfolio foundation for code, thought, and craft."
+  },
+  "navigation": {
+    "home": "Home",
+    "work": "Work",
+    "notes": "Notes",
+    "atelier": "Atelier",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "languageSwitcher": "Choose language",
+    "currentLanguage": "Current language",
+    "footerNavigation": "Footer navigation"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norsk",
+    "tr": "Türkçe"
+  },
+  "pages": {
+    "home": {
+      "heading": "Enes Yilmaz",
+      "description": "Software Developer. This foundation will grow into a multilingual portfolio for code, thought, and craft.",
+      "metaTitle": "Enes Yilmaz - Software Developer",
+      "metaDescription": "A multilingual portfolio foundation for Enes Yilmaz, a software developer building thoughtful systems."
+    },
+    "work": {
+      "heading": "Work",
+      "description": "Selected work will be added after the project content model is ready.",
+      "metaTitle": "Work",
+      "metaDescription": "A future collection of selected software and web projects by Enes Yilmaz."
+    },
+    "notes": {
+      "heading": "Notes",
+      "description": "Technical and reflective notes will be added through the future content system.",
+      "metaTitle": "Notes",
+      "metaDescription": "A future notes archive for technical writing and reflective essays."
+    },
+    "atelier": {
+      "heading": "Atelier",
+      "description": "Craft and process entries will be added in a later content phase.",
+      "metaTitle": "Atelier",
+      "metaDescription": "A future space for craft, process, and creative work."
+    },
+    "about": {
+      "heading": "About",
+      "description": "A fuller professional narrative will be written after the content foundation is ready.",
+      "metaTitle": "About",
+      "metaDescription": "A future professional profile for Enes Yilmaz."
+    },
+    "contact": {
+      "heading": "Contact",
+      "description": "Contact links are available while the full contact experience remains intentionally simple.",
+      "metaTitle": "Contact",
+      "metaDescription": "Contact Enes Yilmaz through public professional links."
+    }
+  },
+  "contact": {
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "All rights reserved."
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "description": "The requested page does not exist in this language.",
+    "homeLink": "Go to the English home page"
+  }
+}

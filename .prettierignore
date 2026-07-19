@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.open-next/
+.wrangler/
+legacy/
+playwright-report/
+test-results/
+package-lock.json
+AGENTS.md
+cloudflare-env.d.ts
