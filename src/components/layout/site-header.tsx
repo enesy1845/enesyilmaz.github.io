@@ -14,10 +14,14 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
   return (
-    <header className="sticky top-0 z-[var(--z-sticky)] border-b border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-background),transparent_4%)]">
+    <header
+      className="sticky top-0 z-[var(--z-sticky)] border-b border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-background),transparent_4%)]"
+      data-site-header=""
+    >
       <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-3">
         <Link
           className="group inline-flex items-center gap-3 no-underline"
+          data-header-identity=""
           href={createLocalePath(locale)}
         >
           <span

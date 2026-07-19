@@ -9,6 +9,7 @@ html {
   background: var(--color-background);
   color: var(--color-foreground);
   scroll-behavior: smooth;
+  --hero-scroll-progress: 1;
 }
 
 body {
@@ -84,6 +85,66 @@ button {
   background-size: 3rem 3rem;
 }
 
+[data-header-identity],
+[data-hero-identity],
+[data-hero-large-identity],
+[data-hero-particle-stage] {
+  transform-origin: left center;
+  transition:
+    opacity var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
+}
+
+[data-header-identity] {
+  opacity: calc(0.72 + (var(--hero-scroll-progress, 1) * 0.28));
+  transform: translateY(calc((1 - var(--hero-scroll-progress, 1)) * 1px))
+    scale(calc(0.96 + (var(--hero-scroll-progress, 1) * 0.04)));
+}
+
+[data-hero-identity] {
+  opacity: calc(1 - (var(--hero-scroll-progress, 0) * 0.14));
+  transform: translateY(calc(var(--hero-scroll-progress, 0) * -1rem))
+    scale(calc(1 - (var(--hero-scroll-progress, 0) * 0.03)));
+}
+
+[data-hero-title] {
+  font-size: clamp(3.5rem, 6.8vw, 6.85rem);
+}
+
+[data-hero-large-identity] {
+  position: absolute;
+  z-index: -1;
+  inset-block-start: clamp(7rem, 16vh, 11rem);
+  inset-inline-start: max(
+    var(--layout-gutter),
+    calc((100vw - var(--layout-wide)) / 2)
+  );
+  max-width: min(92vw, var(--layout-wide));
+  color: color-mix(in srgb, var(--color-foreground), transparent 89%);
+  font-size: clamp(7rem, 16vw, 14rem);
+  line-height: 0.82;
+  opacity: calc(1 - (var(--hero-scroll-progress, 0) * 0.72));
+  pointer-events: none;
+  transform: translate(
+      calc(var(--hero-scroll-progress, 0) * -2.5rem),
+      calc(var(--hero-scroll-progress, 0) * -5rem)
+    )
+    scale(calc(1 - (var(--hero-scroll-progress, 0) * 0.48)));
+  white-space: nowrap;
+}
+
+@media (width >= 90rem) {
+  [data-hero-title] {
+    white-space: nowrap;
+  }
+}
+
+[data-hero-particle-stage] {
+  opacity: calc(1 - (var(--hero-scroll-progress, 0) * 0.28));
+  transform: translateY(calc(var(--hero-scroll-progress, 0) * -1.5rem))
+    scale(calc(1 - (var(--hero-scroll-progress, 0) * 0.04)));
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -96,5 +157,13 @@ button {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  [data-header-identity],
+  [data-hero-identity],
+  [data-hero-large-identity],
+  [data-hero-particle-stage] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

@@ -62,7 +62,7 @@ test("home page sections render in Turkish", async ({ page }) => {
 });
 
 test("English home renders shared header and footer", async ({ page }) => {
-  await page.goto("/en");
+  await page.goto("http://127.0.0.1:3100/en");
 
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
@@ -226,11 +226,65 @@ test("tested pages contain one h1", async ({ page }) => {
 });
 
 test("main content remains usable without animation", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/en");
 
   await expect(page.locator("canvas")).toHaveCount(0);
-  await expect(page.locator("svg").filter({ hasText: "Code" })).toHaveCount(0);
+  await expect(page.locator("[data-particle-fallback]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
   await expect(page.getByRole("main")).toContainText("Selected work");
+});
+
+test("home content remains usable when JavaScript is disabled", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto("/en");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Enes Yilmaz",
+  );
+  await expect(page.locator("canvas")).toHaveCount(0);
+  await expect(page.getByRole("main")).toContainText("Selected work");
+
+  await context.close();
+});
+
+test("particle canvas is lazy, decorative and limited to the home route", async ({
+  page,
+}) => {
+  await page.goto("/en/work");
+  await expect(page.locator("[data-particle-host]")).toHaveCount(0);
+
+  await page.goto("/en");
+  await expect(page.locator("[data-particle-host]")).toHaveAttribute(
+    "data-particle-visible",
+    "true",
+  );
+  await expect(page.locator("[data-particle-canvas]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+});
+
+test("hero scroll transition updates header state without blocking navigation", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await page
+    .getByRole("link", { name: "View selected work" })
+    .click({ trial: true });
+
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.25));
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.dataset.heroState))
+    .toBe("hero-passed");
+
+  await page.getByRole("link", { name: "View selected work" }).click();
+  await expect(page).toHaveURL(/\/en\/work$/);
 });
 
 test("home and internal page have no obvious accessibility violations", async ({
