@@ -2,7 +2,7 @@
   "site": {
     "name": "Enes Yilmaz",
     "role": "Programvareutvikler",
-    "description": "Et flerspråklig portfoliofundament for kode, tanke og håndverk."
+    "description": "En flerspråklig portfolio for programvaresystemer, gjennomtenkt skriving og nøyaktig håndverk."
   },
   "navigation": {
     "home": "Hjem",
@@ -30,50 +30,50 @@
   "pages": {
     "home": {
       "heading": "Enes Yilmaz",
-      "description": "Programvareutvikler. Dette fundamentet skal bli en flerspråklig portfolio for kode, tanke og håndverk.",
-      "primaryAction": "Se arbeid",
-      "secondaryAction": "Om Enes",
+      "description": "Programvareutvikler som bygger gjennomtenkte systemer på tvers av Python, data og web.",
+      "primaryAction": "Se utvalgt arbeid",
+      "secondaryAction": "Om meg",
       "meta": "Basert i Norge. Arbeider med Python, data, web og programvaresystemer.",
-      "foundationTitle": "Kode · Tanke · Håndverk",
-      "foundationDescription": "Den fulle forsiden formes i en senere fase. Denne versjonen etablerer visuell rytme og felles layout.",
+      "foundationTitle": "Kode / Tanke / Håndverk",
+      "foundationDescription": "Den fulle interaktive identiteten er fortsatt utsatt. Denne versjonen presenterer det statiske innholdsgrunnlaget.",
       "metaTitle": "Enes Yilmaz - Programvareutvikler",
-      "metaDescription": "Et flerspråklig portfoliofundament for Enes Yilmaz, en programvareutvikler som bygger gjennomtenkte systemer."
+      "metaDescription": "Portfolio for Enes Yilmaz, en programvareutvikler som bygger gjennomtenkte systemer på tvers av Python, data og web."
     },
     "work": {
       "heading": "Arbeid",
-      "description": "Utvalgt arbeid legges til når prosjektmodellen er klar.",
-      "placeholderTitle": "Prosjektcase er bevisst utsatt",
-      "placeholderDescription": "Detaljerte prosjektdata, ansvar, resultater og medier legges til etter at innholdsmodellen er utformet.",
+      "description": "Utvalgt programvare-, data-, offentlig sektor- og webarbeid der sensitive detaljer anonymiseres ved behov.",
+      "placeholderTitle": "Verifiserte prosjektdata",
+      "placeholderDescription": "Utvalgt arbeid inkluderer anonymiserte offentlige systemer, dokumentautomatisering, personvernflyter og offentlige webprosjekter.",
       "metaTitle": "Arbeid",
-      "metaDescription": "En fremtidig samling av utvalgte programvare- og webprosjekter av Enes Yilmaz."
+      "metaDescription": "Utvalgte programvare-, data- og webprosjekter av Enes Yilmaz, inkludert anonymisert offentlig sektor-arbeid."
     },
     "notes": {
       "heading": "Notater",
-      "description": "Tekniske og reflekterende notater legges til gjennom det fremtidige innholdssystemet.",
+      "description": "Et planlagt rom for tekniske notater, data- og AI-observasjoner, utdanning, tenkning og poesi.",
       "placeholderTitle": "Redaksjonelt innhold beholder sitt ekte språk",
       "placeholderDescription": "Notater kan senere vises på engelsk, norsk eller tyrkisk, avhengig av originaltekst og tilgjengelige oversettelser.",
       "metaTitle": "Notater",
-      "metaDescription": "Et fremtidig notatarkiv for teknisk skriving og reflekterende tekster."
+      "metaDescription": "Planlagt notatarkiv for teknisk skriving, data- og AI-observasjoner, utdanning, tenkning og poesi."
     },
     "atelier": {
       "heading": "Atelier",
-      "description": "Håndverk og prosess legges til i en senere innholdsfase.",
+      "description": "Et planlagt rom for håndverk, visuell prosess, tre, klokker, design og video.",
       "placeholderTitle": "Håndverksinnhold er ikke migrert ennå",
       "placeholderDescription": "Fremtidige atelierinnlegg vil knytte materialprosess, visuelt arbeid og den bredere håndverkssiden av portfolioen sammen.",
       "metaTitle": "Atelier",
-      "metaDescription": "Et fremtidig rom for håndverk, prosess og kreativt arbeid."
+      "metaDescription": "Atelier-forhåndsvisning for håndverk, visuell prosess, tre, klokker, design og video."
     },
     "about": {
       "heading": "Om",
-      "description": "En fyldigere profesjonell fortelling skrives når innholdsgrunnlaget er klart.",
-      "placeholderTitle": "Den profesjonelle fortellingen kommer etter innholdsavklaring",
-      "placeholderDescription": "Den senere Om-siden skal bruke verifisert erfaring, undervisning og prosjektkontekst uten å finne opp påstander.",
+      "description": "En kort profesjonell profil som knytter programvareutvikling, matematikk, undervisning, web, data, skriving og håndverk sammen.",
+      "placeholderTitle": "Profesjonell fortelling",
+      "placeholderDescription": "Om-siden bruker verifisert erfaring, undervisning og prosjektkontekst uten å finne opp påstander.",
       "metaTitle": "Om",
-      "metaDescription": "En fremtidig profesjonell profil for Enes Yilmaz."
+      "metaDescription": "Profesjonell profil for Enes Yilmaz, en programvareutvikler basert i Norge."
     },
     "contact": {
       "heading": "Kontakt",
-      "description": "Kontaktlenker er tilgjengelige mens den fulle kontaktopplevelsen holdes bevisst enkel.",
+      "description": "Kontakt Enes gjennom verifiserte offentlige profesjonelle kanaler. Ingen skjema eller sporing er aktiv.",
       "placeholderTitle": "Bruk verifiserte profesjonelle lenker",
       "placeholderDescription": "Kontaktopplevelsen forblir lenkebasert til et serverside-skjema, validering og misbruksvern er godkjent.",
       "metaTitle": "Kontakt",

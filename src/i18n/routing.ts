@@ -36,7 +36,10 @@ export function getRouteFromPath(pathname: string | null): RouteDefinition {
 
   const [, maybeLocale, ...rest] = pathname.split("/");
   const segment = rest.join("/");
-  const match = routes.find((route) => route.segment === segment);
+  const match = routes.find(
+    (route) =>
+      route.segment === segment || segment.startsWith(`${route.segment}/`),
+  );
 
   if (match) {
     return match;
@@ -53,6 +56,15 @@ export function switchLocalePath(
   pathname: string | null,
   nextLocale: Locale,
 ): string {
+  if (!pathname) {
+    return createPathForRoute(nextLocale, routes[0]);
+  }
+
+  const [, maybeLocale, ...rest] = pathname.split("/");
+  if (maybeLocale && locales.includes(maybeLocale as Locale)) {
+    return createLocalePath(nextLocale, rest.join("/"));
+  }
+
   const route = getRouteFromPath(pathname);
   return createPathForRoute(nextLocale, route);
 }

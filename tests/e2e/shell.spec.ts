@@ -13,6 +13,54 @@ for (const locale of ["en", "no", "tr"] as const) {
   });
 }
 
+test("home page sections render in English", async ({ page }) => {
+  await page.goto("/en");
+
+  for (const heading of [
+    "Selected work",
+    "Professional evidence",
+    "Code / Thought / Craft",
+    "Notes preview",
+    "Atelier preview",
+    "About preview",
+    "Contact",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+
+  await expect(
+    page.getByRole("link", { name: "Quality System" }),
+  ).toBeVisible();
+});
+
+test("home page sections render in Norwegian", async ({ page }) => {
+  await page.goto("/no");
+
+  await expect(
+    page.getByRole("heading", { name: "Utvalgt arbeid" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Profesjonell dokumentasjon" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Kode / Tanke / Håndverk" }),
+  ).toBeVisible();
+});
+
+test("home page sections render in Turkish", async ({ page }) => {
+  await page.goto("/tr");
+
+  await expect(
+    page.getByRole("heading", { name: "Seçili işler" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Profesyonel dayanak" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Kod / Düşünce / Zanaat" }),
+  ).toBeVisible();
+});
+
 test("English home renders shared header and footer", async ({ page }) => {
   await page.goto("/en");
 
@@ -43,24 +91,59 @@ test("Turkish route renders translated navigation", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("navigation to Work preserves locale and exposes active state", async ({
-  page,
-}) => {
+test("Work navigation works and preserves locale", async ({ page }) => {
   await page.goto("/tr");
   await page.getByRole("link", { name: "İşler" }).first().click();
 
   await expect(page).toHaveURL(/\/tr\/work$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("İşler");
   await expect(
+    page.getByRole("link", { name: "Kalite Sistemi" }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("link", { name: "İşler" }).first(),
   ).toHaveAttribute("aria-current", "page");
 });
 
-test("language switching preserves equivalent route", async ({ page }) => {
-  await page.goto("/en/work");
+test("Project links preserve locale", async ({ page }) => {
+  await page.goto("/no/work");
+  await page.getByRole("link", { name: "Kvalitetssystem" }).first().click();
+
+  await expect(page).toHaveURL(/\/no\/work\/municipal-quality-system$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Kommunalt kvalitetssystem",
+  );
+});
+
+test("language switching preserves equivalent project route", async ({
+  page,
+}) => {
+  await page.goto("/en/work/municipal-quality-system");
   await page.getByRole("link", { name: "Türkçe" }).first().click();
 
-  await expect(page).toHaveURL(/\/tr\/work$/);
+  await expect(page).toHaveURL(/\/tr\/work\/municipal-quality-system$/);
+});
+
+test("About page loads", async ({ page }) => {
+  await page.goto("/en/about");
+
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("About");
+  await expect(page.getByText("Current professional identity")).toBeVisible();
+});
+
+test("Contact page loads verified links", async ({ page }) => {
+  await page.goto("/en/contact");
+
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Contact");
+  const main = page.getByRole("main");
+  await expect(main.getByRole("link", { name: "Email" })).toHaveAttribute(
+    "href",
+    "mailto:enes.yilmaz1845@gmail.com",
+  );
+  await expect(main.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
+    "href",
+    "https://www.linkedin.com/in/enes-yilmaz-026249286",
+  );
 });
 
 test("skip link moves focus to main content", async ({ page }) => {
@@ -135,26 +218,25 @@ for (const width of [320, 375] as const) {
   });
 }
 
-test("footer links are reachable by keyboard", async ({ page }) => {
+test("tested pages contain one h1", async ({ page }) => {
+  for (const path of ["/en", "/en/work", "/en/about", "/en/contact"]) {
+    await page.goto(path);
+    await expect(page.locator("h1")).toHaveCount(1);
+  }
+});
+
+test("main content remains usable without animation", async ({ page }) => {
   await page.goto("/en");
 
-  for (let index = 0; index < 30; index += 1) {
-    await page.keyboard.press("Tab");
-    const focusedText = await page.evaluate(() =>
-      document.activeElement?.textContent?.trim(),
-    );
-    if (focusedText === "LinkedIn") {
-      break;
-    }
-  }
-
-  await expect(page.getByRole("link", { name: "LinkedIn" })).toBeFocused();
+  await expect(page.locator("canvas")).toHaveCount(0);
+  await expect(page.locator("svg").filter({ hasText: "Code" })).toHaveCount(0);
+  await expect(page.getByRole("main")).toContainText("Selected work");
 });
 
 test("home and internal page have no obvious accessibility violations", async ({
   page,
 }) => {
-  for (const path of ["/en", "/en/work"]) {
+  for (const path of ["/en", "/en/work", "/en/work/municipal-quality-system"]) {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);

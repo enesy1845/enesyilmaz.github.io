@@ -2,7 +2,7 @@
 
 This repository is being migrated from a legacy static GitHub Pages portfolio into a multilingual Next.js portfolio designed for a future Cloudflare Workers deployment through OpenNext.
 
-The current application is Phase 2. It has a multilingual technical foundation and a restrained visual design foundation, but it is still not the final portfolio experience.
+The current application is Phase 3. It has a multilingual technical foundation, a restrained visual design foundation, typed content records, real static Home content, selected projects, and improved Work/About/Contact pages. It is still not the final interactive portfolio experience.
 
 ## Status
 
@@ -14,6 +14,10 @@ The current application is Phase 2. It has a multilingual technical foundation a
 - Package manager: npm only
 - Cloudflare is not connected
 - Deployment has not occurred
+- Typed project content exists
+- Static Home page content exists
+- Work and project detail foundations exist
+- About, Notes, Atelier, and Contact pages have meaningful static content
 - The visual system is a foundation, not final brand polish
 - The particle hero is not implemented
 - The ecosystem graph is not implemented
@@ -66,8 +70,11 @@ When unset, local metadata uses `http://localhost:3000`.
 - `docs/`: migration inventory, architecture notes, and ADRs.
 - `src/app/[locale]/`: locale-prefixed App Router shell.
 - `src/i18n/`: locale configuration, routing helpers, and dictionaries.
-- `src/messages/`: Phase 1 interface translations.
-- `src/components/`: minimal server-rendered layout, navigation, and SEO components.
+- `src/messages/`: shared interface translations and localized metadata copy.
+- `src/content/projects/`: typed multilingual project records.
+- `src/data/`: translated Home, evidence, page, label, notes, and atelier content.
+- `src/components/`: server-rendered layout, navigation, content, project, SEO, and UI components.
+- `src/lib/content/`: content loaders and validation helpers.
 - `src/styles/tokens.css`: semantic design tokens for color, type, spacing, layout, radius, shadow, motion, and z-index.
 - `tests/`: unit and Playwright tests.
 
@@ -87,7 +94,20 @@ Current design direction:
 - sticky header with desktop and mobile navigation,
 - production-quality footer with verified professional links.
 
-No external fonts, icon CDN, analytics, background video, animation library, or theme provider is used.
+No external fonts, icon CDN, analytics, background video, animation library, remote image hotlinking, or theme provider is used.
+
+## Content System
+
+Projects are typed in `src/types/project.ts` and stored in `src/content/projects/projects.ts`.
+
+Current featured projects:
+
+- anonymized municipal quality system,
+- anonymized process PDF export system,
+- anonymized privacy and PII workflow,
+- ILC Language Centre website.
+
+Public-sector work is intentionally anonymized. Public web work uses live links only when the URL is verified. Legacy screenshots are not migrated yet.
 
 ## Server-First Policy
 
@@ -99,10 +119,10 @@ Current client components are limited to navigation behavior that needs current-
 
 The shell includes semantic landmarks, a skip link, visible focus states, `aria-current` route and locale indicators, keyboard-reachable footer links, and an accessible mobile menu with Escape close behavior.
 
-## Phase 2 Limitations
+## Phase 3 Limitations
 
-The shell contains minimal translated page content only. It does not include final Home page design, project cards, case studies, MDX content, particle effects, the ecosystem graph, analytics, authentication, a database, a CMS, audio, or a contact form.
+The site does not include final MDX case studies, final project images, a particle hero, the interactive ecosystem graph, analytics, authentication, a database, a CMS, audio, or a server-side contact form.
 
 ## Next Phase
 
-Phase 3 should focus on typed content models, content loaders, and verified initial project/content records without building the final hero effects or ecosystem graph.
+The next phase should refine the static Home composition and content depth without starting particle, graph, audio, analytics, or deployment work unless explicitly requested.

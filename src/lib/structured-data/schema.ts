@@ -10,7 +10,9 @@ export function createPersonJsonLd(): JsonLd {
     "@type": "Person",
     name: siteConfig.author,
     url: absoluteUrl("/en"),
-    sameAs: socialLinks.map((link) => link.href),
+    sameAs: socialLinks
+      .filter((link) => link.href.startsWith("https://"))
+      .map((link) => link.href),
   };
 }
 

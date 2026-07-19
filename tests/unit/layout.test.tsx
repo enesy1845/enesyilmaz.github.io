@@ -19,6 +19,10 @@ describe("shared layout", () => {
   it("renders verified footer social links", () => {
     render(<SiteFooter dictionary={en} locale="en" />);
 
+    expect(screen.getByRole("link", { name: "Email" })).toHaveAttribute(
+      "href",
+      "mailto:enes.yilmaz1845@gmail.com",
+    );
     expect(screen.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
       "href",
       "https://www.linkedin.com/in/enes-yilmaz-026249286",

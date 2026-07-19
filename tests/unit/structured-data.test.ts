@@ -19,4 +19,16 @@ describe("structured data", () => {
       name: "Enes Yilmaz",
     });
   });
+
+  it("keeps mailto links out of schema sameAs", () => {
+    const person = createPersonJsonLd();
+
+    expect(person.sameAs).toEqual(
+      expect.arrayContaining([
+        "https://www.linkedin.com/in/enes-yilmaz-026249286",
+        "https://github.com/enesy1845",
+      ]),
+    );
+    expect(person.sameAs).not.toContain("mailto:enes.yilmaz1845@gmail.com");
+  });
 });

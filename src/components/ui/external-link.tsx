@@ -12,7 +12,8 @@ export function ExternalLink({
   target,
   ...props
 }: ExternalLinkProps) {
-  const safeTarget = target ?? "_blank";
+  const safeTarget =
+    target ?? (href.startsWith("mailto:") ? undefined : "_blank");
   const safeRel =
     rel ?? (safeTarget === "_blank" ? "noreferrer noopener" : undefined);
 

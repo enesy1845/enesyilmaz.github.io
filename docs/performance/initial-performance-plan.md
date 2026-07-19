@@ -175,3 +175,24 @@ Known Phase 2 risks:
 - Mobile menu body-scroll handling should be rechecked after route transitions or richer content are introduced.
 - Client JavaScript will grow if future visual effects are added without dynamic imports and lifecycle controls.
 - The current `npm audit` warning remains tied to transitive Next/OpenNext dependencies and should be revisited when compatible upstream fixes are available.
+
+## Phase 3 Baseline Update
+
+Phase 3 keeps content static and server-rendered:
+
+- New client components: 0.
+- Project data is local TypeScript content.
+- Home, Work, About, Contact, Notes, Atelier, and project detail pages render as static or SSG output.
+- No images were migrated, so no new image requests are introduced.
+- No third-party embeds are loaded.
+- YouTube is only a contact/content link; legacy iframes are not carried forward.
+- No WebGL, Canvas, particle hero, ecosystem graph, animation runtime, or route-transition library is added.
+- No analytics or tracking scripts are added.
+
+Build output after Phase 3 includes localized project detail routes under `/[locale]/work/[slug]`.
+
+Known Phase 3 risks:
+
+- Text-first project cards are intentionally image-light and should be revisited after image rights and optimization decisions.
+- Longer Turkish and Norwegian labels require continued mobile overflow checks as content grows.
+- The contact email is public because it existed in the legacy portfolio; confirm whether it should remain preferred before production hardening.

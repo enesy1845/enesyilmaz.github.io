@@ -277,3 +277,31 @@ Verify:
 Remove later:
 
 - `script.js`, cache-busting query strings, broken `profile.png` reference, and obsolete legacy assets after migration is complete.
+
+## Phase 3 Migration Notes
+
+Phase 3 migrated selected legacy content into typed data without moving legacy assets.
+
+Reused as public links:
+
+- LinkedIn profile.
+- GitHub profile.
+- Public email address from legacy contact section.
+- YouTube channel link from legacy portfolio.
+- ILC Language Centres URL.
+- Quiver Blog URL.
+
+Not migrated in Phase 3:
+
+- Legacy screenshots and profile image, pending rights, relevance, dimensions, and optimization review.
+- YouTube iframes, due to privacy and performance cost.
+- Individual certification claims.
+- Most legacy client project cards, pending current URL and permission confirmation.
+
+Added from user-provided Phase 3 context:
+
+- Anonymized municipal quality system.
+- Process PDF export system.
+- Privacy and PII workflow.
+
+Those public-sector entries intentionally omit organization names, screenshots, internal URLs, personal data, field names, repository details, and private architecture.

@@ -35,5 +35,8 @@ describe("locale configuration", () => {
     expect(createLocalePath("en")).toBe("/en");
     expect(createLocalePath("no", "about")).toBe("/no/about");
     expect(switchLocalePath("/en/contact", "tr")).toBe("/tr/contact");
+    expect(switchLocalePath("/en/work/municipal-quality-system", "no")).toBe(
+      "/no/work/municipal-quality-system",
+    );
   });
 });

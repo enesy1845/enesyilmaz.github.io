@@ -2,7 +2,7 @@
   "site": {
     "name": "Enes Yilmaz",
     "role": "Yazılım Geliştirici",
-    "description": "Kod, düşünce ve zanaat için çok dilli bir portfolyo temeli."
+    "description": "Yazılım sistemleri, düşünceli yazılar ve özenli zanaat için çok dilli bir portfolyo."
   },
   "navigation": {
     "home": "Ana sayfa",
@@ -30,50 +30,50 @@
   "pages": {
     "home": {
       "heading": "Enes Yilmaz",
-      "description": "Yazılım geliştirici. Bu temel, kod, düşünce ve zanaat için çok dilli bir portfolyoya dönüşecek.",
-      "primaryAction": "İşleri gör",
-      "secondaryAction": "Enes hakkında",
+      "description": "Python, veri ve web üzerinde düşünülmüş sistemler geliştiren yazılım geliştirici.",
+      "primaryAction": "Seçili işleri gör",
+      "secondaryAction": "Hakkımda",
       "meta": "Norveç merkezli. Python, veri, web ve yazılım sistemleri üzerinde çalışıyor.",
-      "foundationTitle": "Kod · Düşünce · Zanaat",
-      "foundationDescription": "Tam ana sayfa daha sonraki bir fazda şekillenecek. Bu sürüm görsel ritmi ve ortak yerleşimi kurar.",
+      "foundationTitle": "Kod / Düşünce / Zanaat",
+      "foundationDescription": "Tam interaktif kimlik hâlâ ertelidir. Bu sürüm statik içerik temelini sunar.",
       "metaTitle": "Enes Yilmaz - Yazılım Geliştirici",
-      "metaDescription": "Düşünülmüş sistemler geliştiren yazılım geliştirici Enes Yilmaz için çok dilli portfolyo temeli."
+      "metaDescription": "Python, veri ve web üzerinde düşünülmüş sistemler geliştiren yazılım geliştirici Enes Yilmaz'ın portfolyosu."
     },
     "work": {
       "heading": "İşler",
-      "description": "Seçilmiş işler, proje içerik modeli hazır olduğunda eklenecek.",
-      "placeholderTitle": "Proje vaka çalışmaları bilinçli olarak ertelendi",
-      "placeholderDescription": "Ayrıntılı proje kayıtları, sorumluluklar, çıktılar ve medya içerik modeli tasarlandıktan sonra eklenecek.",
+      "description": "Gerektiğinde hassas detayları anonimleştirilmiş seçili yazılım, veri, kamu sektörü ve web çalışmaları.",
+      "placeholderTitle": "Doğrulanmış proje kayıtları",
+      "placeholderDescription": "Seçili işler anonimleştirilmiş kamu sistemleri, belge otomasyonu, gizlilik iş akışları ve kamuya açık web projelerini içerir.",
       "metaTitle": "İşler",
-      "metaDescription": "Enes Yilmaz tarafından yapılan seçilmiş yazılım ve web projeleri için gelecekteki koleksiyon."
+      "metaDescription": "Enes Yilmaz'ın anonimleştirilmiş kamu çalışmaları dahil seçili yazılım, veri ve web projeleri."
     },
     "notes": {
       "heading": "Notlar",
-      "description": "Teknik ve düşünsel notlar gelecekteki içerik sistemiyle eklenecek.",
+      "description": "Teknik notlar, veri ve AI gözlemleri, eğitim yazıları, düşünce ve şiir için planlanan alan.",
       "placeholderTitle": "Editöryel içerik gerçek dilini koruyacak",
       "placeholderDescription": "Notlar ileride özgün metne ve mevcut çevirilere göre İngilizce, Norveççe veya Türkçe görünebilir.",
       "metaTitle": "Notlar",
-      "metaDescription": "Teknik yazılar ve düşünsel denemeler için gelecekteki not arşivi."
+      "metaDescription": "Teknik yazı, veri ve AI gözlemleri, eğitim, düşünce ve şiir için planlanan not arşivi."
     },
     "atelier": {
       "heading": "Atölye",
-      "description": "Zanaat ve süreç yazıları daha sonraki bir içerik aşamasında eklenecek.",
+      "description": "Zanaat, görsel süreç, ahşap, saatler, tasarım ve video için planlanan alan.",
       "placeholderTitle": "Zanaat içeriği henüz taşınmadı",
       "placeholderDescription": "Gelecekteki atölye yazıları malzeme sürecini, görsel çalışmayı ve portfolyonun zanaat yönünü birbirine bağlayacak.",
       "metaTitle": "Atölye",
-      "metaDescription": "Zanaat, süreç ve yaratıcı işler için gelecekteki alan."
+      "metaDescription": "Zanaat, görsel süreç, ahşap, saatler, tasarım ve video için atölye önizlemesi."
     },
     "about": {
       "heading": "Hakkında",
-      "description": "Daha kapsamlı profesyonel anlatı, içerik temeli hazır olduğunda yazılacak.",
-      "placeholderTitle": "Profesyonel anlatı içerik doğrulamasından sonra gelecek",
-      "placeholderDescription": "Sonraki Hakkında sayfası, doğrulanmış deneyim, öğretim ve proje bağlamını uydurma iddialar olmadan kullanacak.",
+      "description": "Yazılım geliştirme, matematik, eğitim, web, veri, yazı ve zanaatı bağlayan kısa profesyonel profil.",
+      "placeholderTitle": "Profesyonel anlatı",
+      "placeholderDescription": "Hakkında sayfası, doğrulanmış deneyim, öğretim ve proje bağlamını uydurma iddialar olmadan kullanır.",
       "metaTitle": "Hakkında",
-      "metaDescription": "Enes Yilmaz için gelecekteki profesyonel profil."
+      "metaDescription": "Norveç merkezli yazılım geliştirici Enes Yilmaz'ın profesyonel profili."
     },
     "contact": {
       "heading": "İletişim",
-      "description": "Tam iletişim deneyimi bilinçli olarak sade tutulurken iletişim bağlantıları kullanılabilir.",
+      "description": "Enes ile doğrulanmış kamuya açık profesyonel kanallar üzerinden iletişim kurun. Form veya takip aktif değildir.",
       "placeholderTitle": "Doğrulanmış profesyonel bağlantıları kullanın",
       "placeholderDescription": "Sunucu taraflı form, doğrulama ve kötüye kullanım koruması onaylanana kadar iletişim deneyimi bağlantı temelli kalır.",
       "metaTitle": "İletişim",
