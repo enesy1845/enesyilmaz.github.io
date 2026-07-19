@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 
-import { PageIntro } from "@/components/layout/page-intro";
+import { PageIntro } from "@/components/ui/page-intro";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { routes } from "@/i18n/routing";
+import { createLocalePath, routes } from "@/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata/pages";
 
 type PageProps = {
@@ -27,11 +29,31 @@ export default async function HomePage({ params }: PageProps) {
   const page = dictionary.pages.home;
 
   return (
-    <PageIntro
-      eyebrow={dictionary.site.role}
-      heading={page.heading}
-      description={page.description}
-      locale={locale}
-    />
+    <>
+      <PageIntro
+        actions={[
+          {
+            href: createLocalePath(locale, "work"),
+            label: page.primaryAction,
+          },
+          {
+            href: createLocalePath(locale, "about"),
+            label: page.secondaryAction,
+            variant: "secondary",
+          },
+        ]}
+        description={page.description}
+        eyebrow={dictionary.site.role}
+        heading={page.heading}
+        locale={locale}
+        meta={page.meta}
+      />
+      <Section>
+        <SectionHeader
+          title={page.foundationTitle}
+          description={page.foundationDescription}
+        />
+      </Section>
+    </>
   );
 }

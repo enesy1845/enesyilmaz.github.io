@@ -10,8 +10,4 @@ export const siteConfig = {
   defaultLocale,
   locales,
   localUrl: "http://localhost:3000",
-  social: {
-    github: "https://github.com/enesy1845",
-    linkedin: "https://www.linkedin.com/in/enes-yilmaz-026249286",
-  },
 } as const;

@@ -2,7 +2,7 @@
 
 This repository is being migrated from a legacy static GitHub Pages portfolio into a multilingual Next.js portfolio designed for a future Cloudflare Workers deployment through OpenNext.
 
-The current application is Phase 1 only. It is a minimal technical foundation, not the final design.
+The current application is Phase 2. It has a multilingual technical foundation and a restrained visual design foundation, but it is still not the final portfolio experience.
 
 ## Status
 
@@ -14,8 +14,11 @@ The current application is Phase 1 only. It is a minimal technical foundation, n
 - Package manager: npm only
 - Cloudflare is not connected
 - Deployment has not occurred
+- The visual system is a foundation, not final brand polish
 - The particle hero is not implemented
 - The ecosystem graph is not implemented
+- Advanced route/page motion is not implemented
+- Custom fonts are not finalized
 - Audio is not implemented
 
 ## Requirements
@@ -65,16 +68,41 @@ When unset, local metadata uses `http://localhost:3000`.
 - `src/i18n/`: locale configuration, routing helpers, and dictionaries.
 - `src/messages/`: Phase 1 interface translations.
 - `src/components/`: minimal server-rendered layout, navigation, and SEO components.
+- `src/styles/tokens.css`: semantic design tokens for color, type, spacing, layout, radius, shadow, motion, and z-index.
 - `tests/`: unit and Playwright tests.
+
+## Visual System
+
+The Phase 2 visual system uses semantic CSS custom properties as the source of truth and Tailwind utilities to consume them in components.
+
+Current design direction:
+
+- primary dark warm editorial theme,
+- system font stacks only,
+- sans-serif for interface/professional content,
+- serif for page identity and editorial emphasis,
+- monospace for metadata and technical labels,
+- restrained brass accent,
+- responsive containers and section spacing,
+- sticky header with desktop and mobile navigation,
+- production-quality footer with verified professional links.
+
+No external fonts, icon CDN, analytics, background video, animation library, or theme provider is used.
 
 ## Server-First Policy
 
 Components are Server Components by default. Client components should be introduced only for browser APIs, local interactive state, animation runtime, or client-only accessibility behavior.
 
-## Phase 1 Limitations
+Current client components are limited to navigation behavior that needs current-route awareness or mobile menu state.
 
-The shell contains minimal translated page content only. It does not include final visual design, project cards, case studies, MDX content, particle effects, the ecosystem graph, analytics, authentication, a database, a CMS, audio, or a contact form.
+## Accessibility
+
+The shell includes semantic landmarks, a skip link, visible focus states, `aria-current` route and locale indicators, keyboard-reachable footer links, and an accessible mobile menu with Escape close behavior.
+
+## Phase 2 Limitations
+
+The shell contains minimal translated page content only. It does not include final Home page design, project cards, case studies, MDX content, particle effects, the ecosystem graph, analytics, authentication, a database, a CMS, audio, or a contact form.
 
 ## Next Phase
 
-Phase 2 should focus on design tokens, typography, base layout refinement, and accessible visual primitives without adding final hero effects or the ecosystem graph.
+Phase 3 should focus on typed content models, content loaders, and verified initial project/content records without building the final hero effects or ecosystem graph.

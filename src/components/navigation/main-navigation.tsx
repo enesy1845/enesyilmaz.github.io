@@ -19,15 +19,21 @@ export function MainNavigation({ dictionary, locale }: MainNavigationProps) {
 
   return (
     <nav aria-label={dictionary.accessibility.mainNavigation}>
-      <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+      <ul className="flex flex-wrap gap-x-1 gap-y-2 text-[var(--font-size-sm)]">
         {navigationRoutes.map((route) => (
           <li key={route.key}>
             <Link
               aria-current={activeRoute.key === route.key ? "page" : undefined}
-              className="aria-current:text-[var(--color-accent)]"
+              className="inline-flex min-h-10 items-center rounded-[var(--radius-pill)] px-3 text-[var(--color-foreground-muted)] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-[var(--color-surface)] hover:text-[var(--color-foreground)] aria-current:bg-[var(--color-surface-muted)] aria-current:text-[var(--color-foreground)]"
               href={createPathForRoute(locale, route)}
             >
               {dictionary.navigation[route.key]}
+              {activeRoute.key === route.key ? (
+                <span
+                  aria-hidden="true"
+                  className="ml-2 h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"
+                />
+              ) : null}
             </Link>
           </li>
         ))}

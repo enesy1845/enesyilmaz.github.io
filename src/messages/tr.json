@@ -15,6 +15,9 @@
   "accessibility": {
     "skipToContent": "İçeriğe geç",
     "mainNavigation": "Ana gezinme",
+    "mobileNavigation": "Mobil gezinme",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
     "languageSwitcher": "Dil seç",
     "currentLanguage": "Geçerli dil",
     "footerNavigation": "Alt bilgi gezinmesi"
@@ -28,36 +31,51 @@
     "home": {
       "heading": "Enes Yilmaz",
       "description": "Yazılım geliştirici. Bu temel, kod, düşünce ve zanaat için çok dilli bir portfolyoya dönüşecek.",
+      "primaryAction": "İşleri gör",
+      "secondaryAction": "Enes hakkında",
+      "meta": "Norveç merkezli. Python, veri, web ve yazılım sistemleri üzerinde çalışıyor.",
+      "foundationTitle": "Kod · Düşünce · Zanaat",
+      "foundationDescription": "Tam ana sayfa daha sonraki bir fazda şekillenecek. Bu sürüm görsel ritmi ve ortak yerleşimi kurar.",
       "metaTitle": "Enes Yilmaz - Yazılım Geliştirici",
       "metaDescription": "Düşünülmüş sistemler geliştiren yazılım geliştirici Enes Yilmaz için çok dilli portfolyo temeli."
     },
     "work": {
       "heading": "İşler",
       "description": "Seçilmiş işler, proje içerik modeli hazır olduğunda eklenecek.",
+      "placeholderTitle": "Proje vaka çalışmaları bilinçli olarak ertelendi",
+      "placeholderDescription": "Ayrıntılı proje kayıtları, sorumluluklar, çıktılar ve medya içerik modeli tasarlandıktan sonra eklenecek.",
       "metaTitle": "İşler",
       "metaDescription": "Enes Yilmaz tarafından yapılan seçilmiş yazılım ve web projeleri için gelecekteki koleksiyon."
     },
     "notes": {
       "heading": "Notlar",
       "description": "Teknik ve düşünsel notlar gelecekteki içerik sistemiyle eklenecek.",
+      "placeholderTitle": "Editöryel içerik gerçek dilini koruyacak",
+      "placeholderDescription": "Notlar ileride özgün metne ve mevcut çevirilere göre İngilizce, Norveççe veya Türkçe görünebilir.",
       "metaTitle": "Notlar",
       "metaDescription": "Teknik yazılar ve düşünsel denemeler için gelecekteki not arşivi."
     },
     "atelier": {
       "heading": "Atölye",
       "description": "Zanaat ve süreç yazıları daha sonraki bir içerik aşamasında eklenecek.",
+      "placeholderTitle": "Zanaat içeriği henüz taşınmadı",
+      "placeholderDescription": "Gelecekteki atölye yazıları malzeme sürecini, görsel çalışmayı ve portfolyonun zanaat yönünü birbirine bağlayacak.",
       "metaTitle": "Atölye",
       "metaDescription": "Zanaat, süreç ve yaratıcı işler için gelecekteki alan."
     },
     "about": {
       "heading": "Hakkında",
       "description": "Daha kapsamlı profesyonel anlatı, içerik temeli hazır olduğunda yazılacak.",
+      "placeholderTitle": "Profesyonel anlatı içerik doğrulamasından sonra gelecek",
+      "placeholderDescription": "Sonraki Hakkında sayfası, doğrulanmış deneyim, öğretim ve proje bağlamını uydurma iddialar olmadan kullanacak.",
       "metaTitle": "Hakkında",
       "metaDescription": "Enes Yilmaz için gelecekteki profesyonel profil."
     },
     "contact": {
       "heading": "İletişim",
       "description": "Tam iletişim deneyimi bilinçli olarak sade tutulurken iletişim bağlantıları kullanılabilir.",
+      "placeholderTitle": "Doğrulanmış profesyonel bağlantıları kullanın",
+      "placeholderDescription": "Sunucu taraflı form, doğrulama ve kötüye kullanım koruması onaylanana kadar iletişim deneyimi bağlantı temelli kalır.",
       "metaTitle": "İletişim",
       "metaDescription": "Enes Yilmaz ile herkese açık profesyonel bağlantılar üzerinden iletişim kurun."
     }
@@ -68,6 +86,9 @@
     "github": "GitHub"
   },
   "footer": {
+    "statement": "Yazılım sistemleri, düşünceli yazılar ve özenli zanaat için çok dilli bir portfolyo.",
+    "location": "Norveç merkezli",
+    "professionalLinks": "Profesyonel bağlantılar",
     "copyright": "Tüm hakları saklıdır."
   },
   "notFound": {

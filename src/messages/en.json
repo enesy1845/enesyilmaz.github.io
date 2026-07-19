@@ -15,6 +15,9 @@
   "accessibility": {
     "skipToContent": "Skip to content",
     "mainNavigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "languageSwitcher": "Choose language",
     "currentLanguage": "Current language",
     "footerNavigation": "Footer navigation"
@@ -28,36 +31,51 @@
     "home": {
       "heading": "Enes Yilmaz",
       "description": "Software Developer. This foundation will grow into a multilingual portfolio for code, thought, and craft.",
+      "primaryAction": "View work",
+      "secondaryAction": "About Enes",
+      "meta": "Based in Norway. Working across Python, data, web, and software systems.",
+      "foundationTitle": "Code · Thought · Craft",
+      "foundationDescription": "The full home page will be shaped in a later phase. This version establishes the visual rhythm and shared layout.",
       "metaTitle": "Enes Yilmaz - Software Developer",
       "metaDescription": "A multilingual portfolio foundation for Enes Yilmaz, a software developer building thoughtful systems."
     },
     "work": {
       "heading": "Work",
       "description": "Selected work will be added after the project content model is ready.",
+      "placeholderTitle": "Project case studies are intentionally deferred",
+      "placeholderDescription": "Detailed project records, responsibilities, outcomes, and media will be added after the content model is designed.",
       "metaTitle": "Work",
       "metaDescription": "A future collection of selected software and web projects by Enes Yilmaz."
     },
     "notes": {
       "heading": "Notes",
       "description": "Technical and reflective notes will be added through the future content system.",
+      "placeholderTitle": "Editorial content will keep its real language",
+      "placeholderDescription": "Notes may later appear in English, Norwegian, or Turkish depending on the original text and available translations.",
       "metaTitle": "Notes",
       "metaDescription": "A future notes archive for technical writing and reflective essays."
     },
     "atelier": {
       "heading": "Atelier",
       "description": "Craft and process entries will be added in a later content phase.",
+      "placeholderTitle": "Craft content is not migrated yet",
+      "placeholderDescription": "Future atelier entries will connect material process, visual work, and the broader craft side of the portfolio.",
       "metaTitle": "Atelier",
       "metaDescription": "A future space for craft, process, and creative work."
     },
     "about": {
       "heading": "About",
       "description": "A fuller professional narrative will be written after the content foundation is ready.",
+      "placeholderTitle": "Professional narrative comes after content confirmation",
+      "placeholderDescription": "The later About page will use verified experience, teaching, and project context without inventing claims.",
       "metaTitle": "About",
       "metaDescription": "A future professional profile for Enes Yilmaz."
     },
     "contact": {
       "heading": "Contact",
       "description": "Contact links are available while the full contact experience remains intentionally simple.",
+      "placeholderTitle": "Use verified professional links",
+      "placeholderDescription": "The contact experience stays link-based until a server-side form, validation, and abuse protection are approved.",
       "metaTitle": "Contact",
       "metaDescription": "Contact Enes Yilmaz through public professional links."
     }
@@ -68,6 +86,9 @@
     "github": "GitHub"
   },
   "footer": {
+    "statement": "A multilingual portfolio for software systems, thoughtful writing, and careful craft.",
+    "location": "Based in Norway",
+    "professionalLinks": "Professional links",
     "copyright": "All rights reserved."
   },
   "notFound": {

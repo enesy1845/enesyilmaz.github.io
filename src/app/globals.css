@@ -15,14 +15,21 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(180deg, rgba(185, 155, 93, 0.08), transparent 22rem),
+    radial-gradient(
+      circle at top left,
+      rgb(185 155 93 / 0.1),
+      transparent 28rem
+    ),
+    linear-gradient(180deg, rgb(185 155 93 / 0.04), transparent 22rem),
     var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body);
   text-rendering: optimizeLegibility;
 }
 
-a {
+a:not([class]) {
   color: inherit;
   text-decoration-color: color-mix(
     in srgb,
@@ -32,17 +39,49 @@ a {
   text-underline-offset: 0.2em;
 }
 
-a:hover {
+a:not([class]):hover {
   color: var(--color-accent);
 }
 
+::selection {
+  background: var(--color-selection);
+  color: var(--color-foreground);
+}
+
 :focus-visible {
-  outline: 3px solid var(--color-focus);
+  outline: 0.1875rem solid var(--color-focus);
   outline-offset: 4px;
 }
 
 main {
   min-height: 60vh;
+  scroll-margin-top: calc(var(--layout-header-height) + var(--space-6));
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.surface-grid {
+  background-image:
+    linear-gradient(rgb(247 239 229 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(247 239 229 / 0.035) 1px, transparent 1px);
+  background-size: 3rem 3rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

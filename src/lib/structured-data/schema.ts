@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { socialLinks } from "@/config/social";
 import { absoluteUrl } from "@/lib/utils/url";
 
 export type JsonLd = Record<string, unknown>;
@@ -9,7 +10,7 @@ export function createPersonJsonLd(): JsonLd {
     "@type": "Person",
     name: siteConfig.author,
     url: absoluteUrl("/en"),
-    sameAs: [siteConfig.social.github, siteConfig.social.linkedin],
+    sameAs: socialLinks.map((link) => link.href),
   };
 }
 

@@ -17,6 +17,30 @@ describe("navigation shell", () => {
     );
   });
 
+  it("renders all route labels", () => {
+    render(<MainNavigation dictionary={en} locale="en" />);
+
+    for (const label of [
+      "Home",
+      "Work",
+      "Notes",
+      "Atelier",
+      "About",
+      "Contact",
+    ]) {
+      expect(screen.getByRole("link", { name: label })).toBeInTheDocument();
+    }
+  });
+
+  it("marks the current page semantically", () => {
+    render(<MainNavigation dictionary={en} locale="en" />);
+
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  });
+
   it("renders all language options", () => {
     render(<LanguageSwitcher dictionary={en} locale="en" />);
 

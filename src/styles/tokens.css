@@ -1,18 +1,98 @@
 :root {
+  color-scheme: dark;
+
   --color-background: #171412;
-  --color-foreground: #f5efe7;
-  --color-muted: #b9afa4;
-  --color-border: #3a332d;
+  --color-background-elevated: #1d1915;
   --color-surface: #211d19;
+  --color-surface-muted: #2a241e;
+  --color-foreground: #f7efe5;
+  --color-foreground-muted: #c9bdb0;
+  --color-foreground-subtle: #94887b;
+  --color-border: #3e352c;
+  --color-border-strong: #6e5c48;
   --color-accent: #b99b5d;
+  --color-accent-hover: #d3b979;
+  --color-accent-foreground: #171412;
   --color-focus: #e2bd68;
-  --max-content-width: 72rem;
-  --space-page-x: clamp(1rem, 4vw, 2rem);
-  --space-section-y: clamp(2.5rem, 7vw, 5rem);
+  --color-selection: #5b4425;
+  --color-success: #7da177;
+  --color-warning: #d8a657;
+  --color-error: #df7f72;
+  --color-code: #83a7a0;
+  --color-thought: #c4b183;
+  --color-craft: #b7835f;
+
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono:
     "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --font-size-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+  --font-size-sm: clamp(0.875rem, 0.84rem + 0.14vw, 0.9375rem);
+  --font-size-base: clamp(1rem, 0.96rem + 0.16vw, 1.0625rem);
+  --font-size-md: clamp(1.0625rem, 1rem + 0.28vw, 1.1875rem);
+  --font-size-lg: clamp(1.1875rem, 1.1rem + 0.42vw, 1.375rem);
+  --font-size-xl: clamp(1.375rem, 1.24rem + 0.68vw, 1.75rem);
+  --font-size-2xl: clamp(1.75rem, 1.5rem + 1.05vw, 2.25rem);
+  --font-size-3xl: clamp(2.125rem, 1.78rem + 1.55vw, 3rem);
+  --font-size-4xl: clamp(2.625rem, 2.15rem + 2vw, 4rem);
+  --font-size-display: clamp(3rem, 2.2rem + 3.2vw, 5.25rem);
+
+  --line-height-tight: 1.05;
+  --line-height-heading: 1.12;
+  --line-height-body: 1.65;
+  --line-height-relaxed: 1.8;
+
+  --letter-spacing-tight: 0;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-label: 0.08em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-section: clamp(3rem, 8vw, 7rem);
+
+  --layout-max: 76rem;
+  --layout-wide: 88rem;
+  --layout-reading: 44rem;
+  --layout-gutter: clamp(1rem, 4vw, 2.5rem);
+  --layout-header-height: 4.75rem;
+  --max-content-width: var(--layout-max);
+  --space-page-x: var(--layout-gutter);
+  --space-section-y: var(--space-section);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-pill: 999rem;
+  --border-width: 1px;
+
+  --shadow-subtle: 0 1rem 2.5rem rgb(0 0 0 / 0.18);
+  --shadow-elevated: 0 1.5rem 4rem rgb(0 0 0 / 0.28);
+
+  --duration-fast: 140ms;
+  --duration-normal: 220ms;
+  --duration-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-navigation: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-toast: 50;
 }

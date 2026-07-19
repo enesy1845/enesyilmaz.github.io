@@ -15,6 +15,9 @@
   "accessibility": {
     "skipToContent": "Gå til innhold",
     "mainNavigation": "Hovednavigasjon",
+    "mobileNavigation": "Mobilnavigasjon",
+    "openMenu": "Åpne meny",
+    "closeMenu": "Lukk meny",
     "languageSwitcher": "Velg språk",
     "currentLanguage": "Gjeldende språk",
     "footerNavigation": "Bunnnavigasjon"
@@ -28,36 +31,51 @@
     "home": {
       "heading": "Enes Yilmaz",
       "description": "Programvareutvikler. Dette fundamentet skal bli en flerspråklig portfolio for kode, tanke og håndverk.",
+      "primaryAction": "Se arbeid",
+      "secondaryAction": "Om Enes",
+      "meta": "Basert i Norge. Arbeider med Python, data, web og programvaresystemer.",
+      "foundationTitle": "Kode · Tanke · Håndverk",
+      "foundationDescription": "Den fulle forsiden formes i en senere fase. Denne versjonen etablerer visuell rytme og felles layout.",
       "metaTitle": "Enes Yilmaz - Programvareutvikler",
       "metaDescription": "Et flerspråklig portfoliofundament for Enes Yilmaz, en programvareutvikler som bygger gjennomtenkte systemer."
     },
     "work": {
       "heading": "Arbeid",
       "description": "Utvalgt arbeid legges til når prosjektmodellen er klar.",
+      "placeholderTitle": "Prosjektcase er bevisst utsatt",
+      "placeholderDescription": "Detaljerte prosjektdata, ansvar, resultater og medier legges til etter at innholdsmodellen er utformet.",
       "metaTitle": "Arbeid",
       "metaDescription": "En fremtidig samling av utvalgte programvare- og webprosjekter av Enes Yilmaz."
     },
     "notes": {
       "heading": "Notater",
       "description": "Tekniske og reflekterende notater legges til gjennom det fremtidige innholdssystemet.",
+      "placeholderTitle": "Redaksjonelt innhold beholder sitt ekte språk",
+      "placeholderDescription": "Notater kan senere vises på engelsk, norsk eller tyrkisk, avhengig av originaltekst og tilgjengelige oversettelser.",
       "metaTitle": "Notater",
       "metaDescription": "Et fremtidig notatarkiv for teknisk skriving og reflekterende tekster."
     },
     "atelier": {
       "heading": "Atelier",
       "description": "Håndverk og prosess legges til i en senere innholdsfase.",
+      "placeholderTitle": "Håndverksinnhold er ikke migrert ennå",
+      "placeholderDescription": "Fremtidige atelierinnlegg vil knytte materialprosess, visuelt arbeid og den bredere håndverkssiden av portfolioen sammen.",
       "metaTitle": "Atelier",
       "metaDescription": "Et fremtidig rom for håndverk, prosess og kreativt arbeid."
     },
     "about": {
       "heading": "Om",
       "description": "En fyldigere profesjonell fortelling skrives når innholdsgrunnlaget er klart.",
+      "placeholderTitle": "Den profesjonelle fortellingen kommer etter innholdsavklaring",
+      "placeholderDescription": "Den senere Om-siden skal bruke verifisert erfaring, undervisning og prosjektkontekst uten å finne opp påstander.",
       "metaTitle": "Om",
       "metaDescription": "En fremtidig profesjonell profil for Enes Yilmaz."
     },
     "contact": {
       "heading": "Kontakt",
       "description": "Kontaktlenker er tilgjengelige mens den fulle kontaktopplevelsen holdes bevisst enkel.",
+      "placeholderTitle": "Bruk verifiserte profesjonelle lenker",
+      "placeholderDescription": "Kontaktopplevelsen forblir lenkebasert til et serverside-skjema, validering og misbruksvern er godkjent.",
       "metaTitle": "Kontakt",
       "metaDescription": "Kontakt Enes Yilmaz gjennom offentlige profesjonelle lenker."
     }
@@ -68,6 +86,9 @@
     "github": "GitHub"
   },
   "footer": {
+    "statement": "En flerspråklig portfolio for programvaresystemer, gjennomtenkt skriving og nøyaktig håndverk.",
+    "location": "Basert i Norge",
+    "professionalLinks": "Profesjonelle lenker",
     "copyright": "Alle rettigheter forbeholdt."
   },
   "notFound": {

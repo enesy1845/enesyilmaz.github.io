@@ -11,7 +11,7 @@ export default function NotFound() {
       <body>
         <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-16">
           <h1 className="text-4xl font-semibold">{en.notFound.heading}</h1>
-          <p className="mt-4 text-lg text-[var(--color-muted)]">
+          <p className="mt-4 text-lg text-[var(--color-foreground-muted)]">
             {en.notFound.description}
           </p>
           <Link

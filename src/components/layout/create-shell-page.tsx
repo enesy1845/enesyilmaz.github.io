@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-import { PageIntro } from "@/components/layout/page-intro";
+import { PageIntro } from "@/components/ui/page-intro";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { routes, type RouteKey } from "@/i18n/routing";
@@ -32,11 +34,20 @@ export function createShellPage(routeKey: Exclude<RouteKey, "home">) {
     const page = dictionary.pages[routeKey];
 
     return (
-      <PageIntro
-        heading={page.heading}
-        description={page.description}
-        locale={locale}
-      />
+      <>
+        <PageIntro
+          heading={page.heading}
+          description={page.description}
+          locale={locale}
+          meta={dictionary.footer.location}
+        />
+        <Section>
+          <SectionHeader
+            title={page.placeholderTitle}
+            description={page.placeholderDescription}
+          />
+        </Section>
+      </>
     );
   }
 

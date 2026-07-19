@@ -153,3 +153,25 @@ After the first Next.js foundation exists:
 5. Add bundle analysis tooling only if needed and documented.
 6. Record measured budgets in a future `docs/performance/budgets.md`.
 7. Re-run analysis after adding the particle hero, ecosystem graph, MDX, or video embeds.
+
+## Phase 2 Baseline Update
+
+Phase 2 keeps the shell lightweight:
+
+- Client components: 3.
+- `MainNavigation`: client-side only to read the current pathname and expose `aria-current` accurately in a shared layout.
+- `LanguageSwitcher`: client-side only to preserve the equivalent route while switching locale.
+- `MobileNavigation`: client-side for open state, Escape close behavior, body scroll control, and focus return.
+- External requests: none from the application shell.
+- Font requests: none; system fonts only.
+- Image requests: none in the active Next.js shell.
+- Third-party scripts: none.
+- Backdrop filtering: not used; the sticky header uses a flat elevated background.
+- Current routes: `/`, localized home routes, localized shell routes, `robots.txt`, `sitemap.xml`, and manifest are static or SSG in production builds.
+
+Known Phase 2 risks:
+
+- Sticky navigation can cover future anchor targets unless future sections use appropriate scroll margins.
+- Mobile menu body-scroll handling should be rechecked after route transitions or richer content are introduced.
+- Client JavaScript will grow if future visual effects are added without dynamic imports and lifecycle controls.
+- The current `npm audit` warning remains tied to transitive Next/OpenNext dependencies and should be revisited when compatible upstream fixes are available.
