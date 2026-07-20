@@ -19,27 +19,27 @@ export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
       data-site-header=""
     >
       <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-3">
-        <Link
-          className="group inline-flex items-center gap-3 no-underline"
-          data-header-identity=""
-          href={createLocalePath(locale)}
-        >
+        <div className="flex min-w-0 items-center gap-3">
+          <Link
+            aria-label={`${dictionary.site.name}: Code / Thought / Craft`}
+            className="inline-flex min-w-0 font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-accent)] text-[var(--font-size-xs)] no-underline"
+            data-header-signature=""
+            href={createLocalePath(locale)}
+          >
+            Code / Thought / Craft
+          </Link>
           <span
             aria-hidden="true"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[var(--color-surface)] font-serif text-[var(--color-accent)] text-[var(--font-size-md)]"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[var(--color-surface)] font-serif text-[var(--color-accent)] text-[var(--font-size-sm)] no-underline"
+            data-header-compact-mark=""
           >
             EY
           </span>
-          <span className="flex flex-col leading-none">
-            <span className="font-semibold text-[var(--color-foreground)] text-[var(--font-size-md)]">
-              {dictionary.site.name}
-            </span>
-            <span className="mt-1 text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
-              {dictionary.site.role}
-            </span>
-          </span>
-        </Link>
-        <div className="hidden items-center gap-4 lg:flex">
+        </div>
+        <div
+          className="hidden items-center gap-4 lg:flex"
+          data-header-navigation=""
+        >
           <MainNavigation dictionary={dictionary} locale={locale} />
           <LanguageSwitcher dictionary={dictionary} locale={locale} />
         </div>

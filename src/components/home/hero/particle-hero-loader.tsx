@@ -101,7 +101,7 @@ export function ParticleHeroLoader({ label }: ParticleHeroLoaderProps) {
 
   return (
     <div
-      className="relative h-full min-h-[18rem] overflow-hidden rounded-[var(--radius-lg)]"
+      className="relative h-full min-h-[18rem] overflow-hidden"
       data-particle-host=""
       data-particle-visible={isVisible ? "true" : "false"}
       ref={hostRef}

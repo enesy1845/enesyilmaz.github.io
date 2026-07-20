@@ -30,14 +30,13 @@ export async function generateMetadata({
 
 export default async function HomePage({ params }: PageProps) {
   const { locale: localeParam } = await params;
-  const dictionary = await getDictionary(localeParam);
   const locale = isLocale(localeParam) ? localeParam : "en";
   const page = homeContent[locale];
   const featuredProjects = getFeaturedProjects();
 
   return (
     <>
-      <HomeHero dictionary={dictionary} locale={locale} page={page} />
+      <HomeHero locale={locale} page={page} />
 
       <Section container="reading">
         <SectionHeader

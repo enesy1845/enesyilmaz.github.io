@@ -67,7 +67,9 @@ test("English home renders shared header and footer", async ({ page }) => {
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
   await expect(
-    page.getByRole("banner").getByRole("link", { name: /Enes Yilmaz/ }),
+    page
+      .getByRole("banner")
+      .getByRole("link", { name: /Code \/ Thought \/ Craft/ }),
   ).toHaveAttribute("href", "/en");
 });
 
@@ -253,9 +255,10 @@ test("home content remains usable when JavaScript is disabled", async ({
   await context.close();
 });
 
-test("particle canvas is lazy, decorative and limited to the home route", async ({
+test("particle enhancement is lazy, decorative and limited to the home route", async ({
   page,
 }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/en/work");
   await expect(page.locator("[data-particle-host]")).toHaveCount(0);
 
@@ -264,16 +267,54 @@ test("particle canvas is lazy, decorative and limited to the home route", async 
     "data-particle-visible",
     "true",
   );
-  await expect(page.locator("[data-particle-canvas]")).toHaveAttribute(
-    "aria-hidden",
-    "true",
+  const canvasCount = await page.locator("[data-particle-canvas]").count();
+  if (canvasCount > 0) {
+    await expect(page.locator("[data-particle-canvas]")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+  } else {
+    await expect(page.locator("[data-particle-fallback]")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+  }
+});
+
+test("home hero keeps the first viewport as a pure identity scene", async ({
+  page,
+}) => {
+  await page.goto("/en");
+
+  const hero = page.locator("[data-home-hero]");
+  await expect(hero.getByRole("heading", { level: 1 })).toHaveText(
+    "Enes Yilmaz",
   );
+  await expect(hero.getByText("Software Developer")).toHaveCount(0);
+  await expect(
+    hero.getByRole("link", { name: "View selected work" }),
+  ).toHaveCount(0);
+  await expect(
+    hero.locator("[data-hero-background-mark] span").first(),
+  ).toHaveText("E");
+  await expect(
+    hero.locator("[data-hero-background-mark] span").last(),
+  ).toHaveText("Y");
+  await expect(page.locator("[data-home-hero-support]")).toContainText(
+    "Software Developer",
+  );
+  await expect(
+    page.locator("[data-home-hero-support]").getByRole("link", {
+      name: "View selected work",
+    }),
+  ).toHaveAttribute("href", "/en/work");
 });
 
 test("hero scroll transition updates header state without blocking navigation", async ({
   page,
 }) => {
   await page.goto("/en");
+  await page.locator("[data-home-hero-support]").scrollIntoViewIfNeeded();
   await page
     .getByRole("link", { name: "View selected work" })
     .click({ trial: true });
@@ -282,6 +323,12 @@ test("hero scroll transition updates header state without blocking navigation", 
   await expect
     .poll(() => page.evaluate(() => document.documentElement.dataset.heroState))
     .toBe("hero-passed");
+  await expect(page.locator("[data-header-signature]")).toBeVisible();
+  await expect(page.locator("[data-header-signature]")).toHaveText(
+    "Code / Thought / Craft",
+  );
+  await expect(page.locator("[data-header-compact-mark]")).toBeVisible();
+  await expect(page.locator("[data-header-compact-mark]")).toHaveText("EY");
 
   await page.getByRole("link", { name: "View selected work" }).click();
   await expect(page).toHaveURL(/\/en\/work$/);

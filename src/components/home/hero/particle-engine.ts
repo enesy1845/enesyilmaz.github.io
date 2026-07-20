@@ -44,8 +44,9 @@ export function buildParticles(
 
   context.clearRect(0, 0, source.width, source.height);
   const lines = getParticleTextLines(width);
-  const fontSize = Math.min(width * config.fontScale, height * 0.36);
-  context.font = `700 ${fontSize}px Georgia, "Times New Roman", serif`;
+  const maxFontSize = Math.min(width * config.fontScale, height * 0.56);
+  const fontSize = getFittedFontSize(context, lines, maxFontSize, width);
+  context.font = getParticleFont(fontSize);
   context.textAlign = "center";
   context.textBaseline = "middle";
   context.fillStyle = "#ffffff";
@@ -79,7 +80,7 @@ export function buildParticles(
     const seedA = seededUnit(index + 1);
     const seedB = seededUnit(index + 17);
     const angle = seedA * Math.PI * 2;
-    const spread = Math.min(width, height) * (0.1 + seedB * 0.12);
+    const spread = Math.min(width, height) * (0.012 + seedB * 0.025);
     particles.push({
       tx: target.x,
       ty: target.y,
@@ -93,6 +94,30 @@ export function buildParticles(
   }
 
   return particles;
+}
+
+function getParticleFont(fontSize: number): string {
+  return `800 ${fontSize}px Arial, Helvetica, sans-serif`;
+}
+
+function getFittedFontSize(
+  context: CanvasRenderingContext2D,
+  lines: readonly string[],
+  maxFontSize: number,
+  width: number,
+): number {
+  const targetWidth = width * 0.9;
+  let fittedSize = maxFontSize;
+
+  for (const line of lines) {
+    context.font = getParticleFont(fittedSize);
+    const measuredWidth = context.measureText(line).width;
+    if (measuredWidth > targetWidth) {
+      fittedSize *= targetWidth / measuredWidth;
+    }
+  }
+
+  return Math.max(42, fittedSize);
 }
 
 export function drawParticleFrame(

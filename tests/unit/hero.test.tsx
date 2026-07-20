@@ -11,7 +11,6 @@ import {
 } from "@/components/home/hero/hero.utils";
 import { ParticleHeroFallback } from "@/components/home/hero/particle-hero-fallback";
 import { homeContent } from "@/data/home";
-import en from "@/messages/en.json";
 
 const baseCapabilities = {
   supportsCanvas: true,
@@ -24,7 +23,7 @@ const baseCapabilities = {
 
 describe("home hero", () => {
   it("renders the semantic hero content before particle enhancement", () => {
-    render(<HomeHero dictionary={en} locale="en" page={homeContent.en} />);
+    render(<HomeHero locale="en" page={homeContent.en} />);
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Enes Yilmaz",
@@ -33,10 +32,7 @@ describe("home hero", () => {
     expect(
       screen.getByRole("link", { name: "View selected work" }),
     ).toHaveAttribute("href", "/en/work");
-    expect(screen.getByRole("link", { name: "About me" })).toHaveAttribute(
-      "href",
-      "/en/about",
-    );
+    expect(screen.queryByRole("link", { name: "About me" })).toBeNull();
   });
 
   it("keeps the static particle fallback decorative", () => {
