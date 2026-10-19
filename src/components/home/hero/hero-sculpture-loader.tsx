@@ -65,7 +65,9 @@ export function HeroSculptureLoader() {
       },
       { threshold: [0, 0.05] },
     );
-    observer.observe(host);
+    // The host is a fixed layer that never leaves the viewport, so track the
+    // hero section itself to pause rendering once it has scrolled away.
+    observer.observe(host.closest("[data-home-hero]") ?? host);
 
     return () => {
       cancelled = true;

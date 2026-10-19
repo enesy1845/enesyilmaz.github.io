@@ -22,11 +22,18 @@ export const HERO_INTRO_STORAGE_KEY = "hero-intro-seen";
 const INTRO_MIN_DURATION = 1100;
 const INTRO_REVEAL_DURATION = 1400;
 
-function toRect(element: Element, scrollY: number): Rect {
+/**
+ * Time constant (seconds) of the follow-through applied to the animation, not
+ * to the page: the page scrolls natively while the hero eases towards the
+ * scroll position. This turns coarse wheel steps into one continuous glide.
+ */
+const SCROLL_SMOOTHING = 0.14;
+
+function toRect(element: Element): Rect {
   const rect = element.getBoundingClientRect();
   return {
     x: rect.left,
-    y: rect.top + scrollY,
+    y: rect.top,
     width: rect.width,
     height: rect.height,
   };
@@ -35,7 +42,11 @@ function toRect(element: Element, scrollY: number): Rect {
 /**
  * Drives the AIR-style hero: the preloader sequence, the copy fade and the
  * wordmark that docks letter by letter into the site header while scrolling.
- * All work is transform/opacity only and runs in a single rAF per scroll.
+ *
+ * The letters and copy live in a fixed layer, so the browser keeps them in
+ * place during scroll and they never lag a frame behind (no jitter). Only
+ * transform/opacity are written, from one rAF loop that runs while the
+ * smoothed position is still catching up and stops once it settles.
  */
 export function HeroMotion({ heroId }: HeroMotionProps) {
   useEffect(() => {
@@ -78,61 +89,62 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     let from: Rect[] = [];
     let to: Rect[] = [];
     let stagger = 0;
-    let dockDistance = 1;
-    let fadeDistance = 1;
+    let heroHeight = 1;
+    let headerBottom = 0;
     let frame: number | null = null;
     let introFrame: number | null = null;
+    let lastTime: number | null = null;
+    let smoothY = window.scrollY;
+    let disposed = false;
     const timers: number[] = [];
 
     function measure() {
-      if (!canDock || introActive) {
+      if (disposed) {
         return;
       }
-      for (const letter of heroLetters) {
-        letter.style.transform = "";
+      heroHeight = Math.max(1, heroElement.offsetHeight);
+      headerBottom = headerElement.getBoundingClientRect().bottom;
+      if (canDock && !introActive) {
+        for (const letter of heroLetters) {
+          letter.style.transform = "";
+        }
+        from = heroLetters.map(toRect);
+        to = headerLetters.map(toRect);
+        // Only the stacked (two-row) wordmark needs words to leave in turn; on
+        // one row every letter converges together, as on the AIR reference.
+        const tops = from.map((rect) => rect.y);
+        const isStacked =
+          Math.max(...tops) - Math.min(...tops) > (from[0]?.height ?? 0) / 2;
+        stagger = isStacked ? WORDMARK_WORD_STAGGER : 0;
       }
-      const scrollY = window.scrollY;
-      from = heroLetters.map((letter) => toRect(letter, scrollY));
-      to = headerLetters.map((letter) => toRect(letter, 0));
-      // Only the stacked (two-row) wordmark needs words to leave in turn; on
-      // one row every letter converges together, as on the AIR reference.
-      const tops = from.map((rect) => rect.y);
-      const isStacked =
-        Math.max(...tops) - Math.min(...tops) > (from[0]?.height ?? 0) / 2;
-      stagger = isStacked ? WORDMARK_WORD_STAGGER : 0;
-      apply();
+      render(smoothY);
     }
 
-    function apply() {
-      frame = null;
+    function render(position: number) {
+      if (disposed) {
+        return;
+      }
       const scrollY = window.scrollY;
-      const heroRect = heroElement.getBoundingClientRect();
-      const headerRect = headerElement.getBoundingClientRect();
-      const height = Math.max(1, heroElement.offsetHeight);
-      dockDistance = height * WORDMARK_DOCK_DISTANCE;
-      fadeDistance = height * HERO_FADE_DISTANCE;
-
-      root.dataset.heroState = getHeroScrollState(
-        scrollY,
-        heroRect.bottom,
-        headerRect.bottom,
+      const heroBottom = heroElement.getBoundingClientRect().top + heroHeight;
+      const state = getHeroScrollState(scrollY, heroBottom, headerBottom);
+      const progress = clampProgress(
+        position / (heroHeight * WORDMARK_DOCK_DISTANCE),
       );
+      root.dataset.heroState = state;
+      if (state === "hero-passed" && progress >= 0.999) {
+        root.dataset.heroDocked = "true";
+      } else {
+        delete root.dataset.heroDocked;
+      }
       heroElement.style.setProperty(
         "--hero-fade",
-        clampProgress(-heroRect.top / fadeDistance).toFixed(4),
-      );
-      // Keeps the hero copy pinned in place while it fades, like a sticky
-      // layer, so it never slides into the docking letters.
-      heroElement.style.setProperty(
-        "--hero-pin",
-        `${Math.min(Math.max(0, -heroRect.top), fadeDistance).toFixed(1)}px`,
+        clampProgress(position / (heroHeight * HERO_FADE_DISTANCE)).toFixed(4),
       );
 
       if (!canDock || introActive || from.length === 0) {
         return;
       }
 
-      const progress = clampProgress(scrollY / dockDistance);
       heroLetters.forEach((letter, index) => {
         const start = from[index];
         const end = to[index];
@@ -142,7 +154,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         const transform = getLetterTransform(
           start,
           end,
-          scrollY,
+          0,
           getStaggeredProgress(
             progress,
             letterWords[index] ?? 0,
@@ -154,17 +166,37 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       });
     }
 
+    function tick(now: number) {
+      frame = null;
+      const target = window.scrollY;
+      const dt = lastTime === null ? 1 / 60 : (now - lastTime) / 1000;
+      lastTime = now;
+      if (prefersReducedMotion) {
+        smoothY = target;
+      } else {
+        smoothY +=
+          (target - smoothY) *
+          (1 - Math.exp(-Math.min(dt, 0.1) / SCROLL_SMOOTHING));
+      }
+      if (Math.abs(target - smoothY) < 0.5) {
+        smoothY = target;
+      }
+      render(smoothY);
+      if (smoothY !== target) {
+        frame = window.requestAnimationFrame(tick);
+      } else {
+        lastTime = null;
+      }
+    }
+
     function requestApply() {
       if (frame === null) {
-        frame = window.requestAnimationFrame(apply);
+        frame = window.requestAnimationFrame(tick);
       }
     }
 
     function requestMeasure() {
-      if (frame !== null) {
-        window.cancelAnimationFrame(frame);
-      }
-      frame = window.requestAnimationFrame(measure);
+      window.requestAnimationFrame(measure);
     }
 
     function finishIntro() {
@@ -217,9 +249,9 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       runIntro();
     }
     measure();
-    apply();
 
     return () => {
+      disposed = true;
       if (frame !== null) {
         window.cancelAnimationFrame(frame);
       }
@@ -236,6 +268,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         letter.style.transform = "";
       }
       delete root.dataset.heroState;
+      delete root.dataset.heroDocked;
       delete root.dataset.heroMotion;
       if (root.dataset.heroIntro !== "done") {
         delete root.dataset.heroIntro;

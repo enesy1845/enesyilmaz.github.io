@@ -103,7 +103,10 @@ export function HomeHero({
         <HeroSculptureLoader />
       </div>
 
-      <div className="hero__stage">
+      {/* Pinned layer: held in place by the browser (position: fixed once
+          motion is enabled) so scrolling never makes it jitter; the next
+          section slides over it, like AIR's sticky intro. */}
+      <div className="hero__stage hero__pinned">
         <h1 className="sr-only" id="home-hero-title">
           {page.heading}
         </h1>
@@ -124,6 +127,10 @@ export function HomeHero({
           </div>
         </div>
 
+        <div aria-hidden="true" className="hero__footer-space" />
+      </div>
+
+      <div className="hero__stage hero__flow">
         <div className="hero__footer" data-hero-fade="">
           <nav
             aria-label="Hero links"
