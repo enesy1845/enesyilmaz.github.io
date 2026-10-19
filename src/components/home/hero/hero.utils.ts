@@ -1,91 +1,37 @@
 import type {
   HeroScrollState,
-  ParticleCapabilities,
-  ParticleQualityTier,
-  ParticleTierConfig,
+  LetterTransform,
+  Rect,
+  SculptureCapabilities,
+  SculptureQualityTier,
+  SculptureTierConfig,
 } from "@/components/home/hero/hero.types";
 
-const tierConfig: Record<ParticleQualityTier, ParticleTierConfig> = {
-  reduced: {
-    tier: "reduced",
-    maxParticles: 0,
-    sampleStep: 16,
-    maxDpr: 1,
-    fontScale: 0.56,
-    interactionRadius: 0,
-    displacementStrength: 0,
-    returnForce: 0,
-    damping: 0.9,
-    maxVelocity: 0,
-  },
-  "small-mobile": {
-    tier: "small-mobile",
-    maxParticles: 420,
-    sampleStep: 10,
-    maxDpr: 1,
-    fontScale: 0.31,
-    interactionRadius: 0,
-    displacementStrength: 0,
-    returnForce: 0.055,
-    damping: 0.82,
-    maxVelocity: 8,
-  },
-  "large-mobile": {
-    tier: "large-mobile",
-    maxParticles: 620,
-    sampleStep: 9,
-    maxDpr: 1.25,
-    fontScale: 0.31,
-    interactionRadius: 0,
-    displacementStrength: 0,
-    returnForce: 0.055,
-    damping: 0.82,
-    maxVelocity: 8,
-  },
-  tablet: {
-    tier: "tablet",
-    maxParticles: 900,
-    sampleStep: 8,
-    maxDpr: 1.5,
-    fontScale: 0.3,
-    interactionRadius: 76,
-    displacementStrength: 0.9,
-    returnForce: 0.06,
-    damping: 0.84,
-    maxVelocity: 10,
-  },
-  desktop: {
-    tier: "desktop",
-    maxParticles: 1300,
-    sampleStep: 7,
-    maxDpr: 1.5,
-    fontScale: 0.29,
-    interactionRadius: 96,
-    displacementStrength: 1.05,
-    returnForce: 0.065,
-    damping: 0.85,
-    maxVelocity: 11,
-  },
+const tierConfig: Record<SculptureQualityTier, SculptureTierConfig> = {
+  reduced: { tier: "reduced", plateCount: 0, maxDpr: 1, frameInterval: 0 },
+  mobile: { tier: "mobile", plateCount: 84, maxDpr: 1.5, frameInterval: 33 },
+  tablet: { tier: "tablet", plateCount: 104, maxDpr: 1.5, frameInterval: 16 },
+  desktop: { tier: "desktop", plateCount: 128, maxDpr: 1.75, frameInterval: 0 },
   "large-desktop": {
     tier: "large-desktop",
-    maxParticles: 1600,
-    sampleStep: 7,
-    maxDpr: 1.5,
-    fontScale: 0.29,
-    interactionRadius: 110,
-    displacementStrength: 1.1,
-    returnForce: 0.065,
-    damping: 0.85,
-    maxVelocity: 11,
+    plateCount: 144,
+    maxDpr: 1.75,
+    frameInterval: 0,
   },
 };
 
-export function getParticleTier(width: number): ParticleQualityTier {
-  if (width < 360) {
-    return "small-mobile";
-  }
+/** Portion of the hero height over which the wordmark docks into the header. */
+export const WORDMARK_DOCK_DISTANCE = 0.85;
+
+/** Share of the dock distance by which the last word trails the first. */
+export const WORDMARK_WORD_STAGGER = 0.35;
+
+/** Portion of the hero height over which hero copy fades out (AIR: -80%). */
+export const HERO_FADE_DISTANCE = 0.8;
+
+export function getSculptureTier(width: number): SculptureQualityTier {
   if (width < 640) {
-    return "large-mobile";
+    return "mobile";
   }
   if (width < 1024) {
     return "tablet";
@@ -96,59 +42,101 @@ export function getParticleTier(width: number): ParticleQualityTier {
   return "large-desktop";
 }
 
-export function getParticleConfig(
-  capabilities: ParticleCapabilities,
-): ParticleTierConfig {
+export function getSculptureConfig(
+  capabilities: SculptureCapabilities,
+): SculptureTierConfig {
   if (
     capabilities.prefersReducedMotion ||
     !capabilities.supportsCanvas ||
-    capabilities.width < 300 ||
-    capabilities.height < 260
+    capabilities.width < 280 ||
+    capabilities.height < 240
   ) {
     return tierConfig.reduced;
   }
 
-  const tier = getParticleTier(capabilities.width);
-  const config = tierConfig[tier];
+  return tierConfig[getSculptureTier(capabilities.width)];
+}
 
-  return capabilities.pointer === "fine"
-    ? config
-    : {
-        ...config,
-        interactionRadius: 0,
-        displacementStrength: 0,
-      };
+export function shouldRunSculpture(capabilities: SculptureCapabilities) {
+  return getSculptureConfig(capabilities).tier !== "reduced";
 }
 
 export function getCappedDpr(
   devicePixelRatio: number,
-  config: ParticleTierConfig,
+  config: SculptureTierConfig,
 ): number {
   return Math.max(1, Math.min(devicePixelRatio || 1, config.maxDpr));
 }
 
-export function getHeroScrollState(progress: number): HeroScrollState {
-  if (progress <= 0.08) {
-    return "hero-top";
+export function clampProgress(value: number): number {
+  if (Number.isNaN(value)) {
+    return 0;
   }
-  if (progress >= 0.86) {
+  return Math.max(0, Math.min(1, value));
+}
+
+export function easeOutQuad(value: number): number {
+  const t = clampProgress(value);
+  return t * (2 - t);
+}
+
+export function easeInOutQuad(value: number): number {
+  const t = clampProgress(value);
+  return t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+}
+
+export function getHeroScrollState(
+  scrollY: number,
+  heroBottom: number,
+  headerBottom: number,
+): HeroScrollState {
+  if (heroBottom <= headerBottom + 1) {
     return "hero-passed";
+  }
+  if (scrollY <= 8) {
+    return "hero-top";
   }
   return "hero-transitioning";
 }
 
-export function clampProgress(value: number): number {
-  return Math.max(0, Math.min(1, value));
+/**
+ * Transform that moves a hero letter from its resting place (`from`, measured
+ * in document coordinates) to the matching header letter (`to`, measured in
+ * viewport coordinates of the sticky header). The extra `scrollY` term keeps
+ * the letter pinned to the viewport while it travels, like AIR's sticky logo.
+ */
+export function getLetterTransform(
+  from: Rect,
+  to: Rect,
+  scrollY: number,
+  progress: number,
+): LetterTransform {
+  const eased = easeOutQuad(progress);
+  const targetScale = from.height > 0 ? to.height / from.height : 1;
+
+  return {
+    x: (to.x - from.x) * eased,
+    y: scrollY + (to.y - from.y) * eased,
+    scale: 1 + (targetScale - 1) * eased,
+  };
 }
 
-export function shouldRunParticleRenderer(
-  capabilities: ParticleCapabilities,
-): boolean {
-  return getParticleConfig(capabilities).tier !== "reduced";
-}
-
-export function getParticleTextLines(width: number): readonly string[] {
-  return width >= 760 ? ["ENES YILMAZ"] : ["ENES", "YILMAZ"];
+/**
+ * Per-word docking progress. Words leave one after another so the second row
+ * of the stacked mobile wordmark never runs into the first one, while the
+ * letters of a word keep travelling together.
+ */
+export function getStaggeredProgress(
+  progress: number,
+  index: number,
+  count: number,
+  stagger = WORDMARK_WORD_STAGGER,
+): number {
+  if (stagger <= 0 || count <= 1) {
+    return clampProgress(progress);
+  }
+  const delay = (stagger * index) / (count - 1);
+  return clampProgress((progress - delay) / (1 - stagger));
 }
 
 export function seededUnit(index: number): number {

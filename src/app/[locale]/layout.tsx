@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Onest } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -15,6 +16,13 @@ import {
   createPersonJsonLd,
   createWebSiteJsonLd,
 } from "@/lib/structured-data/schema";
+
+const displayFont = Onest({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 type LocaleLayoutProps = {
   children: ReactNode;
@@ -53,7 +61,12 @@ export default async function LocaleLayout({
   const dictionary = await getDictionary(locale);
 
   return (
-    <html lang={htmlLang[locale]} data-scroll-behavior="smooth">
+    <html
+      className={displayFont.variable}
+      data-scroll-behavior="smooth"
+      lang={htmlLang[locale]}
+      suppressHydrationWarning
+    >
       <body>
         <SkipLink label={dictionary.accessibility.skipToContent} />
         <SiteHeader dictionary={dictionary} locale={locale} />

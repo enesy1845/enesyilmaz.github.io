@@ -39,7 +39,11 @@ export default async function HomePage({ params }: PageProps) {
     <>
       <HomeHero dictionary={dictionary} locale={locale} page={page} />
 
-      <Section container="reading">
+      <Section
+        className="scroll-mt-[var(--layout-header-height)]"
+        container="reading"
+        id="home-next"
+      >
         <SectionHeader
           title={page.manifestoTitle}
           description={page.manifestoLines.join(" ")}
