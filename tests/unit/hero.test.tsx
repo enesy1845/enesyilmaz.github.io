@@ -7,6 +7,7 @@ import {
   easeOutQuad,
   getCappedDpr,
   getHeroScrollState,
+  getHeroSnapTarget,
   getLetterTransform,
   getSculptureConfig,
   getStaggeredProgress,
@@ -122,5 +123,13 @@ describe("home hero", () => {
     expect(getStaggeredProgress(0.3, 1, 2)).toBe(0);
     expect(clampProgress(Number.NaN)).toBe(0);
     expect(easeOutQuad(2)).toBe(1);
+  });
+
+  it("only finishes a resting scroll that is nearly done", () => {
+    expect(getHeroSnapTarget(0.13, 1)).toBeNull();
+    expect(getHeroSnapTarget(0.5, 1)).toBeNull();
+    expect(getHeroSnapTarget(0.85, 1)).toBe(1);
+    expect(getHeroSnapTarget(0.85, -1)).toBeNull();
+    expect(getHeroSnapTarget(0.15, -1)).toBe(0);
   });
 });

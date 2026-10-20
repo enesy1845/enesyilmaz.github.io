@@ -10,6 +10,7 @@ import {
   clampProgress,
   easeInOutQuad,
   getHeroScrollState,
+  getHeroSnapTarget,
   getLetterTransform,
   getStaggeredProgress,
 } from "@/components/home/hero/hero.utils";
@@ -28,6 +29,9 @@ const INTRO_REVEAL_DURATION = 1400;
  * scroll position. This turns coarse wheel steps into one continuous glide.
  */
 const SCROLL_SMOOTHING = 0.14;
+
+/** Idle time after the last scroll event before snapping (no `scrollend`). */
+const SNAP_IDLE_MS = 140;
 
 function toRect(element: Element): Rect {
   const rect = element.getBoundingClientRect();
@@ -189,6 +193,59 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       }
     }
 
+    /**
+     * AIR snaps the intro to its start or end (hero top / hero bottom). When
+     * scrolling rests close to either end in the direction of travel, finish
+     * the motion; in between, leave the position to the user.
+     */
+    let lastScrollY = window.scrollY;
+    let direction = 0;
+    let snapTimer: number | null = null;
+    let pointerDown = false;
+
+    function snap() {
+      snapTimer = null;
+      if (disposed || !canDock || introActive || pointerDown) {
+        return;
+      }
+      const heroTop = heroElement.getBoundingClientRect().top + window.scrollY;
+      const end = Math.max(0, heroTop + heroHeight - headerBottom);
+      const scrollY = window.scrollY;
+      if (scrollY <= 1 || scrollY >= end - 1) {
+        return;
+      }
+      const target = getHeroSnapTarget(scrollY / end, direction);
+      if (target !== null) {
+        window.scrollTo({ top: target * end, behavior: "smooth" });
+      }
+    }
+
+    function scheduleSnap() {
+      if (snapTimer !== null) {
+        window.clearTimeout(snapTimer);
+      }
+      snapTimer = window.setTimeout(snap, SNAP_IDLE_MS);
+    }
+
+    function onPointerDown() {
+      pointerDown = true;
+    }
+
+    function onPointerUp() {
+      pointerDown = false;
+      scheduleSnap();
+    }
+
+    function onScroll() {
+      const scrollY = window.scrollY;
+      if (scrollY !== lastScrollY) {
+        direction = Math.sign(scrollY - lastScrollY);
+        lastScrollY = scrollY;
+      }
+      scheduleSnap();
+      requestApply();
+    }
+
     function requestApply() {
       if (frame === null) {
         frame = window.requestAnimationFrame(tick);
@@ -241,7 +298,10 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     const resizeObserver = new ResizeObserver(requestMeasure);
     resizeObserver.observe(heroElement);
     resizeObserver.observe(headerElement);
-    window.addEventListener("scroll", requestApply, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("touchstart", onPointerDown, { passive: true });
+    window.addEventListener("touchend", onPointerUp, { passive: true });
+    window.addEventListener("touchcancel", onPointerUp, { passive: true });
     window.addEventListener("resize", requestMeasure);
     void document.fonts?.ready.then(requestMeasure);
 
@@ -262,7 +322,13 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         window.clearTimeout(timer);
       }
       resizeObserver.disconnect();
-      window.removeEventListener("scroll", requestApply);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("touchstart", onPointerDown);
+      window.removeEventListener("touchend", onPointerUp);
+      window.removeEventListener("touchcancel", onPointerUp);
+      if (snapTimer !== null) {
+        window.clearTimeout(snapTimer);
+      }
       window.removeEventListener("resize", requestMeasure);
       for (const letter of heroLetters) {
         letter.style.transform = "";

@@ -139,6 +139,29 @@ export function getStaggeredProgress(
   return clampProgress((progress - delay) / (1 - stagger));
 }
 
+/** Remaining share of the motion inside which a resting scroll is finished. */
+export const HERO_SNAP_THRESHOLD = 0.2;
+
+/**
+ * Snap target for a scroll that came to rest at `progress` (0 = hero start,
+ * 1 = fully docked), or null to leave it where the user put it. The motion is
+ * only finished once it is nearly done in the direction of travel, so a
+ * single wheel step never triggers it and it never pulls against the user.
+ */
+export function getHeroSnapTarget(
+  progress: number,
+  direction: number,
+  threshold = HERO_SNAP_THRESHOLD,
+): 0 | 1 | null {
+  if (direction > 0 && progress >= 1 - threshold) {
+    return 1;
+  }
+  if (direction < 0 && progress <= threshold) {
+    return 0;
+  }
+  return null;
+}
+
 export function seededUnit(index: number): number {
   const value = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
   return value - Math.floor(value);
