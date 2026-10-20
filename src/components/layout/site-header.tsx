@@ -17,7 +17,7 @@ type SiteHeaderProps = {
 export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
   return (
     <header
-      className="site-header sticky top-0 z-[var(--z-sticky)] border-b border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-background),transparent_4%)]"
+      className="site-header sticky top-0 z-[var(--z-sticky)] border-b border-[var(--color-border)] bg-[var(--color-background)]"
       data-site-header=""
     >
       <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-3">
