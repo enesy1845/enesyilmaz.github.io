@@ -1,4 +1,7 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
+
+import { NoiLetter } from "@/components/brand/noi-letter";
 
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
 import { LanguageSwitcher } from "@/components/navigation/language-switcher";
@@ -32,7 +35,15 @@ export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
               <span className="site-wordmark__word" key={word[0]?.index}>
                 {word.map((letter) => (
                   <span data-header-letter={letter.index} key={letter.index}>
-                    {letter.character}
+                    <span
+                      className="site-wordmark__letter-inner"
+                      style={{ "--i": letter.index } as CSSProperties}
+                    >
+                      <NoiLetter
+                        character={letter.character}
+                        dotPosition="top"
+                      />
+                    </span>
                   </span>
                 ))}
               </span>

@@ -1,6 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
+import {
+  getNoiDotPosition,
+  getScrollDotPosition,
+  NOI_DOT_TOP,
+  NOI_MOTION_DURATION,
+} from "@/components/brand/noi-motion.utils";
 
 import type { Rect } from "@/components/home/hero/hero.types";
 import {
@@ -19,7 +25,6 @@ type HeroMotionProps = {
   heroId: string;
 };
 
-export const HERO_INTRO_STORAGE_KEY = "hero-intro-seen";
 const INTRO_MIN_DURATION = 1100;
 const INTRO_REVEAL_DURATION = 1400;
 
@@ -28,7 +33,7 @@ const INTRO_REVEAL_DURATION = 1400;
  * to the page: the page scrolls natively while the hero eases towards the
  * scroll position. This turns coarse wheel steps into one continuous glide.
  */
-const SCROLL_SMOOTHING = 0.14;
+const SCROLL_SMOOTHING = 0.22;
 
 /** Idle time after the last scroll event before snapping (no `scrollend`). */
 const SNAP_IDLE_MS = 140;
@@ -44,13 +49,9 @@ function toRect(element: Element): Rect {
 }
 
 /**
- * Drives the AIR-style hero: the preloader sequence, the copy fade and the
- * wordmark that docks letter by letter into the site header while scrolling.
- *
- * The letters and copy live in a fixed layer, so the browser keeps them in
- * place during scroll and they never lag a frame behind (no jitter). Only
- * transform/opacity are written, from one rAF loop that runs while the
- * smoothed position is still catching up and stops once it settles.
+ * A single header logo is inverted into the hero's layout coordinates and
+ * returns to its native header position. It never changes DOM nodes or
+ * toggles visibility at docking. Hero letters remain the static fallback.
  */
 export function HeroMotion({ heroId }: HeroMotionProps) {
   useEffect(() => {
@@ -72,6 +73,8 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     const headerLetters = Array.from(
       headerElement.querySelectorAll<HTMLElement>("[data-header-letter]"),
     );
+    const headerDot =
+      headerElement.querySelector<SVGCircleElement>("[data-noi-dot]");
     const letterWords = heroLetters.map((letter) =>
       Number(
         letter.closest<HTMLElement>("[data-hero-word]")?.dataset.heroWord ?? 0,
@@ -85,8 +88,9 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
 
     root.dataset.heroMotion = canDock ? "full" : "reduced";
 
-    let introActive = canDock && root.dataset.heroIntro === "loading";
-    if (!canDock && root.dataset.heroIntro) {
+    let introActive =
+      canDock && root.dataset.heroIntro === "loading" && window.scrollY <= 8;
+    if (!introActive) {
       root.dataset.heroIntro = "done";
     }
 
@@ -99,6 +103,10 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     let introFrame: number | null = null;
     let lastTime: number | null = null;
     let smoothY = window.scrollY;
+    let docked = false;
+    // Only the initial entrance may bounce. Any scroll hands control to
+    // the reversible docking path permanently for this page mount.
+    let dotIntroElapsed = introActive ? 0 : NOI_MOTION_DURATION;
     let disposed = false;
     const timers: number[] = [];
 
@@ -108,8 +116,8 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       }
       heroHeight = Math.max(1, heroElement.offsetHeight);
       headerBottom = headerElement.getBoundingClientRect().bottom;
-      if (canDock && !introActive) {
-        for (const letter of heroLetters) {
+      if (canDock) {
+        for (const letter of headerLetters) {
           letter.style.transform = "";
         }
         from = heroLetters.map(toRect);
@@ -122,6 +130,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         stagger = isStacked ? WORDMARK_WORD_STAGGER : 0;
       }
       render(smoothY);
+      if (canDock && from.length > 0) root.dataset.heroLogoReady = "true";
     }
 
     function render(position: number) {
@@ -135,7 +144,19 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         position / (heroHeight * WORDMARK_DOCK_DISTANCE),
       );
       root.dataset.heroState = state;
-      if (state === "hero-passed" && progress >= 0.999) {
+      // This flag only settles the transform. It never controls visibility.
+      if (
+        !docked &&
+        canDock &&
+        !introActive &&
+        from.length > 0 &&
+        progress >= 0.999
+      ) {
+        docked = true;
+      } else if (docked && progress < 0.98) {
+        docked = false;
+      }
+      if (docked) {
         root.dataset.heroDocked = "true";
       } else {
         delete root.dataset.heroDocked;
@@ -145,11 +166,11 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         clampProgress(position / (heroHeight * HERO_FADE_DISTANCE)).toFixed(4),
       );
 
-      if (!canDock || introActive || from.length === 0) {
+      if (!canDock || from.length === 0) {
         return;
       }
 
-      heroLetters.forEach((letter, index) => {
+      headerLetters.forEach((letter, index) => {
         const start = from[index];
         const end = to[index];
         if (!start || !end) {
@@ -158,16 +179,35 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         const transform = getLetterTransform(
           start,
           end,
-          0,
           getStaggeredProgress(
-            progress,
+            introActive ? 0 : docked ? 1 : progress,
             letterWords[index] ?? 0,
             wordCount,
             stagger,
           ),
         );
-        letter.style.transform = `translate3d(${transform.x.toFixed(2)}px, ${transform.y.toFixed(2)}px, 0) scale(${transform.scale.toFixed(4)})`;
+        const value = docked
+          ? "none"
+          : `translate3d(${transform.x.toFixed(2)}px, ${transform.y.toFixed(2)}px, 0) scale(${transform.scale.toFixed(6)})`;
+        // Once docked, keep the same element/layer and stop rewriting it.
+        if (letter.style.transform !== value) letter.style.transform = value;
+        letter.style.setProperty(
+          "--hero-logo-scale",
+          transform.scale.toFixed(6),
+        );
       });
+      if (headerDot) {
+        const point =
+          dotIntroElapsed < NOI_MOTION_DURATION
+            ? getNoiDotPosition(dotIntroElapsed / NOI_MOTION_DURATION)
+            : getScrollDotPosition(docked ? 1 : progress);
+        if (docked) headerDot.removeAttribute("transform");
+        else
+          headerDot.setAttribute(
+            "transform",
+            `translate(${(point.x - NOI_DOT_TOP.x).toFixed(3)} ${(point.y - NOI_DOT_TOP.y).toFixed(3)})`,
+          );
+      }
     }
 
     function tick(now: number) {
@@ -175,6 +215,12 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       const target = window.scrollY;
       const dt = lastTime === null ? 1 / 60 : (now - lastTime) / 1000;
       lastTime = now;
+      if (root.dataset.heroIntro !== "loading" && !document.hidden) {
+        dotIntroElapsed = Math.min(
+          NOI_MOTION_DURATION,
+          dotIntroElapsed + Math.min(dt, 0.1) * 1000,
+        );
+      }
       if (prefersReducedMotion) {
         smoothY = target;
       } else {
@@ -186,7 +232,11 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         smoothY = target;
       }
       render(smoothY);
-      if (smoothY !== target) {
+      if (
+        smoothY !== target ||
+        (dotIntroElapsed < NOI_MOTION_DURATION &&
+          root.dataset.heroIntro !== "loading")
+      ) {
         frame = window.requestAnimationFrame(tick);
       } else {
         lastTime = null;
@@ -238,6 +288,10 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
 
     function onScroll() {
       const scrollY = window.scrollY;
+      if (scrollY > 8) dotIntroElapsed = NOI_MOTION_DURATION;
+      // Native scroll restoration can happen AFTER the inline script and
+      // hydration. Cancel the entrance before it can overlay restored content.
+      if (introActive && scrollY > 8) finishIntro();
       if (scrollY !== lastScrollY) {
         direction = Math.sign(scrollY - lastScrollY);
         lastScrollY = scrollY;
@@ -257,14 +311,14 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     }
 
     function finishIntro() {
+      if (introFrame !== null) window.cancelAnimationFrame(introFrame);
+      introFrame = null;
+      for (const timer of timers) window.clearTimeout(timer);
+      timers.length = 0;
       introActive = false;
       root.dataset.heroIntro = "done";
       root.style.removeProperty("--hero-intro");
-      try {
-        window.sessionStorage.setItem(HERO_INTRO_STORAGE_KEY, "1");
-      } catch {
-        // Storage can be unavailable (private mode); the intro simply replays.
-      }
+      smoothY = window.scrollY;
       measure();
     }
 
@@ -278,6 +332,8 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
 
       function step(now: number) {
         introFrame = null;
+        if (disposed || !introActive) return;
+        if (window.scrollY > 8) return finishIntro();
         const linear = (now - startedAt) / INTRO_MIN_DURATION;
         const progress = assetsReady ? linear : Math.min(linear, 0.82);
         root.style.setProperty(
@@ -289,6 +345,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
           return;
         }
         root.dataset.heroIntro = "reveal";
+        requestApply();
         timers.push(window.setTimeout(finishIntro, INTRO_REVEAL_DURATION));
       }
 
@@ -299,6 +356,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     resizeObserver.observe(heroElement);
     resizeObserver.observe(headerElement);
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pageshow", onScroll);
     window.addEventListener("touchstart", onPointerDown, { passive: true });
     window.addEventListener("touchend", onPointerUp, { passive: true });
     window.addEventListener("touchcancel", onPointerUp, { passive: true });
@@ -323,6 +381,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       }
       resizeObserver.disconnect();
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pageshow", onScroll);
       window.removeEventListener("touchstart", onPointerDown);
       window.removeEventListener("touchend", onPointerUp);
       window.removeEventListener("touchcancel", onPointerUp);
@@ -330,12 +389,15 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
         window.clearTimeout(snapTimer);
       }
       window.removeEventListener("resize", requestMeasure);
-      for (const letter of heroLetters) {
+      for (const letter of headerLetters) {
         letter.style.transform = "";
+        letter.style.removeProperty("--hero-logo-scale");
       }
+      headerDot?.removeAttribute("transform");
       delete root.dataset.heroState;
       delete root.dataset.heroDocked;
       delete root.dataset.heroMotion;
+      delete root.dataset.heroLogoReady;
       if (root.dataset.heroIntro !== "done") {
         delete root.dataset.heroIntro;
       }

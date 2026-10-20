@@ -3,7 +3,7 @@
  * a full-bleed light stage, a wordmark spread edge to edge, centred uppercase
  * copy, and letters that dock into the header logo while scrolling.
  *
- * The mark ("NOI", see siteConfig.wordmark) always sits on one row spread
+ * The mark ("noi", see siteConfig.wordmark) always sits on one row spread
  * edge to edge. On phones and portrait tablets the lead copy goes below it;
  * on desktop and landscape it sits in the gap before the last letter, like
  * the AIR "A  I  R" composition.
@@ -36,12 +36,59 @@
 
 .site-wordmark__word {
   display: inline-flex;
+  gap: 0.22em;
+}
+
+/* Vector outlines stay sharp at small sizes; the dot shares their coordinates. */
+.noi-letter {
+  display: block;
+  overflow: visible;
+  flex: none;
+  fill: currentColor;
+}
+
+.noi-closing {
+  position: relative;
+  padding: var(--space-12) var(--layout-gutter);
+  overflow: clip;
+  background: var(--color-background);
+}
+
+.noi-closing__letters {
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--layout-wide);
+  margin-inline: auto;
+  font-size: min(36vw, 40svh);
+  line-height: 1;
+}
+
+/* Whole-mark arrival: the dot inherits the same transform as its stem. */
+@media (prefers-reduced-motion: no-preference) {
+  .noi-closing[data-noi-enhanced] .noi-closing__letters {
+    opacity: 0;
+    transform: translate3d(0, 3rem, 0) scale(0.96);
+    transition:
+      transform 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.8s ease-out;
+  }
+
+  .noi-closing[data-noi-active] .noi-closing__letters {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 [data-header-letter] {
   display: inline-block;
   line-height: 1;
-  transition: opacity var(--duration-fast) linear;
+  transform-origin: 0 0;
+  transition: none;
+}
+
+.site-wordmark__letter-inner {
+  display: block;
+  line-height: 0;
 }
 
 /* Light header while the home hero is on screen. Without JavaScript the
@@ -75,17 +122,21 @@ html:has([data-home-hero]):not([data-hero-state="hero-passed"])
   color: #ffffff;
 }
 
-/* The hero letters stand in for the header letters until they have fully
-   docked (the smoothed animation can trail the scroll position briefly). */
-html[data-hero-motion="full"]:has([data-home-hero]):not([data-hero-docked])
+/* A single visible logo lives in the header throughout the scroll. The hero
+   letters only provide layout geometry and the no-JS/static fallback. */
+html[data-hero-motion="full"]:has([data-home-hero]):not([data-hero-logo-ready])
   [data-header-letter] {
   opacity: 0;
   transition: none;
 }
 
-html[data-hero-motion="full"][data-hero-docked] .hero__letter {
+html[data-hero-motion="full"][data-hero-logo-ready] .hero__letter {
   visibility: hidden;
 }
+
+/* Do not add will-change: transform here. It can freeze a small raster of
+   these vectors and magnify that bitmap on the return to the hero. Let the
+   browser rasterize the SVG at the current scale instead. */
 
 /* Once the header turns dark, letters still gliding in take its colour. */
 html[data-hero-state="hero-passed"] .hero__letter {
@@ -273,15 +324,17 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 }
 
 .hero__letter {
-  display: inline-block;
-  line-height: 1;
+  display: block;
+  line-height: 0;
   transform-origin: 0 0;
   transition: color var(--duration-normal) var(--ease-standard);
-  will-change: transform;
 }
 
 .hero__letter-inner {
-  display: inline-block;
+  /* No inline baseline/descender gap: FLIP must measure the SVG alone,
+     matching the header. Extra line-box height causes a size jump on handoff. */
+  display: block;
+  line-height: 0;
 }
 
 .hero__lead {
@@ -406,7 +459,7 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
   }
 }
 
-/* ---------- Preloader (first visit per session) ---------- */
+/* ---------- Preloader (each full home-page load) ---------- */
 
 .hero__progress {
   position: fixed;
@@ -442,6 +495,15 @@ html[data-hero-intro="loading"] .hero__letter-inner {
   );
 }
 
+html[data-hero-intro="loading"] .site-wordmark__letter-inner {
+  transform: translateX(
+    calc(
+      (clamp(0, var(--hero-intro, 0) * (1 + var(--i, 0) * 0.06), 1) - 1) *
+        110vw / var(--hero-logo-scale, 1)
+    )
+  );
+}
+
 html[data-hero-intro="loading"] .hero__reveal {
   opacity: 0;
   transform: translateY(1.25rem);
@@ -455,7 +517,11 @@ html[data-hero-intro="loading"] .hero__backdrop {
   opacity: 0;
 }
 
-html[data-hero-intro="loading"]:has([data-home-hero]) .site-header {
+html[data-hero-intro="loading"]:has([data-home-hero])
+  .site-header
+  > div
+  > :not([data-header-identity]) {
+  opacity: 0;
   transform: translateY(-100%);
 }
 
@@ -467,10 +533,13 @@ html[data-hero-intro="reveal"] .hero__backdrop {
     transform 1.4s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
-html[data-hero-intro="reveal"]:has([data-home-hero]) .site-header {
+html[data-hero-intro="reveal"]:has([data-home-hero])
+  .site-header
+  > div
+  > :not([data-header-identity]) {
   transition:
     transform 1.4s cubic-bezier(0.7, 0, 0.3, 1),
-    background-color var(--duration-normal) var(--ease-standard);
+    opacity 1.4s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 .hero__reveal {

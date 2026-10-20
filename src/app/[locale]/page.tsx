@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { NoiLetter } from "@/components/brand/noi-letter";
 import { HomeHero } from "@/components/home/hero/home-hero";
 import { ProjectList } from "@/components/projects/project-list";
 import { ButtonLink } from "@/components/ui/button";
@@ -181,6 +182,18 @@ export default async function HomePage({ params }: PageProps) {
           </aside>
         </div>
       </Section>
+      <div
+        className="noi-closing"
+        data-noi-closing=""
+        role="img"
+        aria-label="noi"
+      >
+        <span aria-hidden="true" className="noi-closing__letters">
+          {["n", "o", "i"].map((character) => (
+            <NoiLetter character={character} key={character} />
+          ))}
+        </span>
+      </div>
     </>
   );
 }

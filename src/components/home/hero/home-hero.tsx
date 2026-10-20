@@ -1,4 +1,7 @@
 import Link from "next/link";
+
+import { NoiLetter } from "@/components/brand/noi-letter";
+import { NoiMotion } from "@/components/brand/noi-motion";
 import type { CSSProperties } from "react";
 
 import { HeroMotion } from "@/components/home/hero/hero-motion";
@@ -21,7 +24,7 @@ type HomeHeroProps = {
  * Runs before first paint so the preloader state is in place without a flash.
  * The timeout is a safety net in case the client bundle never hydrates.
  */
-const introScript = `(function(){try{var d=document.documentElement;if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.heroMotion="reduced";return}d.dataset.heroMotion="full";d.dataset.heroState=window.scrollY>8?"hero-transitioning":"hero-top";if(sessionStorage.getItem("hero-intro-seen"))return;d.dataset.heroIntro="loading";setTimeout(function(){if(d.dataset.heroIntro==="loading")d.dataset.heroIntro="done"},5000)}catch(e){}})();`;
+const introScript = `(function(){try{var d=document.documentElement;if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.heroMotion="reduced";return}d.dataset.heroMotion="full";d.dataset.heroState=window.scrollY>8?"hero-transitioning":"hero-top";if(window.scrollY>8)return;d.dataset.heroIntro="loading";setTimeout(function(){if(d.dataset.heroIntro==="loading")d.dataset.heroIntro="done"},5000)}catch(e){}})();`;
 
 function ArrowDownIcon() {
   return (
@@ -80,7 +83,7 @@ export function HomeHero({
               className="hero__letter-inner"
               style={{ "--i": letter.index } as CSSProperties}
             >
-              {letter.character}
+              <NoiLetter character={letter.character} />
             </span>
           </span>
         ))}
@@ -97,6 +100,7 @@ export function HomeHero({
     >
       <script dangerouslySetInnerHTML={{ __html: introScript }} />
       <HeroMotion heroId="home-hero" />
+      <NoiMotion />
       <div aria-hidden="true" className="hero__progress" />
 
       <div className="hero__backdrop">

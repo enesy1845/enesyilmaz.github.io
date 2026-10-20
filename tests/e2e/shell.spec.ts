@@ -1,16 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-// The hero preloader plays once per session; skip it so navigation tests do
-// not wait for it. The dedicated intro test below opts back in.
-test.beforeEach(async ({ page }, testInfo) => {
-  if (!testInfo.title.includes("preloader")) {
-    await page.addInitScript(() => {
-      window.sessionStorage.setItem("hero-intro-seen", "1");
-    });
-  }
-});
-
 test("root redirects to English", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en$/);
@@ -293,10 +283,15 @@ test("hero sculpture is lazy, decorative and limited to the home route", async (
   );
 });
 
-test("hero wordmark docks into the header and hands over on scroll", async ({
+test("one header logo moves from the hero and stays mounted on scroll", async ({
   page,
 }) => {
   await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
 
   const headerLetter = page
     .getByRole("banner")
@@ -308,8 +303,10 @@ test("hero wordmark docks into the header and hands over on scroll", async ({
     "data-hero-state",
     "hero-top",
   );
-  await expect(headerLetter).toHaveCSS("opacity", "0");
-  await expect(heroLetter).toBeVisible();
+  await expect(headerLetter).toHaveCSS("opacity", "1");
+  await expect(heroLetter).toHaveCSS("visibility", "hidden");
+  const originalLogo = await headerLetter.elementHandle();
+  const largeSize = await headerLetter.boundingBox();
 
   await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.25));
   await expect(page.locator("html")).toHaveAttribute(
@@ -318,16 +315,100 @@ test("hero wordmark docks into the header and hands over on scroll", async ({
   );
   await expect(headerLetter).toHaveCSS("opacity", "1");
   await expect(heroLetter).toHaveCSS("visibility", "hidden");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+
+  expect(
+    await headerLetter.evaluate(
+      (element, original) => element === original,
+      originalLogo,
+    ),
+  ).toBe(true);
+  const matrix = await headerLetter.evaluate((element) => {
+    const matrix = new DOMMatrix(getComputedStyle(element).transform);
+    return { x: matrix.m41, y: matrix.m42, scale: matrix.m11 };
+  });
+  expect(matrix).toEqual({ x: 0, y: 0, scale: 1 });
+  const dockedSize = await headerLetter.boundingBox();
+  for (const offset of [1.8, 1.15, 2]) {
+    await page.evaluate(
+      (offset) =>
+        window.scrollTo({
+          top: window.innerHeight * offset,
+          behavior: "instant",
+        }),
+      offset,
+    );
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-hero-docked",
+      "true",
+    );
+    const size = await headerLetter.boundingBox();
+    expect(size?.width).toBe(dockedSize?.width);
+    expect(size?.height).toBe(dockedSize?.height);
+  }
 
   await page.evaluate(() => window.scrollTo(0, 0));
   await expect(page.locator("html")).toHaveAttribute(
     "data-hero-state",
     "hero-top",
   );
-  await expect(heroLetter).toHaveCSS("visibility", "visible");
+  await expect(headerLetter).toHaveCSS("opacity", "1");
+  await expect
+    .poll(async () => (await headerLetter.boundingBox())?.width)
+    .toBeGreaterThan((dockedSize?.width ?? 0) * 2);
+  expect(largeSize?.width).toBeGreaterThan((dockedSize?.width ?? 0) * 2);
 });
 
-test("hero preloader plays once and reveals the page", async ({ page }) => {
+test("docked logo stays visible while scrolling across the hero boundary", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.3, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+
+  const frames = await page.evaluate(async () => {
+    const hero = document.querySelector<HTMLElement>("[data-home-hero]");
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    const letter = document.querySelector("[data-header-letter]");
+    if (!hero || !header || !letter) throw new Error("Missing logo geometry");
+    const boundary = hero.offsetHeight - header.offsetHeight;
+    const samples: { docked: boolean; opacity: string }[] = [];
+    for (const offset of [2, -2, 3, -3, 1, -1, 4]) {
+      window.scrollTo({ top: boundary + offset, behavior: "instant" });
+      for (let frame = 0; frame < 3; frame += 1) {
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => resolve()),
+        );
+        samples.push({
+          docked: document.documentElement.dataset.heroDocked === "true",
+          opacity: getComputedStyle(letter).opacity,
+        });
+      }
+    }
+    return samples;
+  });
+  for (const frame of frames) {
+    expect(frame.docked).toBe(true);
+    expect(frame.opacity).toBe("1");
+  }
+});
+
+test("hero preloader shows left-to-right entrance on each full load", async ({
+  page,
+}) => {
   await page.goto("/en");
 
   await expect(page.locator("html")).toHaveAttribute(
@@ -336,14 +417,228 @@ test("hero preloader plays once and reveals the page", async ({ page }) => {
     { timeout: 8_000 },
   );
   await expect(page.getByRole("banner")).toBeInViewport();
-  expect(
-    await page.evaluate(() => window.sessionStorage.getItem("hero-intro-seen")),
-  ).toBe("1");
-
   await page.reload();
-  await expect(page.locator("html")).not.toHaveAttribute(
+  await expect(page.locator("html")).toHaveAttribute(
     "data-hero-intro",
     "loading",
+  );
+  await expect(page.locator(".hero__progress")).toBeVisible();
+  expect(
+    await page
+      .locator(".site-wordmark__letter-inner")
+      .first()
+      .evaluate(
+        (element) => new DOMMatrix(getComputedStyle(element).transform).m41,
+      ),
+  ).toBeLessThan(0);
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+});
+
+test("dot bounces only on opening then follows reversible logo docking", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  const dot = page.locator("[data-site-header] [data-noi-dot]");
+  await expect(dot).toHaveAttribute("transform", "translate(0.000 947.000)", {
+    timeout: 8_000,
+  });
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.5, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  await expect(dot).toHaveAttribute("cy", "-56");
+  await expect(dot).not.toHaveAttribute("transform", /./);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect(dot).toHaveAttribute("transform", "translate(0.000 947.000)");
+  const positions = await dot.evaluate(async (element) => {
+    const positions = [];
+    for (let frame = 0; frame < 15; frame += 1) {
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      positions.push(element.getAttribute("transform"));
+    }
+    return positions;
+  });
+  expect(new Set(positions)).toEqual(new Set(["translate(0.000 947.000)"]));
+  await page.locator("[data-noi-closing]").scrollIntoViewIfNeeded();
+  await expect(
+    page.locator("[data-noi-closing] [data-noi-dot]"),
+  ).not.toHaveAttribute("transform", /./);
+});
+
+test("hero vector stays sharp after docking and returning", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1865, height: 780 });
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  // Isolate the letter from the independently moving sculpture behind it.
+  await page.addStyleTag({
+    content: ".hero__backdrop { visibility: hidden; }",
+  });
+  const letter = page.locator("[data-header-letter]").first();
+  const initialTransform = await letter.evaluate(
+    (element) => element.style.transform,
+  );
+  const box = await letter.boundingBox();
+  if (!box) throw new Error("Missing letter bounds");
+  const cdp = await page.context().newCDPSession(page);
+  const before = await cdp.send("Page.captureScreenshot", {
+    format: "png",
+    fromSurface: true,
+    captureBeyondViewport: false,
+  });
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.5, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect
+    .poll(() => letter.evaluate((element) => element.style.transform))
+    .toBe(initialTransform);
+  await expect(letter).toHaveCSS("will-change", "auto");
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  const after = await cdp.send("Page.captureScreenshot", {
+    format: "png",
+    fromSurface: true,
+    captureBeyondViewport: false,
+  });
+  await cdp.detach();
+  const changed = await page.evaluate(
+    async ({ before, after, box }) => {
+      const read = async (data: string) => {
+        const image = new Image();
+        image.src = `data:image/png;base64,${data}`;
+        await image.decode();
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext("2d");
+        if (!context)
+          throw new Error("Canvas unavailable for visual verification");
+        context.drawImage(image, 0, 0);
+        return context.getImageData(
+          Math.ceil(box.x),
+          Math.ceil(box.y),
+          Math.floor(box.width) - 1,
+          Math.floor(box.height) - 1,
+        ).data;
+      };
+      const first = await read(before);
+      const returned = await read(after);
+      let changed = 0;
+      for (let index = 0; index < first.length; index += 4) {
+        if (Math.abs((first[index] ?? 0) - (returned[index] ?? 0)) > 30)
+          changed += 1;
+      }
+      return changed / (first.length / 4);
+    },
+    { before: before.data, after: after.data, box },
+  );
+  // The old cached bitmap changed >7% of this region; allow tiny AA variance.
+  expect(changed).toBeLessThan(0.005);
+});
+
+test("docked logo remains painted during wheel scroll and deep reload", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.6, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  const box = await page.locator("[data-header-letter]").first().boundingBox();
+  if (!box) throw new Error("Missing logo bounds");
+  const cdp = await page.context().newCDPSession(page);
+  let baseline = 0;
+  for (const delta of [0, 100, 300, -200, 450, -300]) {
+    await page.mouse.wheel(0, delta);
+    // Capture the actual compositor viewport, avoiding document-clip offsets
+    // that ordinary screenshots can race with during asynchronous wheel scroll.
+    const shot = await cdp.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true,
+      captureBeyondViewport: false,
+    });
+    const ink = await page.evaluate(
+      async ({ data, box }) => {
+        const image = new Image();
+        image.src = `data:image/png;base64,${data}`;
+        await image.decode();
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext("2d");
+        if (!context)
+          throw new Error("Canvas unavailable for visual verification");
+        context.drawImage(image, 0, 0);
+        const scale = image.naturalWidth / innerWidth;
+        const pixels = context.getImageData(
+          box.x * scale,
+          box.y * scale,
+          box.width * scale,
+          box.height * scale,
+        ).data;
+        let dark = 0;
+        for (let i = 0; i < pixels.length; i += 4) {
+          if (
+            (pixels[i] ?? 255) < 60 &&
+            (pixels[i + 1] ?? 255) < 60 &&
+            (pixels[i + 2] ?? 255) < 60
+          )
+            dark += 1;
+        }
+        return dark;
+      },
+      { data: shot.data, box },
+    );
+    if (delta === 0) baseline = ink;
+    expect(ink).toBeGreaterThan(100);
+    expect(ink).toBeGreaterThanOrEqual(baseline * 0.95);
+  }
+  await cdp.detach();
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(800);
+  await expect(page.locator("html")).toHaveAttribute("data-hero-intro", "done");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  await expect(page.locator("[data-header-letter]").first()).toHaveCSS(
+    "transform",
+    "none",
+  );
+  await expect(page.locator(".site-wordmark__letter-inner").first()).toHaveCSS(
+    "transform",
+    "none",
   );
 });
 

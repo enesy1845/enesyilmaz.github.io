@@ -3,7 +3,7 @@ import { defaultLocale, locales } from "@/i18n/config";
 export const siteConfig = {
   name: "Enes Yilmaz",
   /** Visual brand mark used by the hero and header (AIR-style letters). */
-  wordmark: "NOI",
+  wordmark: "noi",
   defaultTitle: "Enes Yilmaz - Software Developer",
   titleTemplate: "%s | Enes Yilmaz",
   defaultDescription:

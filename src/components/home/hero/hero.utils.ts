@@ -100,24 +100,21 @@ export function getHeroScrollState(
 }
 
 /**
- * Transform that moves a hero letter from its resting place (`from`, measured
- * in document coordinates) to the matching header letter (`to`, measured in
- * viewport coordinates of the sticky header). The extra `scrollY` term keeps
- * the letter pinned to the viewport while it travels, like AIR's sticky logo.
+ * Invert the header letter into the hero position, then return that SAME
+ * element to its native size. No swapping or fading between visual copies.
  */
 export function getLetterTransform(
   from: Rect,
   to: Rect,
-  scrollY: number,
   progress: number,
 ): LetterTransform {
   const eased = easeOutQuad(progress);
-  const targetScale = from.height > 0 ? to.height / from.height : 1;
+  const startScale = to.height > 0 ? from.height / to.height : 1;
 
   return {
-    x: (to.x - from.x) * eased,
-    y: scrollY + (to.y - from.y) * eased,
-    scale: 1 + (targetScale - 1) * eased,
+    x: (from.x - to.x) * (1 - eased),
+    y: (from.y - to.y) * (1 - eased),
+    scale: 1 + (startScale - 1) * (1 - eased),
   };
 }
 

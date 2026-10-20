@@ -52,17 +52,19 @@ describe("home hero", () => {
 
     expect(letters).toHaveLength(3);
     expect(letters[0]?.closest("[aria-hidden='true']")).not.toBeNull();
-    expect(Array.from(letters, (letter) => letter.textContent).join("")).toBe(
-      "NOI",
-    );
+    expect(
+      Array.from(container.querySelectorAll("[data-noi-letter]"), (letter) =>
+        letter.getAttribute("data-noi-letter"),
+      ),
+    ).toEqual(["n", "o", "i"]);
   });
 
-  it("uppercases the wordmark without Turkish dotted capitals", () => {
+  it("preserves brand casing when pairing hero and header letters", () => {
     const words = getWordmarkWords("Enes Yilmaz");
 
     expect(words.map((word) => word.map((l) => l.character).join(""))).toEqual([
-      "ENES",
-      "YILMAZ",
+      "Enes",
+      "Yilmaz",
     ]);
     expect(words.flat().map((letter) => letter.index)).toEqual([
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -102,16 +104,11 @@ describe("home hero", () => {
     const from = { x: 20, y: 400, width: 120, height: 160 };
     const to = { x: 56, y: 26, width: 18, height: 24 };
 
-    expect(getLetterTransform(from, to, 0, 0)).toEqual({
-      x: 0,
-      y: 0,
-      scale: 1,
-    });
-
-    const docked = getLetterTransform(from, to, 700, 1);
-    expect(docked.x).toBe(36);
-    expect(docked.y).toBe(700 - 374);
-    expect(docked.scale).toBeCloseTo(0.15);
+    const large = getLetterTransform(from, to, 0);
+    expect(large.x).toBe(-36);
+    expect(large.y).toBe(374);
+    expect(large.scale).toBeCloseTo(160 / 24);
+    expect(getLetterTransform(from, to, 1)).toEqual({ x: -0, y: 0, scale: 1 });
   });
 
   it("staggers words while keeping progress within bounds", () => {

@@ -4,10 +4,9 @@ export type WordmarkLetter = {
 };
 
 /**
- * Splits a display name into uppercase words of indexed letters. The hero and
+ * Splits a display name into words of indexed letters, preserving brand case. The hero and
  * the header both render the wordmark from this so their letters pair up
- * one-to-one for the scroll docking transition. Uppercasing uses a fixed
- * locale so "Yilmaz" never becomes "YİLMAZ" on Turkish pages.
+ * one-to-one for the scroll docking transition.
  */
 export function getWordmarkWords(name: string): WordmarkLetter[][] {
   let index = 0;
@@ -17,7 +16,7 @@ export function getWordmarkWords(name: string): WordmarkLetter[][] {
     .split(/\s+/)
     .filter(Boolean)
     .map((word) =>
-      Array.from(word.toLocaleUpperCase("en-US")).map((character) => ({
+      Array.from(word).map((character) => ({
         character,
         index: index++,
       })),
