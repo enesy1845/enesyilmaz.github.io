@@ -75,17 +75,21 @@ html:has([data-home-hero]):not([data-hero-state="hero-passed"])
   color: #ffffff;
 }
 
-/* The hero letters stand in for the header letters until they hand over. */
-html[data-hero-motion="full"]:has([data-home-hero]):not(
-    [data-hero-state="hero-passed"]
-  )
+/* The hero letters stand in for the header letters until they have fully
+   docked (the smoothed animation can trail the scroll position briefly). */
+html[data-hero-motion="full"]:has([data-home-hero]):not([data-hero-docked])
   [data-header-letter] {
   opacity: 0;
   transition: none;
 }
 
-html[data-hero-motion="full"][data-hero-state="hero-passed"] .hero__letter {
+html[data-hero-motion="full"][data-hero-docked] .hero__letter {
   visibility: hidden;
+}
+
+/* Once the header turns dark, letters still gliding in take its colour. */
+html[data-hero-state="hero-passed"] .hero__letter {
+  color: var(--color-foreground);
 }
 
 /* ---------- Hero ---------- */
@@ -135,7 +139,7 @@ html[data-hero-motion="full"][data-hero-state="hero-passed"] .hero__letter {
     rgb(255 255 255 / 0) 72%
   );
   opacity: calc(1 - var(--hero-fade, 0));
-  transform: translateY(calc(var(--hero-fade, 0) * 12svh));
+  transform: translateY(calc(var(--hero-fade, 0) * 6svh));
 }
 
 .hero-sculpture canvas {
@@ -150,7 +154,6 @@ html[data-hero-motion="full"][data-hero-state="hero-passed"] .hero__letter {
 
 .hero__stage {
   position: relative;
-  z-index: 1;
   display: flex;
   min-height: 100vh;
   min-height: 100svh;
@@ -159,9 +162,53 @@ html[data-hero-motion="full"][data-hero-state="hero-passed"] .hero__letter {
     var(--hero-gutter) var(--hero-gutter);
 }
 
+/* Pinned layer (letters + copy). Without JavaScript or with reduced motion
+   it simply scrolls with the hero; with motion it is fixed to the viewport
+   and the following sections slide over it. */
+.hero__pinned {
+  position: absolute;
+  inset: 0 0 auto;
+  pointer-events: none;
+}
+
+.hero__pinned a,
+.hero__pinned button {
+  pointer-events: auto;
+}
+
+.hero__flow {
+  z-index: 1;
+  justify-content: flex-end;
+}
+
+.hero__footer-space {
+  height: 2.5rem;
+  flex: none;
+}
+
+html[data-hero-motion="full"] .hero__pinned,
+html[data-hero-motion="full"] .hero__backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100vh;
+  height: 100svh;
+}
+
+html[data-hero-motion="full"] [data-home-hero] ~ *,
+html[data-hero-motion="full"] body:has([data-home-hero]) > footer {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-hero-motion="full"] [data-home-hero] ~ * {
+  background-color: var(--color-background);
+}
+
 [data-hero-fade] {
   opacity: calc(1 - var(--hero-fade, 0) * 2.2);
-  transform: translateY(var(--hero-pin, 0px));
+  transform: translateY(calc(var(--hero-fade, 0) * 8svh));
 }
 
 /* The actions only fade: moving them would push them under the next section
@@ -229,6 +276,7 @@ html[data-hero-motion="full"][data-hero-state="hero-passed"] .hero__letter {
   display: inline-block;
   line-height: 1;
   transform-origin: 0 0;
+  transition: color var(--duration-normal) var(--ease-standard);
   will-change: transform;
 }
 

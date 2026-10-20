@@ -994,6 +994,14 @@ npm run build
 
 Do not report success when a required command has not been run.
 
+During iteration, keep checks proportional to the change to save time and tokens:
+
+- run `npm run typecheck` and lint on the touched files after each code change,
+- run only the unit or e2e tests that cover the changed area (for example `npx playwright test -g "hero"`),
+- run the full suite (`lint`, `typecheck`, `test`, `test:e2e`, `build`) before a phase is reported complete or before a push, not after every small edit,
+- prefer one targeted probe or screenshot over repeated full-page screenshot sets,
+- keep progress messages and summaries short.
+
 ---
 
 ## 29. Git workflow

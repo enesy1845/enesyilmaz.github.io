@@ -1,31 +1,31 @@
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --color-background: #171412;
-  --color-background-elevated: #1d1915;
-  --color-surface: #211d19;
-  --color-surface-muted: #2a241e;
-  --color-foreground: #f7efe5;
-  --color-foreground-muted: #c9bdb0;
-  --color-foreground-subtle: #94887b;
-  --color-border: #3e352c;
-  --color-border-strong: #6e5c48;
-  --color-accent: #b99b5d;
-  --color-accent-hover: #d3b979;
-  --color-accent-foreground: #171412;
-  --color-focus: #e2bd68;
-  --color-selection: #5b4425;
-  --color-success: #7da177;
-  --color-warning: #d8a657;
-  --color-error: #df7f72;
-  --color-code: #83a7a0;
-  --color-thought: #c4b183;
-  --color-craft: #b7835f;
+  --color-background: #ffffff;
+  --color-background-elevated: #fafafa;
+  --color-surface: #f5f5f5;
+  --color-surface-muted: #ececec;
+  --color-foreground: #0a0a0a;
+  --color-foreground-muted: #3d3d3d;
+  --color-foreground-subtle: #6b6b6b;
+  --color-border: #e5e5e5;
+  --color-border-strong: #cfcfcf;
+  --color-accent: #0a0a0a;
+  --color-accent-hover: #333333;
+  --color-accent-foreground: #ffffff;
+  --color-focus: #0a0a0a;
+  --color-selection: #e5e5e5;
+  --color-success: #2f7d4f;
+  --color-warning: #9a6400;
+  --color-error: #b42318;
+  --color-code: #3d5a80;
+  --color-thought: #5c5c5c;
+  --color-craft: #7a5c3e;
 
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+    var(--font-display), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace;
 
@@ -79,8 +79,8 @@
   --radius-pill: 999rem;
   --border-width: 1px;
 
-  --shadow-subtle: 0 1rem 2.5rem rgb(0 0 0 / 0.18);
-  --shadow-elevated: 0 1.5rem 4rem rgb(0 0 0 / 0.28);
+  --shadow-subtle: 0 1rem 2.5rem rgb(0 0 0 / 0.06);
+  --shadow-elevated: 0 1.5rem 4rem rgb(0 0 0 / 0.12);
 
   --duration-fast: 140ms;
   --duration-normal: 220ms;
