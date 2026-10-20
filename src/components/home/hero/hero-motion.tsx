@@ -11,10 +11,13 @@ import {
 import type { Rect } from "@/components/home/hero/hero.types";
 import {
   HERO_FADE_DISTANCE,
+  HERO_SNAP_IDLE_MS,
+  HERO_SNAP_DURATION_MS,
   WORDMARK_DOCK_DISTANCE,
   WORDMARK_WORD_STAGGER,
   clampProgress,
   easeInOutQuad,
+  easeHeroSnap,
   getHeroScrollState,
   getHeroSnapTarget,
   getLetterTransform,
@@ -34,9 +37,6 @@ const INTRO_REVEAL_DURATION = 1400;
  * scroll position. This turns coarse wheel steps into one continuous glide.
  */
 const SCROLL_SMOOTHING = 0.22;
-
-/** Idle time after the last scroll event before snapping (no `scrollend`). */
-const SNAP_IDLE_MS = 140;
 
 function toRect(element: Element): Rect {
   const rect = element.getBoundingClientRect();
@@ -243,41 +243,72 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       }
     }
 
-    /**
-     * AIR snaps the intro to its start or end (hero top / hero bottom). When
-     * scrolling rests close to either end in the direction of travel, finish
-     * the motion; in between, leave the position to the user.
-     */
-    let lastScrollY = window.scrollY;
-    let direction = 0;
+    /** Nearest-endpoint settling, limited to the intro and interruptible. */
     let snapTimer: number | null = null;
+    let snapFrame: number | null = null;
+    let snapActive = false;
+    let lastSnapY: number | null = null;
     let pointerDown = false;
+
+    function cancelSnap() {
+      if (snapTimer !== null) window.clearTimeout(snapTimer);
+      if (snapFrame !== null) window.cancelAnimationFrame(snapFrame);
+      snapTimer = null;
+      snapFrame = null;
+      snapActive = false;
+    }
 
     function snap() {
       snapTimer = null;
       if (disposed || !canDock || introActive || pointerDown) {
         return;
       }
-      const heroTop = heroElement.getBoundingClientRect().top + window.scrollY;
-      const end = Math.max(0, heroTop + heroHeight - headerBottom);
+      const start = Math.max(
+        0,
+        heroElement.getBoundingClientRect().top + window.scrollY,
+      );
+      const end = start + heroHeight;
       const scrollY = window.scrollY;
-      if (scrollY <= 1 || scrollY >= end - 1) {
+      if (scrollY <= start + 1 || scrollY >= end - 1) {
         return;
       }
-      const target = getHeroSnapTarget(scrollY / end, direction);
+      const target = getHeroSnapTarget((scrollY - start) / heroHeight);
       if (target !== null) {
-        window.scrollTo({ top: target * end, behavior: "smooth" });
+        const destination = target === 0 ? start : end;
+        const startedAt = performance.now();
+        snapActive = true;
+        function settle(now: number) {
+          if (disposed || !snapActive) return;
+          const progress = Math.min(
+            1,
+            (now - startedAt) / HERO_SNAP_DURATION_MS,
+          );
+          window.scrollTo({
+            top: scrollY + (destination - scrollY) * easeHeroSnap(progress),
+            behavior: "instant",
+          });
+          lastSnapY = window.scrollY;
+          requestApply();
+          if (progress < 1) snapFrame = window.requestAnimationFrame(settle);
+          else {
+            snapFrame = null;
+            snapActive = false;
+          }
+        }
+        snapFrame = window.requestAnimationFrame(settle);
       }
     }
 
     function scheduleSnap() {
+      if (snapActive || !canDock || pointerDown) return;
       if (snapTimer !== null) {
         window.clearTimeout(snapTimer);
       }
-      snapTimer = window.setTimeout(snap, SNAP_IDLE_MS);
+      snapTimer = window.setTimeout(snap, HERO_SNAP_IDLE_MS);
     }
 
     function onPointerDown() {
+      cancelSnap();
       pointerDown = true;
     }
 
@@ -292,11 +323,9 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       // Native scroll restoration can happen AFTER the inline script and
       // hydration. Cancel the entrance before it can overlay restored content.
       if (introActive && scrollY > 8) finishIntro();
-      if (scrollY !== lastScrollY) {
-        direction = Math.sign(scrollY - lastScrollY);
-        lastScrollY = scrollY;
-      }
-      scheduleSnap();
+      // A final asynchronous event from our own tween must not restart
+      // settling after the user has cancelled it (for example with Escape).
+      if (scrollY !== lastSnapY) scheduleSnap();
       requestApply();
     }
 
@@ -307,7 +336,28 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     }
 
     function requestMeasure() {
+      cancelSnap();
       window.requestAnimationFrame(measure);
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (
+        [
+          "ArrowDown",
+          "ArrowUp",
+          "PageDown",
+          "PageUp",
+          "Home",
+          "End",
+          " ",
+          "Escape",
+        ].includes(event.key)
+      )
+        cancelSnap();
+    }
+
+    function onVisibilityChange() {
+      if (document.hidden) cancelSnap();
     }
 
     function finishIntro() {
@@ -357,6 +407,11 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
     resizeObserver.observe(headerElement);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("pageshow", onScroll);
+    window.addEventListener("wheel", cancelSnap, { passive: true });
+    window.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     window.addEventListener("touchstart", onPointerDown, { passive: true });
     window.addEventListener("touchend", onPointerUp, { passive: true });
     window.addEventListener("touchcancel", onPointerUp, { passive: true });
@@ -370,6 +425,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
 
     return () => {
       disposed = true;
+      cancelSnap();
       if (frame !== null) {
         window.cancelAnimationFrame(frame);
       }
@@ -382,12 +438,14 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       resizeObserver.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pageshow", onScroll);
+      window.removeEventListener("wheel", cancelSnap);
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("touchstart", onPointerDown);
       window.removeEventListener("touchend", onPointerUp);
       window.removeEventListener("touchcancel", onPointerUp);
-      if (snapTimer !== null) {
-        window.clearTimeout(snapTimer);
-      }
       window.removeEventListener("resize", requestMeasure);
       for (const letter of headerLetters) {
         letter.style.transform = "";

@@ -136,27 +136,32 @@ export function getStaggeredProgress(
   return clampProgress((progress - delay) / (1 - stagger));
 }
 
-/** Remaining share of the motion inside which a resting scroll is finished. */
-export const HERO_SNAP_THRESHOLD = 0.2;
+export const HERO_SNAP_IDLE_MS = 250;
+export const HERO_SNAP_DURATION_MS = 1000;
 
 /**
- * Snap target for a scroll that came to rest at `progress` (0 = hero start,
- * 1 = fully docked), or null to leave it where the user put it. The motion is
- * only finished once it is nearly done in the direction of travel, so a
- * single wheel step never triggers it and it never pulls against the user.
+ * AIR resolves a resting intro scroll to the nearest endpoint. Its desktop
+ * endpoints span one full hero height; letter docking finishes at 85%.
  */
-export function getHeroSnapTarget(
-  progress: number,
-  direction: number,
-  threshold = HERO_SNAP_THRESHOLD,
-): 0 | 1 | null {
-  if (direction > 0 && progress >= 1 - threshold) {
-    return 1;
+export function getHeroSnapTarget(progress: number): 0 | 1 | null {
+  if (!Number.isFinite(progress) || progress <= 0 || progress >= 1) return null;
+  return progress > 0.5 ? 1 : 0;
+}
+
+/** Invert x for the measured AIR snap curve, cubic-bezier(.25, 0, .35, 1). */
+export function easeHeroSnap(progress: number): number {
+  const x = clampProgress(progress);
+  if (x === 0 || x === 1) return x;
+  let low = 0;
+  let high = 1;
+  for (let iteration = 0; iteration < 20; iteration += 1) {
+    const t = (low + high) / 2;
+    const curveX = 0.75 * (1 - t) ** 2 * t + 1.05 * (1 - t) * t ** 2 + t ** 3;
+    if (curveX < x) low = t;
+    else high = t;
   }
-  if (direction < 0 && progress <= threshold) {
-    return 0;
-  }
-  return null;
+  const t = (low + high) / 2;
+  return t * t * (3 - 2 * t);
 }
 
 export function seededUnit(index: number): number {

@@ -5,6 +5,7 @@ import { HomeHero } from "@/components/home/hero/home-hero";
 import {
   clampProgress,
   easeOutQuad,
+  easeHeroSnap,
   getCappedDpr,
   getHeroScrollState,
   getHeroSnapTarget,
@@ -122,11 +123,27 @@ describe("home hero", () => {
     expect(easeOutQuad(2)).toBe(1);
   });
 
-  it("only finishes a resting scroll that is nearly done", () => {
-    expect(getHeroSnapTarget(0.13, 1)).toBeNull();
-    expect(getHeroSnapTarget(0.5, 1)).toBeNull();
-    expect(getHeroSnapTarget(0.85, 1)).toBe(1);
-    expect(getHeroSnapTarget(0.85, -1)).toBeNull();
-    expect(getHeroSnapTarget(0.15, -1)).toBe(0);
+  it("resolves a resting intro to its nearest endpoint", () => {
+    expect(getHeroSnapTarget(0.13)).toBe(0);
+    expect(getHeroSnapTarget(0.5)).toBe(0);
+    expect(getHeroSnapTarget(0.51)).toBe(1);
+    expect(getHeroSnapTarget(0.85)).toBe(1);
+    expect(getHeroSnapTarget(0)).toBeNull();
+    expect(getHeroSnapTarget(1)).toBeNull();
+    expect(getHeroSnapTarget(1.2)).toBeNull();
+    expect(getHeroSnapTarget(Number.NaN)).toBeNull();
+  });
+
+  it("uses a continuous monotone snap easing with exact endpoints", () => {
+    expect(easeHeroSnap(0)).toBe(0);
+    expect(easeHeroSnap(1)).toBe(1);
+    // At parameter t=.5 the measured Bezier passes through x=.35, y=.5.
+    expect(easeHeroSnap(0.35)).toBeCloseTo(0.5, 5);
+    let previous = 0;
+    for (let step = 0; step <= 100; step += 1) {
+      const next = easeHeroSnap(step / 100);
+      expect(next).toBeGreaterThanOrEqual(previous);
+      previous = next;
+    }
   });
 });

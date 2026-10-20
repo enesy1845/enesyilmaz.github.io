@@ -362,6 +362,75 @@ test("one header logo moves from the hero and stays mounted on scroll", async ({
   expect(largeSize?.width).toBeGreaterThan((dockedSize?.width ?? 0) * 2);
 });
 
+test("intro settles to the nearest endpoint and fresh input interrupts it", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  const height = await page
+    .locator("[data-home-hero]")
+    .evaluate((element) => (element as HTMLElement).offsetHeight);
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.4, behavior: "instant" }),
+    height,
+  );
+  await expect
+    .poll(() => page.evaluate(() => scrollY), { timeout: 4000 })
+    .toBeLessThan(2);
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.6, behavior: "instant" }),
+    height,
+  );
+  await expect
+    .poll(() => page.evaluate((height) => Math.abs(scrollY - height), height), {
+      timeout: 4000,
+    })
+    .toBeLessThan(2);
+  await expect(page.locator("[data-header-letter]").first()).toHaveCSS(
+    "transform",
+    "none",
+  );
+
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.4, behavior: "instant" }),
+    height,
+  );
+  await expect
+    .poll(() =>
+      page.evaluate(
+        (height) => scrollY < height * 0.35 && scrollY > height * 0.05,
+        height,
+      ),
+    )
+    .toBe(true);
+  await page.keyboard.press("Escape");
+  const interrupted = await page.evaluate(() => scrollY);
+  await page.waitForTimeout(500);
+  expect(
+    Math.abs((await page.evaluate(() => scrollY)) - interrupted),
+  ).toBeLessThan(2);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-motion",
+    "reduced",
+  );
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.4, behavior: "instant" }),
+    height,
+  );
+  const stationary = await page.evaluate(() => scrollY);
+  await page.waitForTimeout(1400);
+  expect(
+    Math.abs((await page.evaluate(() => scrollY)) - stationary),
+  ).toBeLessThan(2);
+});
+
 test("docked logo stays visible while scrolling across the hero boundary", async ({
   page,
 }) => {

@@ -94,19 +94,8 @@
 /* Light header while the home hero is on screen. Without JavaScript the
    header stays solid white; with it, it turns transparent like AIR's. */
 html:has([data-home-hero]):not([data-hero-state="hero-passed"]) .site-header {
-  --color-foreground: #0a0a0a;
-  --color-foreground-muted: #3d3d3d;
-  --color-foreground-subtle: #6b6b6b;
-  --color-border: rgb(0 0 0 / 0.12);
-  --color-border-strong: rgb(0 0 0 / 0.32);
-  --color-surface: rgb(0 0 0 / 0.05);
-  --color-surface-muted: rgb(0 0 0 / 0.08);
-  --color-background-elevated: #ffffff;
-  --color-accent: #0a0a0a;
-  --color-focus: #0a0a0a;
-
   border-bottom-color: transparent;
-  background-color: #ffffff;
+  background-color: var(--color-light);
 }
 
 html[data-hero-state]:has([data-home-hero]):not([data-hero-state="hero-passed"])
@@ -117,9 +106,9 @@ html[data-hero-state]:has([data-home-hero]):not([data-hero-state="hero-passed"])
 html:has([data-home-hero]):not([data-hero-state="hero-passed"])
   .site-header
   .menu-toggle {
-  border-color: #0a0a0a;
-  background-color: #0a0a0a;
-  color: #ffffff;
+  border-color: var(--color-dark);
+  background-color: var(--color-dark);
+  color: var(--color-light);
 }
 
 /* A single visible logo lives in the header throughout the scroll. The hero
@@ -146,10 +135,10 @@ html[data-hero-state="hero-passed"] .hero__letter {
 /* ---------- Hero ---------- */
 
 .hero {
-  --hero-bg: #ffffff;
-  --hero-ink: #0a0a0a;
-  --hero-muted: #6b6b6b;
-  --hero-chip: #ececec;
+  --hero-bg: var(--color-light);
+  --hero-ink: var(--color-dark);
+  --hero-muted: var(--color-foreground-subtle);
+  --hero-chip: var(--color-surface-muted);
   --hero-gutter: clamp(1rem, 1.4vw, 1.5rem);
   --hero-ease: cubic-bezier(0.7, 0, 0.3, 1);
   --hero-header-offset: calc(var(--layout-header-height) + 1px);
@@ -166,8 +155,8 @@ html[data-hero-state="hero-passed"] .hero__letter {
 }
 
 .hero ::selection {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: var(--color-dark);
+  color: var(--color-light);
 }
 
 .hero :focus-visible {
@@ -186,8 +175,8 @@ html[data-hero-state="hero-passed"] .hero__letter {
   inset: 0;
   background: radial-gradient(
     60% 48% at 42% 46%,
-    #f1f1f1,
-    rgb(255 255 255 / 0) 72%
+    var(--color-surface),
+    transparent 72%
   );
   opacity: calc(1 - var(--hero-fade, 0));
   transform: translateY(calc(var(--hero-fade, 0) * 6svh));
@@ -385,11 +374,11 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 
 .hero__button--primary {
   background: var(--hero-ink);
-  color: #ffffff;
+  color: var(--color-light);
 }
 
 .hero__button--primary:hover {
-  background: #333333;
+  background: var(--color-accent-hover);
 }
 
 .hero__button--secondary {
@@ -398,7 +387,7 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 }
 
 .hero__button--secondary:hover {
-  background: #dcdcdc;
+  background: var(--color-border-strong);
 }
 
 .hero__next {
@@ -415,7 +404,7 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 }
 
 .hero__next:hover {
-  background: #dcdcdc;
+  background: var(--color-border-strong);
 }
 
 @media (min-width: 64rem),

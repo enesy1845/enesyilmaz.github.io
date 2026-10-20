@@ -73,8 +73,8 @@ button {
 
 .surface-grid {
   background-image:
-    linear-gradient(rgb(0 0 0 / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(0 0 0 / 0.04) 1px, transparent 1px);
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
   background-size: 3rem 3rem;
 }
 

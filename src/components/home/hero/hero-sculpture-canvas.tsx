@@ -28,6 +28,21 @@ export default function HeroSculptureCanvas({
     }
     const canvasElement = canvas;
     const context2d = context;
+    const tokens = getComputedStyle(document.documentElement);
+    // The two owned brand tokens are six-digit hex colors; read once, not
+    // inside the render loop, so Canvas shares the CSS palette.
+    function readBrandColor(
+      property: string,
+    ): readonly [number, number, number] {
+      const hex = tokens.getPropertyValue(property).trim().slice(1);
+      const channel = (offset: number) =>
+        Number.parseInt(hex.slice(offset, offset + 2), 16);
+      return [channel(0), channel(2), channel(4)];
+    }
+    const palette = {
+      light: readBrandColor("--color-light"),
+      dark: readBrandColor("--color-dark"),
+    };
 
     let frame: number | null = null;
     let resizeTimer: number | null = null;
@@ -63,6 +78,7 @@ export default function HeroSculptureCanvas({
           size.height,
           config.plateCount,
           elapsed,
+          palette,
         );
       }
     }

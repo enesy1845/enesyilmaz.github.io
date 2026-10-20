@@ -98,7 +98,7 @@ export function MobileNavigation({
 
       {isOpen ? (
         <div
-          className="fixed inset-0 z-[var(--z-overlay)] bg-black/20 p-[var(--space-4)]"
+          className="fixed inset-0 z-[var(--z-overlay)] bg-[var(--color-overlay)] p-[var(--space-4)]"
           role="presentation"
         >
           <div

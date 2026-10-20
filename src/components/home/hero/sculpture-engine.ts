@@ -6,6 +6,11 @@
 
 type Vec3 = [number, number, number];
 
+export type SculpturePalette = {
+  light: readonly [number, number, number];
+  dark: readonly [number, number, number];
+};
+
 type Face = {
   depth: number;
   points: Array<[number, number]>;
@@ -213,6 +218,7 @@ export function drawSculptureFrame(
   height: number,
   plateCount: number,
   timeSeconds: number,
+  palette: SculpturePalette,
 ) {
   context.clearRect(0, 0, width, height);
 
@@ -235,9 +241,12 @@ export function drawSculptureFrame(
   context.lineJoin = "round";
   context.lineWidth = 0.6;
   for (const face of faces) {
-    const tone = Math.round(Math.min(1, face.shade) * 255);
-    context.fillStyle = `rgb(${tone}, ${tone}, ${tone})`;
-    context.strokeStyle = `rgba(0, 0, 0, ${0.04 + (1 - face.shade) * 0.2})`;
+    const shade = Math.min(1, face.shade);
+    const tone = palette.light.map((channel, index) =>
+      Math.round((palette.dark[index] ?? 0) * (1 - shade) + channel * shade),
+    );
+    context.fillStyle = `rgb(${tone.join(", ")})`;
+    context.strokeStyle = `rgba(${palette.dark.join(", ")}, ${0.04 + (1 - face.shade) * 0.2})`;
     context.beginPath();
     const [first, ...rest] = face.points;
     if (!first) {
