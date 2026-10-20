@@ -3,27 +3,29 @@ import { describe, expect, it } from "vitest";
 
 import { HomeHero } from "@/components/home/hero/home-hero";
 import {
+  clampProgress,
+  easeOutQuad,
   getCappedDpr,
   getHeroScrollState,
-  getParticleConfig,
-  getParticleTextLines,
-  shouldRunParticleRenderer,
+  getLetterTransform,
+  getSculptureConfig,
+  getStaggeredProgress,
+  shouldRunSculpture,
 } from "@/components/home/hero/hero.utils";
-import { ParticleHeroFallback } from "@/components/home/hero/particle-hero-fallback";
 import { homeContent } from "@/data/home";
+import en from "@/messages/en.json";
+import { getWordmarkWords } from "@/lib/utils/wordmark";
 
 const baseCapabilities = {
   supportsCanvas: true,
   prefersReducedMotion: false,
   width: 1280,
-  height: 520,
-  devicePixelRatio: 2,
-  pointer: "fine" as const,
+  height: 820,
 };
 
 describe("home hero", () => {
-  it("renders the semantic hero content before particle enhancement", () => {
-    render(<HomeHero locale="en" page={homeContent.en} />);
+  it("renders the semantic hero content before any enhancement", () => {
+    render(<HomeHero dictionary={en} locale="en" page={homeContent.en} />);
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Enes Yilmaz",
@@ -32,62 +34,93 @@ describe("home hero", () => {
     expect(
       screen.getByRole("link", { name: "View selected work" }),
     ).toHaveAttribute("href", "/en/work");
-    expect(screen.queryByRole("link", { name: "About me" })).toBeNull();
+    expect(screen.getByRole("link", { name: "About me" })).toHaveAttribute(
+      "href",
+      "/en/about",
+    );
+    expect(
+      screen.getByRole("link", { name: homeContent.en.manifestoTitle }),
+    ).toHaveAttribute("href", "#home-next");
   });
 
-  it("keeps the static particle fallback decorative", () => {
-    const { container } = render(<ParticleHeroFallback />);
+  it("renders the wordmark as decorative, indexed letters", () => {
+    const { container } = render(
+      <HomeHero dictionary={en} locale="en" page={homeContent.en} />,
+    );
+    const letters = container.querySelectorAll("[data-hero-letter]");
 
-    expect(container.querySelector("[data-particle-fallback]")).toHaveAttribute(
-      "aria-hidden",
-      "true",
+    expect(letters).toHaveLength(3);
+    expect(letters[0]?.closest("[aria-hidden='true']")).not.toBeNull();
+    expect(Array.from(letters, (letter) => letter.textContent).join("")).toBe(
+      "NOI",
     );
   });
 
-  it("selects bounded particle quality tiers", () => {
-    expect(getParticleConfig({ ...baseCapabilities, width: 340 }).tier).toBe(
-      "small-mobile",
+  it("uppercases the wordmark without Turkish dotted capitals", () => {
+    const words = getWordmarkWords("Enes Yilmaz");
+
+    expect(words.map((word) => word.map((l) => l.character).join(""))).toEqual([
+      "ENES",
+      "YILMAZ",
+    ]);
+    expect(words.flat().map((letter) => letter.index)).toEqual([
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    ]);
+  });
+
+  it("selects bounded sculpture tiers and falls back when required", () => {
+    expect(getSculptureConfig({ ...baseCapabilities, width: 390 }).tier).toBe(
+      "mobile",
     );
-    expect(getParticleConfig({ ...baseCapabilities, width: 1440 }).tier).toBe(
+    expect(getSculptureConfig({ ...baseCapabilities, width: 1440 }).tier).toBe(
       "desktop",
     );
-    expect(getParticleConfig({ ...baseCapabilities, width: 1800 }).tier).toBe(
-      "large-desktop",
-    );
-  });
-
-  it("disables interaction and rendering when capabilities require fallback", () => {
-    const coarseConfig = getParticleConfig({
-      ...baseCapabilities,
-      pointer: "coarse",
-    });
-    const reducedConfig = getParticleConfig({
-      ...baseCapabilities,
-      prefersReducedMotion: true,
-    });
-
-    expect(coarseConfig.interactionRadius).toBe(0);
-    expect(reducedConfig.tier).toBe("reduced");
     expect(
-      shouldRunParticleRenderer({
-        ...baseCapabilities,
-        supportsCanvas: false,
-      }),
+      getSculptureConfig({ ...baseCapabilities, prefersReducedMotion: true })
+        .tier,
+    ).toBe("reduced");
+    expect(
+      shouldRunSculpture({ ...baseCapabilities, supportsCanvas: false }),
     ).toBe(false);
   });
 
   it("caps device pixel ratio per quality tier", () => {
-    const config = getParticleConfig(baseCapabilities);
+    const config = getSculptureConfig(baseCapabilities);
 
     expect(getCappedDpr(3, config)).toBeLessThanOrEqual(config.maxDpr);
     expect(getCappedDpr(0, config)).toBe(1);
   });
 
-  it("keeps scroll and text helpers deterministic", () => {
-    expect(getHeroScrollState(0)).toBe("hero-top");
-    expect(getHeroScrollState(0.5)).toBe("hero-transitioning");
-    expect(getHeroScrollState(1)).toBe("hero-passed");
-    expect(getParticleTextLines(375)).toEqual(["ENES", "YILMAZ"]);
-    expect(getParticleTextLines(1024)).toEqual(["ENES YILMAZ"]);
+  it("derives the scroll state from hero and header positions", () => {
+    expect(getHeroScrollState(0, 900, 77)).toBe("hero-top");
+    expect(getHeroScrollState(300, 600, 77)).toBe("hero-transitioning");
+    expect(getHeroScrollState(830, 77, 77)).toBe("hero-passed");
+  });
+
+  it("docks a letter onto its header target and keeps it pinned", () => {
+    const from = { x: 20, y: 400, width: 120, height: 160 };
+    const to = { x: 56, y: 26, width: 18, height: 24 };
+
+    expect(getLetterTransform(from, to, 0, 0)).toEqual({
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
+
+    const docked = getLetterTransform(from, to, 700, 1);
+    expect(docked.x).toBe(36);
+    expect(docked.y).toBe(700 - 374);
+    expect(docked.scale).toBeCloseTo(0.15);
+  });
+
+  it("staggers words while keeping progress within bounds", () => {
+    expect(getStaggeredProgress(0, 0, 2)).toBe(0);
+    expect(getStaggeredProgress(1, 1, 2)).toBe(1);
+    expect(getStaggeredProgress(0.5, 0, 2)).toBeGreaterThan(
+      getStaggeredProgress(0.5, 1, 2),
+    );
+    expect(getStaggeredProgress(0.3, 1, 2)).toBe(0);
+    expect(clampProgress(Number.NaN)).toBe(0);
+    expect(easeOutQuad(2)).toBe(1);
   });
 });

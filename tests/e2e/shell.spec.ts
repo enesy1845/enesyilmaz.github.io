@@ -1,6 +1,16 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+// The hero preloader plays once per session; skip it so navigation tests do
+// not wait for it. The dedicated intro test below opts back in.
+test.beforeEach(async ({ page }, testInfo) => {
+  if (!testInfo.title.includes("preloader")) {
+    await page.addInitScript(() => {
+      window.sessionStorage.setItem("hero-intro-seen", "1");
+    });
+  }
+});
+
 test("root redirects to English", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en$/);
@@ -67,9 +77,7 @@ test("English home renders shared header and footer", async ({ page }) => {
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
   await expect(
-    page
-      .getByRole("banner")
-      .getByRole("link", { name: /Code \/ Thought \/ Craft/ }),
+    page.getByRole("banner").getByRole("link", { name: /Enes Yilmaz/ }),
   ).toHaveAttribute("href", "/en");
 });
 
@@ -232,10 +240,17 @@ test("main content remains usable without animation", async ({ page }) => {
   await page.goto("/en");
 
   await expect(page.locator("canvas")).toHaveCount(0);
-  await expect(page.locator("[data-particle-fallback]")).toHaveAttribute(
+  await expect(page.locator("[data-sculpture-host]")).toHaveAttribute(
     "aria-hidden",
     "true",
   );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-motion",
+    "reduced",
+  );
+  await expect(
+    page.getByRole("banner").locator("[data-header-letter]").first(),
+  ).toHaveCSS("opacity", "1");
   await expect(page.getByRole("main")).toContainText("Selected work");
 });
 
@@ -250,71 +265,92 @@ test("home content remains usable when JavaScript is disabled", async ({
     "Enes Yilmaz",
   );
   await expect(page.locator("canvas")).toHaveCount(0);
+  await expect(
+    page.getByRole("banner").locator("[data-header-letter]").first(),
+  ).toHaveCSS("opacity", "1");
+  await expect(
+    page.getByRole("link", { name: "View selected work" }),
+  ).toBeVisible();
   await expect(page.getByRole("main")).toContainText("Selected work");
 
   await context.close();
 });
 
-test("particle enhancement is lazy, decorative and limited to the home route", async ({
+test("hero sculpture is lazy, decorative and limited to the home route", async ({
   page,
 }) => {
-  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/en/work");
-  await expect(page.locator("[data-particle-host]")).toHaveCount(0);
+  await expect(page.locator("[data-sculpture-host]")).toHaveCount(0);
 
   await page.goto("/en");
-  await expect(page.locator("[data-particle-host]")).toHaveAttribute(
-    "data-particle-visible",
+  await expect(page.locator("[data-sculpture-host]")).toHaveAttribute(
+    "data-sculpture-visible",
     "true",
   );
-  const canvasCount = await page.locator("[data-particle-canvas]").count();
-  if (canvasCount > 0) {
-    await expect(page.locator("[data-particle-canvas]")).toHaveAttribute(
-      "aria-hidden",
-      "true",
-    );
-  } else {
-    await expect(page.locator("[data-particle-fallback]")).toHaveAttribute(
-      "aria-hidden",
-      "true",
-    );
-  }
+  await expect(page.locator("[data-sculpture-canvas]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
 });
 
-test("home hero keeps the first viewport as a pure identity scene", async ({
+test("hero wordmark docks into the header and hands over on scroll", async ({
   page,
 }) => {
   await page.goto("/en");
 
-  const hero = page.locator("[data-home-hero]");
-  await expect(hero.getByRole("heading", { level: 1 })).toHaveText(
-    "Enes Yilmaz",
+  const headerLetter = page
+    .getByRole("banner")
+    .locator("[data-header-letter]")
+    .first();
+  const heroLetter = page.locator("[data-hero-letter]").first();
+
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-state",
+    "hero-top",
   );
-  await expect(hero.getByText("Software Developer")).toHaveCount(0);
-  await expect(
-    hero.getByRole("link", { name: "View selected work" }),
-  ).toHaveCount(0);
-  await expect(
-    hero.locator("[data-hero-background-mark] span").first(),
-  ).toHaveText("E");
-  await expect(
-    hero.locator("[data-hero-background-mark] span").last(),
-  ).toHaveText("Y");
-  await expect(page.locator("[data-home-hero-support]")).toContainText(
-    "Software Developer",
+  await expect(headerLetter).toHaveCSS("opacity", "0");
+  await expect(heroLetter).toBeVisible();
+
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.25));
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-state",
+    "hero-passed",
   );
-  await expect(
-    page.locator("[data-home-hero-support]").getByRole("link", {
-      name: "View selected work",
-    }),
-  ).toHaveAttribute("href", "/en/work");
+  await expect(headerLetter).toHaveCSS("opacity", "1");
+  await expect(heroLetter).toHaveCSS("visibility", "hidden");
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-state",
+    "hero-top",
+  );
+  await expect(heroLetter).toHaveCSS("visibility", "visible");
+});
+
+test("hero preloader plays once and reveals the page", async ({ page }) => {
+  await page.goto("/en");
+
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  await expect(page.getByRole("banner")).toBeInViewport();
+  expect(
+    await page.evaluate(() => window.sessionStorage.getItem("hero-intro-seen")),
+  ).toBe("1");
+
+  await page.reload();
+  await expect(page.locator("html")).not.toHaveAttribute(
+    "data-hero-intro",
+    "loading",
+  );
 });
 
 test("hero scroll transition updates header state without blocking navigation", async ({
   page,
 }) => {
   await page.goto("/en");
-  await page.locator("[data-home-hero-support]").scrollIntoViewIfNeeded();
   await page
     .getByRole("link", { name: "View selected work" })
     .click({ trial: true });
@@ -323,16 +359,61 @@ test("hero scroll transition updates header state without blocking navigation", 
   await expect
     .poll(() => page.evaluate(() => document.documentElement.dataset.heroState))
     .toBe("hero-passed");
-  await expect(page.locator("[data-header-signature]")).toBeVisible();
-  await expect(page.locator("[data-header-signature]")).toHaveText(
-    "Code / Thought / Craft",
-  );
-  await expect(page.locator("[data-header-compact-mark]")).toBeVisible();
-  await expect(page.locator("[data-header-compact-mark]")).toHaveText("EY");
 
   await page.getByRole("link", { name: "View selected work" }).click();
   await expect(page).toHaveURL(/\/en\/work$/);
 });
+
+test("hero state does not leak into other routes after client navigation", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await page.getByRole("link", { name: "View selected work" }).click();
+  await expect(page).toHaveURL(/\/en\/work$/);
+
+  await expect(page.locator("html")).not.toHaveAttribute(
+    "data-hero-state",
+    /.+/,
+  );
+  await expect(
+    page.getByRole("banner").locator("[data-header-letter]").first(),
+  ).toHaveCSS("opacity", "1");
+});
+
+for (const viewport of [
+  { width: 320, height: 568 },
+  { width: 375, height: 667 },
+  { width: 390, height: 844 },
+  { width: 844, height: 390 },
+] as const) {
+  test(`hero fits ${viewport.width}x${viewport.height} without overflow`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/tr");
+
+    const metrics = await page.evaluate(() => {
+      const stage = document.querySelector(".hero__stage");
+      const letters = Array.from(
+        document.querySelectorAll("[data-hero-letter]"),
+        (letter) => letter.getBoundingClientRect(),
+      );
+      return {
+        overflowX: document.documentElement.scrollWidth > window.innerWidth,
+        stageHeight: stage?.getBoundingClientRect().height ?? 0,
+        lettersRight: Math.max(...letters.map((rect) => rect.right)),
+        lettersLeft: Math.min(...letters.map((rect) => rect.left)),
+        viewportHeight: window.innerHeight,
+        viewportWidth: window.innerWidth,
+      };
+    });
+
+    expect(metrics.overflowX).toBe(false);
+    expect(metrics.lettersLeft).toBeGreaterThanOrEqual(0);
+    expect(metrics.lettersRight).toBeLessThanOrEqual(metrics.viewportWidth);
+    expect(metrics.stageHeight).toBeLessThanOrEqual(metrics.viewportHeight + 1);
+  });
+}
 
 test("home and internal page have no obvious accessibility violations", async ({
   page,

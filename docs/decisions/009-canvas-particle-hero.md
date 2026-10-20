@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted for Phase 4
+Superseded by [ADR 010](010-air-style-hero.md)
 
 ## Context
 
