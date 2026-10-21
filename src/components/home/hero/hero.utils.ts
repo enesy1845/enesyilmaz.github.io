@@ -29,7 +29,9 @@ export const WORDMARK_WORD_STAGGER = 0.35;
 /** Portion of the hero height over which hero copy fades out (AIR: -80%). */
 export const HERO_FADE_DISTANCE = 0.8;
 
-export function getSculptureTier(width: number): SculptureQualityTier {
+export function getSculptureTier(
+  width: number,
+): Exclude<SculptureQualityTier, "reduced"> {
   if (width < 640) {
     return "mobile";
   }
@@ -63,7 +65,7 @@ export function shouldRunSculpture(capabilities: SculptureCapabilities) {
 
 export function getCappedDpr(
   devicePixelRatio: number,
-  config: SculptureTierConfig,
+  config: Pick<SculptureTierConfig, "maxDpr">,
 ): number {
   return Math.max(1, Math.min(devicePixelRatio || 1, config.maxDpr));
 }

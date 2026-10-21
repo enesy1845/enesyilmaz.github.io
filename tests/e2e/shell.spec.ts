@@ -288,6 +288,18 @@ test("hero sculpture is lazy, decorative and limited to the home route", async (
   );
 });
 
+test("hero sculpture falls back to Canvas 2D without WebGL", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Reflect.deleteProperty(window, "WebGL2RenderingContext");
+  });
+  await page.goto("/en");
+  const host = page.locator("[data-sculpture-host]");
+  await expect(host).toHaveAttribute("data-sculpture-renderer", "canvas2d");
+  await expect(page.locator("canvas")).toHaveCount(1);
+});
+
 test("one header logo moves from the hero and stays mounted on scroll", async ({
   page,
 }) => {
