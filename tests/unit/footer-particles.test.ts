@@ -10,7 +10,7 @@ import {
 const still = { active: false, x: 0, y: 0 };
 
 function particleAt(x: number, y: number, tx = x, ty = y): FooterParticle {
-  return { tx, ty, x, y, vx: 0, vy: 0, size: 1, tone: 0 };
+  return { tx, ty, x, y, vx: 0, vy: 0, size: 1 };
 }
 
 describe("footer particles", () => {

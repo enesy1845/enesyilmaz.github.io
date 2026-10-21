@@ -15,7 +15,7 @@ The footer needed a brand moment above its content: the NOI wordmark spread edge
 - `footer-particles-engine.ts` samples particle targets from the rendered SVG paths using their own screen transforms (`getScreenCTM`), so particles match the CSS layout and logo outlines exactly. Targets are jittered within each sample cell, so the mark reads as grain rather than a grid.
 - Particles start scattered below the mark and spring into place when it becomes visible; a fine pointer pushes them aside on tablet and desktop.
 - When every particle has settled, the loop stops, so a resting footer costs nothing. Input, resize or returning to view restarts it. It also pauses when the tab is hidden.
-- Budgets per tier: 1700 particles on desktop, 1100 on tablet and 520 on mobile, kept low so the dots can be large without merging. DPR is capped at 2 (1.5 on mobile). All dots are filled in three batched calls, one per tone. The engine can draw squares instead of arcs for a cheaper tier, but no tier needs it at these counts.
+- Budgets per tier: 380 particles on desktop, 280 on tablet and 200 on mobile, kept low so the dots can be large without merging. All dots share the footer ink colour and are filled with a single path. DPR is capped at 2 (1.5 on mobile). The engine can draw squares instead of arcs for a cheaper tier, but no tier needs it at these counts.
 - The static letters fade out only after the first particle frame has painted, so the mark is never blank.
 
 ## Consequences

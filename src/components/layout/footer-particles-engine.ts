@@ -24,7 +24,6 @@ export type FooterParticle = {
   vx: number;
   vy: number;
   size: number;
-  tone: 0 | 1 | 2;
 };
 
 export type PointerState = { active: boolean; x: number; y: number };
@@ -35,7 +34,6 @@ const MAX_VELOCITY = 18;
 const PUSH_STRENGTH = 0.32;
 /** Below this summed speed every particle is home and the loop can stop. */
 const SETTLED_SPEED = 0.02;
-const TONE_ALPHA = [0.55, 0.75, 0.95] as const;
 
 export function getFooterParticleConfig(
   width: number,
@@ -55,7 +53,7 @@ export function getFooterParticleConfig(
   if (width < 640) {
     return {
       tier: "mobile",
-      maxParticles: 520,
+      maxParticles: 200,
       maxDpr: 1.5,
       interactionRadius: 0,
       dot: "circle",
@@ -64,7 +62,7 @@ export function getFooterParticleConfig(
   if (width < 1024) {
     return {
       tier: "tablet",
-      maxParticles: 1100,
+      maxParticles: 280,
       maxDpr: 2,
       interactionRadius: interactive ? 70 : 0,
       dot: "circle",
@@ -72,7 +70,7 @@ export function getFooterParticleConfig(
   }
   return {
     tier: "desktop",
-    maxParticles: 1700,
+    maxParticles: 380,
     maxDpr: 2,
     interactionRadius: interactive ? 110 : 0,
     dot: "circle",
@@ -174,8 +172,7 @@ export function buildFooterParticles(
         y: ty + Math.abs(Math.sin(angle)) * spread,
         vx: 0,
         vy: 0,
-        size: Math.max(1.6, step * (0.38 + seededUnit(seed + 13) * 0.12)),
-        tone: Math.floor(seededUnit(seed + 29) * 3) as 0 | 1 | 2,
+        size: Math.max(2.5, step * (0.4 + seededUnit(seed + 13) * 0.06)),
       });
     }
   }
@@ -221,7 +218,7 @@ export function stepFooterParticles(
   return motion / Math.max(1, particles.length) > SETTLED_SPEED;
 }
 
-/** One path and fill per tone keeps thousands of dots to three draw calls. */
+/** All dots share one ink, so a single path and fill draws the whole mark. */
 export function drawFooterParticles(
   context: CanvasRenderingContext2D,
   width: number,
@@ -232,20 +229,15 @@ export function drawFooterParticles(
 ) {
   context.clearRect(0, 0, width, height);
   context.fillStyle = ink;
-  for (const [tone, alpha] of TONE_ALPHA.entries()) {
-    context.globalAlpha = alpha;
-    context.beginPath();
-    for (const particle of particles) {
-      if (particle.tone !== tone) continue;
-      if (dot === "square") {
-        const side = particle.size * 1.8;
-        context.rect(particle.x - side / 2, particle.y - side / 2, side, side);
-      } else {
-        context.moveTo(particle.x + particle.size, particle.y);
-        context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-      }
+  context.beginPath();
+  for (const particle of particles) {
+    if (dot === "square") {
+      const side = particle.size * 1.8;
+      context.rect(particle.x - side / 2, particle.y - side / 2, side, side);
+    } else {
+      context.moveTo(particle.x + particle.size, particle.y);
+      context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
     }
-    context.fill();
   }
-  context.globalAlpha = 1;
+  context.fill();
 }
