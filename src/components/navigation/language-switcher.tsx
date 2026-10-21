@@ -41,7 +41,7 @@ type LanguageSwitcherProps = {
 };
 
 /**
- * Icon-only language disclosure: the trigger shows the current flag and the
+ * Compact language disclosure: the trigger shows the current locale and the
  * panel, centred under it, lists the offered locales as flags. Names stay
  * available to assistive technology through visually hidden dictionary text.
  */
@@ -103,7 +103,9 @@ export function LanguageSwitcher({
         <span className="sr-only">
           {`${dictionary.accessibility.languageSwitcher}. ${dictionary.accessibility.currentLanguage}: ${dictionary.language[locale]}`}
         </span>
-        <LanguageFlag locale={locale} />
+        <span aria-hidden="true" className="language-switcher__code">
+          {locale}
+        </span>
         <ChevronIcon />
       </button>
 

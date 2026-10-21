@@ -1,10 +1,8 @@
 import { getImageProps } from "next/image";
 
-import { HeaderAutoHide } from "@/components/home/header-auto-hide";
-
 /**
- * Full-bleed decorative image right after the home hero, like the AIR image
- * section that follows its intro. The files are pre-optimised WebP, so they
+ * A cropped, full-width interlude after the hero. The files are
+ * pre-optimised WebP, so they
  * are served as-is; the portrait crop keeps the orb visible on phones.
  */
 export function HomeImage() {
@@ -19,10 +17,14 @@ export function HomeImage() {
   return (
     <div
       aria-hidden="true"
-      className="relative h-svh min-h-80 overflow-hidden bg-[var(--color-surface)]"
+      className="home-image relative overflow-hidden bg-[var(--color-surface)]"
       data-home-image=""
     >
-      <HeaderAutoHide />
+      <span
+        aria-hidden="true"
+        className="header-island-marker"
+        data-header-island-trigger=""
+      />
       <picture>
         <source
           height={1920}

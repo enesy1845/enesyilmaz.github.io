@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { ProjectList } from "@/components/projects/project-list";
+import { ProjectIndex } from "@/components/projects/project-index";
+import { ProjectArchive } from "@/components/projects/project-archive";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
-import { SectionHeader } from "@/components/ui/section-header";
 import { contentLabels } from "@/data/content-labels";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -44,19 +44,22 @@ export default async function WorkPage({ params }: PageProps) {
         meta={labels.sourceNotice}
       />
       <Section>
-        <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader
-            title={labels.featured}
-            description={dictionary.pages.work.featuredDescription}
-          />
-          <ProjectList projects={featuredProjects} locale={locale} />
+        <div className="section-heading">
+          <h2>{labels.featured}</h2>
+          <p className="section-caption">
+            {dictionary.pages.work.featuredDescription}
+          </p>
         </div>
+        <ProjectIndex projects={featuredProjects} locale={locale} />
       </Section>
       <Section className="border-t border-[var(--color-border)]">
-        <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader title={labels.additionalProjects} />
-          <ProjectList compact projects={additionalProjects} locale={locale} />
+        <div className="section-heading">
+          <h2>{labels.additionalProjects}</h2>
+          <span className="section-index">
+            {String(additionalProjects.length).padStart(2, "0")}
+          </span>
         </div>
+        <ProjectArchive projects={additionalProjects} locale={locale} />
       </Section>
     </>
   );

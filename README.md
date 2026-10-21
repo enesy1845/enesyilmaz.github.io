@@ -2,6 +2,21 @@
 
 This repository is being migrated from a legacy static GitHub Pages portfolio into a multilingual Next.js portfolio designed for a future Cloudflare Workers deployment through OpenNext.
 
+The latest home/navigation revision uses a shorter manifesto, a stationary
+project preview with a compact index, native expertise disclosures, and an
+asymmetric Code / Thought / Craft composition. See the [portfolio rhythm study](docs/design/portfolio-rhythm-study.md)
+for live references, design decisions, motion constraints and browser checks.
+The [expanded component study](docs/design/minimal-components-study.md) covers
+the transparent header with its floating glass navigation, native category
+filters and email-copy feedback.
+The [interior folio study](docs/design/interior-folio-study.md) extends this
+direction across Work, Notes, Atelier, About, Contact and case studies,
+including shared navigation behaviour on every route.
+The [Awwwards research and proposed direction](docs/design/awwwards-study.md)
+compares twelve references and records the applied visual refinements: CSS-only
+project previews, category studies, editorial Notes and asymmetric Atelier layouts.
+The foundation notes below describe the earlier Phase 3 baseline.
+
 The current application is Phase 3. It has a multilingual technical foundation, a restrained visual design foundation, typed content records, real static Home content, selected projects, and improved Work/About/Contact pages. It is still not the final interactive portfolio experience.
 
 ## Status

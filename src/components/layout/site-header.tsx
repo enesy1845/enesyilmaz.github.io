@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import { NoiLetter } from "@/components/brand/noi-letter";
+import { HeaderContrast } from "@/components/layout/header-contrast";
+import { HeaderIsland } from "@/components/layout/header-island";
 
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
 import { LanguageSwitcher } from "@/components/navigation/language-switcher";
@@ -23,7 +25,9 @@ export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
       className="site-header sticky top-0 z-[var(--z-sticky)]"
       data-site-header=""
     >
-      <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-3 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+      <HeaderContrast />
+      <HeaderIsland />
+      <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-2 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <Link
           className="site-wordmark justify-self-start no-underline"
           data-header-identity=""

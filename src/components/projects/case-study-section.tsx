@@ -1,4 +1,5 @@
-type CaseStudySectionProps = {
+export type CaseStudySectionProps = {
+  id: string;
   title: string;
   items?: readonly string[];
   body?: string;
@@ -8,14 +9,15 @@ export function CaseStudySection({
   title,
   items,
   body,
+  id,
 }: CaseStudySectionProps) {
   if (!body && (!items || items.length === 0)) {
     return null;
   }
 
   return (
-    <section className="border-t border-[var(--color-border)] py-[var(--space-8)]">
-      <h2 className="font-serif text-[length:var(--font-size-xl)]">{title}</h2>
+    <section className="case-study-section" id={id}>
+      <h2>{title}</h2>
       {body ? (
         <p className="mt-[var(--space-4)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
           {body}

@@ -31,6 +31,7 @@ export type HomeContent = {
   atelierItems: readonly string[];
   atelierAction: string;
   aboutTitle: string;
+  aboutLead: string;
   aboutDescription: string;
   aboutAction: string;
   contactTitle: string;
@@ -97,6 +98,8 @@ export const homeContent: Record<Locale, HomeContent> = {
     ],
     atelierAction: "Visit the atelier",
     aboutTitle: "A little about me",
+    aboutLead:
+      "A software developer in Norway, with a background in mathematics and a curiosity for how things work.",
     aboutDescription:
       "I'm a software developer based in Norway. My journey connects mathematics, programming education, full-stack development and data engineering. I enjoy understanding complex systems, but I'm equally interested in the people and ideas behind them.",
     aboutAction: "More about me",
@@ -163,6 +166,8 @@ export const homeContent: Record<Locale, HomeContent> = {
     ],
     atelierAction: "Besøk atelieret",
     aboutTitle: "Litt om meg",
+    aboutLead:
+      "Programvareutvikler i Norge, med bakgrunn i matematikk og nysgjerrighet for hvordan ting fungerer.",
     aboutDescription:
       "Jeg er programvareutvikler og bor i Norge. Reisen min knytter sammen matematikk, programmeringsundervisning, full-stack-utvikling og datautvikling. Jeg liker å forstå komplekse systemer, men er like interessert i menneskene og ideene bak dem.",
     aboutAction: "Mer om meg",
@@ -229,6 +234,8 @@ export const homeContent: Record<Locale, HomeContent> = {
     ],
     atelierAction: "Atölyeyi ziyaret et",
     aboutTitle: "Kısaca ben",
+    aboutLead:
+      "Norveç'te bir yazılım geliştirici. Temelim matematik, merakım işlerin nasıl çalıştığı.",
     aboutDescription:
       "Norveç'te yaşayan bir yazılım geliştiriciyim. Yolculuğum matematiği, programlama eğitimini, full-stack geliştirmeyi ve veri mühendisliğini birbirine bağlıyor. Karmaşık sistemleri anlamayı seviyorum; ama onların arkasındaki insanlar ve fikirler de beni en az o kadar ilgilendiriyor.",
     aboutAction: "Hakkımda daha fazlası",

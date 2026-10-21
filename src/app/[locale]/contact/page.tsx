@@ -5,6 +5,7 @@ import { ExternalLink } from "@/components/ui/external-link";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { CopyEmail } from "@/components/ui/copy-email";
 import { socialLinks } from "@/config/social";
 import { contentLabels } from "@/data/content-labels";
 import { contactPageContent } from "@/data/pages";
@@ -34,6 +35,7 @@ export default async function ContactPage({ params }: PageProps) {
   const locale = isLocale(localeParam) ? localeParam : "en";
   const content = contactPageContent[locale];
   const labels = contentLabels[locale];
+  const email = socialLinks.find((link) => link.key === "email");
 
   return (
     <>
@@ -44,31 +46,53 @@ export default async function ContactPage({ params }: PageProps) {
         meta={content.introMeta}
       />
       <Section>
-        <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
+        <div className="contact-directory">
           <SectionHeader
             title={labels.contactLinks}
             description={content.description}
           />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {socialLinks.map((link) => (
-              <article
-                className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]"
-                key={link.key}
-              >
-                <h2 className="font-serif text-[length:var(--font-size-xl)]">
-                  {link.label}
-                </h2>
-                <p className="mt-[var(--space-3)] text-[length:var(--font-size-sm)] break-words text-[var(--color-foreground-muted)]">
-                  {link.description}
-                </p>
-                <ExternalLink
-                  className="mt-[var(--space-5)] inline-block"
-                  href={link.href}
+          <div>
+            {email ? (
+              <div className="contact-primary">
+                <h2>{email.label}</h2>
+                <a
+                  aria-label={email.label}
+                  className="contact-address"
+                  href={email.href}
                 >
-                  {link.label}
-                </ExternalLink>
-              </article>
-            ))}
+                  {email.description}
+                  <span aria-hidden="true" className="link-arrow">
+                    ↗
+                  </span>
+                </a>
+                <CopyEmail email={email.description} labels={labels} />
+              </div>
+            ) : null}
+            <div className="contact-channels">
+              {socialLinks
+                .filter((link) => link.key !== "email")
+                .map((link, index) => (
+                  <ExternalLink
+                    aria-label={link.label}
+                    className="contact-channel"
+                    href={link.href}
+                    key={link.key}
+                  >
+                    <span aria-hidden="true" className="section-index">
+                      0{index + 1}
+                    </span>
+                    <span>
+                      <strong>{link.label}</strong>
+                      <span className="contact-channel__detail">
+                        {link.description}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" className="link-arrow">
+                      ↗
+                    </span>
+                  </ExternalLink>
+                ))}
+            </div>
           </div>
         </div>
       </Section>

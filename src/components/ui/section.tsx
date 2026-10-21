@@ -7,6 +7,7 @@ type SectionProps = {
   className?: string;
   container?: "standard" | "wide" | "reading";
   id?: string;
+  tone?: "inverse";
 };
 
 export function Section({
@@ -14,9 +15,14 @@ export function Section({
   className = "",
   container = "standard",
   id,
+  tone,
 }: SectionProps) {
   return (
-    <section className={`py-[var(--space-section)] ${className}`} id={id}>
+    <section
+      className={`py-[var(--space-section)] ${className}`}
+      data-header-tone={tone}
+      id={id}
+    >
       <Container size={container}>{children}</Container>
     </section>
   );

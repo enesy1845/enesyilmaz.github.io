@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { ButtonLink } from "@/components/ui/button";
+import { ClosingInvite } from "@/components/ui/closing-invite";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
-import { SectionHeader } from "@/components/ui/section-header";
+import { contentLabels } from "@/data/content-labels";
+import { siteConfig } from "@/config/site";
 import { aboutPageContent } from "@/data/pages";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -30,48 +32,76 @@ export default async function AboutPage({ params }: PageProps) {
   const dictionary = await getDictionary(localeParam);
   const locale = isLocale(localeParam) ? localeParam : "en";
   const content = aboutPageContent[locale];
+  const destinations = ["cv", "work", "notes", "atelier"] as const;
 
   return (
-    <>
+    <div className="about-page">
       <PageIntro
         heading={dictionary.pages.about.heading}
         description={dictionary.pages.about.description}
+        eyebrow={siteConfig.author}
         locale={locale}
         meta={content.introMeta}
       />
-      <Section>
-        <div className="grid gap-[var(--space-8)]">
-          {content.sections.map((section) => (
-            <article
-              className="border-t border-[var(--color-border)] pt-[var(--space-6)]"
-              key={section.title}
-            >
-              <h2 className="font-serif text-[length:var(--font-size-xl)]">
-                {section.title}
-              </h2>
-              <p className="mt-[var(--space-3)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-                {section.body}
-              </p>
-            </article>
-          ))}
+      <Section className="about-narrative">
+        <div className="about-overview">
+          <nav
+            className="about-contents"
+            aria-label={contentLabels[locale].onThisPage}
+          >
+            <ol role="list">
+              {content.sections.map((section, index) => (
+                <li key={section.title}>
+                  <a href={`#about-${index + 1}`}>
+                    <span aria-hidden="true">0{index + 1}</span>
+                    <span>{section.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+          <div className="about-chapters">
+            {content.sections.map((section, index) => {
+              const destination = destinations[index];
+              return (
+                <article
+                  className="about-chapter"
+                  id={`about-${index + 1}`}
+                  key={section.title}
+                >
+                  <header>
+                    <span aria-hidden="true" className="section-index">
+                      0{index + 1}
+                    </span>
+                    <h2>{section.title}</h2>
+                  </header>
+                  {section.lead ? (
+                    <p className="about-chapter__lead">{section.lead}</p>
+                  ) : null}
+                  <p>{section.body}</p>
+                  {destination ? (
+                    <Link
+                      className="text-link"
+                      href={createLocalePath(locale, destination)}
+                    >
+                      {dictionary.navigation[destination]}
+                      <span aria-hidden="true">↗</span>
+                    </Link>
+                  ) : null}
+                </article>
+              );
+            })}
+          </div>
         </div>
       </Section>
-      <Section
-        className="border-t border-[var(--color-border)]"
-        container="reading"
-      >
-        <SectionHeader
-          title={content.closingTitle}
-          description={content.closingBody}
-        />
-        <ButtonLink
-          className="mt-[var(--space-6)]"
-          href={createLocalePath(locale, "cv")}
-          variant="secondary"
-        >
-          {content.cvAction}
-        </ButtonLink>
-      </Section>
-    </>
+      <ClosingInvite
+        title={content.closingTitle}
+        description={content.closingBody}
+        primary={{
+          href: createLocalePath(locale, "cv"),
+          label: content.cvAction,
+        }}
+      />
+    </div>
   );
 }

@@ -22,10 +22,30 @@ export type ContentLabels = {
   contactLinks: string;
   noFormNotice: string;
   sourceNotice: string;
+  filterProjects: string;
+  copyEmail: string;
+  emailCopied: string;
+  emailCopyFailed: string;
+  backHome: string;
+  onThisPage: string;
+  previousProject: string;
+  nextProject: string;
+  projectNavigation: string;
+  readingMinutes: string;
 };
 
 export const contentLabels: Record<Locale, ContentLabels> = {
   en: {
+    backHome: "Home",
+    onThisPage: "On this page",
+    previousProject: "Previous project",
+    nextProject: "Next project",
+    projectNavigation: "Explore more work",
+    readingMinutes: "{minutes} min read",
+    filterProjects: "Filter projects by category",
+    copyEmail: "Copy email",
+    emailCopied: "Email copied",
+    emailCopyFailed: "Could not copy. Use the email link instead.",
     category: {
       software: "Software",
       data: "Data",
@@ -56,6 +76,16 @@ export const contentLabels: Record<Locale, ContentLabels> = {
       "Public-sector work is shown in anonymized form to protect internal details.",
   },
   no: {
+    backHome: "Hjem",
+    onThisPage: "På denne siden",
+    previousProject: "Forrige prosjekt",
+    nextProject: "Neste prosjekt",
+    projectNavigation: "Utforsk mer arbeid",
+    readingMinutes: "{minutes} min lesetid",
+    filterProjects: "Filtrer prosjekter etter kategori",
+    copyEmail: "Kopier e-post",
+    emailCopied: "E-post kopiert",
+    emailCopyFailed: "Kunne ikke kopiere. Bruk e-postlenken i stedet.",
     category: {
       software: "Programvare",
       data: "Data",
@@ -86,6 +116,16 @@ export const contentLabels: Record<Locale, ContentLabels> = {
       "Arbeid i offentlig sektor vises anonymisert for å beskytte interne detaljer.",
   },
   tr: {
+    backHome: "Ana sayfa",
+    onThisPage: "Bu sayfada",
+    previousProject: "Önceki proje",
+    nextProject: "Sonraki proje",
+    projectNavigation: "Diğer çalışmaları keşfet",
+    readingMinutes: "{minutes} dk okuma",
+    filterProjects: "Projeleri kategoriye göre filtrele",
+    copyEmail: "E-postayı kopyala",
+    emailCopied: "E-posta kopyalandı",
+    emailCopyFailed: "Kopyalanamadı. E-posta bağlantısını kullanabilirsin.",
     category: {
       software: "Yazılım",
       data: "Veri",

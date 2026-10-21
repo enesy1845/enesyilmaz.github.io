@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 import { CvTimeline } from "@/components/cv/cv-timeline";
+import { ReferenceIndex } from "@/components/cv/reference-index";
 import { StructuredData } from "@/components/seo/structured-data";
-import { ButtonLink } from "@/components/ui/button";
+import { ClosingInvite } from "@/components/ui/closing-invite";
 import { ExternalLink } from "@/components/ui/external-link";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
@@ -97,6 +98,7 @@ export default async function CvPage({ params }: PageProps) {
         heading={dictionary.pages.cv.heading}
         locale={locale}
         meta={`${siteConfig.author} · ${dictionary.footer.location}`}
+        variant="document"
       />
 
       <Section>
@@ -198,73 +200,52 @@ export default async function CvPage({ params }: PageProps) {
         id="references"
       >
         <div className="grid gap-[var(--space-10)]">
-          <div>
-            <SectionHeader
-              title={copy.referencesTitle}
-              description={copy.referencesDescription}
-            />
-            {email ? (
-              <ExternalLink
-                className="mt-[var(--space-5)] inline-block"
-                href={requestHref}
-              >
-                {copy.requestReferences}
-              </ExternalLink>
-            ) : null}
+          <div className="cv-references-heading">
+            <div>
+              <SectionHeader
+                title={copy.referencesTitle}
+                description={copy.referencesDescription}
+              />
+              {email ? (
+                <ExternalLink
+                  className="text-link mt-[var(--space-5)]"
+                  href={requestHref}
+                >
+                  {copy.requestReferences}
+                  <span aria-hidden="true">↗</span>
+                </ExternalLink>
+              ) : null}
+            </div>
+            <span aria-hidden="true" className="cv-references-count">
+              {String(references.length).padStart(2, "0")}
+            </span>
           </div>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {references.map((reference) => (
-              <li
-                className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]"
-                key={reference.key}
-              >
-                <p className="font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
-                  {reference.field[locale]}
-                </p>
-                <h3 className="mt-[var(--space-2)] font-serif text-[length:var(--font-size-lg)]">
-                  {reference.organization}
-                </h3>
-                <p className="mt-[var(--space-3)] text-[length:var(--font-size-sm)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-                  {reference.description[locale]}
-                </p>
-                {reference.documentUrl ? (
-                  <ExternalLink
-                    className="mt-[var(--space-4)] inline-block text-[length:var(--font-size-sm)]"
-                    href={reference.documentUrl}
-                  >
-                    {copy.viewDocument}
-                  </ExternalLink>
-                ) : null}
-              </li>
-            ))}
-          </ul>
+          <ReferenceIndex
+            entries={references}
+            locale={locale}
+            documentLabel={copy.viewDocument}
+          />
         </div>
       </Section>
 
-      <Section
-        className="border-t border-[var(--color-border)]"
-        container="reading"
-      >
-        <SectionHeader
-          title={copy.contactTitle}
-          description={copy.contactDescription}
-        />
-        <div className="mt-[var(--space-6)] flex flex-wrap gap-3">
-          <ButtonLink href={createLocalePath(locale, "contact")}>
-            {copy.contactAction}
-          </ButtonLink>
-          <ButtonLink
-            href={createLocalePath(locale, "work")}
-            variant="secondary"
-          >
-            {dictionary.navigation.work}
-          </ButtonLink>
-        </div>
-        <p className="mt-[var(--space-8)] font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
-          {copy.lastUpdated}:{" "}
-          <time dateTime={siteConfig.contentUpdatedAt}>{updated}</time>
-        </p>
-      </Section>
+      <ClosingInvite
+        title={copy.contactTitle}
+        description={copy.contactDescription}
+        primary={{
+          href: createLocalePath(locale, "contact"),
+          label: copy.contactAction,
+        }}
+        secondary={{
+          href: createLocalePath(locale, "work"),
+          label: dictionary.navigation.work,
+        }}
+        meta={
+          <>
+            {copy.lastUpdated}:{" "}
+            <time dateTime={siteConfig.contentUpdatedAt}>{updated}</time>
+          </>
+        }
+      />
     </>
   );
 }

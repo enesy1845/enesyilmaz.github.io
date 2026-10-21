@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { DisciplineMark } from "@/components/home/discipline-mark";
 import { HomeHero } from "@/components/home/hero/home-hero";
 import { HomeImage } from "@/components/home/home-image";
-import { InkReveal } from "@/components/home/ink-reveal";
 import { ProjectIndex } from "@/components/projects/project-index";
-import { ButtonLink } from "@/components/ui/button";
+import { MaterialStudy } from "@/components/media/material-study";
+import { CopyEmail } from "@/components/ui/copy-email";
 import { ExternalLink } from "@/components/ui/external-link";
 import { Section } from "@/components/ui/section";
-import { SectionHeader } from "@/components/ui/section-header";
 import { socialLinks } from "@/config/social";
 import { notes } from "@/content/notes/notes";
 import { evidenceItems } from "@/data/experience";
+import { contentLabels } from "@/data/content-labels";
 import { homeContent } from "@/data/home";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -19,10 +20,7 @@ import { createLocalePath, routes } from "@/i18n/routing";
 import { getFeaturedProjects } from "@/lib/content/projects";
 import { createPageMetadata } from "@/lib/metadata/pages";
 
-type PageProps = {
-  params: Promise<{ locale: string }>;
-};
-
+type PageProps = { params: Promise<{ locale: string }> };
 const route = routes[0];
 
 export async function generateMetadata({
@@ -38,182 +36,214 @@ export default async function HomePage({ params }: PageProps) {
   const dictionary = await getDictionary(localeParam);
   const locale = isLocale(localeParam) ? localeParam : "en";
   const page = homeContent[locale];
-  const featuredProjects = getFeaturedProjects();
   const featuredNote = notes[0];
   const email = socialLinks.find((link) => link.key === "email");
   const profileLinks = socialLinks.filter((link) =>
     ["linkedin", "github"].includes(link.key),
   );
-  const mediumUrl =
-    socialLinks.find((link) => link.key === "medium")?.href ?? "";
 
   return (
     <>
       <HomeHero dictionary={dictionary} locale={locale} page={page} />
       <HomeImage />
 
-      <Section
-        className="scroll-mt-[var(--layout-header-height)]"
-        id="home-next"
-      >
-        <h2 className="sr-only">{page.manifestoTitle}</h2>
-        <InkReveal
-          className="max-w-5xl"
-          text={`${page.manifestoTitle} ${page.manifestoText}`}
-        />
-      </Section>
-
-      <Section className="border-t border-[var(--color-border)]">
-        <div className="reveal grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <div>
-            <SectionHeader
-              title={page.selectedWorkTitle}
-              description={page.selectedWorkDescription}
-            />
-            <Link
-              className="mt-[var(--space-5)] inline-block"
-              href={createLocalePath(locale, "work")}
-            >
-              {page.allWorkAction}
-            </Link>
-          </div>
-          <ProjectIndex projects={featuredProjects} locale={locale} />
+      <Section className="home-statement" id="home-next">
+        <div className="home-statement__inner reveal">
+          <span aria-hidden="true" className="section-index">
+            01 /
+          </span>
+          <h2>{page.manifestoTitle}</h2>
+          <Link className="text-link" href={createLocalePath(locale, "about")}>
+            {page.aboutAction}
+            <span aria-hidden="true"> ↗</span>
+          </Link>
         </div>
       </Section>
 
-      <Section className="border-t border-[var(--color-border)]">
-        <div className="reveal grid gap-[var(--space-8)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader title={page.expertiseTitle} />
-          <ul className="label-rows">
-            {evidenceItems.map((item) => {
-              const content = item.content[locale];
-              return (
-                <li key={item.key}>
-                  <strong>{content.title}</strong>
-                  <span>{content.description}</span>
-                </li>
-              );
-            })}
-          </ul>
+      <Section className="home-work" id="selected-work">
+        <div className="section-heading">
+          <h2>
+            <span aria-hidden="true" className="section-index">
+              02 /
+            </span>
+            {page.selectedWorkTitle}
+          </h2>
+          <Link className="text-link" href={createLocalePath(locale, "work")}>
+            {page.allWorkAction}
+            <span aria-hidden="true"> ↗</span>
+          </Link>
         </div>
+        <ProjectIndex projects={getFeaturedProjects()} locale={locale} />
       </Section>
 
-      <Section className="border-t border-[var(--color-border)]">
-        <div className="reveal grid gap-[var(--space-10)]">
-          <SectionHeader title={page.disciplinesTitle} />
-          <ul className="disciplines">
-            {page.disciplines.map((item) => (
-              <li key={item.title}>
-                <Link
-                  className="discipline"
-                  href={createLocalePath(locale, item.segment)}
-                >
-                  <span className="discipline__word">{item.title}</span>
-                  <span className="discipline__text">{item.description}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
-
-      <Section className="border-t border-[var(--color-border)]">
-        <div className="reveal grid gap-[var(--space-10)] md:grid-cols-2">
-          <article>
-            <h2 className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
-              {page.notesTitle}
+      <Section className="home-expertise">
+        <div className="expertise-layout reveal">
+          <div className="section-heading">
+            <h2>
+              <span aria-hidden="true" className="section-index">
+                03 /
+              </span>
+              {page.expertiseTitle}
             </h2>
+          </div>
+          <div className="expertise-list">
+            {evidenceItems.map((item, index) => (
+              <details className="expertise-item" key={item.key}>
+                <summary>
+                  <span aria-hidden="true" className="section-index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>{item.content[locale].title}</span>
+                  <span aria-hidden="true" className="expertise-item__toggle">
+                    +
+                  </span>
+                </summary>
+                <p>{item.content[locale].description}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section className="home-disciplines" tone="inverse">
+        <div className="section-heading">
+          <h2>
+            <span aria-hidden="true" className="section-index">
+              04 /
+            </span>
+            {page.disciplinesTitle}
+          </h2>
+        </div>
+        <ul className="disciplines">
+          {page.disciplines.map((item, index) => (
+            <li key={item.segment}>
+              <Link
+                className={`discipline discipline--${item.segment}`}
+                href={createLocalePath(locale, item.segment)}
+              >
+                <span aria-hidden="true" className="discipline__index">
+                  0{index + 1}
+                </span>
+                <DisciplineMark kind={item.segment} />
+                <span className="discipline__word">{item.title}</span>
+                <span className="discipline__action">
+                  {item.action}
+                  <span aria-hidden="true" className="link-arrow">
+                    ↗
+                  </span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section className="home-journal">
+        <div className="journal-grid reveal">
+          <article className="journal-entry">
+            <div className="journal-entry__meta">
+              <h2>{page.notesTitle}</h2>
+              {featuredNote ? (
+                <span lang={featuredNote.language}>
+                  {dictionary.language[featuredNote.language]}
+                </span>
+              ) : null}
+            </div>
             {featuredNote ? (
-              <h3 className="mt-[var(--space-4)] font-serif text-[length:var(--font-size-2xl)] leading-[var(--line-height-heading)] text-balance">
+              <h3>
                 <Link
-                  className="text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent-hover)]"
                   href={createLocalePath(
                     featuredNote.language,
                     `notes/${featuredNote.slug}`,
                   )}
                   hrefLang={featuredNote.language}
+                  lang={featuredNote.language}
                 >
                   {featuredNote.title}
+                  <span aria-hidden="true" className="link-arrow">
+                    ↗
+                  </span>
                 </Link>
               </h3>
             ) : null}
-            <p className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)] text-[length:var(--font-size-sm)]">
-              <Link href={createLocalePath(locale, "notes")}>
-                {page.notesAction}
-              </Link>
-              {mediumUrl ? (
-                <ExternalLink href={mediumUrl}>
-                  {page.mediumAction}
-                </ExternalLink>
-              ) : null}
-            </p>
-          </article>
-          <article>
-            <h2 className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
-              {page.atelierTitle}
-            </h2>
-            <ul className="mt-[var(--space-4)] font-serif text-[length:var(--font-size-2xl)] leading-[var(--line-height-heading)]">
-              {page.atelierItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
             <Link
-              className="mt-[var(--space-5)] inline-block text-[length:var(--font-size-sm)]"
+              className="text-link"
+              href={createLocalePath(locale, "notes")}
+            >
+              {page.notesAction}
+              <span aria-hidden="true"> ↗</span>
+            </Link>
+          </article>
+          <article className="journal-entry journal-entry--atelier">
+            <div className="journal-entry__meta">
+              <h2>{page.atelierTitle}</h2>
+              <span aria-hidden="true">↘</span>
+            </div>
+            <div className="material-index">
+              <MaterialStudy kind="wood" />
+              <ul className="material-list">
+                {page.atelierItems.map((item, index) => (
+                  <li key={item}>
+                    <span aria-hidden="true" className="section-index">
+                      0{index + 1}
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Link
+              className="text-link"
               href={createLocalePath(locale, "atelier")}
             >
               {page.atelierAction}
+              <span aria-hidden="true"> ↗</span>
             </Link>
           </article>
         </div>
       </Section>
 
-      <Section className="border-t border-[var(--color-border)]">
-        <div className="reveal grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader title={page.aboutTitle} />
-          <div>
-            <p className="max-w-[var(--layout-reading)] text-[length:var(--font-size-lg)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-              {page.aboutDescription}
-            </p>
-            <Link
-              className="mt-[var(--space-5)] inline-block"
-              href={createLocalePath(locale, "about")}
-            >
-              {page.aboutAction}
-            </Link>
-          </div>
+      <Section className="home-about">
+        <div className="about-strip reveal">
+          <h2>{page.aboutTitle}</h2>
+          <p>{page.aboutLead}</p>
+          <Link className="text-link" href={createLocalePath(locale, "cv")}>
+            {page.cvAction}
+            <span aria-hidden="true"> ↗</span>
+          </Link>
         </div>
       </Section>
 
-      <Section className="border-t border-[var(--color-border)]">
-        <div className="reveal">
-          <h2 className="max-w-4xl font-serif text-[length:var(--font-size-display)] leading-[var(--line-height-tight)] text-balance">
-            {page.contactTitle}
-          </h2>
-          <p className="mt-[var(--space-5)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-            {page.contactDescription}
-          </p>
-          {email ? (
-            <a className="mail-link mt-[var(--space-8)]" href={email.href}>
-              {email.description}
-            </a>
-          ) : null}
-          <div className="mt-[var(--space-8)] flex flex-wrap items-center gap-3">
-            <ButtonLink href={createLocalePath(locale, "contact")}>
-              {page.contactAction}
-            </ButtonLink>
-            <ButtonLink
-              href={createLocalePath(locale, "cv")}
-              variant="secondary"
-            >
-              {page.cvAction}
-            </ButtonLink>
-            <ul className="flex flex-wrap gap-[var(--space-4)] text-[length:var(--font-size-sm)] sm:ml-[var(--space-4)]">
+      <Section className="home-contact">
+        <div className="contact-layout reveal">
+          <h2>{page.contactTitle}</h2>
+          <div className="contact-layout__actions">
+            {email ? (
+              <div className="contact-email">
+                <a className="mail-link" href={email.href}>
+                  {email.description}
+                  <span aria-hidden="true"> ↗</span>
+                </a>
+                <CopyEmail
+                  email={email.description}
+                  labels={contentLabels[locale]}
+                />
+              </div>
+            ) : null}
+            <div className="contact-links">
+              <Link
+                className="text-link"
+                href={createLocalePath(locale, "contact")}
+              >
+                {page.contactAction}
+                <span aria-hidden="true">↗</span>
+              </Link>
               {profileLinks.map((link) => (
-                <li key={link.key}>
-                  <ExternalLink href={link.href}>{link.label}</ExternalLink>
-                </li>
+                <ExternalLink href={link.href} key={link.key}>
+                  {link.label}
+                </ExternalLink>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </Section>

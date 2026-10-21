@@ -4,6 +4,8 @@
 @import "../styles/footer.css";
 @import "../styles/cv.css";
 @import "../styles/home.css";
+@import "../styles/folio.css";
+@import "../styles/closing.css";
 
 * {
   box-sizing: border-box;
@@ -52,6 +54,10 @@ a:not([class]):hover {
 
 main {
   min-height: 60vh;
+  scroll-margin-top: calc(var(--layout-header-height) + var(--space-6));
+}
+
+main > section[id] {
   scroll-margin-top: calc(var(--layout-header-height) + var(--space-6));
 }
 

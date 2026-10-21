@@ -3,6 +3,8 @@
 
   --color-light: #f3f4ef;
   --color-dark: #161e1d;
+  --color-inverse-muted: #b4bdb7;
+  --color-inverse-border: #47514c;
   --color-background: var(--color-light);
   --color-background-elevated: color-mix(
     in srgb,
@@ -56,6 +58,8 @@
   --font-serif: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-editorial:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 
   --font-size-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
   --font-size-sm: clamp(0.875rem, 0.84rem + 0.14vw, 0.9375rem);
@@ -67,6 +71,8 @@
   --font-size-3xl: clamp(2.125rem, 1.78rem + 1.55vw, 3rem);
   --font-size-4xl: clamp(2.625rem, 2.15rem + 2vw, 4rem);
   --font-size-display: clamp(3rem, 2.2rem + 3.2vw, 5.25rem);
+  --font-size-page-title: clamp(3.25rem, 9vw, 8rem);
+  --font-size-discipline: clamp(3.5rem, 8vw, 8rem);
 
   --line-height-tight: 1.05;
   --line-height-heading: 1.12;
@@ -74,6 +80,7 @@
   --line-height-relaxed: 1.8;
 
   --letter-spacing-tight: 0;
+  --letter-spacing-editorial: -0.035em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.02em;
   --letter-spacing-label: 0.08em;
@@ -97,6 +104,8 @@
   --layout-reading: 44rem;
   --layout-gutter: clamp(1rem, 4vw, 2.5rem);
   --layout-header-height: 4.75rem;
+  --work-thumbnail: clamp(4rem, 9vw, 7rem);
+  --work-preview-height: 40rem;
   --max-content-width: var(--layout-max);
   --space-page-x: var(--layout-gutter);
   --space-section-y: var(--space-section);
@@ -113,6 +122,7 @@
     color-mix(in srgb, var(--color-dark) 12%, transparent);
 
   --duration-fast: 140ms;
+  --glass-blur: 20px;
   --duration-normal: 220ms;
   --duration-slow: 360ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);

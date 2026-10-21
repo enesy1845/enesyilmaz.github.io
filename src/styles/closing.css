@@ -1,0 +1,85 @@
+/* A quiet full-width close, shared by About and CV. */
+.closing-invite {
+  color-scheme: dark;
+  background: var(--color-dark);
+  --color-foreground: var(--color-light);
+  --color-foreground-muted: var(--color-inverse-muted);
+  --color-foreground-subtle: var(--color-inverse-muted);
+  --color-border: var(--color-inverse-border);
+  --color-border-strong: var(--color-inverse-border);
+  --color-focus: var(--color-light);
+  color: var(--color-foreground);
+}
+
+.closing-invite__layout {
+  display: grid;
+  align-items: start;
+  gap: var(--space-10);
+}
+
+.closing-invite h2 {
+  max-width: 12ch;
+  font-family: var(--font-editorial);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-editorial);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.closing-invite__body {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.closing-invite__body > p {
+  max-width: 40ch;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-body);
+  color: var(--color-foreground-muted);
+}
+
+.closing-invite__action {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: 4rem;
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-xl);
+  color: var(--color-foreground);
+  text-decoration: none;
+}
+
+.closing-invite__arrow {
+  display: inline-block;
+  flex: none;
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+
+.closing-invite__action:is(:hover, :focus-visible) .closing-invite__arrow {
+  transform: translate(0.08em, -0.08em);
+}
+
+.closing-invite__meta {
+  margin-top: var(--space-16);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-foreground-subtle);
+}
+
+@media (min-width: 48rem) {
+  .closing-invite__layout {
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-16);
+  }
+}

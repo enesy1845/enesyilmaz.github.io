@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/config";
 
 export type PageSection = {
   title: string;
+  lead?: string;
   body: string;
 };
 
@@ -25,7 +26,8 @@ export const aboutPageContent: Record<Locale, AboutPageContent> = {
     sections: [
       {
         title: "My path",
-        body: "My background is not limited to a single discipline. Mathematics shaped the way I approach problems; teaching helped me communicate complex ideas; and software development gave me a practical way to turn those ideas into working systems.",
+        lead: "My background is not limited to a single discipline.",
+        body: "Mathematics shaped the way I approach problems; teaching helped me communicate complex ideas; and software development gave me a practical way to turn those ideas into working systems.",
       },
       {
         title: "What I do",
@@ -50,7 +52,8 @@ export const aboutPageContent: Record<Locale, AboutPageContent> = {
     sections: [
       {
         title: "Min vei",
-        body: "Bakgrunnen min er ikke begrenset til ett fagfelt. Matematikken formet måten jeg angriper problemer på, undervisning lærte meg å formidle komplekse ideer, og programvareutvikling ga meg en praktisk måte å gjøre ideene om til fungerende systemer.",
+        lead: "Bakgrunnen min er ikke begrenset til ett fagfelt.",
+        body: "Matematikken formet måten jeg angriper problemer på, undervisning lærte meg å formidle komplekse ideer, og programvareutvikling ga meg en praktisk måte å gjøre ideene om til fungerende systemer.",
       },
       {
         title: "Det jeg gjør",
@@ -75,7 +78,8 @@ export const aboutPageContent: Record<Locale, AboutPageContent> = {
     sections: [
       {
         title: "Yolum",
-        body: "Geçmişim tek bir disiplinle sınırlı değil. Matematik problemlere yaklaşımımı şekillendirdi; öğretmenlik karmaşık fikirleri anlatmayı öğretti; yazılım geliştirme ise bu fikirleri çalışan sistemlere dönüştürmenin pratik bir yolunu verdi.",
+        lead: "Geçmişim tek bir disiplinle sınırlı değil.",
+        body: "Matematik problemlere yaklaşımımı şekillendirdi; öğretmenlik karmaşık fikirleri anlatmayı öğretti; yazılım geliştirme ise bu fikirleri çalışan sistemlere dönüştürmenin pratik bir yolunu verdi.",
       },
       {
         title: "Ne yapıyorum",

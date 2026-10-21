@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { ProjectFilters } from "@/components/projects/project-filters";
+import { ProjectVisual } from "@/components/projects/project-visual";
 import { contentLabels } from "@/data/content-labels";
 import type { Locale } from "@/i18n/config";
 import { createLocalePath } from "@/i18n/routing";
@@ -10,64 +12,76 @@ type ProjectIndexProps = {
   locale: Locale;
 };
 
-/**
- * Title-first project list: one line per project. On wide screens with a
- * mouse, the summary, stack and screenshot open on hover or keyboard focus;
- * elsewhere the row is simply a link to the case study (see home.css).
- */
+/** CSS connects list hover/focus to one stationary preview, including without JS. */
 export function ProjectIndex({ projects, locale }: ProjectIndexProps) {
   const labels = contentLabels[locale];
 
   return (
-    <ol className="pindex">
-      {projects.map((project, index) => {
-        const content = project.content[locale];
-        const cover =
-          project.coverImage && content.imageAlt ? project.coverImage : null;
-        const meta = [labels.category[project.category], content.status]
-          .filter(Boolean)
-          .join(" · ");
+    <div className="project-explorer">
+      <ProjectFilters
+        projects={projects}
+        locale={locale}
+        name="selected-work-category"
+      />
+      <ol className="work-index">
+        {projects.map((project, index) => {
+          const content = project.content[locale];
 
-        return (
-          <li className="pindex__row" key={project.slug}>
-            <Link
-              className="pindex__link"
-              href={createLocalePath(locale, `work/${project.slug}`)}
+          return (
+            <li
+              className="work-index__item"
+              data-project-category={project.category}
+              key={project.slug}
             >
-              <span aria-hidden="true" className="pindex__num">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="pindex__title">{content.title}</span>
-              <span className="pindex__meta">{meta}</span>
-              <span aria-hidden="true" className="pindex__arrow">
-                →
-              </span>
-            </Link>
-            <div className="pindex__detail">
-              <div>
-                <p>{content.summary}</p>
-                <p className="pindex__stack">
-                  {project.technologies.join(" · ")}
-                </p>
-              </div>
-            </div>
-            {cover ? (
-              // Decorative duplicate of the case-study cover, desktop only.
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                alt=""
+              <Link
+                aria-label={content.shortTitle ?? content.title}
+                className="work-index__link"
+                href={createLocalePath(locale, `work/${project.slug}`)}
+              >
+                <span aria-hidden="true" className="work-index__visual">
+                  <ProjectVisual project={project} locale={locale} />
+                </span>
+                <span className="work-index__body">
+                  <span className="work-index__meta">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <span>{labels.category[project.category]}</span>
+                    {content.status ? <span>{content.status}</span> : null}
+                  </span>
+                  <span className="work-index__title">
+                    {content.shortTitle ?? content.title}
+                  </span>
+                  <span className="work-index__summary sr-only">
+                    {content.summary}
+                  </span>
+                  <span className="work-index__stack">
+                    {project.technologies.slice(0, 3).join(" / ")}
+                  </span>
+                </span>
+                <span aria-hidden="true" className="link-arrow">
+                  ↗
+                </span>
+              </Link>
+              <div
                 aria-hidden="true"
-                className="pindex__preview"
-                decoding="async"
-                height={640}
-                loading="lazy"
-                src={cover}
-                width={1280}
-              />
-            ) : null}
-          </li>
-        );
-      })}
-    </ol>
+                className="work-preview"
+                data-preview={project.slug}
+              >
+                <ProjectVisual project={project} locale={locale} />
+                <div className="work-preview__caption">
+                  <span className="section-index">
+                    {String(index + 1).padStart(2, "0")} /{" "}
+                    {labels.category[project.category]}
+                    {project.confidential ? ` / ${labels.confidential}` : ""}
+                  </span>
+                  <strong>{content.shortTitle ?? content.title}</strong>
+                  <p>{content.summary}</p>
+                  <span className="work-preview__role">{content.role}</span>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }

@@ -36,7 +36,7 @@ export default async function NotesPage({ params }: PageProps) {
   const medium = socialLinks.find((link) => link.key === "medium");
 
   return (
-    <>
+    <div className="journal-page">
       <PageIntro
         heading={dictionary.pages.notes.heading}
         description={dictionary.pages.notes.description}
@@ -44,43 +44,61 @@ export default async function NotesPage({ params }: PageProps) {
         meta={content.introMeta}
       />
       <Section>
-        <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader title={content.featuredTitle} />
-          <div>
-            {notes.map((note) => (
-              <article
-                className="border-t border-[var(--color-border)] py-[var(--space-6)]"
-                key={note.slug}
-                lang={note.language}
-              >
+        <div className="section-heading">
+          <h2>{content.featuredTitle}</h2>
+          <span className="section-index">
+            {String(notes.length).padStart(2, "0")}
+          </span>
+        </div>
+        <div>
+          {notes.map((note) => (
+            <article
+              className="note-index"
+              key={note.slug}
+              lang={note.language}
+            >
+              <time className="note-index__date" dateTime={note.publishedAt}>
+                {new Intl.DateTimeFormat(locale, {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                  timeZone: "UTC",
+                }).format(new Date(note.publishedAt))}
+              </time>
+              <div className="note-index__body">
                 <p className="font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
                   {note.category}
                   {note.language !== locale
                     ? ` · ${content.languageLabel[note.language]}`
                     : null}
                 </p>
-                <h2 className="mt-[var(--space-3)] font-serif text-[length:var(--font-size-xl)] leading-[var(--line-height-heading)]">
+                <h2>
                   <Link
-                    className="text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent-hover)]"
                     href={createLocalePath(note.language, `notes/${note.slug}`)}
                     hrefLang={note.language}
                   >
                     {note.title}
                   </Link>
                 </h2>
-                <p className="mt-[var(--space-3)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-                  {note.description}
-                </p>
-              </article>
-            ))}
-          </div>
+                <p>{note.description}</p>
+                <Link
+                  className="text-link"
+                  href={createLocalePath(note.language, `notes/${note.slug}`)}
+                  hrefLang={note.language}
+                >
+                  {content.readAction}
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </Section>
       <Section className="border-t border-[var(--color-border)]">
         <div className="grid gap-[var(--space-10)] md:grid-cols-2">
           <div>
             <SectionHeader title={content.topicsTitle} />
-            <ul className="mt-[var(--space-5)] grid gap-2 text-[var(--color-foreground-muted)]">
+            <ul className="note-topics">
               {content.topics.map((topic) => (
                 <li key={topic}>{topic}</li>
               ))}
@@ -102,6 +120,6 @@ export default async function NotesPage({ params }: PageProps) {
           ) : null}
         </div>
       </Section>
-    </>
+    </div>
   );
 }

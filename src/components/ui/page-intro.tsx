@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { contentLabels } from "@/data/content-labels";
 import type { Locale } from "@/i18n/config";
+import { createLocalePath } from "@/i18n/routing";
 
 type PageIntroAction = {
   href: string;
@@ -15,6 +18,8 @@ type PageIntroProps = {
   locale: Locale;
   actions?: PageIntroAction[];
   meta?: string;
+  /** Choose by page role so translations cannot change typography or layout. */
+  variant?: "page" | "document";
 };
 
 export function PageIntro({
@@ -24,42 +29,49 @@ export function PageIntro({
   locale,
   actions = [],
   meta,
+  variant = "page",
 }: PageIntroProps) {
   return (
-    <section className="surface-grid border-b border-[var(--color-border)] py-[var(--space-section)]">
-      <Container className="grid gap-[var(--space-10)] lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
-        <div>
-          {eyebrow ? (
-            <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-accent)]">
-              {eyebrow}
-            </p>
-          ) : null}
-          <h1 className="mt-[var(--space-4)] max-w-4xl font-serif text-[length:var(--font-size-display)] leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-balance">
-            {heading}
-          </h1>
-          <p className="mt-[var(--space-6)] max-w-[var(--layout-reading)] text-[length:var(--font-size-lg)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-            {description}
-          </p>
-          {actions.length > 0 ? (
-            <div className="mt-[var(--space-8)] flex flex-wrap gap-[var(--space-3)]">
-              {actions.map((action) => (
-                <ButtonLink
-                  href={action.href}
-                  key={action.href}
-                  variant={action.variant}
-                >
-                  {action.label}
-                </ButtonLink>
-              ))}
-            </div>
-          ) : null}
+    <section
+      className={
+        variant === "document"
+          ? "page-intro page-intro--document"
+          : "page-intro"
+      }
+    >
+      <span
+        aria-hidden="true"
+        className="header-island-marker"
+        data-header-island-trigger=""
+      />
+      <Container>
+        <div className="page-intro__topline">
+          <Link className="text-link" href={createLocalePath(locale)}>
+            <span aria-hidden="true">←</span>
+            {contentLabels[locale].backHome}
+          </Link>
+          {eyebrow ? <p>{eyebrow}</p> : null}
         </div>
-        <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)] text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)] shadow-[var(--shadow-subtle)]">
-          <p className="font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
-            /{locale}
-          </p>
-          {meta ? <p className="mt-[var(--space-3)]">{meta}</p> : null}
+        <div className="page-intro__grid">
+          <h1 className="page-intro__title">{heading}</h1>
+          <div className="page-intro__lead">
+            <p>{description}</p>
+            {actions.length ? (
+              <div className="page-intro__actions">
+                {actions.map((action) => (
+                  <ButtonLink
+                    href={action.href}
+                    key={action.href}
+                    variant={action.variant}
+                  >
+                    {action.label}
+                  </ButtonLink>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
+        {meta ? <p className="page-intro__meta">{meta}</p> : null}
       </Container>
     </section>
   );

@@ -8,6 +8,7 @@ import { StructuredData } from "@/components/seo/structured-data";
 import { siteConfig } from "@/config/site";
 import { getNoteBySlug, notes } from "@/content/notes/notes";
 import { notesPageContent } from "@/data/supporting-content";
+import { contentLabels } from "@/data/content-labels";
 import { isLocale, openGraphLocales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { createLocalePath } from "@/i18n/routing";
@@ -67,25 +68,42 @@ export default async function NotePage({ params }: PageProps) {
   const locale = localeParam;
   const dictionary = await getDictionary(locale);
   const content = notesPageContent[locale];
+  const readingMinutes = Math.max(
+    1,
+    Math.ceil(note.paragraphs.join(" ").trim().split(/\s+/u).length / 200),
+  );
   const published = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
   }).format(new Date(note.publishedAt));
 
   return (
-    <>
+    <div className="journal-page">
       <StructuredData data={[createArticleJsonLd(note)]} />
       <PageIntro
         heading={note.title}
         description={note.description}
         locale={locale}
         meta={`${note.category} · ${published}`}
+        variant="document"
       />
-      <Section container="reading">
-        <article className="grid gap-[var(--space-5)] font-serif text-[length:var(--font-size-lg)] leading-[var(--line-height-relaxed)]">
-          {note.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </article>
+      <Section>
+        <div className="reading-layout">
+          <aside className="reading-rail">
+            <time dateTime={note.publishedAt}>{published}</time>
+            <p>
+              {contentLabels[locale].readingMinutes.replace(
+                "{minutes}",
+                String(readingMinutes),
+              )}
+            </p>
+            <p>{note.category}</p>
+          </aside>
+          <article className="note-body">
+            {note.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </article>
+        </div>
         <p className="mt-[var(--space-10)] border-t border-[var(--color-border)] pt-[var(--space-6)] text-[length:var(--font-size-sm)]">
           <Link href={createLocalePath(locale, "notes")}>
             {dictionary.navigation.notes}
@@ -104,6 +122,6 @@ export default async function NotePage({ params }: PageProps) {
           ) : null}
         </p>
       </Section>
-    </>
+    </div>
   );
 }

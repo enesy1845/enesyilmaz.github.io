@@ -64,7 +64,7 @@ test("home page sections render in Turkish", async ({ page }) => {
 });
 
 test("English home renders shared header and footer", async ({ page }) => {
-  await page.goto("http://127.0.0.1:3100/en");
+  await page.goto("/en");
 
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
@@ -416,7 +416,10 @@ test("one header logo moves from the hero and stays mounted on scroll", async ({
     return { x: matrix.m41, y: matrix.m42, scale: matrix.m11 };
   });
   expect(matrix).toEqual({ x: 0, y: 0, scale: 1 });
-  const dockedSize = await headerLetter.boundingBox();
+  const dockedSize = await headerLetter.evaluate((element) => {
+    const { width, height } = element.getBoundingClientRect();
+    return { width, height };
+  });
   for (const offset of [1.8, 1.15, 2]) {
     await page.evaluate(
       (offset) =>
@@ -430,9 +433,14 @@ test("one header logo moves from the hero and stays mounted on scroll", async ({
       "data-hero-docked",
       "true",
     );
-    const size = await headerLetter.boundingBox();
-    expect(size?.width).toBe(dockedSize?.width);
-    expect(size?.height).toBe(dockedSize?.height);
+    // The island deliberately hides the identity later in the page, but
+    // the same vector remains mounted at its settled dimensions.
+    const size = await headerLetter.evaluate((element) => {
+      const { width, height } = element.getBoundingClientRect();
+      return { width, height };
+    });
+    expect(size.width).toBe(dockedSize.width);
+    expect(size.height).toBe(dockedSize.height);
   }
 
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -480,20 +488,30 @@ test("intro settles to the nearest endpoint and fresh input interrupts it", asyn
     "none",
   );
 
-  await page.evaluate(
-    (height) => window.scrollTo({ top: height * 0.4, behavior: "instant" }),
+  // Interrupt on the actual scroll event so polling cannot miss the short
+  // intermediate range on a fast machine.
+  const interrupted = await page.evaluate(
+    (height) =>
+      new Promise<number>((resolve, reject) => {
+        const timeout = window.setTimeout(() => {
+          window.removeEventListener("scroll", onScroll);
+          reject(new Error("Intro did not begin settling"));
+        }, 5000);
+        function onScroll() {
+          if (scrollY < height * 0.35 && scrollY > height * 0.05) {
+            window.dispatchEvent(
+              new KeyboardEvent("keydown", { key: "Escape" }),
+            );
+            window.clearTimeout(timeout);
+            window.removeEventListener("scroll", onScroll);
+            resolve(scrollY);
+          }
+        }
+        window.addEventListener("scroll", onScroll);
+        window.scrollTo({ top: height * 0.4, behavior: "instant" });
+      }),
     height,
   );
-  await expect
-    .poll(() =>
-      page.evaluate(
-        (height) => scrollY < height * 0.35 && scrollY > height * 0.05,
-        height,
-      ),
-    )
-    .toBe(true);
-  await page.keyboard.press("Escape");
-  const interrupted = await page.evaluate(() => scrollY);
   await page.waitForTimeout(500);
   expect(
     Math.abs((await page.evaluate(() => scrollY)) - interrupted),
@@ -662,6 +680,10 @@ test("hero vector stays sharp after docking and returning", async ({
     .poll(() => letter.evaluate((element) => element.style.transform))
     .toBe(initialTransform);
   await expect(letter).toHaveCSS("will-change", "auto");
+  await expect(page.locator("[data-header-identity]")).toHaveCSS(
+    "opacity",
+    "1",
+  );
   await page.evaluate(
     () =>
       new Promise<void>((resolve) =>
@@ -709,7 +731,7 @@ test("hero vector stays sharp after docking and returning", async ({
   expect(changed).toBeLessThan(0.005);
 });
 
-test("docked logo remains painted during wheel scroll and deep reload", async ({
+test("docked logo stays painted before the island threshold and hides on deep reload", async ({
   page,
 }) => {
   await page.goto("/en");
@@ -719,7 +741,7 @@ test("docked logo remains painted during wheel scroll and deep reload", async ({
     { timeout: 8_000 },
   );
   await page.evaluate(() =>
-    window.scrollTo({ top: innerHeight * 1.6, behavior: "instant" }),
+    window.scrollTo({ top: innerHeight * 0.95, behavior: "instant" }),
   );
   await expect(page.locator("html")).toHaveAttribute(
     "data-hero-docked",
@@ -729,7 +751,7 @@ test("docked logo remains painted during wheel scroll and deep reload", async ({
   if (!box) throw new Error("Missing logo bounds");
   const cdp = await page.context().newCDPSession(page);
   let baseline = 0;
-  for (const delta of [0, 100, 300, -200, 450, -300]) {
+  for (const delta of [0, 4, -4, 6, -6, 2]) {
     await page.mouse.wheel(0, delta);
     // Capture the actual compositor viewport, avoiding document-clip offsets
     // that ordinary screenshots can race with during asynchronous wheel scroll.
@@ -775,9 +797,12 @@ test("docked logo remains painted during wheel scroll and deep reload", async ({
     expect(ink).toBeGreaterThanOrEqual(baseline * 0.95);
   }
   await cdp.detach();
+  await page.locator(".home-work").scrollIntoViewIfNeeded();
+  await expect(page.locator("html")).toHaveAttribute("data-header-hidden", "");
   await page.reload();
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(800);
   await expect(page.locator("html")).toHaveAttribute("data-hero-intro", "done");
+  await expect(page.locator("[data-header-identity]")).toBeHidden();
   await expect(page.locator("html")).toHaveAttribute(
     "data-hero-docked",
     "true",
@@ -796,11 +821,18 @@ test("hero scroll transition updates header state without blocking navigation", 
   page,
 }) => {
   await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8000 },
+  );
   await page
     .getByRole("link", { name: "Explore my work" })
     .click({ trial: true });
 
-  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.25));
+  await page.evaluate(() =>
+    window.scrollTo({ top: window.innerHeight * 1.25, behavior: "instant" }),
+  );
   await expect
     .poll(() => page.evaluate(() => document.documentElement.dataset.heroState))
     .toBe("hero-passed");

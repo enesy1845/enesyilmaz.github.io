@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CaseStudySection } from "@/components/projects/case-study-section";
+import {
+  CaseStudySection,
+  type CaseStudySectionProps,
+} from "@/components/projects/case-study-section";
+import { ProjectPagination } from "@/components/projects/project-pagination";
 import { ExternalLink } from "@/components/ui/external-link";
 import { ProjectCover } from "@/components/projects/project-cover";
 import { PageIntro } from "@/components/ui/page-intro";
@@ -70,6 +74,33 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const labels = contentLabels[locale];
   const content = project.content[locale];
 
+  const sections: readonly CaseStudySectionProps[] = [
+    {
+      id: "context",
+      title: labels.context,
+      body: [
+        content.organization,
+        content.location,
+        content.period,
+        content.status,
+      ]
+        .filter(Boolean)
+        .join(" / "),
+    },
+    {
+      id: "responsibilities",
+      title: labels.responsibilities,
+      items: content.responsibilities,
+    },
+    { id: "challenges", title: labels.challenges, items: content.challenges },
+    { id: "decisions", title: labels.decisions, items: content.decisions },
+    { id: "outcomes", title: labels.outcomes, items: content.outcomes },
+    { id: "lessons", title: labels.lessons, items: content.lessons },
+  ];
+  const visibleSections = sections.filter(
+    (section) => section.body || section.items?.length,
+  );
+
   return (
     <>
       <PageIntro
@@ -77,67 +108,55 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         description={content.description ?? content.summary}
         locale={locale}
         meta={`${labels.category[project.category]} / ${content.role}`}
+        variant="document"
       />
-      <Section container="reading">
-        {project.coverImage && content.imageAlt ? (
-          <ProjectCover
-            alt={content.imageAlt}
-            className="mb-[var(--space-8)]"
-            priority
-            sizes="(min-width: 768px) 42rem, 100vw"
-            src={project.coverImage}
-          />
-        ) : null}
-        <div className="grid gap-[var(--space-6)]">
-          <div>
-            <h2 className="font-serif text-[length:var(--font-size-xl)]">
-              {labels.technologies}
-            </h2>
-            <ul className="mt-[var(--space-4)] flex flex-wrap gap-2">
-              {project.technologies.map((technology) => (
-                <li
-                  className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[length:var(--font-size-xs)] text-[var(--color-foreground-muted)]"
-                  key={technology}
-                >
-                  {technology}
+      <Section>
+        <div className="case-study-layout">
+          <nav aria-label={labels.onThisPage} className="case-study-toc">
+            <h2>{labels.onThisPage}</h2>
+            <ol>
+              {visibleSections.map((section) => (
+                <li key={section.id}>
+                  <a href={`#${section.id}`}>{section.title}</a>
                 </li>
               ))}
-            </ul>
-          </div>
-          {project.confidential ? (
-            <p className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-4)] text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
-              {labels.sourceNotice}
-            </p>
-          ) : null}
-          {project.externalUrl ? (
-            <ExternalLink href={project.externalUrl}>
-              {labels.visitProject}
-            </ExternalLink>
-          ) : null}
-        </div>
+            </ol>
+          </nav>
+          <div>
+            {project.coverImage && content.imageAlt ? (
+              <ProjectCover
+                alt={content.imageAlt}
+                className="mb-[var(--space-8)]"
+                priority
+                sizes="(min-width: 768px) 42rem, 100vw"
+                src={project.coverImage}
+              />
+            ) : null}
+            <div className="project-facts">
+              <div>
+                <h2>{labels.technologies}</h2>
+                <ul>
+                  {project.technologies.map((technology) => (
+                    <li key={technology}>{technology}</li>
+                  ))}
+                </ul>
+              </div>
+              {project.confidential ? (
+                <p className="project-disclosure">{labels.sourceNotice}</p>
+              ) : null}
+              {project.externalUrl ? (
+                <ExternalLink href={project.externalUrl}>
+                  {labels.visitProject}
+                </ExternalLink>
+              ) : null}
+            </div>
 
-        <CaseStudySection
-          title={labels.context}
-          body={[
-            content.organization,
-            content.location,
-            content.period,
-            content.status,
-          ]
-            .filter(Boolean)
-            .join(" / ")}
-        />
-        <CaseStudySection
-          title={labels.responsibilities}
-          items={content.responsibilities}
-        />
-        <CaseStudySection
-          title={labels.challenges}
-          items={content.challenges}
-        />
-        <CaseStudySection title={labels.decisions} items={content.decisions} />
-        <CaseStudySection title={labels.outcomes} items={content.outcomes} />
-        <CaseStudySection title={labels.lessons} items={content.lessons} />
+            {visibleSections.map((section) => (
+              <CaseStudySection {...section} key={section.id} />
+            ))}
+          </div>
+        </div>
+        <ProjectPagination slug={project.slug} locale={locale} />
       </Section>
     </>
   );

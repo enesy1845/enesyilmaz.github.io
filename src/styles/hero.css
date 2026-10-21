@@ -11,16 +11,37 @@
 
 /* ---------- Header wordmark (all pages) ---------- */
 
-/* The header never paints a background; it floats over every page. On the
-   home page, once the image after the hero has been scrolled past, the logo
-   and language links leave and only the navigation stays, as a floating
-   frosted pill modelled on the AIR menu: a faint dark tint over a 20px
-   blur, no border or shadow. */
+/* Transparent at the top; the original glass island takes over after the
+   image reaches the viewport. Preserve the hero's docking geometry. */
 .site-header {
+  --header-ink: var(--color-dark);
+  --header-muted: var(--color-foreground-muted);
   --island-glass: color-mix(in srgb, var(--color-dark) 5%, transparent);
-  --island-blur: blur(20px);
-
+  --island-blur: blur(var(--glass-blur));
+  position: relative;
   background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+html[data-header-tone-ready] .site-header {
+  position: sticky;
+}
+
+html[data-header-inverse] .site-header {
+  --header-ink: var(--color-light);
+  --header-muted: var(--color-light);
+}
+
+.site-header__island {
+  padding: var(--space-1);
+}
+
+.header-island-marker {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
 }
 
 [data-header-identity],
@@ -52,6 +73,104 @@ html[data-header-hidden] .site-header .menu-toggle {
   backdrop-filter: var(--island-blur);
 }
 
+html[data-header-hidden] .site-header__island {
+  position: fixed;
+  top: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
+  animation: island-in var(--duration-normal) var(--ease-standard) both;
+}
+
+html[data-header-hidden] .site-header [role="dialog"] {
+  pointer-events: auto;
+}
+
+@keyframes island-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-1 * var(--space-3))) scale(0.96);
+  }
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .site-header {
+    --island-glass: var(--color-background);
+  }
+
+  html[data-header-inverse] .site-header {
+    --island-glass: var(--color-dark);
+  }
+}
+
+.site-header .language-switcher__toggle,
+.site-header .menu-toggle {
+  color: var(--header-ink);
+  background: transparent;
+  border-color: transparent;
+}
+
+.site-header :is(a, button):focus-visible {
+  outline-color: var(--header-ink);
+}
+
+.main-navigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+}
+
+.main-navigation__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--header-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.main-navigation__link:hover {
+  color: var(--header-ink);
+}
+
+.main-navigation__link[aria-current="page"] {
+  color: var(--header-ink);
+}
+
+.main-navigation__link::after {
+  position: absolute;
+  bottom: var(--space-1);
+  inset-inline: var(--space-3);
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+
+.main-navigation__link:is(
+    :hover,
+    :focus-visible,
+    [aria-current="page"]
+  )::after {
+  transform: scaleX(1);
+}
+
+.language-switcher__code {
+  padding-left: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+}
+
 .language-switcher__chevron {
   transition: transform var(--duration-fast) var(--ease-standard);
 }
@@ -61,19 +180,12 @@ html[data-header-hidden] .site-header .menu-toggle {
 }
 
 .language-switcher__panel {
+  --header-ink: var(--color-dark);
   border-radius: var(--radius-lg);
-  background-color: var(--island-glass);
+  border: 1px solid var(--color-border);
+  background: var(--island-glass);
   -webkit-backdrop-filter: var(--island-blur);
   backdrop-filter: var(--island-blur);
-}
-
-html[data-header-hidden] .site-header__island {
-  position: fixed;
-  top: 0.75rem;
-  left: 50%;
-  padding: 0.25rem;
-  transform: translateX(-50%);
-  animation: island-in var(--duration-normal) var(--ease-standard) both;
 }
 
 .language-switcher__item:hover,
@@ -81,30 +193,11 @@ html[data-header-hidden] .site-header__island {
   background-color: color-mix(in srgb, var(--color-dark) 6%, transparent);
 }
 
-@keyframes island-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -0.75rem) scale(0.96);
-  }
-}
-
-@supports not (
-  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-) {
-  .site-header {
-    --island-glass: color-mix(
-      in srgb,
-      var(--color-dark) 5%,
-      var(--color-light)
-    );
-  }
-}
-
 .site-wordmark {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--color-foreground);
+  color: var(--header-ink);
   font-family: var(--font-display), var(--font-sans);
 }
 
@@ -140,14 +233,6 @@ html[data-header-hidden] .site-header__island {
 .site-wordmark__letter-inner {
   display: block;
   line-height: 0;
-}
-
-html:has([data-home-hero]):not([data-hero-state="hero-passed"])
-  .site-header
-  .menu-toggle {
-  border-color: var(--color-dark);
-  background-color: var(--color-dark);
-  color: var(--color-light);
 }
 
 /* A single visible logo lives in the header throughout the scroll. The hero
