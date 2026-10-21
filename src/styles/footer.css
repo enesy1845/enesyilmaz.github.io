@@ -1,0 +1,35 @@
+/* Footer closing wordmark: NOI letters spread edge to edge like the hero,
+   redrawn as particles by footer-particles-canvas when motion is allowed. */
+
+.footer-mark {
+  --footer-gutter: clamp(1rem, 1.4vw, 1.5rem);
+
+  position: relative;
+  padding: var(--space-10) var(--footer-gutter) var(--footer-gutter);
+  color: var(--color-foreground);
+}
+
+.footer-mark__letters {
+  display: flex;
+  justify-content: space-between;
+  font-size: calc((100vw - 2 * var(--footer-gutter)) * 0.3);
+  line-height: 0;
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+.footer-mark__letter {
+  display: block;
+  line-height: 0;
+}
+
+/* The particles start scattered and assemble, so the outline dissolves into
+   them instead of being duplicated. */
+.footer-mark[data-footer-mark-ready="true"] .footer-mark__letters {
+  opacity: 0;
+}
+
+@media (min-width: 64rem) {
+  .footer-mark__letters {
+    font-size: calc((100vw - 2 * var(--footer-gutter)) * 0.135);
+  }
+}

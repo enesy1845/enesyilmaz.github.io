@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { NoiLetter } from "@/components/brand/noi-letter";
+import { FooterParticlesLoader } from "@/components/layout/footer-particles-loader";
 import { Container } from "@/components/ui/container";
 import { ExternalLink } from "@/components/ui/external-link";
 import { socialLinks } from "@/config/social";
@@ -7,6 +9,7 @@ import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/config";
 import { createLocalePath, routes } from "@/i18n/routing";
 import type { Dictionary } from "@/i18n/types";
+import { getWordmarkWords } from "@/lib/utils/wordmark";
 
 type SiteFooterProps = {
   dictionary: Dictionary;
@@ -14,6 +17,8 @@ type SiteFooterProps = {
 };
 
 export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
+  const letters = getWordmarkWords(siteConfig.wordmark).flat();
+
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-background-elevated)]">
       <Container className="grid gap-[var(--space-10)] py-[var(--space-12)] md:grid-cols-[minmax(0,1fr)_auto_auto]">
@@ -65,6 +70,18 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
           {dictionary.footer.copyright}
         </p>
       </Container>
+
+      {/* Decorative closing mark; the particle layer replaces it when motion
+          is allowed, and the static letters remain the fallback. */}
+      <FooterParticlesLoader>
+        <div className="footer-mark__letters" data-footer-mark-letters="">
+          {letters.map((letter) => (
+            <span className="footer-mark__letter" key={letter.index}>
+              <NoiLetter character={letter.character} />
+            </span>
+          ))}
+        </div>
+      </FooterParticlesLoader>
     </footer>
   );
 }

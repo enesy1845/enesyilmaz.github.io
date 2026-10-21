@@ -288,6 +288,35 @@ test("hero sculpture is lazy, decorative and limited to the home route", async (
   );
 });
 
+test("footer wordmark turns into particles only when reached", async ({
+  page,
+}) => {
+  await page.goto("/en/work");
+  const mark = page.locator("[data-footer-mark]");
+  await expect(mark).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator("[data-footer-particles]")).toHaveCount(0);
+
+  await mark.scrollIntoViewIfNeeded();
+  await expect(mark).toHaveAttribute("data-footer-mark-ready", "true");
+  await expect(page.locator("[data-footer-particles]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+});
+
+test("footer wordmark stays static with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/en/work");
+  const mark = page.locator("[data-footer-mark]");
+  await mark.scrollIntoViewIfNeeded();
+  await expect(mark.locator("[data-noi-letter]")).toHaveCount(3);
+  await expect(page.locator("[data-footer-particles]")).toHaveCount(0);
+  await expect(mark.locator("[data-footer-mark-letters]")).toHaveCSS(
+    "opacity",
+    "1",
+  );
+});
+
 test("hero sculpture falls back to Canvas 2D without WebGL", async ({
   page,
 }) => {
