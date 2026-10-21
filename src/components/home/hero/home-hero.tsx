@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { NoiLetter } from "@/components/brand/noi-letter";
-import { NoiMotion } from "@/components/brand/noi-motion";
 import type { CSSProperties } from "react";
 
 import { HeroMotion } from "@/components/home/hero/hero-motion";
@@ -101,7 +100,6 @@ export function HomeHero({
     >
       <script dangerouslySetInnerHTML={{ __html: introScript }} />
       <HeroMotion heroId="home-hero" />
-      <NoiMotion />
       <div aria-hidden="true" className="hero__progress" />
 
       <div className="hero__backdrop">

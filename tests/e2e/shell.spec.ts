@@ -583,10 +583,6 @@ test("dot bounces only on opening then follows reversible logo docking", async (
     return positions;
   });
   expect(new Set(positions)).toEqual(new Set(["translate(0.000 947.000)"]));
-  await page.locator("[data-noi-closing]").scrollIntoViewIfNeeded();
-  await expect(
-    page.locator("[data-noi-closing] [data-noi-dot]"),
-  ).not.toHaveAttribute("transform", /./);
 });
 
 test("hero vector stays sharp after docking and returning", async ({

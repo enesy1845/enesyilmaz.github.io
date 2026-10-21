@@ -80,14 +80,7 @@ export default function FooterParticlesCanvas({
           particle.x = particle.tx;
           particle.y = particle.ty;
         }
-        drawFooterParticles(
-          context2d,
-          size.width,
-          size.height,
-          particles,
-          ink,
-          config?.dot ?? "circle",
-        );
+        drawFooterParticles(context2d, size.width, size.height, particles, ink);
       }
     }
 
@@ -108,14 +101,7 @@ export default function FooterParticlesCanvas({
         pointer,
         config?.interactionRadius ?? 0,
       );
-      drawFooterParticles(
-        context2d,
-        size.width,
-        size.height,
-        particles,
-        ink,
-        config?.dot ?? "circle",
-      );
+      drawFooterParticles(context2d, size.width, size.height, particles, ink);
       if (!announced) {
         announced = true;
         readyRef.current();

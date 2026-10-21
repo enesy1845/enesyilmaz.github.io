@@ -1,18 +1,18 @@
-/* Footer closing wordmark: NOI letters spread edge to edge like the hero,
-   redrawn as particles by footer-particles-canvas when motion is allowed. */
+/* Footer wordmark: NOI letters spread across the wide layout, redrawn as a
+   dot-matrix by footer-particles-canvas when motion is allowed. */
 
 .footer-mark {
-  --footer-gutter: clamp(1rem, 1.4vw, 1.5rem);
-
   position: relative;
-  padding: var(--space-12) var(--footer-gutter) var(--space-10);
+  padding: var(--space-12) var(--layout-gutter);
   color: var(--color-foreground);
 }
 
 .footer-mark__letters {
   display: flex;
   justify-content: space-between;
-  font-size: calc((100vw - 2 * var(--footer-gutter)) * 0.3);
+  max-width: var(--layout-wide);
+  margin-inline: auto;
+  font-size: min(36vw, 40svh);
   line-height: 0;
   transition: opacity var(--duration-slow) var(--ease-standard);
 }
@@ -26,10 +26,4 @@
    them instead of being duplicated. */
 .footer-mark[data-footer-mark-ready="true"] .footer-mark__letters {
   opacity: 0;
-}
-
-@media (min-width: 64rem) {
-  .footer-mark__letters {
-    font-size: calc((100vw - 2 * var(--footer-gutter)) * 0.135);
-  }
 }

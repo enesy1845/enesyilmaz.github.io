@@ -1,7 +1,8 @@
 /**
  * Canvas 2D particle renderer for the footer NOI wordmark, after the Phase 4
- * particle hero (ADR 009): targets are sampled from the real logo outlines,
- * particles spring towards them and a fine pointer pushes them aside.
+ * particle hero (ADR 009): the real logo outlines are sampled on an even
+ * dot-matrix grid, particles spring towards those dots and a fine pointer
+ * pushes them aside.
  * Lifecycle lives in footer-particles-canvas.
  */
 
@@ -9,11 +10,10 @@ export type PointerMode = "fine" | "coarse" | "none";
 
 export type FooterParticleConfig = {
   tier: "reduced" | "mobile" | "tablet" | "desktop";
-  maxParticles: number;
+  /** Dot rows across the letter height; fewer rows mean larger dots. */
+  rows: number;
   maxDpr: number;
   interactionRadius: number;
-  /** Squares are much cheaper to fill and look the same at mobile sizes. */
-  dot: "circle" | "square";
 };
 
 export type FooterParticle = {
@@ -43,44 +43,68 @@ export function getFooterParticleConfig(
   if (prefersReducedMotion || width < 280) {
     return {
       tier: "reduced",
-      maxParticles: 0,
+      rows: 0,
       maxDpr: 1,
       interactionRadius: 0,
-      dot: "circle",
     };
   }
   const interactive = pointer === "fine";
   if (width < 640) {
     return {
       tier: "mobile",
-      maxParticles: 200,
+      rows: 12,
       maxDpr: 1.5,
       interactionRadius: 0,
-      dot: "circle",
     };
   }
   if (width < 1024) {
     return {
       tier: "tablet",
-      maxParticles: 280,
+      rows: 14,
       maxDpr: 2,
       interactionRadius: interactive ? 70 : 0,
-      dot: "circle",
     };
   }
   return {
     tier: "desktop",
-    maxParticles: 380,
+    rows: 16,
     maxDpr: 2,
     interactionRadius: interactive ? 110 : 0,
-    dot: "circle",
   };
 }
 
-/** Grid step that yields roughly `maxParticles` samples for the ink area. */
-export function getSampleStep(inkArea: number, maxParticles: number): number {
-  if (inkArea <= 0 || maxParticles <= 0) return 1;
-  return Math.max(1, Math.round(Math.sqrt(inkArea / maxParticles)));
+/** Dot pitch for a letter height; never so small that dots turn to grain. */
+export function getGridStep(letterHeight: number, rows: number): number {
+  if (letterHeight <= 0 || rows <= 0) return 0;
+  return Math.max(4, letterHeight / rows);
+}
+
+/**
+ * Cell centres for one shape's bounds. Columns and rows are fitted to the
+ * shape, so every letter starts and ends on a full dot instead of a cut one.
+ */
+export function getGridCells(
+  left: number,
+  top: number,
+  width: number,
+  height: number,
+  step: number,
+): Array<[number, number]> {
+  if (step <= 0 || width <= 0 || height <= 0) return [];
+  const columns = Math.max(1, Math.round(width / step));
+  const rows = Math.max(1, Math.round(height / step));
+  const cellWidth = width / columns;
+  const cellHeight = height / rows;
+  const cells: Array<[number, number]> = [];
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      cells.push([
+        left + (column + 0.5) * cellWidth,
+        top + (row + 0.5) * cellHeight,
+      ]);
+    }
+  }
+  return cells;
 }
 
 export function detectPointerMode(): PointerMode {
@@ -144,35 +168,51 @@ export function buildFooterParticles(
   source.width = width;
   source.height = height;
   const context = source.getContext("2d", { willReadFrequently: true });
-  if (!context || config.maxParticles === 0) return [];
+  if (!context || config.rows === 0) return [];
 
   paintLetters(context, shapes, origin);
   const pixels = context.getImageData(0, 0, width, height).data;
-  let inkArea = 0;
-  for (let index = 3; index < pixels.length; index += 4) {
-    if ((pixels[index] ?? 0) > 128) inkArea += 1;
-  }
-  const step = getSampleStep(inkArea, config.maxParticles);
+  const bounds = shapes.map((shape) => {
+    const rect = shape.getBoundingClientRect();
+    return {
+      left: rect.left - origin.left,
+      top: rect.top - origin.top,
+      width: rect.width,
+      height: rect.height,
+    };
+  });
+  // The pitch follows the main letter body, so dots scale with the mark.
+  const step = getGridStep(
+    Math.max(0, ...bounds.map((bound) => bound.height)) * 0.75,
+    config.rows,
+  );
+  const radius = step * 0.36;
 
   const particles: FooterParticle[] = [];
-  for (let y = Math.floor(step / 2); y < height; y += step) {
-    for (let x = Math.floor(step / 2); x < width; x += step) {
-      if ((pixels[(y * width + x) * 4 + 3] ?? 0) <= 128) continue;
+  for (const bound of bounds) {
+    for (const [x, y] of getGridCells(
+      bound.left,
+      bound.top,
+      bound.width,
+      bound.height,
+      step,
+    )) {
+      const px = Math.round(x);
+      const py = Math.round(y);
+      if (px < 0 || py < 0 || px >= width || py >= height) continue;
+      if ((pixels[(py * width + px) * 4 + 3] ?? 0) <= 128) continue;
       const seed = particles.length + 1;
       // Start loosely scattered below the mark, so it assembles on arrival.
       const angle = seededUnit(seed) * Math.PI * 2;
       const spread = height * (0.25 + seededUnit(seed + 7) * 0.5);
-      // Jitter within the sample cell, so the mark reads as grain, not a grid.
-      const tx = x + (seededUnit(seed + 41) - 0.5) * step * 0.9;
-      const ty = y + (seededUnit(seed + 53) - 0.5) * step * 0.9;
       particles.push({
-        tx,
-        ty,
-        x: tx + Math.cos(angle) * spread,
-        y: ty + Math.abs(Math.sin(angle)) * spread,
+        tx: x,
+        ty: y,
+        x: x + Math.cos(angle) * spread,
+        y: y + Math.abs(Math.sin(angle)) * spread,
         vx: 0,
         vy: 0,
-        size: Math.max(2.5, step * (0.4 + seededUnit(seed + 13) * 0.06)),
+        size: radius,
       });
     }
   }
@@ -225,19 +265,13 @@ export function drawFooterParticles(
   height: number,
   particles: FooterParticle[],
   ink: string,
-  dot: FooterParticleConfig["dot"],
 ) {
   context.clearRect(0, 0, width, height);
   context.fillStyle = ink;
   context.beginPath();
   for (const particle of particles) {
-    if (dot === "square") {
-      const side = particle.size * 1.8;
-      context.rect(particle.x - side / 2, particle.y - side / 2, side, side);
-    } else {
-      context.moveTo(particle.x + particle.size, particle.y);
-      context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-    }
+    context.moveTo(particle.x + particle.size, particle.y);
+    context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
   }
   context.fill();
 }

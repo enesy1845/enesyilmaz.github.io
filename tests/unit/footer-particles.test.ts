@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import {
   getFooterParticleConfig,
-  getSampleStep,
+  getGridCells,
+  getGridStep,
   stepFooterParticles,
   type FooterParticle,
 } from "@/components/layout/footer-particles-engine";
@@ -16,14 +17,15 @@ function particleAt(x: number, y: number, tx = x, ty = y): FooterParticle {
 describe("footer particles", () => {
   it("skips particles for reduced motion and tiny widths", () => {
     expect(getFooterParticleConfig(1440, true, "fine").tier).toBe("reduced");
-    expect(getFooterParticleConfig(200, false, "fine").maxParticles).toBe(0);
+    expect(getFooterParticleConfig(200, false, "fine").rows).toBe(0);
   });
 
   it("bounds particle counts per tier and only pushes for fine pointers", () => {
     const mobile = getFooterParticleConfig(390, false, "coarse");
     const desktop = getFooterParticleConfig(1440, false, "fine");
 
-    expect(mobile.maxParticles).toBeLessThan(desktop.maxParticles);
+    expect(mobile.rows).toBeGreaterThan(0);
+    expect(desktop.rows).toBeGreaterThanOrEqual(mobile.rows);
     expect(mobile.interactionRadius).toBe(0);
     expect(desktop.interactionRadius).toBeGreaterThan(0);
     expect(
@@ -31,12 +33,18 @@ describe("footer particles", () => {
     ).toBe(0);
   });
 
-  it("chooses a sample step that stays near the particle budget", () => {
-    const inkArea = 400_000;
-    const step = getSampleStep(inkArea, 4000);
+  it("derives an even dot pitch from the letter height", () => {
+    expect(getGridStep(240, 16)).toBe(15);
+    expect(getGridStep(20, 16)).toBe(4);
+    expect(getGridStep(0, 16)).toBe(0);
+  });
 
-    expect(inkArea / step ** 2).toBeLessThanOrEqual(4000 * 1.3);
-    expect(getSampleStep(0, 4000)).toBe(1);
+  it("fits whole cells to each shape, starting and ending on a dot", () => {
+    const cells = getGridCells(10, 20, 100, 50, 10);
+
+    expect(cells).toHaveLength(50);
+    expect(cells[0]).toEqual([15, 25]);
+    expect(cells.at(-1)).toEqual([105, 65]);
   });
 
   it("assembles scattered particles and reports when they settle", () => {

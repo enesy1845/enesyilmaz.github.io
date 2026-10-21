@@ -130,38 +130,6 @@ html[data-header-hidden] .site-header__island {
   fill: currentColor;
 }
 
-.noi-closing {
-  position: relative;
-  padding: var(--space-12) var(--layout-gutter);
-  overflow: clip;
-  background: var(--color-background);
-}
-
-.noi-closing__letters {
-  display: flex;
-  justify-content: space-between;
-  max-width: var(--layout-wide);
-  margin-inline: auto;
-  font-size: min(36vw, 40svh);
-  line-height: 1;
-}
-
-/* Whole-mark arrival: the dot inherits the same transform as its stem. */
-@media (prefers-reduced-motion: no-preference) {
-  .noi-closing[data-noi-enhanced] .noi-closing__letters {
-    opacity: 0;
-    transform: translate3d(0, 3rem, 0) scale(0.96);
-    transition:
-      transform 1.3s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 0.8s ease-out;
-  }
-
-  .noi-closing[data-noi-active] .noi-closing__letters {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 [data-header-letter] {
   display: inline-block;
   line-height: 1;
