@@ -136,12 +136,21 @@ export default function FooterParticlesCanvas({
       }, 120);
     }
 
+    // The canvas bleeds past the mark and lets clicks through to the links
+    // beneath it, so the pointer is tracked on the document instead.
     function onPointerMove(event: PointerEvent) {
       if (!config?.interactionRadius || event.pointerType !== "mouse") return;
       const rect = canvasElement.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
+      if (!inside) {
+        pointer.active = false;
+        return;
+      }
       pointer.active = true;
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
+      pointer.x = x;
+      pointer.y = y;
       start();
     }
 
@@ -156,8 +165,8 @@ export default function FooterParticlesCanvas({
 
     const observer = new ResizeObserver(scheduleRebuild);
     observer.observe(canvasElement);
-    hostElement.addEventListener("pointermove", onPointerMove);
-    hostElement.addEventListener("pointerleave", onPointerLeave);
+    document.addEventListener("pointermove", onPointerMove, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onPointerLeave);
     document.addEventListener("visibilitychange", onVisibilityChange);
     rebuild();
     start();
@@ -167,8 +176,11 @@ export default function FooterParticlesCanvas({
       stop();
       if (resizeTimer !== null) window.clearTimeout(resizeTimer);
       observer.disconnect();
-      hostElement.removeEventListener("pointermove", onPointerMove);
-      hostElement.removeEventListener("pointerleave", onPointerLeave);
+      document.removeEventListener("pointermove", onPointerMove);
+      document.documentElement.removeEventListener(
+        "pointerleave",
+        onPointerLeave,
+      );
       document.removeEventListener("visibilitychange", onVisibilityChange);
       particles = [];
     };
@@ -182,7 +194,7 @@ export default function FooterParticlesCanvas({
   return (
     <canvas
       aria-hidden="true"
-      className="absolute inset-0 h-full w-full"
+      className="footer-mark__canvas"
       data-footer-particles=""
       ref={canvasRef}
     />

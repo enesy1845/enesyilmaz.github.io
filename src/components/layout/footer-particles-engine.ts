@@ -28,12 +28,13 @@ export type FooterParticle = {
 
 export type PointerState = { active: boolean; x: number; y: number };
 
-const RETURN_FORCE = 0.045;
-const DAMPING = 0.86;
-const MAX_VELOCITY = 18;
-const PUSH_STRENGTH = 0.32;
-/** Below this summed speed every particle is home and the loop can stop. */
-const SETTLED_SPEED = 0.02;
+const RETURN_FORCE = 0.032;
+/** Lower damping lets dots overshoot slightly as they snap back. */
+const DAMPING = 0.9;
+const MAX_VELOCITY = 26;
+const PUSH_STRENGTH = 0.45;
+/** Once no single dot moves or strays more than this, the mark is home. */
+const SETTLED_DISTANCE = 0.15;
 
 /** `width` is the viewport width; it picks the device tier. */
 export function getFooterParticleConfig(
@@ -63,14 +64,14 @@ export function getFooterParticleConfig(
       tier: "tablet",
       rows: 10,
       maxDpr: 2,
-      interactionRadius: interactive ? 56 : 0,
+      interactionRadius: interactive ? 70 : 0,
     };
   }
   return {
     tier: "desktop",
     rows: 10,
     maxDpr: 2,
-    interactionRadius: interactive ? 72 : 0,
+    interactionRadius: interactive ? 90 : 0,
   };
 }
 
@@ -238,7 +239,12 @@ export function buildFooterParticles(
   return particles;
 }
 
-/** Advances one frame and returns whether any particle is still moving. */
+/**
+ * Advances one frame and returns whether any particle is still moving. The
+ * check uses the most active dot, not the average: a pointer disturbs only a
+ * few dots, and an average would stop the loop before they are home. When
+ * everything has settled, dots snap exactly onto the grid.
+ */
 export function stepFooterParticles(
   particles: FooterParticle[],
   pointer: PointerState,
@@ -268,13 +274,20 @@ export function stepFooterParticles(
     );
     particle.x += particle.vx;
     particle.y += particle.vy;
-    motion +=
-      Math.abs(particle.vx) +
-      Math.abs(particle.vy) +
-      Math.abs(dx) * 0.01 +
-      Math.abs(dy) * 0.01;
+    motion = Math.max(
+      motion,
+      Math.abs(particle.vx) + Math.abs(particle.vy),
+      Math.abs(particle.tx - particle.x) + Math.abs(particle.ty - particle.y),
+    );
   }
-  return motion / Math.max(1, particles.length) > SETTLED_SPEED;
+  if (motion > SETTLED_DISTANCE || pointer.active) return true;
+  for (const particle of particles) {
+    particle.x = particle.tx;
+    particle.y = particle.ty;
+    particle.vx = 0;
+    particle.vy = 0;
+  }
+  return false;
 }
 
 /** All dots share one ink, so a single path and fill draws the whole mark. */

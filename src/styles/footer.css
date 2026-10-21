@@ -17,6 +17,19 @@
   transition: opacity var(--duration-slow) var(--ease-standard);
 }
 
+/* The canvas bleeds past the mark so pushed dots are never clipped: up to the
+   page edge at the sides (no horizontal scroll) and a little above and below. */
+.footer-mark__canvas {
+  --footer-mark-bleed-y: var(--space-12);
+
+  position: absolute;
+  top: calc(-1 * var(--footer-mark-bleed-y));
+  left: calc(-1 * var(--layout-gutter));
+  width: calc(100% + 2 * var(--layout-gutter));
+  height: calc(100% + 2 * var(--footer-mark-bleed-y));
+  pointer-events: none;
+}
+
 .footer-mark__letter {
   display: block;
   line-height: 0;
