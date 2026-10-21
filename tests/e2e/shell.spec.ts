@@ -304,6 +304,32 @@ test("footer wordmark turns into particles only when reached", async ({
   );
 });
 
+test("footer wordmark particles react to the mouse", async ({ page }) => {
+  await page.goto("/en/work");
+  const mark = page.locator("[data-footer-mark]");
+  await mark.scrollIntoViewIfNeeded();
+  await expect(mark).toHaveAttribute("data-footer-mark-ready", "true");
+  const canvas = page.locator("[data-footer-particles]");
+  // Let the assembly settle so any later change comes from the pointer.
+  await page.waitForTimeout(3000);
+  const before = await canvas.evaluate((element: HTMLCanvasElement) =>
+    element.toDataURL(),
+  );
+  const box = await canvas.boundingBox();
+  if (!box) throw new Error("Missing footer canvas bounds");
+  for (let step = 0; step <= 10; step += 1) {
+    await page.mouse.move(
+      box.x + box.width * (0.05 + step * 0.04),
+      box.y + box.height / 2,
+    );
+  }
+  await expect
+    .poll(() =>
+      canvas.evaluate((element: HTMLCanvasElement) => element.toDataURL()),
+    )
+    .not.toBe(before);
+});
+
 test("footer wordmark stays static with reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/en/work");

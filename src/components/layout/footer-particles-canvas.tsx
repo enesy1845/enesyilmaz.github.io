@@ -54,8 +54,10 @@ export default function FooterParticlesCanvas({
 
     function rebuild() {
       const rect = canvasElement.getBoundingClientRect();
+      // The tier describes the device, not the mark: the footer column is
+      // narrow even on large screens.
       config = getFooterParticleConfig(
-        rect.width,
+        window.innerWidth,
         window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         detectPointerMode(),
       );

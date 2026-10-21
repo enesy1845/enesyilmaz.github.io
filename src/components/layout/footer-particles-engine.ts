@@ -35,6 +35,7 @@ const PUSH_STRENGTH = 0.32;
 /** Below this summed speed every particle is home and the loop can stop. */
 const SETTLED_SPEED = 0.02;
 
+/** `width` is the viewport width; it picks the device tier. */
 export function getFooterParticleConfig(
   width: number,
   prefersReducedMotion: boolean,
@@ -62,14 +63,14 @@ export function getFooterParticleConfig(
       tier: "tablet",
       rows: 10,
       maxDpr: 2,
-      interactionRadius: interactive ? 70 : 0,
+      interactionRadius: interactive ? 56 : 0,
     };
   }
   return {
     tier: "desktop",
     rows: 10,
     maxDpr: 2,
-    interactionRadius: interactive ? 110 : 0,
+    interactionRadius: interactive ? 72 : 0,
   };
 }
 
