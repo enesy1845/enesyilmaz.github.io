@@ -20,12 +20,12 @@ type SiteHeaderProps = {
 export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
   return (
     <header
-      className="site-header sticky top-0 z-[var(--z-sticky)] border-b border-[var(--color-border)] bg-[var(--color-background)]"
+      className="site-header sticky top-0 z-[var(--z-sticky)]"
       data-site-header=""
     >
-      <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-3">
+      <div className="mx-auto flex min-h-[var(--layout-header-height)] w-full max-w-[var(--layout-wide)] items-center justify-between gap-4 px-[var(--layout-gutter)] py-3 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <Link
-          className="site-wordmark no-underline"
+          className="site-wordmark justify-self-start no-underline"
           data-header-identity=""
           href={createLocalePath(locale)}
         >
@@ -50,8 +50,12 @@ export function SiteHeader({ dictionary, locale }: SiteHeaderProps) {
             ))}
           </span>
         </Link>
-        <div className="hidden items-center gap-4 lg:flex">
+        {/* Logo, page-centred navigation and language stay on three equal
+            outer tracks, so the nav is centred whatever their widths. */}
+        <div className="site-header__island hidden lg:block">
           <MainNavigation dictionary={dictionary} locale={locale} />
+        </div>
+        <div className="site-header__extra hidden justify-self-end lg:block">
           <LanguageSwitcher dictionary={dictionary} locale={locale} />
         </div>
         <MobileNavigation dictionary={dictionary} locale={locale} />

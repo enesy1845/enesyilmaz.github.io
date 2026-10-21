@@ -11,10 +11,93 @@
 
 /* ---------- Header wordmark (all pages) ---------- */
 
+/* The header never paints a background; it floats over every page. On the
+   home page, once the image after the hero has been scrolled past, the logo
+   and language links leave and only the navigation stays, as a floating
+   frosted pill modelled on the AIR menu: a faint dark tint over a 20px
+   blur, no border or shadow. */
 .site-header {
+  --island-glass: color-mix(in srgb, var(--color-dark) 5%, transparent);
+  --island-blur: blur(20px);
+
+  background: transparent;
+}
+
+[data-header-identity],
+.site-header__extra {
   transition:
-    background-color var(--duration-normal) var(--ease-standard),
-    border-color var(--duration-normal) var(--ease-standard);
+    opacity var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
+}
+
+html[data-header-hidden] .site-header {
+  pointer-events: none;
+}
+
+html[data-header-hidden] [data-header-identity],
+html[data-header-hidden] .site-header__extra {
+  opacity: 0;
+  transform: translateY(-120%);
+  visibility: hidden;
+}
+
+html[data-header-hidden] .site-header__island,
+html[data-header-hidden] .site-header .menu-toggle {
+  pointer-events: auto;
+  border-color: transparent;
+  border-radius: var(--radius-pill);
+  background-color: var(--island-glass);
+  box-shadow: none;
+  -webkit-backdrop-filter: var(--island-blur);
+  backdrop-filter: var(--island-blur);
+}
+
+.language-switcher__chevron {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+[aria-expanded="true"] > .language-switcher__chevron {
+  transform: rotate(180deg);
+}
+
+.language-switcher__panel {
+  border-radius: var(--radius-lg);
+  background-color: var(--island-glass);
+  -webkit-backdrop-filter: var(--island-blur);
+  backdrop-filter: var(--island-blur);
+}
+
+html[data-header-hidden] .site-header__island {
+  position: fixed;
+  top: 0.75rem;
+  left: 50%;
+  padding: 0.25rem;
+  transform: translateX(-50%);
+  animation: island-in var(--duration-normal) var(--ease-standard) both;
+}
+
+.language-switcher__item:hover,
+.language-switcher__item:focus-visible {
+  background-color: color-mix(in srgb, var(--color-dark) 6%, transparent);
+}
+
+@keyframes island-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -0.75rem) scale(0.96);
+  }
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .site-header {
+    --island-glass: color-mix(
+      in srgb,
+      var(--color-dark) 5%,
+      var(--color-light)
+    );
+  }
 }
 
 .site-wordmark {
@@ -89,18 +172,6 @@
 .site-wordmark__letter-inner {
   display: block;
   line-height: 0;
-}
-
-/* Light header while the home hero is on screen. Without JavaScript the
-   header stays solid white; with it, it turns transparent like AIR's. */
-html:has([data-home-hero]):not([data-hero-state="hero-passed"]) .site-header {
-  border-bottom-color: transparent;
-  background-color: var(--color-light);
-}
-
-html[data-hero-state]:has([data-home-hero]):not([data-hero-state="hero-passed"])
-  .site-header {
-  background-color: transparent;
 }
 
 html:has([data-home-hero]):not([data-hero-state="hero-passed"])
