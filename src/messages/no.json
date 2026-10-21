@@ -20,7 +20,8 @@
     "closeMenu": "Lukk meny",
     "languageSwitcher": "Velg språk",
     "currentLanguage": "Gjeldende språk",
-    "footerNavigation": "Bunnnavigasjon"
+    "footerNavigation": "Bunnnavigasjon",
+    "heroLinks": "Lenker i introduksjonen"
   },
   "language": {
     "en": "English",

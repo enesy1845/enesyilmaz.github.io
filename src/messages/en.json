@@ -20,7 +20,8 @@
     "closeMenu": "Close menu",
     "languageSwitcher": "Choose language",
     "currentLanguage": "Current language",
-    "footerNavigation": "Footer navigation"
+    "footerNavigation": "Footer navigation",
+    "heroLinks": "Hero links"
   },
   "language": {
     "en": "English",

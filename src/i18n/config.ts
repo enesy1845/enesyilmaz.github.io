@@ -1,13 +1,13 @@
 export const locales = ["en", "no", "tr"] as const;
 export const defaultLocale = "en";
 
-export type Locale = (typeof locales)[number];
+/**
+ * Locales offered in the language switcher. Turkish stays routable and
+ * translated but is hidden from the switcher for now.
+ */
+export const switcherLocales: readonly Locale[] = ["en", "no"];
 
-export const localeNames: Record<Locale, string> = {
-  en: "English",
-  no: "Norsk",
-  tr: "Türkçe",
-};
+export type Locale = (typeof locales)[number];
 
 export const htmlLang: Record<Locale, string> = {
   en: "en",

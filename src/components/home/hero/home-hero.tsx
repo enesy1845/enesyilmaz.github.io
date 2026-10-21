@@ -59,6 +59,7 @@ function PlusIcon() {
 }
 
 export function HomeHero({
+  dictionary,
   locale,
   page,
   nextSectionId = "home-next",
@@ -137,7 +138,7 @@ export function HomeHero({
       <div className="hero__stage hero__flow">
         <div className="hero__footer" data-hero-fade="">
           <nav
-            aria-label="Hero links"
+            aria-label={dictionary.accessibility.heroLinks}
             className="hero__actions hero__reveal-bottom"
           >
             <Link

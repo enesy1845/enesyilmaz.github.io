@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { LanguageSwitcher } from "@/components/navigation/language-switcher";
@@ -41,14 +41,21 @@ describe("navigation shell", () => {
     );
   });
 
-  it("renders all language options", () => {
+  it("renders all language options behind an icon-only toggle", () => {
     render(<LanguageSwitcher dictionary={en} locale="en" />);
 
-    expect(screen.getByRole("link", { name: /English/ })).toHaveAttribute(
+    const toggle = screen.getByRole("button", { name: /Choose language/ });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("link")).toBeNull();
+
+    fireEvent.click(toggle);
+
+    expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
       "aria-current",
       "true",
     );
     expect(screen.getByRole("link", { name: "Norsk" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Türkçe" })).toBeInTheDocument();
+    // Turkish stays routable but is hidden from the switcher for now.
+    expect(screen.queryByRole("link", { name: "Türkçe" })).toBeNull();
   });
 });

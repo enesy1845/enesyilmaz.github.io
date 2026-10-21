@@ -119,9 +119,14 @@ test("language switching preserves equivalent project route", async ({
   page,
 }) => {
   await page.goto("/en/work/municipal-quality-system");
-  await page.getByRole("link", { name: "Türkçe" }).first().click();
+  await page
+    .getByRole("banner")
+    .getByRole("button", { name: /Choose language/ })
+    .first()
+    .click();
+  await page.getByRole("link", { name: "Norsk" }).first().click();
 
-  await expect(page).toHaveURL(/\/tr\/work\/municipal-quality-system$/);
+  await expect(page).toHaveURL(/\/no\/work\/municipal-quality-system$/);
 });
 
 test("About page loads", async ({ page }) => {

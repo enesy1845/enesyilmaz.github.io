@@ -20,7 +20,8 @@
     "closeMenu": "Menüyü kapat",
     "languageSwitcher": "Dil seç",
     "currentLanguage": "Geçerli dil",
-    "footerNavigation": "Alt bilgi gezinmesi"
+    "footerNavigation": "Alt bilgi gezinmesi",
+    "heroLinks": "Giriş bölümü bağlantıları"
   },
   "language": {
     "en": "English",
