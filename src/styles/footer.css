@@ -5,7 +5,7 @@
   --footer-gutter: clamp(1rem, 1.4vw, 1.5rem);
 
   position: relative;
-  padding: var(--space-10) var(--footer-gutter) var(--footer-gutter);
+  padding: var(--space-12) var(--footer-gutter) var(--space-10);
   color: var(--color-foreground);
 }
 

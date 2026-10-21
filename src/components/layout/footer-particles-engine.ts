@@ -55,16 +55,16 @@ export function getFooterParticleConfig(
   if (width < 640) {
     return {
       tier: "mobile",
-      maxParticles: 1100,
+      maxParticles: 520,
       maxDpr: 1.5,
       interactionRadius: 0,
-      dot: "square",
+      dot: "circle",
     };
   }
   if (width < 1024) {
     return {
       tier: "tablet",
-      maxParticles: 2800,
+      maxParticles: 1100,
       maxDpr: 2,
       interactionRadius: interactive ? 70 : 0,
       dot: "circle",
@@ -72,7 +72,7 @@ export function getFooterParticleConfig(
   }
   return {
     tier: "desktop",
-    maxParticles: 4200,
+    maxParticles: 1700,
     maxDpr: 2,
     interactionRadius: interactive ? 110 : 0,
     dot: "circle",
@@ -174,7 +174,7 @@ export function buildFooterParticles(
         y: ty + Math.abs(Math.sin(angle)) * spread,
         vx: 0,
         vy: 0,
-        size: Math.max(0.9, step * (0.32 + seededUnit(seed + 13) * 0.14)),
+        size: Math.max(1.6, step * (0.38 + seededUnit(seed + 13) * 0.12)),
         tone: Math.floor(seededUnit(seed + 29) * 3) as 0 | 1 | 2,
       });
     }

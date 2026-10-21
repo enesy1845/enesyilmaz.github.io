@@ -6,7 +6,7 @@ Accepted.
 
 ## Context
 
-The footer needed a closing brand moment: the NOI wordmark spread edge to edge, as in the hero, drawn as particles. The Phase 4 particle hero ([ADR 009](009-canvas-particle-hero.md)) already established a small custom Canvas 2D particle approach, so a particle library (particles.js or similar) would add a dependency for behaviour we already own.
+The footer needed a brand moment above its content: the NOI wordmark spread edge to edge, as in the hero, drawn as particles. The Phase 4 particle hero ([ADR 009](009-canvas-particle-hero.md)) already established a small custom Canvas 2D particle approach, so a particle library (particles.js or similar) would add a dependency for behaviour we already own.
 
 ## Decision
 
@@ -15,11 +15,11 @@ The footer needed a closing brand moment: the NOI wordmark spread edge to edge, 
 - `footer-particles-engine.ts` samples particle targets from the rendered SVG paths using their own screen transforms (`getScreenCTM`), so particles match the CSS layout and logo outlines exactly. Targets are jittered within each sample cell, so the mark reads as grain rather than a grid.
 - Particles start scattered below the mark and spring into place when it becomes visible; a fine pointer pushes them aside on tablet and desktop.
 - When every particle has settled, the loop stops, so a resting footer costs nothing. Input, resize or returning to view restarts it. It also pauses when the tab is hidden.
-- Budgets per tier: 4200 particles on desktop, 2800 on tablet and 1100 on mobile. DPR is capped at 2 (1.5 on mobile), and mobile draws squares instead of arcs. All dots are filled in three batched calls, one per tone.
+- Budgets per tier: 1700 particles on desktop, 1100 on tablet and 520 on mobile, kept low so the dots can be large without merging. DPR is capped at 2 (1.5 on mobile). All dots are filled in three batched calls, one per tone. The engine can draw squares instead of arcs for a cheaper tier, but no tier needs it at these counts.
 - The static letters fade out only after the first particle frame has painted, so the mark is never blank.
 
 ## Consequences
 
 - No new dependency; the canvas chunk loads only near the footer.
-- On a 390px viewport with 4x CPU throttling, assembly runs at about 60fps (p50 frame 16.7ms) after the one-off sampling step.
+- On a 390px viewport with 4x CPU throttling, assembly runs at a p50 frame of 16.7ms (p95 33ms) after the one-off sampling step.
 - The footer appears on every route, so the particle code can load on any page, but only when the visitor reaches the footer.
