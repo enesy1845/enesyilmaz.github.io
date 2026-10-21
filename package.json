@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview --port 8788",
-    "cf-typegen": "wrangler types cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types cloudflare-env.d.ts",
+    "perf:hero": "node scripts/perf-hero.mjs"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "1.20.1",

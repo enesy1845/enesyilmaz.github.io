@@ -19,7 +19,7 @@ The approved "NOI Code Helix / Studio 3D" prototype is a porcelain-white sculptu
   - a generated PMREM softbox environment (no HDR download).
 - Animation is a whole-sculpture transform: one full Y revolution plus sin terms over exactly 16s. Phase is wrapped to [0, 1) and elapsed time is kept modulo the period, so the loop has no seam and time never accumulates.
 - `hero-sculpture-webgl.tsx` is the small client wrapper:
-  - It creates its own canvas one frame after mount, so the static hero paints first and Strict Mode's immediate unmount cancels before any context exists.
+  - It creates its canvas only after the preloader intro has finished (the backdrop is hidden until then), two frames later and on an idle callback. Setup therefore never competes with the intro or the largest contentful paint, and Strict Mode's immediate unmount cancels before any context exists.
   - It caps DPR per tier, renders mobile at about 30fps and pauses off-screen or when the tab is hidden.
   - On unmount it disposes geometries, materials, the shadow map, the environment target and the renderer, then forces context loss.
 - `hero-sculpture-loader.tsx` keeps the existing lazy, IntersectionObserver-gated loading. It tries WebGL when WebGL 2 exists and the device is not obviously low-power. It mounts the Canvas 2D sculpture instead when:
@@ -28,6 +28,15 @@ The approved "NOI Code Helix / Studio 3D" prototype is a porcelain-white sculptu
   - the context is lost.
 - Only one renderer is mounted at a time, so only one loop runs.
 - Reduced motion is unchanged: no canvas is loaded and the static composition is shown.
+
+## Performance
+
+Measured on a production build (`npm run perf:hero`); figures and the procedure are in [the hero sculpture performance notes](../performance/hero-sculpture.md).
+
+- Panels and ribs are merged into one mesh per material (54 panel meshes and 3 ribs become 3 meshes), cutting draw calls from about 116 to 8 per frame including the shadow pass.
+- Shaders compile in parallel with `renderer.compileAsync` (KHR_parallel_shader_compile).
+- The PMREM environment compiled its blur and GGX shaders synchronously, blocking the main thread for about 1.3s on Windows/ANGLE. `prewarmPmrem` compiles the generator's own materials asynchronously first, so `fromScene` hits the program cache (about 50ms). It reads PMREMGenerator internals of the exactly pinned `three` version; if an upgrade changes them, the pre-warm is skipped and the old synchronous path still works. Re-check this when upgrading `three`.
+- The remaining synchronous work (context, geometry, environment, first frame) runs as separate tasks.
 
 ## Consequences
 
