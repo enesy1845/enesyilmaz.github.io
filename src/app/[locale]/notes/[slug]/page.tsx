@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { NoteBody } from "@/components/notes/note-body";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
 import { StructuredData } from "@/components/seo/structured-data";
 import { siteConfig } from "@/config/site";
-import { getNoteBySlug, notes } from "@/content/notes/notes";
+import { getNoteBySlug, notes } from "@/lib/content/notes";
 import { notesPageContent } from "@/data/supporting-content";
 import { contentLabels } from "@/data/content-labels";
 import { isLocale, openGraphLocales } from "@/i18n/config";
@@ -68,10 +69,6 @@ export default async function NotePage({ params }: PageProps) {
   const locale = localeParam;
   const dictionary = await getDictionary(locale);
   const content = notesPageContent[locale];
-  const readingMinutes = Math.max(
-    1,
-    Math.ceil(note.paragraphs.join(" ").trim().split(/\s+/u).length / 200),
-  );
   const published = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
   }).format(new Date(note.publishedAt));
@@ -93,16 +90,12 @@ export default async function NotePage({ params }: PageProps) {
             <p>
               {contentLabels[locale].readingMinutes.replace(
                 "{minutes}",
-                String(readingMinutes),
+                String(note.readingMinutes),
               )}
             </p>
             <p>{note.category}</p>
           </aside>
-          <article className="note-body">
-            {note.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </article>
+          <NoteBody body={note.body} />
         </div>
         <p className="mt-[var(--space-10)] border-t border-[var(--color-border)] pt-[var(--space-6)] text-[length:var(--font-size-sm)]">
           <Link href={createLocalePath(locale, "notes")}>

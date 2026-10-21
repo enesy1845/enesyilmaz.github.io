@@ -363,6 +363,69 @@
 .note-body p:not(:first-child) {
   color: var(--color-foreground-muted);
 }
+/* Rich text written in the admin editor. */
+.note-body :is(h2, h3, h4) {
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-serif);
+  line-height: var(--line-height-heading);
+  color: var(--color-foreground);
+}
+.note-body h2 {
+  font-size: var(--font-size-2xl);
+}
+.note-body :is(h3, h4) {
+  font-size: var(--font-size-xl);
+}
+.note-body :is(ul, ol, blockquote, pre, figure, img, hr) {
+  margin-block: var(--space-6);
+}
+.note-body :is(ul, ol) {
+  padding-left: 1.25em;
+  color: var(--color-foreground-muted);
+}
+.note-body ul {
+  list-style: disc;
+}
+.note-body ol {
+  list-style: decimal;
+}
+.note-body li + li {
+  margin-top: var(--space-2);
+}
+.note-body blockquote {
+  border-left: 2px solid var(--color-accent);
+  padding-left: var(--space-6);
+  font-style: italic;
+  color: var(--color-foreground);
+}
+.note-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.note-body :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--color-code);
+}
+.note-body pre {
+  overflow-x: auto;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+.note-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+.note-body hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
 .case-study-toc h2 {
   font: inherit;
   margin-bottom: var(--space-4);

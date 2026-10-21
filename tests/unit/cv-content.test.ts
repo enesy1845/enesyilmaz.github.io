@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import sitemap from "@/app/sitemap";
-import { notes } from "@/content/notes/notes";
+import { notes } from "@/lib/content/notes";
 import {
   certifications,
   cvDocument,

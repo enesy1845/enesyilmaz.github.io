@@ -63,8 +63,13 @@ npm run test:e2e
 npm run format
 npm run format:check
 npm run preview
+npm run deploy
+npm run upload
+npm run content
 npm run cf-typegen
 ```
+
+`npm run dev` compiles `./content`, watches it and starts `next dev`; `npm run content` compiles once (it also runs before `build`, `typecheck` and `test`). `npm run deploy`/`upload` need a Cloudflare login and are normally run by Workers Builds; see [docs/deployment/cloudflare.md](docs/deployment/cloudflare.md).
 
 `npm run preview` builds with OpenNext and starts a local Cloudflare-compatible runtime. It does not deploy.
 Production builds currently use `next build --webpack` because OpenNext documents Webpack builds as the compatibility fallback for Turbopack chunk-loading failures.
@@ -75,9 +80,13 @@ Copy `.env.example` to a local `.env` only when needed.
 
 ```text
 NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=
+KEYSTATIC_GITHUB_CLIENT_ID=
+KEYSTATIC_GITHUB_CLIENT_SECRET=
+KEYSTATIC_SECRET=
 ```
 
-When unset, local metadata uses `http://localhost:3000`.
+When `NEXT_PUBLIC_SITE_URL` is unset, local metadata uses `http://localhost:3000` and robots blocks indexing. The `KEYSTATIC_*` values are needed only for the production admin panel (GitHub mode); local development needs none of them.
 
 ## Structure
 
@@ -86,7 +95,8 @@ When unset, local metadata uses `http://localhost:3000`.
 - `src/app/[locale]/`: locale-prefixed App Router shell.
 - `src/i18n/`: locale configuration, routing helpers, and dictionaries.
 - `src/messages/`: shared interface translations and localized metadata copy.
-- `src/content/projects/`: typed multilingual project records.
+- `content/`: admin-managed content — `projects/*.json` (Work) and `notes/*.mdoc` (blog).
+- `keystatic.config.ts`: admin panel schema; `scripts/build-content.ts` compiles `content/` into the git-ignored `src/content/generated.ts`.
 - `src/data/`: translated Home, evidence, page, label, notes, and atelier content.
 - `src/components/`: server-rendered layout, navigation, content, project, SEO, and UI components.
 - `src/lib/content/`: content loaders and validation helpers.
@@ -113,16 +123,14 @@ No external fonts, icon CDN, analytics, background video, animation library, rem
 
 ## Content System
 
-Projects are typed in `src/types/project.ts` and stored in `src/content/projects/projects.ts`.
+Work and notes are edited in the admin panel at `/keystatic` (Keystatic, [ADR 013](docs/decisions/013-keystatic-admin.md)):
 
-Current featured projects:
+- `npm run dev`, then open `http://localhost:3000/keystatic`: edits are written to `content/` and appear in the site immediately. Commit them like code.
+- In production the panel signs in with GitHub and each save is a commit that triggers a Cloudflare rebuild.
 
-- anonymized municipal quality system,
-- anonymized process PDF export system,
-- anonymized privacy and PII workflow,
-- ILC Language Centre website.
+Rules enforced at build time: English title, summary and role are required; a locale is published only when its own title, summary and role exist; covers need alt text in every published locale; 3–5 featured projects; drafts are skipped. Types live in `src/types/project.ts` and `src/types/note.ts`.
 
-Public-sector work is intentionally anonymized. Public web work uses live links only when the URL is verified. Legacy screenshots are not migrated yet.
+Public-sector work is intentionally anonymized; do not add confidential details through the panel.
 
 ## Server-First Policy
 

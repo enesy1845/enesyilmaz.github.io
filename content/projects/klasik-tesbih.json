@@ -1,0 +1,69 @@
+{
+  "name": "Klasik Tesbih",
+  "draft": false,
+  "featured": false,
+  "order": 170,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "WordPress",
+    "Responsive design"
+  ],
+  "disciplines": [
+    "Web development"
+  ],
+  "externalUrl": "http://klasiktesbih.com/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/klasik-tesbih.webp",
+  "en": {
+    "title": "Klasik Tesbih",
+    "shortTitle": "",
+    "summary": "A shop-style WordPress site for a Turkish brand presenting classic prayer bead designs.",
+    "description": "",
+    "role": "Freelance WordPress Developer",
+    "organization": "Klasik Tesbih",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the Klasik Tesbih website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Klasik Tesbih",
+    "shortTitle": "",
+    "summary": "Et nettbutikkpreget WordPress-nettsted for et tyrkisk merke med klassiske bønnekjeder.",
+    "description": "",
+    "role": "Frilans WordPress-utvikler",
+    "organization": "Klasik Tesbih",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet Klasik Tesbih",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Klasik Tesbih",
+    "shortTitle": "",
+    "summary": "Klasik tesbih tasarımlarını sergileyen Türk bir marka için e-ticaret tarzında WordPress sitesi.",
+    "description": "",
+    "role": "Serbest WordPress Geliştirici",
+    "organization": "Klasik Tesbih",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Klasik Tesbih web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

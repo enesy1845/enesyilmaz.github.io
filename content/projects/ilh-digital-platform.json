@@ -1,0 +1,90 @@
+{
+  "name": "ILH Digital Platform",
+  "draft": false,
+  "featured": true,
+  "order": 30,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "Next.js",
+    "Cloudflare",
+    "Sanity",
+    "R2"
+  ],
+  "disciplines": [
+    "Web engineering",
+    "Content architecture"
+  ],
+  "externalUrl": null,
+  "repositoryUrl": null,
+  "coverImage": null,
+  "en": {
+    "title": "ILH Digital Platform",
+    "shortTitle": "",
+    "summary": "Modernizing a digital platform with an emphasis on content structure, performance, media management and maintainability.",
+    "description": "",
+    "role": "Web Developer",
+    "organization": "ILH",
+    "period": "",
+    "location": "",
+    "status": "In progress",
+    "imageAlt": "",
+    "responsibilities": [
+      "Website redevelopment",
+      "Asset migration and organization",
+      "Content architecture",
+      "Sanity integration work",
+      "Cloudflare R2 media infrastructure planning"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "ILH digital plattform",
+    "shortTitle": "",
+    "summary": "Jeg moderniserer en digital plattform med vekt på innholdsstruktur, ytelse, mediehåndtering og vedlikeholdbarhet.",
+    "description": "",
+    "role": "Webutvikler",
+    "organization": "ILH",
+    "period": "",
+    "location": "",
+    "status": "Pågår",
+    "imageAlt": "",
+    "responsibilities": [
+      "Nyutvikling av nettstedet",
+      "Migrering og organisering av filer",
+      "Innholdsarkitektur",
+      "Integrasjonsarbeid med Sanity",
+      "Planlegging av medieinfrastruktur i Cloudflare R2"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "ILH Dijital Platformu",
+    "shortTitle": "",
+    "summary": "İçerik yapısı, performans, medya yönetimi ve sürdürülebilirlik odağında bir dijital platformu modernleştiriyorum.",
+    "description": "",
+    "role": "Web Geliştirici",
+    "organization": "ILH",
+    "period": "",
+    "location": "",
+    "status": "Devam ediyor",
+    "imageAlt": "",
+    "responsibilities": [
+      "Web sitesinin yeniden geliştirilmesi",
+      "Dosyaların taşınması ve düzenlenmesi",
+      "İçerik mimarisi",
+      "Sanity entegrasyon çalışmaları",
+      "Cloudflare R2 medya altyapısının planlanması"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

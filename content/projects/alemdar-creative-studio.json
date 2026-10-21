@@ -1,0 +1,69 @@
+{
+  "name": "Alemdar Creative Studio",
+  "draft": false,
+  "featured": false,
+  "order": 140,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "WordPress",
+    "Responsive design"
+  ],
+  "disciplines": [
+    "Web development"
+  ],
+  "externalUrl": "https://www.alemdarcreativestudio.com/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/alemdar-creative-studio.webp",
+  "en": {
+    "title": "Alemdar Creative Studio",
+    "shortTitle": "",
+    "summary": "A WordPress portfolio site for the same designer's creative studio.",
+    "description": "",
+    "role": "Freelance WordPress Developer",
+    "organization": "Alemdar Creative Studio",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the Alemdar Creative Studio website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Alemdar Creative Studio",
+    "shortTitle": "",
+    "summary": "Et WordPress-porteføljenettsted for den samme designerens kreative studio.",
+    "description": "",
+    "role": "Frilans WordPress-utvikler",
+    "organization": "Alemdar Creative Studio",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet Alemdar Creative Studio",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Alemdar Creative Studio",
+    "shortTitle": "",
+    "summary": "Aynı tasarımcının kreatif stüdyosu için bir WordPress portfolyo sitesi.",
+    "description": "",
+    "role": "Serbest WordPress Geliştirici",
+    "organization": "Alemdar Creative Studio",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Alemdar Creative Studio web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

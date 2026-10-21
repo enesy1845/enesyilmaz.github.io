@@ -1,0 +1,71 @@
+{
+  "name": "Quiver Blog",
+  "draft": false,
+  "featured": false,
+  "order": 110,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "WordPress",
+    "UI maintenance",
+    "Content publishing"
+  ],
+  "disciplines": [
+    "Volunteer support",
+    "Web maintenance"
+  ],
+  "externalUrl": "https://quiver.blog/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/quiver-blog.webp",
+  "en": {
+    "title": "Quiver Blog",
+    "shortTitle": "",
+    "summary": "Volunteer UI improvements and maintenance for a Norwegian blogger's website.",
+    "description": "",
+    "role": "Volunteer web contributor",
+    "organization": "Quiver Blog",
+    "period": "",
+    "location": "Norway",
+    "status": "",
+    "imageAlt": "Homepage of the Quiver Blog website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Quiver Blog",
+    "shortTitle": "",
+    "summary": "Frivillige forbedringer av brukergrensesnitt og vedlikehold for en norsk bloggers nettsted.",
+    "description": "",
+    "role": "Frivillig webbidragsyter",
+    "organization": "Quiver Blog",
+    "period": "",
+    "location": "Norge",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet Quiver Blog",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Quiver Blog",
+    "shortTitle": "",
+    "summary": "Norveçli bir blog yazarının sitesi için gönüllü arayüz iyileştirmeleri ve bakım.",
+    "description": "",
+    "role": "Gönüllü web katkısı",
+    "organization": "Quiver Blog",
+    "period": "",
+    "location": "Norveç",
+    "status": "",
+    "imageAlt": "Quiver Blog web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

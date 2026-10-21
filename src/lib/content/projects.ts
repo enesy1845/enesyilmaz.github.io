@@ -1,5 +1,5 @@
 import { locales, type Locale } from "@/i18n/config";
-import { projects } from "@/content/projects/projects";
+import { projects } from "@/content/generated";
 import type { Project, ProjectCategory } from "@/types/project";
 
 const categories: readonly ProjectCategory[] = [

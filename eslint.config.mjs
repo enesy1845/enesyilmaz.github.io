@@ -14,6 +14,7 @@ const config = [
       "playwright-report/**",
       "test-results/**",
       "cloudflare-env.d.ts",
+      "src/content/generated.ts",
     ],
   },
 ];

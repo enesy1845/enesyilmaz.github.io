@@ -1,0 +1,69 @@
+{
+  "name": "5K Consultancy",
+  "draft": false,
+  "featured": false,
+  "order": 150,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "WordPress",
+    "Responsive design"
+  ],
+  "disciplines": [
+    "Web development"
+  ],
+  "externalUrl": "https://5kconsultancy.co.uk/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/5k-consultancy.webp",
+  "en": {
+    "title": "5K Consultancy",
+    "shortTitle": "",
+    "summary": "A WordPress site for a UK-based consulting firm, focused on professionalism and clarity.",
+    "description": "",
+    "role": "Freelance WordPress Developer",
+    "organization": "5K Consultancy",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the 5K Consultancy website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "5K Consultancy",
+    "shortTitle": "",
+    "summary": "Et WordPress-nettsted for et britisk konsulentselskap, med vekt på profesjonalitet og klarhet.",
+    "description": "",
+    "role": "Frilans WordPress-utvikler",
+    "organization": "5K Consultancy",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet 5K Consultancy",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "5K Consultancy",
+    "shortTitle": "",
+    "summary": "Birleşik Krallık merkezli bir danışmanlık firması için profesyonellik ve netlik odaklı bir WordPress sitesi.",
+    "description": "",
+    "role": "Serbest WordPress Geliştirici",
+    "organization": "5K Consultancy",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "5K Consultancy web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

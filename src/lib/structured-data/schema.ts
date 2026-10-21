@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { socialLinks } from "@/config/social";
-import type { Note } from "@/content/notes/notes";
+import type { Note } from "@/types/note";
 import type { Locale } from "@/i18n/config";
 import { createLocalePath } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/utils/url";

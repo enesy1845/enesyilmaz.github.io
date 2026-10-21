@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/config/site";
-import { notes } from "@/content/notes/notes";
+import { notes } from "@/lib/content/notes";
 import { locales, type Locale } from "@/i18n/config";
 import { createLocalePath, routes } from "@/i18n/routing";
 import { getProjects } from "@/lib/content/projects";

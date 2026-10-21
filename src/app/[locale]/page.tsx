@@ -10,7 +10,7 @@ import { CopyEmail } from "@/components/ui/copy-email";
 import { ExternalLink } from "@/components/ui/external-link";
 import { Section } from "@/components/ui/section";
 import { socialLinks } from "@/config/social";
-import { notes } from "@/content/notes/notes";
+import { notes } from "@/lib/content/notes";
 import { evidenceItems } from "@/data/experience";
 import { contentLabels } from "@/data/content-labels";
 import { homeContent } from "@/data/home";

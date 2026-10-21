@@ -1,0 +1,103 @@
+{
+  "name": "Process PDF Export System",
+  "draft": false,
+  "featured": false,
+  "order": 90,
+  "category": "data",
+  "confidential": true,
+  "technologies": [
+    "Python",
+    "PDF generation",
+    "SharePoint",
+    "Background jobs"
+  ],
+  "disciplines": [
+    "Document automation",
+    "Data transformation",
+    "File organization"
+  ],
+  "externalUrl": null,
+  "repositoryUrl": null,
+  "coverImage": null,
+  "en": {
+    "title": "Process PDF Export System",
+    "shortTitle": "PDF Export",
+    "summary": "Background processing that turns structured process data into organized PDF documents.",
+    "description": "Implemented parts of a document export flow that generated PDFs, merged documents, and stored output in SharePoint.",
+    "role": "Software developer contributor",
+    "organization": "Anonymized public-sector context",
+    "period": "",
+    "location": "Norway",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Worked with structured process data and generated document output.",
+      "Handled PDF creation, merging, naming, and folder organization concerns.",
+      "Considered scale and SharePoint folder-limit constraints when shaping the flow."
+    ],
+    "challenges": [
+      "Keeping generated documents predictable for users while respecting platform storage constraints."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "A more repeatable path from process data to stored documentation."
+    ],
+    "lessons": [
+      "Document automation needs careful naming, structure, and failure handling before it feels reliable."
+    ]
+  },
+  "no": {
+    "title": "PDF-eksport for prosesser",
+    "shortTitle": "PDF-eksport",
+    "summary": "Bakgrunnsprosessering som gjør strukturerte prosessdata om til organiserte PDF-dokumenter.",
+    "description": "Implementerte deler av en dokumenteksport som genererte PDF-er, slo sammen dokumenter og lagret resultat i SharePoint.",
+    "role": "Bidragsyter som programvareutvikler",
+    "organization": "Anonymisert offentlig kontekst",
+    "period": "",
+    "location": "Norge",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Arbeidet med strukturerte prosessdata og generert dokumentutdata.",
+      "Håndterte PDF-generering, sammenslåing, navngiving og mappeorganisering.",
+      "Vurderte skala og SharePoint-begrensninger i utformingen av flyten."
+    ],
+    "challenges": [
+      "Å gjøre genererte dokumenter forutsigbare for brukere samtidig som lagringsplattformens rammer respekteres."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "En mer repeterbar vei fra prosessdata til lagret dokumentasjon."
+    ],
+    "lessons": [
+      "Dokumentautomatisering trenger gjennomtenkt navngiving, struktur og feilhåndtering for å oppleves pålitelig."
+    ]
+  },
+  "tr": {
+    "title": "Süreç PDF Dışa Aktarım Sistemi",
+    "shortTitle": "PDF Dışa Aktarım",
+    "summary": "Yapılandırılmış süreç verisini düzenli PDF belgelerine dönüştüren arka plan işleme akışı.",
+    "description": "PDF üretimi, belge birleştirme ve çıktıyı SharePoint içinde saklama akışının bazı bölümlerini uyguladı.",
+    "role": "Yazılım geliştirici katkısı",
+    "organization": "Anonimleştirilmiş kamu bağlamı",
+    "period": "",
+    "location": "Norveç",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Yapılandırılmış süreç verisi ve üretilen belge çıktılarıyla çalıştı.",
+      "PDF oluşturma, birleştirme, adlandırma ve klasör organizasyonu konularını ele aldı.",
+      "Akışı şekillendirirken ölçek ve SharePoint klasör sınırlarını dikkate aldı."
+    ],
+    "challenges": [
+      "Platform sınırlarını korurken üretilen belgeleri kullanıcılar için öngörülebilir kılmak."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "Süreç verisinden saklanan dokümantasyona daha tekrarlanabilir bir yol."
+    ],
+    "lessons": [
+      "Belge otomasyonu güvenilir hissettirmek için adlandırma, yapı ve hata yönetimini baştan düşünmelidir."
+    ]
+  }
+}

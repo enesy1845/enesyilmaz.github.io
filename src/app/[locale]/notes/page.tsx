@@ -6,7 +6,7 @@ import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { socialLinks } from "@/config/social";
-import { notes } from "@/content/notes/notes";
+import { notes } from "@/lib/content/notes";
 import { notesPageContent } from "@/data/supporting-content";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";

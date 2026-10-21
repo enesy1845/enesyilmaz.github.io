@@ -1,0 +1,72 @@
+{
+  "name": "Architech / Cuix Agency",
+  "draft": false,
+  "featured": false,
+  "order": 80,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "Webflow",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "disciplines": [
+    "Webflow development",
+    "Design implementation"
+  ],
+  "externalUrl": "https://www.architech.ca/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/architech.webp",
+  "en": {
+    "title": "Architech / Cuix Agency",
+    "shortTitle": "",
+    "summary": "Translating detailed visual designs into responsive web experiences through close collaboration with an international agency.",
+    "description": "Freelance Webflow work for Cuix Agency in Canada, including maintaining and modernizing the Architech corporate site.",
+    "role": "Freelance Webflow Developer",
+    "organization": "Cuix Agency",
+    "period": "2022–2023",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the Architech website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Architech / Cuix Agency",
+    "shortTitle": "",
+    "summary": "Jeg omsatte detaljerte visuelle design til responsive nettopplevelser i tett samarbeid med et internasjonalt byrå.",
+    "description": "Frilans Webflow-arbeid for Cuix Agency i Canada, blant annet vedlikehold og modernisering av Architechs bedriftsnettsted.",
+    "role": "Frilans Webflow-utvikler",
+    "organization": "Cuix Agency",
+    "period": "2022–2023",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet Architech",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Architech / Cuix Agency",
+    "shortTitle": "",
+    "summary": "Uluslararası bir ajansla yakın iş birliği içinde ayrıntılı görsel tasarımları responsive web deneyimlerine dönüştürdüm.",
+    "description": "Kanada'daki Cuix Agency için serbest Webflow çalışmaları; Architech kurumsal sitesinin bakımı ve modernleştirilmesi dahil.",
+    "role": "Serbest Webflow Geliştirici",
+    "organization": "Cuix Agency",
+    "period": "2022–2023",
+    "location": "",
+    "status": "",
+    "imageAlt": "Architech web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

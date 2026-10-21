@@ -1,0 +1,90 @@
+{
+  "name": "ILC Language Centres",
+  "draft": false,
+  "featured": true,
+  "order": 50,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "Webflow",
+    "Responsive design",
+    "CMS"
+  ],
+  "disciplines": [
+    "Webflow development",
+    "Content structure",
+    "Responsive UI"
+  ],
+  "externalUrl": "https://ilcentres.com/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/ilc-language-centres.webp",
+  "en": {
+    "title": "ILC Language Centres",
+    "shortTitle": "",
+    "summary": "Creating and maintaining accessible, responsive web experiences for an international education organization.",
+    "description": "Webflow development for a UK-based language centre with several locations and course paths. Related work includes the separate ILC Accommodation website.",
+    "role": "Webflow Developer",
+    "organization": "ILC Language Centres",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the ILC Language Centres website",
+    "responsibilities": [
+      "Built and maintained responsive Webflow pages.",
+      "Structured CMS content for locations and courses.",
+      "Kept navigation clear for prospective students."
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": [
+      "Education websites need clear navigation before visual decoration."
+    ]
+  },
+  "no": {
+    "title": "ILC Language Centres",
+    "shortTitle": "",
+    "summary": "Jeg utvikler og vedlikeholder tilgjengelige, responsive nettsider for en internasjonal utdanningsorganisasjon.",
+    "description": "Webflow-utvikling for en britisk språkskole med flere lokasjoner og kursløp. Relatert arbeid omfatter det separate nettstedet ILC Accommodation.",
+    "role": "Webflow-utvikler",
+    "organization": "ILC Language Centres",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet ILC Language Centres",
+    "responsibilities": [
+      "Bygde og vedlikeholdt responsive Webflow-sider.",
+      "Strukturerte CMS-innhold for lokasjoner og kurs.",
+      "Holdt navigasjonen tydelig for potensielle studenter."
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": [
+      "Utdanningsnettsteder trenger tydelig navigasjon før visuell pynt."
+    ]
+  },
+  "tr": {
+    "title": "ILC Language Centres",
+    "shortTitle": "",
+    "summary": "Uluslararası bir eğitim kurumu için erişilebilir, responsive web deneyimleri oluşturuyor ve sürdürüyorum.",
+    "description": "Birden fazla lokasyonu ve kurs seçeneği olan, Birleşik Krallık merkezli bir dil okulu için Webflow geliştirme. İlgili çalışmalar arasında ayrı ILC Accommodation sitesi de var.",
+    "role": "Webflow Geliştirici",
+    "organization": "ILC Language Centres",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "ILC Language Centres web sitesinin ana sayfası",
+    "responsibilities": [
+      "Responsive Webflow sayfaları geliştirdim ve sürdürdüm.",
+      "Lokasyonlar ve kurslar için CMS içeriğini yapılandırdım.",
+      "Aday öğrenciler için gezinmeyi net tuttum."
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": [
+      "Eğitim siteleri görsel süslemeden önce net gezinmeye ihtiyaç duyar."
+    ]
+  }
+}

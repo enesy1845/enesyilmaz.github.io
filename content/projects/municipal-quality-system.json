@@ -1,0 +1,107 @@
+{
+  "name": "Municipal Quality System",
+  "draft": false,
+  "featured": true,
+  "order": 10,
+  "category": "software",
+  "confidential": true,
+  "technologies": [
+    "React",
+    "TypeScript",
+    ".NET",
+    "SharePoint"
+  ],
+  "disciplines": [
+    "Full-stack development",
+    "Workflow design",
+    "Accessibility",
+    "Privacy-sensitive systems"
+  ],
+  "externalUrl": null,
+  "repositoryUrl": null,
+  "coverImage": null,
+  "en": {
+    "title": "Municipal Quality System",
+    "shortTitle": "Quality System",
+    "summary": "Contributing to public-sector software that supports structured workflows, case management and quality processes.",
+    "description": "Contributed to parts of a privacy-sensitive municipal software system with React, TypeScript, .NET, and SharePoint integration.",
+    "role": "Software Developer",
+    "organization": "Asker kommune — IKT / Digitalisering",
+    "period": "",
+    "location": "Norway",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Worked on React and TypeScript interface flows for structured case handling.",
+      "Collaborated around .NET-backed business rules and SharePoint-connected document workflows.",
+      "Kept accessibility, traceability, and privacy-sensitive handling visible in implementation decisions."
+    ],
+    "challenges": [
+      "Balancing complex municipal workflows with readable user interfaces.",
+      "Supporting sensitive case data without exposing implementation details publicly."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "A clearer foundation for deviation and quality workflows inside a larger municipal system."
+    ],
+    "lessons": [
+      "Software quality depends on domain understanding, privacy, and collaboration as much as code."
+    ]
+  },
+  "no": {
+    "title": "Kommunalt kvalitetssystem",
+    "shortTitle": "Kvalitetssystem",
+    "summary": "Jeg bidrar til programvare i offentlig sektor som støtter strukturerte arbeidsflyter, saksbehandling og kvalitetsprosesser.",
+    "description": "Bidro til deler av et personvernsensitivt kommunalt system med React, TypeScript, .NET og SharePoint-integrasjon.",
+    "role": "Programvareutvikler",
+    "organization": "Asker kommune — IKT / Digitalisering",
+    "period": "",
+    "location": "Norge",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Arbeidet med React- og TypeScript-flyt for strukturert saksbehandling.",
+      "Samarbeidet rundt .NET-baserte forretningsregler og SharePoint-tilknyttede dokumentflyter.",
+      "Holdt universell utforming, sporbarhet og sensitiv datahåndtering synlig i implementeringsvalg."
+    ],
+    "challenges": [
+      "Å balansere komplekse kommunale arbeidsflyter med lesbare brukergrensesnitt.",
+      "Å støtte sensitiv saksdata uten å publisere interne detaljer."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "Et tydeligere grunnlag for avviks- og kvalitetsflyter i et større kommunalt system."
+    ],
+    "lessons": [
+      "Programvarekvalitet handler like mye om domene, personvern og samarbeid som om kode."
+    ]
+  },
+  "tr": {
+    "title": "Belediye Kalite Sistemi",
+    "shortTitle": "Kalite Sistemi",
+    "summary": "Yapılandırılmış iş akışlarını, vaka yönetimini ve kalite süreçlerini destekleyen kamu sektörü yazılımına katkı sağlıyorum.",
+    "description": "React, TypeScript, .NET ve SharePoint entegrasyonu kullanılan gizlilik hassasiyetli bir belediye sisteminin bazı bölümlerine katkı sağladı.",
+    "role": "Yazılım Geliştirici",
+    "organization": "Asker kommune — IKT / Digitalisering",
+    "period": "",
+    "location": "Norveç",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Yapılandırılmış vaka yönetimi için React ve TypeScript arayüz akışları üzerinde çalıştı.",
+      ".NET tabanlı iş kuralları ve SharePoint bağlantılı belge akışları etrafında iş birliği yaptı.",
+      "Erişilebilirlik, izlenebilirlik ve hassas veri işleme kararlarını görünür tuttu."
+    ],
+    "challenges": [
+      "Karmaşık belediye iş akışlarını okunabilir arayüzlerle dengelemek.",
+      "İç detayları yayımlamadan hassas vaka verisini desteklemek."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "Daha büyük bir belediye sistemi içinde kalite ve sapma akışları için daha net bir temel."
+    ],
+    "lessons": [
+      "Yazılım kalitesi kod kadar alan bilgisi, gizlilik ve iş birliğine de bağlıdır."
+    ]
+  }
+}

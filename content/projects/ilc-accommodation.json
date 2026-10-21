@@ -1,0 +1,69 @@
+{
+  "name": "ILC Accommodation",
+  "draft": false,
+  "featured": false,
+  "order": 120,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "Webflow",
+    "Responsive design"
+  ],
+  "disciplines": [
+    "Web development"
+  ],
+  "externalUrl": "https://www.ilcaccommodation.com/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/ilc-accommodation.webp",
+  "en": {
+    "title": "ILC Accommodation",
+    "shortTitle": "",
+    "summary": "A Webflow site for ILC's accommodation services, consistent with the main ILC brand.",
+    "description": "",
+    "role": "Webflow Developer",
+    "organization": "ILC Accommodation",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the ILC Accommodation website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "ILC Accommodation",
+    "shortTitle": "",
+    "summary": "Et Webflow-nettsted for ILCs overnattingstjenester, i tråd med ILC-merkevaren.",
+    "description": "",
+    "role": "Webflow-utvikler",
+    "organization": "ILC Accommodation",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet ILC Accommodation",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "ILC Accommodation",
+    "shortTitle": "",
+    "summary": "ILC'nin konaklama hizmetleri için ana ILC markasıyla uyumlu bir Webflow sitesi.",
+    "description": "",
+    "role": "Webflow Geliştirici",
+    "organization": "ILC Accommodation",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "ILC Accommodation web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}
