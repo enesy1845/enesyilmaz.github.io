@@ -10,119 +10,110 @@ export type AboutPageContent = {
   sections: readonly PageSection[];
   closingTitle: string;
   closingBody: string;
+  cvAction: string;
 };
 
 export type ContactPageContent = {
   introMeta: string;
   description: string;
-  note: string;
+  cvAction: string;
 };
 
 export const aboutPageContent: Record<Locale, AboutPageContent> = {
   en: {
-    introMeta: "Based in Norway / Software development / Teaching / Craft",
+    introMeta: "Asker, Norway",
     sections: [
       {
-        title: "Current professional identity",
-        body: "Enes works as a software developer with a focus on practical systems, web interfaces, data-oriented workflows, and careful handling of sensitive contexts.",
+        title: "My path",
+        body: "My background is not limited to a single discipline. Mathematics shaped the way I approach problems; teaching helped me communicate complex ideas; and software development gave me a practical way to turn those ideas into working systems.",
       },
       {
-        title: "Career and learning journey",
-        body: "His background connects mathematics, programming education, public web projects, Python, data, and full-stack software work. The portfolio presents only high-level verified facts while the detailed content model matures.",
+        title: "What I do",
+        body: "I build web applications, APIs and data-oriented workflows using technologies such as Python, React, .NET and modern cloud platforms. My experience spans public-sector software, educational projects and independent client work.",
       },
       {
-        title: "How I approach problems",
-        body: "The starting point is rarely code alone. Domain rules, people, information flow, privacy, and consequences shape the solution before implementation details are chosen.",
+        title: "How I think",
+        body: "I value analytical thinking, intellectual curiosity and the ability to question assumptions. Before choosing a technology, I try to understand the underlying problem, its context and its consequences.",
       },
       {
-        title: "Teaching and communication",
-        body: "Teaching programming and explaining technical topics are part of the professional foundation. That experience supports clearer collaboration and more readable software decisions.",
-      },
-      {
-        title: "Interests outside software",
-        body: "Writing, mathematics, wood, watches, visual design, and video belong to the broader Code / Thought / Craft identity, but they remain secondary to the professional software narrative.",
+        title: "Beyond engineering",
+        body: "Literature, education, craftsmanship and mathematical thinking influence how I see the world. I believe technical ability becomes more meaningful when combined with empathy, responsibility and a willingness to keep learning.",
       },
     ],
-    closingTitle: "Useful for collaboration",
+    closingTitle: "Looking forward",
     closingBody:
-      "This portfolio is designed to support job applications and professional conversations without overstating seniority, outcomes, or sensitive work.",
+      "I'm interested in software engineering roles and collaborations where I can contribute, learn deeply and take ownership of meaningful problems.",
+    cvAction: "Explore my professional journey",
   },
   no: {
-    introMeta:
-      "Basert i Norge / Programvareutvikling / Undervisning / Håndverk",
+    introMeta: "Asker, Norge",
     sections: [
       {
-        title: "Nåværende profesjonell identitet",
-        body: "Enes arbeider som programvareutvikler med praktiske systemer, webgrensesnitt, dataorienterte flyter og nøyaktig håndtering av sensitive kontekster.",
+        title: "Min vei",
+        body: "Bakgrunnen min er ikke begrenset til ett fagfelt. Matematikken formet måten jeg angriper problemer på, undervisning lærte meg å formidle komplekse ideer, og programvareutvikling ga meg en praktisk måte å gjøre ideene om til fungerende systemer.",
       },
       {
-        title: "Karriere- og læringsreise",
-        body: "Bakgrunnen knytter sammen matematikk, programmeringsundervisning, offentlige webprosjekter, Python, data og full-stack programvarearbeid. Porteføljen viser kun overordnede verifiserte fakta mens innholdsmodellen modnes.",
+        title: "Det jeg gjør",
+        body: "Jeg bygger webapplikasjoner, API-er og dataorienterte arbeidsflyter med teknologier som Python, React, .NET og moderne skyplattformer. Erfaringen min spenner over programvare i offentlig sektor, utdanningsprosjekter og selvstendig kundearbeid.",
       },
       {
-        title: "Hvordan jeg angriper problemer",
-        body: "Utgangspunktet er sjelden bare kode. Domeneregler, mennesker, informasjonsflyt, personvern og konsekvenser former løsningen før implementasjonsdetaljer velges.",
+        title: "Hvordan jeg tenker",
+        body: "Jeg verdsetter analytisk tenkning, intellektuell nysgjerrighet og evnen til å utfordre antakelser. Før jeg velger teknologi, prøver jeg å forstå det underliggende problemet, konteksten og konsekvensene.",
       },
       {
-        title: "Undervisning og kommunikasjon",
-        body: "Programmeringsundervisning og teknisk forklaring er en del av den profesjonelle grunnmuren. Erfaringen støtter tydeligere samarbeid og mer lesbare tekniske valg.",
-      },
-      {
-        title: "Interesser utenfor programvare",
-        body: "Skriving, matematikk, tre, klokker, visuell design og video hører til den bredere Kode / Tanke / Håndverk-identiteten, men er sekundært til den profesjonelle programvarefortellingen.",
+        title: "Utenfor teknologien",
+        body: "Litteratur, utdanning, håndverk og matematisk tenkning påvirker hvordan jeg ser verden. Jeg tror teknisk dyktighet blir mer meningsfull når den kombineres med empati, ansvar og vilje til å fortsette å lære.",
       },
     ],
-    closingTitle: "Nyttig for samarbeid",
+    closingTitle: "Veien videre",
     closingBody:
-      "Porteføljen er laget for jobbsøknader og profesjonelle samtaler uten å overdrive senioritet, resultater eller konfidensielt arbeid.",
+      "Jeg er interessert i stillinger og samarbeid innen programvareutvikling der jeg kan bidra, lære mye og ta eierskap til meningsfulle problemer.",
+    cvAction: "Se min profesjonelle reise",
   },
   tr: {
-    introMeta: "Norveç merkezli / Yazılım geliştirme / Eğitim / Zanaat",
+    introMeta: "Asker, Norveç",
     sections: [
       {
-        title: "Güncel profesyonel kimlik",
-        body: "Enes; pratik sistemler, web arayüzleri, veri odaklı akışlar ve hassas bağlamların dikkatli ele alınması üzerine çalışan bir yazılım geliştiricidir.",
+        title: "Yolum",
+        body: "Geçmişim tek bir disiplinle sınırlı değil. Matematik problemlere yaklaşımımı şekillendirdi; öğretmenlik karmaşık fikirleri anlatmayı öğretti; yazılım geliştirme ise bu fikirleri çalışan sistemlere dönüştürmenin pratik bir yolunu verdi.",
       },
       {
-        title: "Kariyer ve öğrenme yolculuğu",
-        body: "Arka planı matematik, programlama eğitimi, kamuya açık web projeleri, Python, veri ve full-stack yazılım işlerini birbirine bağlar. İçerik modeli olgunlaşırken portfolyo yalnızca üst düzey doğrulanmış bilgileri sunar.",
+        title: "Ne yapıyorum",
+        body: "Python, React, .NET ve modern bulut platformları gibi teknolojilerle web uygulamaları, API'ler ve veri odaklı iş akışları geliştiriyorum. Deneyimim kamu sektörü yazılımlarını, eğitim projelerini ve bağımsız müşteri işlerini kapsıyor.",
       },
       {
-        title: "Problemlere yaklaşımım",
-        body: "Başlangıç noktası nadiren yalnızca koddur. Alan kuralları, insanlar, bilgi akışı, gizlilik ve sonuçlar; uygulama detayları seçilmeden önce çözümü şekillendirir.",
+        title: "Nasıl düşünüyorum",
+        body: "Analitik düşünmeye, entelektüel meraka ve varsayımları sorgulayabilmeye değer veriyorum. Bir teknolojiyi seçmeden önce altta yatan problemi, bağlamını ve sonuçlarını anlamaya çalışırım.",
       },
       {
-        title: "Eğitim ve iletişim",
-        body: "Programlama öğretmek ve teknik konuları açıklamak profesyonel temelin parçasıdır. Bu deneyim daha net iş birliğini ve daha okunabilir teknik kararları destekler.",
-      },
-      {
-        title: "Yazılım dışındaki ilgiler",
-        body: "Yazı, matematik, ahşap, saatler, görsel tasarım ve video daha geniş Kod / Düşünce / Zanaat kimliğine aittir; ancak profesyonel yazılım anlatısının yanında ikincil kalır.",
+        title: "Mühendisliğin ötesinde",
+        body: "Edebiyat, eğitim, zanaat ve matematiksel düşünme dünyaya bakışımı etkiliyor. Teknik yeteneğin empati, sorumluluk ve öğrenmeye devam etme isteğiyle birleştiğinde daha anlamlı hâle geldiğine inanıyorum.",
       },
     ],
-    closingTitle: "İş birliği için kullanışlı",
+    closingTitle: "İleriye bakış",
     closingBody:
-      "Bu portfolyo, kıdemi, sonuçları veya gizli işleri abartmadan iş başvurularını ve profesyonel görüşmeleri desteklemek için tasarlanmıştır.",
+      "Katkı sağlayabileceğim, derinlemesine öğrenebileceğim ve anlamlı problemlerin sorumluluğunu üstlenebileceğim yazılım mühendisliği rollerine ve iş birliklerine ilgi duyuyorum.",
+    cvAction: "Profesyonel yolculuğumu keşfet",
   },
 };
 
 export const contactPageContent: Record<Locale, ContactPageContent> = {
   en: {
-    introMeta: "Verified public channels",
+    introMeta: "Asker, Norway",
     description:
-      "Use these channels for professional contact. A server-side contact form is intentionally not active yet.",
-    note: "Email is listed because it already existed in the legacy public portfolio. No message is processed by this site.",
+      "The quickest way to reach me is by email. You can also find me on LinkedIn and GitHub.",
+    cvAction: "Explore my CV",
   },
   no: {
-    introMeta: "Verifiserte offentlige kanaler",
+    introMeta: "Asker, Norge",
     description:
-      "Bruk disse kanalene for profesjonell kontakt. Et serverside-kontaktskjema er bevisst ikke aktivt ennå.",
-    note: "E-post vises fordi den allerede fantes i den offentlige legacy-porteføljen. Ingen melding behandles av dette nettstedet.",
+      "Raskest når du meg på e-post. Du finner meg også på LinkedIn og GitHub.",
+    cvAction: "Se CV-en min",
   },
   tr: {
-    introMeta: "Doğrulanmış kamuya açık kanallar",
+    introMeta: "Asker, Norveç",
     description:
-      "Profesyonel iletişim için bu kanalları kullanın. Sunucu taraflı iletişim formu bilinçli olarak henüz aktif değildir.",
-    note: "E-posta, eski kamuya açık portfolyoda zaten bulunduğu için listelenir. Bu site herhangi bir mesaj işlemez.",
+      "Bana en hızlı e-postayla ulaşabilirsin. LinkedIn ve GitHub'da da beni bulabilirsin.",
+    cvAction: "Özgeçmişimi incele",
   },
 };

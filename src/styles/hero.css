@@ -381,6 +381,14 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
   text-wrap: balance;
 }
 
+/* Secondary statement: same voice as the lead, quieter and on its own line. */
+.hero__support {
+  display: block;
+  margin-top: 0.75em;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
 .hero__footer {
   display: flex;
   align-items: flex-end;

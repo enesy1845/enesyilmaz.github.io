@@ -7,6 +7,7 @@ const categories: readonly ProjectCategory[] = [
   "data",
   "web",
   "education",
+  "ai",
 ];
 
 export function getProjects(): readonly Project[] {
@@ -43,8 +44,8 @@ export function validateProjects(projectList: readonly Project[] = projects) {
     (project) => project.featured,
   ).length;
 
-  if (featuredCount < 3 || featuredCount > 4) {
-    errors.push(`Expected 3-4 featured projects, received ${featuredCount}.`);
+  if (featuredCount < 3 || featuredCount > 5) {
+    errors.push(`Expected 3-5 featured projects, received ${featuredCount}.`);
   }
 
   for (const project of projectList) {

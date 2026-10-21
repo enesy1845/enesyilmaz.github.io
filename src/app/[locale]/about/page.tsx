@@ -66,10 +66,10 @@ export default async function AboutPage({ params }: PageProps) {
         />
         <ButtonLink
           className="mt-[var(--space-6)]"
-          href={createLocalePath(locale, "contact")}
+          href={createLocalePath(locale, "cv")}
           variant="secondary"
         >
-          {dictionary.navigation.contact}
+          {content.cvAction}
         </ButtonLink>
       </Section>
     </>

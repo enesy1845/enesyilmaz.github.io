@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ProjectCover } from "@/components/projects/project-cover";
 import { ExternalLink } from "@/components/ui/external-link";
 import { contentLabels } from "@/data/content-labels";
 import type { Locale } from "@/i18n/config";
@@ -23,9 +24,17 @@ export function ProjectCard({
   const content = project.content[locale];
   const title = content.shortTitle ?? content.title;
   const href = createLocalePath(locale, `work/${project.slug}`);
+  const cover =
+    project.coverImage && content.imageAlt ? project.coverImage : null;
 
   return (
-    <article className="group grid gap-[var(--space-5)] border-t border-[var(--color-border)] py-[var(--space-6)] md:grid-cols-[5rem_minmax(0,1fr)]">
+    <article
+      className={`group grid gap-[var(--space-5)] border-t border-[var(--color-border)] py-[var(--space-6)] ${
+        cover
+          ? "md:grid-cols-[5rem_minmax(0,1fr)_12rem] xl:grid-cols-[5rem_minmax(0,1fr)_15rem]"
+          : "md:grid-cols-[5rem_minmax(0,1fr)]"
+      }`}
+    >
       <div className="flex items-center gap-3 md:block">
         {typeof index === "number" ? (
           <p
@@ -63,6 +72,7 @@ export function ProjectCard({
 
         <p className="mt-[var(--space-4)] font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
           {labels.role}: {content.role}
+          {content.status ? ` · ${content.status}` : null}
         </p>
 
         {!compact ? (
@@ -90,6 +100,14 @@ export function ProjectCard({
           ) : null}
         </div>
       </div>
+      {cover ? (
+        <ProjectCover
+          alt={content.imageAlt ?? ""}
+          className="order-first md:order-none"
+          sizes="(min-width: 1280px) 15rem, (min-width: 768px) 12rem, 100vw"
+          src={cover}
+        />
+      ) : null}
     </article>
   );
 }

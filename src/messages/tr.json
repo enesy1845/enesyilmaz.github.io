@@ -1,8 +1,8 @@
 {
   "site": {
-    "name": "Enes Yilmaz",
+    "name": "Enes Yılmaz",
     "role": "Yazılım Geliştirici",
-    "description": "Yazılım sistemleri, düşünceli yazılar ve özenli zanaat için çok dilli bir portfolyo."
+    "description": "Python, React, .NET, veri mühendisliği ve modern web uygulamalarıyla çalışan, Norveç'te yaşayan yazılım geliştirici."
   },
   "navigation": {
     "home": "Ana sayfa",
@@ -10,6 +10,7 @@
     "notes": "Notlar",
     "atelier": "Atölye",
     "about": "Hakkında",
+    "cv": "CV",
     "contact": "İletişim"
   },
   "accessibility": {
@@ -30,55 +31,47 @@
   },
   "pages": {
     "home": {
-      "heading": "Enes Yilmaz",
-      "description": "Python, veri ve web üzerinde düşünülmüş sistemler geliştiren yazılım geliştirici.",
-      "primaryAction": "Seçili işleri gör",
-      "secondaryAction": "Hakkımda",
-      "meta": "Norveç merkezli. Python, veri, web ve yazılım sistemleri üzerinde çalışıyor.",
-      "foundationTitle": "Kod / Düşünce / Zanaat",
-      "foundationDescription": "Tam interaktif kimlik hâlâ ertelidir. Bu sürüm statik içerik temelini sunar.",
-      "metaTitle": "Enes Yilmaz - Yazılım Geliştirici",
-      "metaDescription": "Python, veri ve web üzerinde düşünülmüş sistemler geliştiren yazılım geliştirici Enes Yilmaz'ın portfolyosu."
+      "heading": "Enes Yılmaz",
+      "description": "Norveç'te yaşayan; Python, React, .NET, veri mühendisliği ve modern web uygulamalarıyla çalışan bir yazılım geliştirici.",
+      "metaTitle": "Enes Yılmaz | Yazılım Geliştirici ve Python Mühendisi",
+      "metaDescription": "Enes Yılmaz, Norveç'te yaşayan; Python, React, .NET, veri mühendisliği ve modern web uygulamalarıyla çalışan bir yazılım geliştiricidir."
     },
     "work": {
       "heading": "İşler",
-      "description": "Gerektiğinde hassas detayları anonimleştirilmiş seçili yazılım, veri, kamu sektörü ve web çalışmaları.",
-      "placeholderTitle": "Doğrulanmış proje kayıtları",
-      "placeholderDescription": "Seçili işler anonimleştirilmiş kamu sistemleri, belge otomasyonu, gizlilik iş akışları ve kamuya açık web projelerini içerir.",
-      "metaTitle": "İşler",
-      "metaDescription": "Enes Yilmaz'ın anonimleştirilmiş kamu çalışmaları dahil seçili yazılım, veri ve web projeleri."
+      "description": "Gerçek problemleri çözmek için geliştirilmiş yazılım sistemleri, dijital ürünler ve web siteleri.",
+      "featuredDescription": "Geliştirdiğim veya katkı verdiğim kamu sektörü yazılımları, müşteri platformları ve web siteleri.",
+      "metaTitle": "İşler ve Projeler",
+      "metaDescription": "Enes Yılmaz'ın kamu sektörü sistemlerinden müşteri platformlarına ve web sitelerine uzanan yazılım, veri ve web projeleri."
     },
     "notes": {
       "heading": "Notlar",
-      "description": "Teknik notlar, veri ve AI gözlemleri, eğitim yazıları, düşünce ve şiir için planlanan alan.",
-      "placeholderTitle": "Editöryel içerik gerçek dilini koruyacak",
-      "placeholderDescription": "Notlar ileride özgün metne ve mevcut çevirilere göre İngilizce, Norveççe veya Türkçe görünebilir.",
+      "description": "Yazılım, eğitim, matematiksel düşünme, teknoloji ve insani gelişim üzerine düşünceler.",
       "metaTitle": "Notlar",
-      "metaDescription": "Teknik yazı, veri ve AI gözlemleri, eğitim, düşünce ve şiir için planlanan not arşivi."
+      "metaDescription": "Enes Yılmaz'ın yazılım, eğitim, matematiksel düşünme, teknoloji ve insani gelişim üzerine yazıları."
     },
     "atelier": {
       "heading": "Atölye",
-      "description": "Zanaat, görsel süreç, ahşap, saatler, tasarım ve video için planlanan alan.",
-      "placeholderTitle": "Zanaat içeriği henüz taşınmadı",
-      "placeholderDescription": "Gelecekteki atölye yazıları malzeme sürecini, görsel çalışmayı ve portfolyonun zanaat yönünü birbirine bağlayacak.",
+      "description": "Beni en çok etkileyen şeylerin bazıları dijital değil: fiziksel nesneler, hassas mekanizmalar ve bir şeyi iyi yapmanın sessiz disiplini.",
       "metaTitle": "Atölye",
-      "metaDescription": "Zanaat, görsel süreç, ahşap, saatler, tasarım ve video için atölye önizlemesi."
+      "metaDescription": "Enes Yılmaz'ın zanaat ilgileri: tesbih, ahşap işçiliği, mekanik saatler ve görsel anlatım."
     },
     "about": {
-      "heading": "Hakkında",
-      "description": "Yazılım geliştirme, matematik, eğitim, web, veri, yazı ve zanaatı bağlayan kısa profesyonel profil.",
-      "placeholderTitle": "Profesyonel anlatı",
-      "placeholderDescription": "Hakkında sayfası, doğrulanmış deneyim, öğretim ve proje bağlamını uydurma iddialar olmadan kullanır.",
-      "metaTitle": "Hakkında",
-      "metaDescription": "Norveç merkezli yazılım geliştirici Enes Yilmaz'ın profesyonel profili."
+      "heading": "Hakkımda",
+      "description": "Yazılım mühendisliği, veri ve insan odaklı problem çözmenin kesiştiği noktada çalışıyorum.",
+      "metaTitle": "Hakkımda",
+      "metaDescription": "Enes Yılmaz, Asker'de (Norveç) matematik, programlama eğitimi, full-stack geliştirme ve veri mühendisliğini birleştiren bir yazılım geliştiricidir."
+    },
+    "cv": {
+      "heading": "Merakla şekillenen bir yolculuk.",
+      "description": "Matematik ve eğitimden yazılım mühendisliğine, veriye ve dijital ürünlere — öğrenmenin, üretmenin ve fikirleri birbirine bağlamanın yolculuğu.",
+      "metaTitle": "Özgeçmiş ve Deneyim | Enes Yılmaz — Yazılım Geliştirici",
+      "metaDescription": "Enes Yılmaz'ın profesyonel yolculuğunu, yazılım deneyimini, teknik becerilerini, eğitimini, sertifikalarını ve referanslarını keşfedin."
     },
     "contact": {
       "heading": "İletişim",
-      "description": "Enes ile doğrulanmış kamuya açık profesyonel kanallar üzerinden iletişim kurun. Form veya takip aktif değildir.",
-      "placeholderTitle": "Doğrulanmış profesyonel bağlantıları kullanın",
-      "placeholderDescription": "Sunucu taraflı form, doğrulama ve kötüye kullanım koruması onaylanana kadar iletişim deneyimi bağlantı temelli kalır.",
+      "description": "Anlamlı iş birliklerine, yazılım mühendisliği fırsatlarına ve üretmeye değer fikirler üzerine sohbetlere açığım.",
       "metaTitle": "İletişim",
-      "metaDescription": "Enes Yilmaz ile herkese açık profesyonel bağlantılar üzerinden iletişim kurun."
+      "metaDescription": "Norveç'teki yazılım geliştirici Enes Yılmaz'a e-posta, LinkedIn veya GitHub üzerinden ulaşın."
     }
   },
   "contact": {
@@ -87,8 +80,7 @@
     "github": "GitHub"
   },
   "footer": {
-    "statement": "Yazılım sistemleri, düşünceli yazılar ve özenli zanaat için çok dilli bir portfolyo.",
-    "location": "Norveç merkezli",
+    "location": "Asker, Norveç",
     "professionalLinks": "Profesyonel bağlantılar",
     "copyright": "Tüm hakları saklıdır."
   },

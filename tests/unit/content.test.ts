@@ -16,7 +16,7 @@ describe("content integrity", () => {
   });
 
   it("has a focused featured project set", () => {
-    expect(getFeaturedProjects()).toHaveLength(4);
+    expect(getFeaturedProjects()).toHaveLength(5);
   });
 
   it("validates project content without integrity errors", () => {
@@ -25,7 +25,7 @@ describe("content integrity", () => {
 
   it("keeps home copy translated for all public locales", () => {
     for (const locale of locales) {
-      expect(homeContent[locale].heading).toBe("Enes Yilmaz");
+      expect(homeContent[locale].heading).toBe("Enes Yılmaz");
       expect(homeContent[locale].selectedWorkTitle).toBeTruthy();
       expect(homeContent[locale].contactTitle).toBeTruthy();
     }

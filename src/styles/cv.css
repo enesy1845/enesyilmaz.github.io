@@ -1,0 +1,144 @@
+/* CV timeline: one thin line with date markers. Single column on small
+   screens; alternating sides on wide screens. No JavaScript. */
+
+.cv-timeline {
+  --cv-line-x: 0.4375rem;
+  --cv-marker: 0.875rem;
+
+  position: relative;
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-timeline::before {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: var(--cv-line-x);
+  width: 1px;
+  background: var(--color-border-strong);
+  content: "";
+}
+
+.cv-timeline__item {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+  padding-left: calc(var(--cv-marker) + var(--space-5));
+}
+
+/* Date marker on the line. */
+.cv-timeline__item::before {
+  position: absolute;
+  top: 0.3rem;
+  left: calc(var(--cv-line-x) - var(--cv-marker) / 2 + 0.5px);
+  width: var(--cv-marker);
+  height: var(--cv-marker);
+  border: 1px solid var(--color-foreground);
+  border-radius: 50%;
+  background: var(--color-background);
+  content: "";
+}
+
+/* Filled markers for roles; outlined for learning, teaching and projects. */
+.cv-timeline__item:is(
+    [data-kind="employment"],
+    [data-kind="practice"]
+  )::before {
+  background: var(--color-foreground);
+}
+
+.cv-timeline__period {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-foreground);
+}
+
+.cv-timeline__card {
+  max-width: var(--layout-reading);
+}
+
+.cv-timeline__kind {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-foreground-subtle);
+}
+
+@media (min-width: 64rem) {
+  .cv-timeline {
+    --cv-line-x: 50%;
+
+    gap: var(--space-6);
+  }
+
+  .cv-timeline__item {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: calc(var(--cv-marker) + var(--space-10));
+    padding-left: 0;
+  }
+
+  .cv-timeline__item::before {
+    left: calc(50% - var(--cv-marker) / 2);
+  }
+
+  /* Period beside the marker, card on the opposite side; sides alternate. */
+  .cv-timeline__item:nth-child(odd) .cv-timeline__period {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  .cv-timeline__item:nth-child(odd) .cv-timeline__card {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .cv-timeline__item:nth-child(even) .cv-timeline__period {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .cv-timeline__item:nth-child(even) .cv-timeline__card {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+/* Restrained reveal driven by native scrolling, where supported. Movement
+   only: text keeps full contrast at every point of the animation. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .cv-timeline__item {
+      animation: cv-reveal linear both;
+      animation-range: entry 0% entry 40%;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes cv-reveal {
+  from {
+    transform: translateY(1.5rem);
+  }
+}
+
+.cv-details summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-foreground-muted);
+}
+
+.cv-details summary:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 4px;
+}

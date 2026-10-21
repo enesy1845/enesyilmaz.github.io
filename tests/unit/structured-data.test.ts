@@ -10,13 +10,13 @@ describe("structured data", () => {
     expect(createPersonJsonLd()).toMatchObject({
       "@context": "https://schema.org",
       "@type": "Person",
-      name: "Enes Yilmaz",
+      name: "Enes Yılmaz",
     });
 
     expect(createWebSiteJsonLd()).toMatchObject({
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "Enes Yilmaz",
+      name: "Enes Yılmaz",
     });
   });
 

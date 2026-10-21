@@ -17,8 +17,13 @@ export function createPageMetadata(
     .filter(([key]) => key !== locale)
     .map(([, value]) => value);
 
+  // Titles that already carry the name skip the "%s | name" template.
+  const title = page.metaTitle.includes(siteConfig.name)
+    ? { absolute: page.metaTitle }
+    : page.metaTitle;
+
   return {
-    title: page.metaTitle,
+    title,
     description: page.metaDescription,
     alternates: createLocalizedAlternates(locale, route),
     openGraph: {

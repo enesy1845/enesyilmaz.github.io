@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { CaseStudySection } from "@/components/projects/case-study-section";
 import { ExternalLink } from "@/components/ui/external-link";
+import { ProjectCover } from "@/components/projects/project-cover";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
 import { contentLabels } from "@/data/content-labels";
@@ -78,6 +79,15 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         meta={`${labels.category[project.category]} / ${content.role}`}
       />
       <Section container="reading">
+        {project.coverImage && content.imageAlt ? (
+          <ProjectCover
+            alt={content.imageAlt}
+            className="mb-[var(--space-8)]"
+            priority
+            sizes="(min-width: 768px) 42rem, 100vw"
+            src={project.coverImage}
+          />
+        ) : null}
         <div className="grid gap-[var(--space-6)]">
           <div>
             <h2 className="font-serif text-[var(--font-size-xl)]">
@@ -108,7 +118,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
         <CaseStudySection
           title={labels.context}
-          body={[content.organization, content.location, content.period]
+          body={[
+            content.organization,
+            content.location,
+            content.period,
+            content.status,
+          ]
             .filter(Boolean)
             .join(" / ")}
         />

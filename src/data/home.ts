@@ -1,7 +1,7 @@
 import type { Locale } from "@/i18n/config";
 
 export type HomeContent = {
-  heroKicker: string;
+  eyebrow: string;
   heading: string;
   role: string;
   position: string;
@@ -9,263 +9,233 @@ export type HomeContent = {
   primaryAction: string;
   secondaryAction: string;
   manifestoTitle: string;
-  manifestoLines: readonly string[];
+  manifestoText: string;
   selectedWorkTitle: string;
   selectedWorkDescription: string;
-  evidenceTitle: string;
-  evidenceDescription: string;
-  ecosystemTitle: string;
-  ecosystemDescription: string;
-  ecosystemItems: readonly {
+  allWorkAction: string;
+  expertiseTitle: string;
+  disciplinesTitle: string;
+  disciplines: readonly {
     title: string;
     description: string;
+    /** Route segment the discipline links to. */
+    segment: "work" | "notes" | "atelier";
+    action: string;
   }[];
   notesTitle: string;
   notesDescription: string;
   notesAction: string;
+  mediumAction: string;
   atelierTitle: string;
   atelierDescription: string;
+  atelierItems: readonly string[];
   atelierAction: string;
   aboutTitle: string;
   aboutDescription: string;
-  aboutItems: readonly {
-    title: string;
-    description: string;
-  }[];
+  aboutAction: string;
   contactTitle: string;
   contactDescription: string;
   contactAction: string;
+  cvAction: string;
 };
 
 export const homeContent: Record<Locale, HomeContent> = {
   en: {
-    heroKicker: "Code / Thought / Craft",
-    heading: "Enes Yilmaz",
-    role: "Software Developer",
+    eyebrow: "Software Developer · Based in Norway",
+    heading: "Enes Yılmaz",
+    role: "Python Developer & Software Engineer",
     position:
-      "I build thoughtful software systems across Python, data and the web.",
-    support: "Connecting technology, people and ideas.",
-    primaryAction: "View selected work",
-    secondaryAction: "About me",
+      "I turn complex problems into useful software — connecting code, data and people.",
+    support: "Building with curiosity, clarity and purpose.",
+    primaryAction: "Explore my work",
+    secondaryAction: "My journey",
     manifestoTitle: "Code is rarely the whole problem.",
-    manifestoLines: [
-      "There are people, decisions, systems and consequences.",
-      "I try to understand the connections before building the solution.",
-    ],
-    selectedWorkTitle: "Selected work",
+    manifestoText:
+      "Behind every technical challenge are people, decisions and connected systems. I believe the best solutions begin with understanding those connections.",
+    selectedWorkTitle: "Selected Work",
     selectedWorkDescription:
-      "A focused set of professional and public projects, with sensitive public-sector details intentionally anonymized.",
-    evidenceTitle: "Professional evidence",
-    evidenceDescription:
-      "The current portfolio foundation emphasizes systems work, data-oriented problem solving, public web projects, and teaching.",
-    ecosystemTitle: "Code / Thought / Craft",
-    ecosystemDescription:
-      "The future interactive ecosystem graph starts here as a static, readable structure.",
-    ecosystemItems: [
+      "Software systems, digital products and websites built to solve real problems.",
+    allWorkAction: "See all work",
+    expertiseTitle: "What I work with",
+    disciplinesTitle: "Different disciplines. One way of thinking.",
+    disciplines: [
       {
         title: "Code",
         description:
-          "Software systems, Python, data, AI-adjacent work, React, .NET and web development.",
+          "Designing reliable systems and turning ideas into practical software.",
+        segment: "work",
+        action: "See my work",
       },
       {
         title: "Thought",
         description:
-          "Education, mathematical thinking, writing, literature and reflective problem framing.",
+          "Exploring how we learn, reason, question assumptions and use knowledge responsibly.",
+        segment: "notes",
+        action: "Read my notes",
       },
       {
         title: "Craft",
         description:
-          "Wood, watches, visual design, video and the practice of making things carefully.",
+          "Finding meaning in materials, mechanisms, visual design and the details of making.",
+        segment: "atelier",
+        action: "Visit the atelier",
       },
     ],
-    notesTitle: "Notes preview",
+    notesTitle: "Thinking out loud",
     notesDescription:
-      "Technical and reflective writing will be added through a controlled content system. For now, notes remain a planned area for software, data, education, thinking and personal writing.",
-    notesAction: "Open notes",
-    atelierTitle: "Atelier preview",
+      "Reflections on software, education, mathematical thinking, technology and human development.",
+    notesAction: "All notes",
+    mediumAction: "More on Medium",
+    atelierTitle: "Beyond the screen",
     atelierDescription:
-      "Creative work belongs here as process, material attention and visual thinking, not as a separate hobbies section.",
-    atelierAction: "Open atelier",
-    aboutTitle: "About preview",
-    aboutDescription:
-      "Based in Norway, working as a software developer, and shaped by mathematics, teaching, web work, data interests, writing and craft.",
-    aboutItems: [
-      {
-        title: "Now",
-        description: "Software development across systems, web and data.",
-      },
-      {
-        title: "Journey",
-        description:
-          "A path through mathematics, programming education and practical software work.",
-      },
-      {
-        title: "How I work",
-        description:
-          "Understand the domain, reduce ambiguity, and build with care.",
-      },
-      {
-        title: "Beyond work",
-        description:
-          "Writing, teaching and craft keep the technical work connected to people.",
-      },
+      "An appreciation for craftsmanship, mechanical systems, materials and visual storytelling.",
+    atelierItems: [
+      "Tesbih / prayer beads",
+      "Wood and woodworking",
+      "Mechanical watches",
+      "Visual design and video",
     ],
-    contactTitle: "Contact",
+    atelierAction: "Visit the atelier",
+    aboutTitle: "A little about me",
+    aboutDescription:
+      "I'm a software developer based in Norway. My journey connects mathematics, programming education, full-stack development and data engineering. I enjoy understanding complex systems, but I'm equally interested in the people and ideas behind them.",
+    aboutAction: "More about me",
+    contactTitle: "Have something interesting in mind?",
     contactDescription:
-      "The contact experience stays deliberately simple: verified professional links, no tracking, no form, no unnecessary data collection.",
-    contactAction: "Contact me",
+      "I'm open to meaningful collaborations, software engineering opportunities and conversations about ideas worth building.",
+    contactAction: "Get in touch",
+    cvAction: "Explore my CV",
   },
   no: {
-    heroKicker: "Kode / Tanke / Håndverk",
-    heading: "Enes Yilmaz",
-    role: "Programvareutvikler",
+    eyebrow: "Programvareutvikler · Basert i Norge",
+    heading: "Enes Yılmaz",
+    role: "Python-utvikler og programvareutvikler",
     position:
-      "Jeg bygger gjennomtenkte programvaresystemer på tvers av Python, data og web.",
-    support: "Kobler teknologi, mennesker og ideer.",
-    primaryAction: "Se utvalgt arbeid",
-    secondaryAction: "Om meg",
+      "Jeg gjør komplekse problemer om til nyttig programvare — og knytter sammen kode, data og mennesker.",
+    support: "Jeg bygger med nysgjerrighet, klarhet og formål.",
+    primaryAction: "Utforsk arbeidet mitt",
+    secondaryAction: "Min reise",
     manifestoTitle: "Kode er sjelden hele problemet.",
-    manifestoLines: [
-      "Det finnes mennesker, beslutninger, systemer og konsekvenser.",
-      "Jeg prøver å forstå forbindelsene før jeg bygger løsningen.",
-    ],
+    manifestoText:
+      "Bak enhver teknisk utfordring står mennesker, beslutninger og sammenkoblede systemer. Jeg tror de beste løsningene begynner med å forstå disse sammenhengene.",
     selectedWorkTitle: "Utvalgt arbeid",
     selectedWorkDescription:
-      "Et fokusert utvalg av profesjonelle og offentlige prosjekter, der sensitive offentlige detaljer er anonymisert.",
-    evidenceTitle: "Profesjonell dokumentasjon",
-    evidenceDescription:
-      "Denne innholdsfasen vektlegger systemarbeid, dataorientert problemløsning, offentlige webprosjekter og undervisning.",
-    ecosystemTitle: "Kode / Tanke / Håndverk",
-    ecosystemDescription:
-      "Den fremtidige interaktive økosystemgrafen starter her som en statisk og lesbar struktur.",
-    ecosystemItems: [
+      "Programvaresystemer, digitale produkter og nettsteder laget for å løse reelle problemer.",
+    allWorkAction: "Se alt arbeid",
+    expertiseTitle: "Det jeg jobber med",
+    disciplinesTitle: "Ulike fagfelt. Én måte å tenke på.",
+    disciplines: [
       {
         title: "Kode",
         description:
-          "Programvaresystemer, Python, data, AI-nært arbeid, React, .NET og webutvikling.",
+          "Jeg utformer pålitelige systemer og gjør ideer om til praktisk programvare.",
+        segment: "work",
+        action: "Se arbeidet mitt",
       },
       {
         title: "Tanke",
         description:
-          "Undervisning, matematisk tenkning, skriving, litteratur og reflektert problemforståelse.",
+          "Jeg utforsker hvordan vi lærer, resonnerer, utfordrer antakelser og bruker kunnskap ansvarlig.",
+        segment: "notes",
+        action: "Les notatene mine",
       },
       {
         title: "Håndverk",
         description:
-          "Tre, klokker, visuell design, video og øvelsen i å lage ting med presisjon.",
+          "Jeg finner mening i materialer, mekanismer, visuell design og detaljene i det å lage noe.",
+        segment: "atelier",
+        action: "Besøk atelieret",
       },
     ],
-    notesTitle: "Notater",
+    notesTitle: "Tenker høyt",
     notesDescription:
-      "Teknisk og reflekterende skriving kommer senere gjennom et kontrollert innholdssystem. Foreløpig er notater et planlagt område for programvare, data, utdanning, tenkning og personlig skriving.",
-    notesAction: "Åpne notater",
-    atelierTitle: "Atelier",
+      "Refleksjoner om programvare, utdanning, matematisk tenkning, teknologi og menneskelig utvikling.",
+    notesAction: "Alle notater",
+    mediumAction: "Mer på Medium",
+    atelierTitle: "Utenfor skjermen",
     atelierDescription:
-      "Kreativt arbeid hører hjemme her som prosess, materialforståelse og visuell tenkning, ikke som en separat hobbyseksjon.",
-    atelierAction: "Åpne atelier",
-    aboutTitle: "Kort om meg",
-    aboutDescription:
-      "Basert i Norge, arbeider som programvareutvikler, og formet av matematikk, undervisning, webarbeid, data, skriving og håndverk.",
-    aboutItems: [
-      {
-        title: "Nå",
-        description: "Programvareutvikling på tvers av systemer, web og data.",
-      },
-      {
-        title: "Reise",
-        description:
-          "En vei gjennom matematikk, programmeringsundervisning og praktisk programvarearbeid.",
-      },
-      {
-        title: "Arbeidsmåte",
-        description: "Forstå domenet, redusere uklarhet og bygge med omtanke.",
-      },
-      {
-        title: "Utenfor arbeid",
-        description:
-          "Skriving, undervisning og håndverk holder det tekniske arbeidet knyttet til mennesker.",
-      },
+      "En forkjærlighet for håndverk, mekaniske systemer, materialer og visuell historiefortelling.",
+    atelierItems: [
+      "Tesbih / bønnekjeder",
+      "Tre og trearbeid",
+      "Mekaniske klokker",
+      "Visuell design og video",
     ],
-    contactTitle: "Kontakt",
+    atelierAction: "Besøk atelieret",
+    aboutTitle: "Litt om meg",
+    aboutDescription:
+      "Jeg er programvareutvikler og bor i Norge. Reisen min knytter sammen matematikk, programmeringsundervisning, full-stack-utvikling og datautvikling. Jeg liker å forstå komplekse systemer, men er like interessert i menneskene og ideene bak dem.",
+    aboutAction: "Mer om meg",
+    contactTitle: "Har du noe spennende på gang?",
     contactDescription:
-      "Kontaktopplevelsen holdes bevisst enkel: verifiserte profesjonelle lenker, ingen sporing, intet skjema og ingen unødvendig datainnsamling.",
-    contactAction: "Kontakt meg",
+      "Jeg er åpen for meningsfulle samarbeid, muligheter innen programvareutvikling og samtaler om ideer som er verdt å bygge.",
+    contactAction: "Ta kontakt",
+    cvAction: "Se CV-en min",
   },
   tr: {
-    heroKicker: "Kod / Düşünce / Zanaat",
-    heading: "Enes Yilmaz",
-    role: "Yazılım Geliştirici",
+    eyebrow: "Yazılım Geliştirici · Norveç",
+    heading: "Enes Yılmaz",
+    role: "Python Geliştirici ve Yazılım Mühendisi",
     position:
-      "Python, veri ve web üzerinde düşünülmüş yazılım sistemleri geliştiriyorum.",
-    support: "Teknolojiyi, insanları ve fikirleri birbirine bağlıyorum.",
-    primaryAction: "Seçili işleri gör",
-    secondaryAction: "Hakkımda",
+      "Karmaşık problemleri faydalı yazılımlara dönüştürüyorum — kodu, veriyi ve insanları birbirine bağlayarak.",
+    support: "Merakla, netlikle ve amaçla üretiyorum.",
+    primaryAction: "İşlerimi keşfet",
+    secondaryAction: "Yolculuğum",
     manifestoTitle: "Kod nadiren problemin tamamıdır.",
-    manifestoLines: [
-      "İnsanlar, kararlar, sistemler ve sonuçlar vardır.",
-      "Çözümü kurmadan önce bağlantıları anlamaya çalışırım.",
-    ],
-    selectedWorkTitle: "Seçili işler",
+    manifestoText:
+      "Her teknik zorluğun arkasında insanlar, kararlar ve birbirine bağlı sistemler vardır. En iyi çözümlerin bu bağlantıları anlamakla başladığına inanıyorum.",
+    selectedWorkTitle: "Seçili İşler",
     selectedWorkDescription:
-      "Hassas kamu sektörü detayları bilinçli olarak anonimleştirilmiş, profesyonel ve kamuya açık projelerden odaklı bir seçki.",
-    evidenceTitle: "Profesyonel dayanak",
-    evidenceDescription:
-      "Bu içerik temeli sistem çalışmasını, veri odaklı problem çözmeyi, kamuya açık web projelerini ve eğitimi öne çıkarır.",
-    ecosystemTitle: "Kod / Düşünce / Zanaat",
-    ecosystemDescription:
-      "Gelecekteki interaktif ekosistem grafiği burada statik ve okunabilir bir yapı olarak başlar.",
-    ecosystemItems: [
+      "Gerçek problemleri çözmek için geliştirilmiş yazılım sistemleri, dijital ürünler ve web siteleri.",
+    allWorkAction: "Tüm işleri gör",
+    expertiseTitle: "Neyle çalışıyorum",
+    disciplinesTitle: "Farklı disiplinler. Tek bir düşünme biçimi.",
+    disciplines: [
       {
         title: "Kod",
         description:
-          "Yazılım sistemleri, Python, veri, AI'ya yakın çalışmalar, React, .NET ve web geliştirme.",
+          "Güvenilir sistemler tasarlamak ve fikirleri pratik yazılımlara dönüştürmek.",
+        segment: "work",
+        action: "İşlerimi gör",
       },
       {
         title: "Düşünce",
         description:
-          "Eğitim, matematiksel düşünme, yazı, edebiyat ve problemleri düşünerek çerçeveleme.",
+          "Nasıl öğrendiğimizi, nasıl akıl yürüttüğümüzü, varsayımları nasıl sorguladığımızı ve bilgiyi nasıl sorumlulukla kullandığımızı keşfetmek.",
+        segment: "notes",
+        action: "Notlarımı oku",
       },
       {
         title: "Zanaat",
         description:
-          "Ahşap, saatler, görsel tasarım, video ve bir şeyi özenle üretme pratiği.",
+          "Malzemelerde, mekanizmalarda, görsel tasarımda ve üretmenin ayrıntılarında anlam bulmak.",
+        segment: "atelier",
+        action: "Atölyeyi ziyaret et",
       },
     ],
-    notesTitle: "Notlar önizlemesi",
+    notesTitle: "Sesli düşünmek",
     notesDescription:
-      "Teknik ve düşünsel yazılar kontrollü bir içerik sistemiyle eklenecek. Şimdilik notlar; yazılım, veri, eğitim, düşünce ve kişisel yazı için planlanan bir alandır.",
-    notesAction: "Notları aç",
-    atelierTitle: "Atölye önizlemesi",
+      "Yazılım, eğitim, matematiksel düşünme, teknoloji ve insani gelişim üzerine düşünceler.",
+    notesAction: "Tüm notlar",
+    mediumAction: "Medium'da daha fazlası",
+    atelierTitle: "Ekranın ötesinde",
     atelierDescription:
-      "Yaratıcı işler burada ayrı bir hobi bölümü olarak değil; süreç, malzeme dikkati ve görsel düşünme olarak yer alır.",
-    atelierAction: "Atölyeyi aç",
-    aboutTitle: "Kısa hakkımda",
-    aboutDescription:
-      "Norveç merkezli, yazılım geliştirici olarak çalışan; matematik, eğitim, web, veri, yazı ve zanaatla şekillenen bir profil.",
-    aboutItems: [
-      {
-        title: "Şimdi",
-        description: "Sistemler, web ve veri üzerinde yazılım geliştirme.",
-      },
-      {
-        title: "Yolculuk",
-        description:
-          "Matematik, programlama eğitimi ve pratik yazılım çalışmaları arasında ilerleyen bir yol.",
-      },
-      {
-        title: "Çalışma biçimim",
-        description:
-          "Alanı anlamak, belirsizliği azaltmak ve özenle inşa etmek.",
-      },
-      {
-        title: "İş dışında",
-        description:
-          "Yazı, eğitim ve zanaat teknik işi insanlarla bağlı tutar.",
-      },
+      "Zanaata, mekanik sistemlere, malzemelere ve görsel anlatıma duyulan bir ilgi.",
+    atelierItems: [
+      "Tesbih",
+      "Ahşap ve ahşap işçiliği",
+      "Mekanik saatler",
+      "Görsel tasarım ve video",
     ],
-    contactTitle: "İletişim",
+    atelierAction: "Atölyeyi ziyaret et",
+    aboutTitle: "Kısaca ben",
+    aboutDescription:
+      "Norveç'te yaşayan bir yazılım geliştiriciyim. Yolculuğum matematiği, programlama eğitimini, full-stack geliştirmeyi ve veri mühendisliğini birbirine bağlıyor. Karmaşık sistemleri anlamayı seviyorum; ama onların arkasındaki insanlar ve fikirler de beni en az o kadar ilgilendiriyor.",
+    aboutAction: "Hakkımda daha fazlası",
+    contactTitle: "Aklında ilginç bir şey mi var?",
     contactDescription:
-      "İletişim deneyimi bilinçli olarak sade tutulur: doğrulanmış profesyonel bağlantılar, takip yok, form yok, gereksiz veri toplama yok.",
+      "Anlamlı iş birliklerine, yazılım mühendisliği fırsatlarına ve üretmeye değer fikirler üzerine sohbetlere açığım.",
     contactAction: "İletişime geç",
+    cvAction: "Özgeçmişimi incele",
   },
 };

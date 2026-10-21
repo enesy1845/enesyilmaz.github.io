@@ -1,8 +1,8 @@
 {
   "site": {
-    "name": "Enes Yilmaz",
+    "name": "Enes Yılmaz",
     "role": "Programvareutvikler",
-    "description": "En flerspråklig portfolio for programvaresystemer, gjennomtenkt skriving og nøyaktig håndverk."
+    "description": "Programvareutvikler i Norge som arbeider med Python, React, .NET, datautvikling og moderne webapplikasjoner."
   },
   "navigation": {
     "home": "Hjem",
@@ -10,6 +10,7 @@
     "notes": "Notater",
     "atelier": "Atelier",
     "about": "Om",
+    "cv": "CV",
     "contact": "Kontakt"
   },
   "accessibility": {
@@ -30,55 +31,47 @@
   },
   "pages": {
     "home": {
-      "heading": "Enes Yilmaz",
-      "description": "Programvareutvikler som bygger gjennomtenkte systemer på tvers av Python, data og web.",
-      "primaryAction": "Se utvalgt arbeid",
-      "secondaryAction": "Om meg",
-      "meta": "Basert i Norge. Arbeider med Python, data, web og programvaresystemer.",
-      "foundationTitle": "Kode / Tanke / Håndverk",
-      "foundationDescription": "Den fulle interaktive identiteten er fortsatt utsatt. Denne versjonen presenterer det statiske innholdsgrunnlaget.",
-      "metaTitle": "Enes Yilmaz - Programvareutvikler",
-      "metaDescription": "Portfolio for Enes Yilmaz, en programvareutvikler som bygger gjennomtenkte systemer på tvers av Python, data og web."
+      "heading": "Enes Yılmaz",
+      "description": "Programvareutvikler i Norge som arbeider med Python, React, .NET, datautvikling og moderne webapplikasjoner.",
+      "metaTitle": "Enes Yılmaz | Programvareutvikler og Python-utvikler",
+      "metaDescription": "Enes Yılmaz er programvareutvikler i Norge og arbeider med Python, React, .NET, datautvikling og moderne webapplikasjoner."
     },
     "work": {
       "heading": "Arbeid",
-      "description": "Utvalgt programvare-, data-, offentlig sektor- og webarbeid der sensitive detaljer anonymiseres ved behov.",
-      "placeholderTitle": "Verifiserte prosjektdata",
-      "placeholderDescription": "Utvalgt arbeid inkluderer anonymiserte offentlige systemer, dokumentautomatisering, personvernflyter og offentlige webprosjekter.",
-      "metaTitle": "Arbeid",
-      "metaDescription": "Utvalgte programvare-, data- og webprosjekter av Enes Yilmaz, inkludert anonymisert offentlig sektor-arbeid."
+      "description": "Programvaresystemer, digitale produkter og nettsteder laget for å løse reelle problemer.",
+      "featuredDescription": "Programvare i offentlig sektor, kundeplattformer og nettsteder jeg har bygget eller bidratt til.",
+      "metaTitle": "Arbeid og prosjekter",
+      "metaDescription": "Programvare-, data- og webprosjekter av Enes Yılmaz, fra systemer i offentlig sektor til kundeplattformer og nettsteder."
     },
     "notes": {
       "heading": "Notater",
-      "description": "Et planlagt rom for tekniske notater, data- og AI-observasjoner, utdanning, tenkning og poesi.",
-      "placeholderTitle": "Redaksjonelt innhold beholder sitt ekte språk",
-      "placeholderDescription": "Notater kan senere vises på engelsk, norsk eller tyrkisk, avhengig av originaltekst og tilgjengelige oversettelser.",
+      "description": "Refleksjoner om programvare, utdanning, matematisk tenkning, teknologi og menneskelig utvikling.",
       "metaTitle": "Notater",
-      "metaDescription": "Planlagt notatarkiv for teknisk skriving, data- og AI-observasjoner, utdanning, tenkning og poesi."
+      "metaDescription": "Tekster og refleksjoner av Enes Yılmaz om programvare, utdanning, matematisk tenkning, teknologi og menneskelig utvikling."
     },
     "atelier": {
       "heading": "Atelier",
-      "description": "Et planlagt rom for håndverk, visuell prosess, tre, klokker, design og video.",
-      "placeholderTitle": "Håndverksinnhold er ikke migrert ennå",
-      "placeholderDescription": "Fremtidige atelierinnlegg vil knytte materialprosess, visuelt arbeid og den bredere håndverkssiden av portfolioen sammen.",
+      "description": "Noe av det som fascinerer meg mest, er ikke digitalt. Det er fysiske gjenstander, presise mekanismer og den stille disiplinen i å lage noe godt.",
       "metaTitle": "Atelier",
-      "metaDescription": "Atelier-forhåndsvisning for håndverk, visuell prosess, tre, klokker, design og video."
+      "metaDescription": "Håndverksinteressene til Enes Yılmaz: bønnekjeder, trearbeid, mekaniske klokker og visuell historiefortelling."
     },
     "about": {
-      "heading": "Om",
-      "description": "En kort profesjonell profil som knytter programvareutvikling, matematikk, undervisning, web, data, skriving og håndverk sammen.",
-      "placeholderTitle": "Profesjonell fortelling",
-      "placeholderDescription": "Om-siden bruker verifisert erfaring, undervisning og prosjektkontekst uten å finne opp påstander.",
-      "metaTitle": "Om",
-      "metaDescription": "Profesjonell profil for Enes Yilmaz, en programvareutvikler basert i Norge."
+      "heading": "Om meg",
+      "description": "Jeg arbeider i skjæringspunktet mellom programvareutvikling, data og menneskesentrert problemløsning.",
+      "metaTitle": "Om meg",
+      "metaDescription": "Enes Yılmaz er programvareutvikler i Asker og kombinerer matematikk, programmeringsundervisning, full-stack-utvikling og datautvikling."
+    },
+    "cv": {
+      "heading": "En reise formet av nysgjerrighet.",
+      "description": "Fra matematikk og undervisning til programvareutvikling, data og digitale produkter — en reise med læring, bygging og nye forbindelser mellom ideer.",
+      "metaTitle": "CV og erfaring | Enes Yılmaz — programvareutvikler",
+      "metaDescription": "Se den profesjonelle reisen til Enes Yılmaz: erfaring med programvareutvikling, tekniske ferdigheter, utdanning, sertifiseringer og referanser."
     },
     "contact": {
       "heading": "Kontakt",
-      "description": "Kontakt Enes gjennom verifiserte offentlige profesjonelle kanaler. Ingen skjema eller sporing er aktiv.",
-      "placeholderTitle": "Bruk verifiserte profesjonelle lenker",
-      "placeholderDescription": "Kontaktopplevelsen forblir lenkebasert til et serverside-skjema, validering og misbruksvern er godkjent.",
+      "description": "Jeg er åpen for meningsfulle samarbeid, muligheter innen programvareutvikling og samtaler om ideer som er verdt å bygge.",
       "metaTitle": "Kontakt",
-      "metaDescription": "Kontakt Enes Yilmaz gjennom offentlige profesjonelle lenker."
+      "metaDescription": "Kontakt Enes Yılmaz, programvareutvikler i Norge, på e-post, LinkedIn eller GitHub."
     }
   },
   "contact": {
@@ -87,8 +80,7 @@
     "github": "GitHub"
   },
   "footer": {
-    "statement": "En flerspråklig portfolio for programvaresystemer, gjennomtenkt skriving og nøyaktig håndverk.",
-    "location": "Basert i Norge",
+    "location": "Asker, Norge",
     "professionalLinks": "Profesjonelle lenker",
     "copyright": "Alle rettigheter forbeholdt."
   },

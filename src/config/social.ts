@@ -1,5 +1,5 @@
 export type SocialLink = {
-  key: "email" | "linkedin" | "github" | "youtube";
+  key: "email" | "linkedin" | "github" | "medium" | "youtube";
   label: string;
   href: string;
   description: string;
@@ -25,9 +25,15 @@ export const socialLinks = [
     description: "github.com/enesy1845",
   },
   {
+    key: "medium",
+    label: "Medium",
+    href: "https://medium.com/@yilmazenes0604",
+    description: "medium.com/@yilmazenes0604",
+  },
+  {
     key: "youtube",
     label: "YouTube",
     href: "https://www.youtube.com/channel/UCwnYJAJrL6B48D73zvcWdeA",
-    description: "Teaching and video channel link from the legacy portfolio",
+    description: "Teaching and programming videos",
   },
 ] as const satisfies readonly SocialLink[];

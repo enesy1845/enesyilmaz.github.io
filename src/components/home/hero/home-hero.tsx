@@ -116,8 +116,8 @@ export function HomeHero({
 
         <div className="hero__subtitle" data-hero-fade="">
           <p className="hero__reveal">
+            <span>{page.eyebrow}</span>
             <span>{page.role}</span>
-            <span>{page.heroKicker}</span>
           </p>
         </div>
 
@@ -126,7 +126,10 @@ export function HomeHero({
             {words.map((letters, index) => renderWord(letters, index))}
           </div>
           <div className="hero__lead" data-hero-fade="">
-            <p className="hero__reveal">{page.position}</p>
+            <p className="hero__reveal">
+              {page.position}
+              <span className="hero__support">{page.support}</span>
+            </p>
           </div>
         </div>
 
@@ -148,7 +151,7 @@ export function HomeHero({
             </Link>
             <Link
               className="hero__button hero__button--secondary"
-              href={createLocalePath(locale, "about")}
+              href={createLocalePath(locale, "cv")}
             >
               {page.secondaryAction}
             </Link>

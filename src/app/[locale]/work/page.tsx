@@ -47,7 +47,7 @@ export default async function WorkPage({ params }: PageProps) {
         <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
           <SectionHeader
             title={labels.featured}
-            description={dictionary.pages.work.placeholderDescription}
+            description={dictionary.pages.work.featuredDescription}
           />
           <ProjectList projects={featuredProjects} locale={locale} />
         </div>

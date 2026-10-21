@@ -5,8 +5,11 @@ import { HomeHero } from "@/components/home/hero/home-hero";
 import { HomeImage } from "@/components/home/home-image";
 import { ProjectList } from "@/components/projects/project-list";
 import { ButtonLink } from "@/components/ui/button";
+import { ExternalLink } from "@/components/ui/external-link";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { socialLinks } from "@/config/social";
+import { notes } from "@/content/notes/notes";
 import { evidenceItems } from "@/data/experience";
 import { homeContent } from "@/data/home";
 import { isLocale, type Locale } from "@/i18n/config";
@@ -35,6 +38,12 @@ export default async function HomePage({ params }: PageProps) {
   const locale = isLocale(localeParam) ? localeParam : "en";
   const page = homeContent[locale];
   const featuredProjects = getFeaturedProjects();
+  const featuredNote = notes[0];
+  const contactLinks = socialLinks.filter((link) =>
+    ["email", "github", "linkedin"].includes(link.key),
+  );
+  const mediumUrl =
+    socialLinks.find((link) => link.key === "medium")?.href ?? "";
 
   return (
     <>
@@ -48,26 +57,31 @@ export default async function HomePage({ params }: PageProps) {
       >
         <SectionHeader
           title={page.manifestoTitle}
-          description={page.manifestoLines.join(" ")}
+          description={page.manifestoText}
         />
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
         <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader
-            title={page.selectedWorkTitle}
-            description={page.selectedWorkDescription}
-          />
+          <div>
+            <SectionHeader
+              title={page.selectedWorkTitle}
+              description={page.selectedWorkDescription}
+            />
+            <Link
+              className="mt-[var(--space-5)] inline-block"
+              href={createLocalePath(locale, "work")}
+            >
+              {page.allWorkAction}
+            </Link>
+          </div>
           <ProjectList projects={featuredProjects} locale={locale} />
         </div>
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
         <div className="grid gap-[var(--space-8)] lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <SectionHeader
-            title={page.evidenceTitle}
-            description={page.evidenceDescription}
-          />
+          <SectionHeader title={page.expertiseTitle} />
           <div className="grid gap-4 sm:grid-cols-2">
             {evidenceItems.map((item) => {
               const content = item.content[locale];
@@ -91,12 +105,9 @@ export default async function HomePage({ params }: PageProps) {
 
       <Section className="border-t border-[var(--color-border)]">
         <div className="grid gap-[var(--space-8)]">
-          <SectionHeader
-            title={page.ecosystemTitle}
-            description={page.ecosystemDescription}
-          />
+          <SectionHeader title={page.disciplinesTitle} />
           <div className="grid gap-4 md:grid-cols-3">
-            {page.ecosystemItems.map((item) => (
+            {page.disciplines.map((item) => (
               <article
                 className="border-t border-[var(--color-border)] pt-[var(--space-5)]"
                 key={item.title}
@@ -107,6 +118,12 @@ export default async function HomePage({ params }: PageProps) {
                 <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
                   {item.description}
                 </p>
+                <Link
+                  className="mt-[var(--space-4)] inline-block text-[var(--font-size-sm)]"
+                  href={createLocalePath(locale, item.segment)}
+                >
+                  {item.action}
+                </Link>
               </article>
             ))}
           </div>
@@ -122,12 +139,30 @@ export default async function HomePage({ params }: PageProps) {
             <p className="mt-[var(--space-4)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
               {page.notesDescription}
             </p>
-            <Link
-              className="mt-[var(--space-5)] inline-block"
-              href={createLocalePath(locale, "notes")}
-            >
-              {page.notesAction}
-            </Link>
+            {featuredNote ? (
+              <p className="mt-[var(--space-5)]">
+                <Link
+                  className="font-serif text-[var(--font-size-lg)]"
+                  href={createLocalePath(
+                    featuredNote.language,
+                    `notes/${featuredNote.slug}`,
+                  )}
+                  hrefLang={featuredNote.language}
+                >
+                  {featuredNote.title}
+                </Link>
+              </p>
+            ) : null}
+            <p className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)]">
+              <Link href={createLocalePath(locale, "notes")}>
+                {page.notesAction}
+              </Link>
+              {mediumUrl ? (
+                <ExternalLink href={mediumUrl}>
+                  {page.mediumAction}
+                </ExternalLink>
+              ) : null}
+            </p>
           </article>
           <article>
             <h2 className="font-serif text-[var(--font-size-2xl)]">
@@ -136,6 +171,11 @@ export default async function HomePage({ params }: PageProps) {
             <p className="mt-[var(--space-4)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
               {page.atelierDescription}
             </p>
+            <ul className="mt-[var(--space-5)] grid gap-2 text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+              {page.atelierItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
             <Link
               className="mt-[var(--space-5)] inline-block"
               href={createLocalePath(locale, "atelier")}
@@ -153,18 +193,12 @@ export default async function HomePage({ params }: PageProps) {
               title={page.aboutTitle}
               description={page.aboutDescription}
             />
-            <div className="mt-[var(--space-8)] grid gap-4 sm:grid-cols-2">
-              {page.aboutItems.map((item) => (
-                <article key={item.title}>
-                  <h3 className="font-mono text-[var(--color-accent)] text-[var(--font-size-xs)]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-[var(--space-2)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
-                    {item.description}
-                  </p>
-                </article>
-              ))}
-            </div>
+            <Link
+              className="mt-[var(--space-6)] inline-block"
+              href={createLocalePath(locale, "about")}
+            >
+              {page.aboutAction}
+            </Link>
           </div>
           <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]">
             <h2 className="font-serif text-[var(--font-size-xl)]">
@@ -173,13 +207,24 @@ export default async function HomePage({ params }: PageProps) {
             <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
               {page.contactDescription}
             </p>
-            <ButtonLink
-              className="mt-[var(--space-5)]"
-              href={createLocalePath(locale, "contact")}
-              variant="secondary"
-            >
-              {page.contactAction}
-            </ButtonLink>
+            <div className="mt-[var(--space-5)] flex flex-wrap gap-3">
+              <ButtonLink href={createLocalePath(locale, "contact")}>
+                {page.contactAction}
+              </ButtonLink>
+              <ButtonLink
+                href={createLocalePath(locale, "cv")}
+                variant="secondary"
+              >
+                {page.cvAction}
+              </ButtonLink>
+            </div>
+            <ul className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)] text-[var(--font-size-sm)]">
+              {contactLinks.map((link) => (
+                <li key={link.key}>
+                  <ExternalLink href={link.href}>{link.label}</ExternalLink>
+                </li>
+              ))}
+            </ul>
           </aside>
         </div>
       </Section>

@@ -17,13 +17,13 @@ test("home page sections render in English", async ({ page }) => {
   await page.goto("/en");
 
   for (const heading of [
-    "Selected work",
-    "Professional evidence",
-    "Code / Thought / Craft",
-    "Notes preview",
-    "Atelier preview",
-    "About preview",
-    "Contact",
+    "Selected Work",
+    "What I work with",
+    "Different disciplines. One way of thinking.",
+    "Thinking out loud",
+    "Beyond the screen",
+    "A little about me",
+    "Have something interesting in mind?",
   ]) {
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
   }
@@ -40,10 +40,10 @@ test("home page sections render in Norwegian", async ({ page }) => {
     page.getByRole("heading", { name: "Utvalgt arbeid" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Profesjonell dokumentasjon" }),
+    page.getByRole("heading", { name: "Det jeg jobber med" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Kode / Tanke / Håndverk" }),
+    page.getByRole("heading", { name: "Ulike fagfelt. Én måte å tenke på." }),
   ).toBeVisible();
 });
 
@@ -51,13 +51,15 @@ test("home page sections render in Turkish", async ({ page }) => {
   await page.goto("/tr");
 
   await expect(
-    page.getByRole("heading", { name: "Seçili işler" }),
+    page.getByRole("heading", { name: "Seçili İşler" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Profesyonel dayanak" }),
+    page.getByRole("heading", { name: "Neyle çalışıyorum" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Kod / Düşünce / Zanaat" }),
+    page.getByRole("heading", {
+      name: "Farklı disiplinler. Tek bir düşünme biçimi.",
+    }),
   ).toBeVisible();
 });
 
@@ -67,7 +69,7 @@ test("English home renders shared header and footer", async ({ page }) => {
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
   await expect(
-    page.getByRole("banner").getByRole("link", { name: /Enes Yilmaz/ }),
+    page.getByRole("banner").getByRole("link", { name: /Enes Yılmaz/ }),
   ).toHaveAttribute("href", "/en");
 });
 
@@ -133,7 +135,7 @@ test("About page loads", async ({ page }) => {
   await page.goto("/en/about");
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("About");
-  await expect(page.getByText("Current professional identity")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "My path" })).toBeVisible();
 });
 
 test("Contact page loads verified links", async ({ page }) => {
@@ -224,7 +226,18 @@ for (const width of [320, 375] as const) {
 }
 
 test("tested pages contain one h1", async ({ page }) => {
-  for (const path of ["/en", "/en/work", "/en/about", "/en/contact"]) {
+  for (const path of [
+    "/en",
+    "/en/work",
+    "/en/about",
+    "/en/contact",
+    "/en/cv",
+    "/no/cv",
+    "/tr/cv",
+    "/en/notes",
+    "/en/notes/the-ideal-human",
+    "/en/atelier",
+  ]) {
     await page.goto(path);
     await expect(page.locator("h1")).toHaveCount(1);
   }
@@ -246,7 +259,7 @@ test("main content remains usable without animation", async ({ page }) => {
   await expect(
     page.getByRole("banner").locator("[data-header-letter]").first(),
   ).toHaveCSS("opacity", "1");
-  await expect(page.getByRole("main")).toContainText("Selected work");
+  await expect(page.getByRole("main")).toContainText("Selected Work");
 });
 
 test("home content remains usable when JavaScript is disabled", async ({
@@ -257,16 +270,16 @@ test("home content remains usable when JavaScript is disabled", async ({
 
   await page.goto("/en");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Enes Yilmaz",
+    "Enes Yılmaz",
   );
   await expect(page.locator("canvas")).toHaveCount(0);
   await expect(
     page.getByRole("banner").locator("[data-header-letter]").first(),
   ).toHaveCSS("opacity", "1");
   await expect(
-    page.getByRole("link", { name: "View selected work" }),
+    page.getByRole("link", { name: "Explore my work" }),
   ).toBeVisible();
-  await expect(page.getByRole("main")).toContainText("Selected work");
+  await expect(page.getByRole("main")).toContainText("Selected Work");
 
   await context.close();
 });
@@ -784,7 +797,7 @@ test("hero scroll transition updates header state without blocking navigation", 
 }) => {
   await page.goto("/en");
   await page
-    .getByRole("link", { name: "View selected work" })
+    .getByRole("link", { name: "Explore my work" })
     .click({ trial: true });
 
   await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.25));
@@ -792,7 +805,7 @@ test("hero scroll transition updates header state without blocking navigation", 
     .poll(() => page.evaluate(() => document.documentElement.dataset.heroState))
     .toBe("hero-passed");
 
-  await page.getByRole("link", { name: "View selected work" }).click();
+  await page.getByRole("link", { name: "Explore my work" }).click();
   await expect(page).toHaveURL(/\/en\/work$/);
 });
 
@@ -800,7 +813,7 @@ test("hero state does not leak into other routes after client navigation", async
   page,
 }) => {
   await page.goto("/en");
-  await page.getByRole("link", { name: "View selected work" }).click();
+  await page.getByRole("link", { name: "Explore my work" }).click();
   await expect(page).toHaveURL(/\/en\/work$/);
 
   await expect(page.locator("html")).not.toHaveAttribute(
@@ -850,7 +863,13 @@ for (const viewport of [
 test("home and internal page have no obvious accessibility violations", async ({
   page,
 }) => {
-  for (const path of ["/en", "/en/work", "/en/work/municipal-quality-system"]) {
+  for (const path of [
+    "/en",
+    "/en/work",
+    "/en/work/municipal-quality-system",
+    "/en/cv",
+    "/en/notes/the-ideal-human",
+  ]) {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);

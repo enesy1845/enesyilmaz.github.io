@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { ButtonLink } from "@/components/ui/button";
 import { ExternalLink } from "@/components/ui/external-link";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
@@ -9,7 +10,7 @@ import { contentLabels } from "@/data/content-labels";
 import { contactPageContent } from "@/data/pages";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { routes } from "@/i18n/routing";
+import { createLocalePath, routes } from "@/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata/pages";
 
 type PageProps = {
@@ -38,7 +39,7 @@ export default async function ContactPage({ params }: PageProps) {
     <>
       <PageIntro
         heading={dictionary.pages.contact.heading}
-        description={content.description}
+        description={dictionary.pages.contact.description}
         locale={locale}
         meta={content.introMeta}
       />
@@ -46,7 +47,7 @@ export default async function ContactPage({ params }: PageProps) {
         <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
           <SectionHeader
             title={labels.contactLinks}
-            description={content.note}
+            description={content.description}
           />
           <div className="grid gap-4 sm:grid-cols-2">
             {socialLinks.map((link) => (
@@ -75,9 +76,16 @@ export default async function ContactPage({ params }: PageProps) {
         className="border-t border-[var(--color-border)]"
         container="reading"
       >
-        <p className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)] text-[var(--color-foreground-muted)]">
+        <p className="leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
           {labels.noFormNotice}
         </p>
+        <ButtonLink
+          className="mt-[var(--space-6)]"
+          href={createLocalePath(locale, "cv")}
+          variant="secondary"
+        >
+          {content.cvAction}
+        </ButtonLink>
       </Section>
     </>
   );

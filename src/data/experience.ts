@@ -11,24 +11,25 @@ export type EvidenceItem = {
   >;
 };
 
+/** "What I work with" groups on the home page. */
 export const evidenceItems = [
   {
-    key: "systems",
+    key: "engineering",
     content: {
       en: {
-        title: "Software systems",
+        title: "Software Engineering",
         description:
-          "Public-sector work with React, TypeScript, .NET, SharePoint-connected workflows, and privacy-sensitive case handling.",
+          "Python, FastAPI, React, TypeScript, C#/.NET and API development.",
       },
       no: {
-        title: "Programvaresystemer",
+        title: "Programvareutvikling",
         description:
-          "Offentlig systemarbeid med React, TypeScript, .NET, SharePoint-tilknyttede flyter og personvernsensitiv saksbehandling.",
+          "Python, FastAPI, React, TypeScript, C#/.NET og API-utvikling.",
       },
       tr: {
-        title: "Yazılım sistemleri",
+        title: "Yazılım Mühendisliği",
         description:
-          "React, TypeScript, .NET, SharePoint bağlantılı akışlar ve gizlilik hassasiyetli vaka yönetimiyle kamu sistemi çalışmaları.",
+          "Python, FastAPI, React, TypeScript, C#/.NET ve API geliştirme.",
       },
     },
   },
@@ -36,19 +37,19 @@ export const evidenceItems = [
     key: "data",
     content: {
       en: {
-        title: "Data and automation",
+        title: "Data & Automation",
         description:
-          "Python, structured data, document generation, background processing, and data-oriented problem solving.",
+          "Data pipelines, PostgreSQL, Neo4j, Microsoft Fabric, Azure and workflow automation.",
       },
       no: {
         title: "Data og automatisering",
         description:
-          "Python, strukturerte data, dokumentgenerering, bakgrunnsprosessering og dataorientert problemløsning.",
+          "Datapipelines, PostgreSQL, Neo4j, Microsoft Fabric, Azure og automatisering av arbeidsflyter.",
       },
       tr: {
-        title: "Veri ve otomasyon",
+        title: "Veri ve Otomasyon",
         description:
-          "Python, yapılandırılmış veri, belge üretimi, arka plan işleme ve veri odaklı problem çözme.",
+          "Veri hatları, PostgreSQL, Neo4j, Microsoft Fabric, Azure ve iş akışı otomasyonu.",
       },
     },
   },
@@ -56,19 +57,19 @@ export const evidenceItems = [
     key: "web",
     content: {
       en: {
-        title: "Web development",
+        title: "Web Experiences",
         description:
-          "Responsive public websites, content structure, maintenance, and clear navigation for real users.",
+          "Next.js, Cloudflare, WordPress and Webflow — combining engineering with thoughtful interfaces.",
       },
       no: {
-        title: "Webutvikling",
+        title: "Nettopplevelser",
         description:
-          "Responsive offentlige nettsteder, innholdsstruktur, vedlikehold og tydelig navigasjon for reelle brukere.",
+          "Next.js, Cloudflare, WordPress og Webflow — der teknisk utvikling møter gjennomtenkte grensesnitt.",
       },
       tr: {
-        title: "Web geliştirme",
+        title: "Web Deneyimleri",
         description:
-          "Responsive kamuya açık web siteleri, içerik yapısı, bakım ve gerçek kullanıcılar için net navigasyon.",
+          "Next.js, Cloudflare, WordPress ve Webflow — mühendisliği özenli arayüzlerle birleştirerek.",
       },
     },
   },
@@ -76,19 +77,19 @@ export const evidenceItems = [
     key: "teaching",
     content: {
       en: {
-        title: "Teaching and communication",
+        title: "Teaching & Communication",
         description:
-          "Programming education across C#, HTML/CSS, JavaScript, Python, and introductory machine learning contexts.",
+          "Programming education, technical mentoring and making complex ideas understandable.",
       },
       no: {
         title: "Undervisning og kommunikasjon",
         description:
-          "Programmeringsundervisning innen C#, HTML/CSS, JavaScript, Python og introduksjon til maskinlæring.",
+          "Programmeringsundervisning, teknisk veiledning og å gjøre komplekse ideer forståelige.",
       },
       tr: {
-        title: "Eğitim ve iletişim",
+        title: "Eğitim ve İletişim",
         description:
-          "C#, HTML/CSS, JavaScript, Python ve giriş seviyesinde makine öğrenmesi bağlamlarında programlama eğitimi.",
+          "Programlama eğitimi, teknik mentorluk ve karmaşık fikirleri anlaşılır kılmak.",
       },
     },
   },

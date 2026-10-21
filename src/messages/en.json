@@ -1,8 +1,8 @@
 {
   "site": {
-    "name": "Enes Yilmaz",
+    "name": "Enes Yılmaz",
     "role": "Software Developer",
-    "description": "A multilingual portfolio for software systems, thoughtful writing, and careful craft."
+    "description": "Software developer in Norway working with Python, React, .NET, data engineering and modern web applications."
   },
   "navigation": {
     "home": "Home",
@@ -10,6 +10,7 @@
     "notes": "Notes",
     "atelier": "Atelier",
     "about": "About",
+    "cv": "CV",
     "contact": "Contact"
   },
   "accessibility": {
@@ -30,55 +31,47 @@
   },
   "pages": {
     "home": {
-      "heading": "Enes Yilmaz",
-      "description": "Software Developer building thoughtful systems across Python, data, and the web.",
-      "primaryAction": "View selected work",
-      "secondaryAction": "About me",
-      "meta": "Based in Norway. Working across Python, data, web, and software systems.",
-      "foundationTitle": "Code / Thought / Craft",
-      "foundationDescription": "The full interactive identity remains deferred. This version presents the static content foundation.",
-      "metaTitle": "Enes Yilmaz - Software Developer",
-      "metaDescription": "Portfolio of Enes Yilmaz, a software developer building thoughtful systems across Python, data, and the web."
+      "heading": "Enes Yılmaz",
+      "description": "Software developer based in Norway, working with Python, React, .NET, data engineering and modern web applications.",
+      "metaTitle": "Enes Yılmaz | Software Developer & Python Engineer",
+      "metaDescription": "Enes Yılmaz is a software developer based in Norway, working with Python, React, .NET, data engineering and modern web applications."
     },
     "work": {
       "heading": "Work",
-      "description": "Selected software, data, public-sector, and web work with sensitive details anonymized where necessary.",
-      "placeholderTitle": "Verified project records",
-      "placeholderDescription": "Featured work includes anonymized public-sector systems, document automation, privacy workflows, and public web projects.",
-      "metaTitle": "Work",
-      "metaDescription": "Selected software, data, and web projects by Enes Yilmaz, including anonymized public-sector work."
+      "description": "Software systems, digital products and websites built to solve real problems.",
+      "featuredDescription": "Public-sector software, client platforms and websites I have built or contributed to.",
+      "metaTitle": "Work & Projects",
+      "metaDescription": "Software, data and web projects by Enes Yılmaz, from public-sector systems to client platforms and websites."
     },
     "notes": {
       "heading": "Notes",
-      "description": "A planned space for technical notes, data and AI observations, education writing, thinking, and poetry.",
-      "placeholderTitle": "Editorial content will keep its real language",
-      "placeholderDescription": "Notes may later appear in English, Norwegian, or Turkish depending on the original text and available translations.",
+      "description": "Reflections on software, education, mathematical thinking, technology and human development.",
       "metaTitle": "Notes",
-      "metaDescription": "Planned notes archive for technical writing, data and AI observations, education, thinking, and poetry."
+      "metaDescription": "Essays and reflections by Enes Yılmaz on software, education, mathematical thinking, technology and human development."
     },
     "atelier": {
       "heading": "Atelier",
-      "description": "A planned space for craft, visual process, wood, watches, design, and video.",
-      "placeholderTitle": "Craft content is not migrated yet",
-      "placeholderDescription": "Future atelier entries will connect material process, visual work, and the broader craft side of the portfolio.",
+      "description": "Some of the things that fascinate me most are not digital. They are physical objects, precise mechanisms and the quiet discipline of making something well.",
       "metaTitle": "Atelier",
-      "metaDescription": "Atelier preview for craft, visual process, wood, watches, design, and video."
+      "metaDescription": "Craft interests of Enes Yılmaz: prayer beads, woodworking, mechanical watches and visual storytelling."
     },
     "about": {
       "heading": "About",
-      "description": "A concise professional profile connecting software development, mathematics, teaching, web, data, writing, and craft.",
-      "placeholderTitle": "Professional narrative",
-      "placeholderDescription": "The About page uses verified high-level experience, teaching, and project context without inventing claims.",
+      "description": "I work at the intersection of software engineering, data and human-centered problem-solving.",
       "metaTitle": "About",
-      "metaDescription": "Professional profile of Enes Yilmaz, a software developer based in Norway."
+      "metaDescription": "Enes Yılmaz is a software developer in Asker, Norway, connecting mathematics, programming education, full-stack development and data engineering."
+    },
+    "cv": {
+      "heading": "A journey shaped by curiosity.",
+      "description": "From mathematics and education to software engineering, data and digital products — a journey of learning, building and connecting ideas.",
+      "metaTitle": "CV & Experience | Enes Yılmaz — Software Developer",
+      "metaDescription": "Explore Enes Yılmaz's professional journey, software engineering experience, technical skills, education, certifications and references."
     },
     "contact": {
       "heading": "Contact",
-      "description": "Contact Enes through verified public professional channels. No form or tracking is active.",
-      "placeholderTitle": "Use verified professional links",
-      "placeholderDescription": "The contact experience stays link-based until a server-side form, validation, and abuse protection are approved.",
+      "description": "I'm open to meaningful collaborations, software engineering opportunities and conversations about ideas worth building.",
       "metaTitle": "Contact",
-      "metaDescription": "Contact Enes Yilmaz through verified public professional links."
+      "metaDescription": "Contact Enes Yılmaz, software developer in Norway, by email, LinkedIn or GitHub."
     }
   },
   "contact": {
@@ -87,8 +80,7 @@
     "github": "GitHub"
   },
   "footer": {
-    "statement": "A multilingual portfolio for software systems, thoughtful writing, and careful craft.",
-    "location": "Based in Norway",
+    "location": "Asker, Norway",
     "professionalLinks": "Professional links",
     "copyright": "All rights reserved."
   },

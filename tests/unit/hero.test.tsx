@@ -30,15 +30,17 @@ describe("home hero", () => {
     render(<HomeHero dictionary={en} locale="en" page={homeContent.en} />);
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Enes Yilmaz",
+      "Enes Yılmaz",
     );
-    expect(screen.getByText("Software Developer")).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "View selected work" }),
+      screen.getByText("Software Developer · Based in Norway"),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "Explore my work" }),
     ).toHaveAttribute("href", "/en/work");
-    expect(screen.getByRole("link", { name: "About me" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "My journey" })).toHaveAttribute(
       "href",
-      "/en/about",
+      "/en/cv",
     );
     expect(
       screen.getByRole("link", { name: homeContent.en.manifestoTitle }),

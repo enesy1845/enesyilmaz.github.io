@@ -10,7 +10,7 @@ describe("shared layout", () => {
   it("links the header identity to the active locale homepage", () => {
     render(<SiteHeader dictionary={en} locale="tr" />);
 
-    expect(screen.getByRole("link", { name: /Enes Yilmaz/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Enes Yılmaz/ })).toHaveAttribute(
       "href",
       "/tr",
     );

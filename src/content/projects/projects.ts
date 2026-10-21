@@ -1,6 +1,8 @@
+import { additionalProjects } from "@/content/projects/additional-projects";
+import { clientProjects } from "@/content/projects/client-projects";
 import type { Project } from "@/types/project";
 
-export const projects = [
+const coreProjects = [
   {
     slug: "municipal-quality-system",
     category: "software",
@@ -19,11 +21,11 @@ export const projects = [
         title: "Municipal Quality System",
         shortTitle: "Quality System",
         summary:
-          "An anonymized public-sector system for quality, deviations, and case workflows.",
+          "Contributing to public-sector software that supports structured workflows, case management and quality processes.",
         description:
           "Contributed to parts of a privacy-sensitive municipal software system with React, TypeScript, .NET, and SharePoint integration.",
-        role: "Software developer contributor",
-        organization: "Anonymized public-sector context",
+        role: "Software Developer",
+        organization: "Asker kommune — IKT / Digitalisering",
         location: "Norway",
         responsibilities: [
           "Worked on React and TypeScript interface flows for structured case handling.",
@@ -33,10 +35,6 @@ export const projects = [
         challenges: [
           "Balancing complex municipal workflows with readable user interfaces.",
           "Supporting sensitive case data without exposing implementation details publicly.",
-        ],
-        decisions: [
-          "Present the work as anonymized public-sector software rather than exposing screenshots, URLs, or implementation architecture.",
-          "Describe contribution language carefully to avoid implying sole ownership.",
         ],
         outcomes: [
           "A clearer foundation for deviation and quality workflows inside a larger municipal system.",
@@ -49,11 +47,11 @@ export const projects = [
         title: "Kommunalt kvalitetssystem",
         shortTitle: "Kvalitetssystem",
         summary:
-          "Et anonymisert offentlig system for kvalitet, avvik og saksflyt.",
+          "Jeg bidrar til programvare i offentlig sektor som støtter strukturerte arbeidsflyter, saksbehandling og kvalitetsprosesser.",
         description:
           "Bidro til deler av et personvernsensitivt kommunalt system med React, TypeScript, .NET og SharePoint-integrasjon.",
-        role: "Bidragsyter som programvareutvikler",
-        organization: "Anonymisert offentlig kontekst",
+        role: "Programvareutvikler",
+        organization: "Asker kommune — IKT / Digitalisering",
         location: "Norge",
         responsibilities: [
           "Arbeidet med React- og TypeScript-flyt for strukturert saksbehandling.",
@@ -63,10 +61,6 @@ export const projects = [
         challenges: [
           "Å balansere komplekse kommunale arbeidsflyter med lesbare brukergrensesnitt.",
           "Å støtte sensitiv saksdata uten å publisere interne detaljer.",
-        ],
-        decisions: [
-          "Presentere arbeidet som anonymisert offentlig programvare uten skjermbilder, URL-er eller implementasjonsarkitektur.",
-          "Bruke presist bidragsspråk som ikke antyder eneansvar.",
         ],
         outcomes: [
           "Et tydeligere grunnlag for avviks- og kvalitetsflyter i et større kommunalt system.",
@@ -79,11 +73,11 @@ export const projects = [
         title: "Belediye Kalite Sistemi",
         shortTitle: "Kalite Sistemi",
         summary:
-          "Kalite, sapma ve vaka iş akışları için anonimleştirilmiş bir kamu sistemi.",
+          "Yapılandırılmış iş akışlarını, vaka yönetimini ve kalite süreçlerini destekleyen kamu sektörü yazılımına katkı sağlıyorum.",
         description:
           "React, TypeScript, .NET ve SharePoint entegrasyonu kullanılan gizlilik hassasiyetli bir belediye sisteminin bazı bölümlerine katkı sağladı.",
-        role: "Yazılım geliştirici katkısı",
-        organization: "Anonimleştirilmiş kamu bağlamı",
+        role: "Yazılım Geliştirici",
+        organization: "Asker kommune — IKT / Digitalisering",
         location: "Norveç",
         responsibilities: [
           "Yapılandırılmış vaka yönetimi için React ve TypeScript arayüz akışları üzerinde çalıştı.",
@@ -93,10 +87,6 @@ export const projects = [
         challenges: [
           "Karmaşık belediye iş akışlarını okunabilir arayüzlerle dengelemek.",
           "İç detayları yayımlamadan hassas vaka verisini desteklemek.",
-        ],
-        decisions: [
-          "Çalışmayı ekran görüntüsü, URL veya uygulama mimarisi paylaşmadan anonim kamu yazılımı olarak sunmak.",
-          "Tek sahiplik ima etmeyen dikkatli katkı dili kullanmak.",
         ],
         outcomes: [
           "Daha büyük bir belediye sistemi içinde kalite ve sapma akışları için daha net bir temel.",
@@ -116,7 +106,7 @@ export const projects = [
       "Data transformation",
       "File organization",
     ],
-    featured: true,
+    featured: false,
     confidential: true,
     availableLocales: ["en", "no", "tr"],
     content: {
@@ -137,9 +127,6 @@ export const projects = [
         ],
         challenges: [
           "Keeping generated documents predictable for users while respecting platform storage constraints.",
-        ],
-        decisions: [
-          "Keep the public description focused on workflow shape rather than storage implementation details.",
         ],
         outcomes: [
           "A more repeatable path from process data to stored documentation.",
@@ -166,9 +153,6 @@ export const projects = [
         challenges: [
           "Å gjøre genererte dokumenter forutsigbare for brukere samtidig som lagringsplattformens rammer respekteres.",
         ],
-        decisions: [
-          "Holde den offentlige beskrivelsen på arbeidsflytnivå, ikke lagringsimplementasjon.",
-        ],
         outcomes: [
           "En mer repeterbar vei fra prosessdata til lagret dokumentasjon.",
         ],
@@ -194,9 +178,6 @@ export const projects = [
         challenges: [
           "Platform sınırlarını korurken üretilen belgeleri kullanıcılar için öngörülebilir kılmak.",
         ],
-        decisions: [
-          "Kamusal açıklamayı depolama uygulaması yerine iş akışının biçimine odaklamak.",
-        ],
         outcomes: [
           "Süreç verisinden saklanan dokümantasyona daha tekrarlanabilir bir yol.",
         ],
@@ -211,7 +192,7 @@ export const projects = [
     category: "software",
     technologies: ["React", "TypeScript", ".NET", "Access control"],
     disciplines: ["Privacy review", "Workflow design", "User interface"],
-    featured: true,
+    featured: false,
     confidential: true,
     availableLocales: ["en", "no", "tr"],
     content: {
@@ -232,9 +213,6 @@ export const projects = [
         ],
         challenges: [
           "Designing a practical user path around information that should not be casually exposed.",
-        ],
-        decisions: [
-          "Avoid screenshots, real field names, and real process labels.",
         ],
         outcomes: [
           "A safer and clearer workflow foundation for handling privacy-sensitive submissions.",
@@ -261,9 +239,6 @@ export const projects = [
         challenges: [
           "Å lage en praktisk brukerflyt rundt informasjon som ikke bør eksponeres tilfeldig.",
         ],
-        decisions: [
-          "Unngå skjermbilder, ekte feltnavn og ekte prosessetiketter.",
-        ],
         outcomes: [
           "Et tryggere og tydeligere grunnlag for håndtering av personvernsensitive innsendinger.",
         ],
@@ -289,9 +264,6 @@ export const projects = [
         challenges: [
           "Rastgele açığa çıkmaması gereken bilgi etrafında pratik bir kullanıcı yolu tasarlamak.",
         ],
-        decisions: [
-          "Ekran görüntüsü, gerçek alan adı ve gerçek süreç etiketi paylaşmamak.",
-        ],
         outcomes: [
           "Gizlilik hassasiyetli başvurular için daha güvenli ve net bir iş akışı temeli.",
         ],
@@ -304,83 +276,66 @@ export const projects = [
   {
     slug: "ilc-language-centre",
     category: "web",
-    technologies: ["Webflow", "Responsive design", "CMS structure"],
-    disciplines: ["Web development", "Content structure", "Responsive UI"],
+    technologies: ["Webflow", "Responsive design", "CMS"],
+    disciplines: ["Webflow development", "Content structure", "Responsive UI"],
     featured: true,
     externalUrl: "https://ilcentres.com/",
+    coverImage: "/images/projects/ilc-language-centres.webp",
     availableLocales: ["en", "no", "tr"],
     content: {
       en: {
-        title: "ILC Language Centre Website",
-        shortTitle: "ILC Website",
+        title: "ILC Language Centres",
         summary:
-          "A responsive public website for an international language-centre organization.",
+          "Creating and maintaining accessible, responsive web experiences for an international education organization.",
         description:
-          "Legacy portfolio material identifies this as a Webflow-based responsive website project for ILC Language Centres. The current public site is live and links to multiple UK locations and course paths.",
-        role: "Web project contributor",
+          "Webflow development for a UK-based language centre with several locations and course paths. Related work includes the separate ILC Accommodation website.",
+        role: "Webflow Developer",
         organization: "ILC Language Centres",
         responsibilities: [
-          "Worked with responsive website implementation and content structure.",
-          "Connected project presentation to a live public website rather than screenshots.",
+          "Built and maintained responsive Webflow pages.",
+          "Structured CMS content for locations and courses.",
+          "Kept navigation clear for prospective students.",
         ],
-        challenges: [
-          "Keeping a multi-location education website clear for prospective students.",
-        ],
-        decisions: [
-          "Use the live external link as the public reference and avoid migrating legacy screenshots in Phase 3.",
-        ],
-        outcomes: ["A public web project suitable for the selected work set."],
         lessons: [
           "Education websites need clear navigation before visual decoration.",
         ],
+        imageAlt: "Homepage of the ILC Language Centres website",
       },
       no: {
-        title: "ILC Language Centre-nettsted",
-        shortTitle: "ILC-nettsted",
+        title: "ILC Language Centres",
         summary:
-          "Et responsivt offentlig nettsted for en internasjonal språkskoleorganisasjon.",
+          "Jeg utvikler og vedlikeholder tilgjengelige, responsive nettsider for en internasjonal utdanningsorganisasjon.",
         description:
-          "Legacy-porteføljen beskriver dette som et Webflow-basert responsivt nettsted for ILC Language Centres. Det offentlige nettstedet er aktivt og viser flere britiske lokasjoner og kursløp.",
-        role: "Bidragsyter på webprosjekt",
+          "Webflow-utvikling for en britisk språkskole med flere lokasjoner og kursløp. Relatert arbeid omfatter det separate nettstedet ILC Accommodation.",
+        role: "Webflow-utvikler",
         organization: "ILC Language Centres",
         responsibilities: [
-          "Arbeidet med responsiv webimplementering og innholdsstruktur.",
-          "Knyttet prosjektpresentasjonen til et levende offentlig nettsted i stedet for skjermbilder.",
+          "Bygde og vedlikeholdt responsive Webflow-sider.",
+          "Strukturerte CMS-innhold for lokasjoner og kurs.",
+          "Holdt navigasjonen tydelig for potensielle studenter.",
         ],
-        challenges: [
-          "Å gjøre et flerlokasjons utdanningsnettsted tydelig for potensielle studenter.",
-        ],
-        decisions: [
-          "Bruke den levende eksterne lenken som offentlig referanse og ikke migrere legacy-skjermbilder i Phase 3.",
-        ],
-        outcomes: ["Et offentlig webprosjekt egnet for utvalgt arbeid."],
         lessons: [
           "Utdanningsnettsteder trenger tydelig navigasjon før visuell pynt.",
         ],
+        imageAlt: "Forsiden til nettstedet ILC Language Centres",
       },
       tr: {
-        title: "ILC Language Centre Web Sitesi",
-        shortTitle: "ILC Web Sitesi",
+        title: "ILC Language Centres",
         summary:
-          "Uluslararası bir dil merkezi organizasyonu için responsive kamuya açık web sitesi.",
+          "Uluslararası bir eğitim kurumu için erişilebilir, responsive web deneyimleri oluşturuyor ve sürdürüyorum.",
         description:
-          "Legacy portfolyo bunu ILC Language Centres için Webflow tabanlı responsive web sitesi projesi olarak tanımlar. Mevcut kamu sitesi canlıdır ve birçok Birleşik Krallık lokasyonu ile kurs yolunu gösterir.",
-        role: "Web projesi katkısı",
+          "Birden fazla lokasyonu ve kurs seçeneği olan, Birleşik Krallık merkezli bir dil okulu için Webflow geliştirme. İlgili çalışmalar arasında ayrı ILC Accommodation sitesi de var.",
+        role: "Webflow Geliştirici",
         organization: "ILC Language Centres",
         responsibilities: [
-          "Responsive web uygulaması ve içerik yapısı üzerinde çalıştı.",
-          "Proje sunumunu ekran görüntüleri yerine canlı kamu sitesiyle ilişkilendirdi.",
+          "Responsive Webflow sayfaları geliştirdim ve sürdürdüm.",
+          "Lokasyonlar ve kurslar için CMS içeriğini yapılandırdım.",
+          "Aday öğrenciler için gezinmeyi net tuttum.",
         ],
-        challenges: [
-          "Çok lokasyonlu bir eğitim sitesini aday öğrenciler için anlaşılır kılmak.",
-        ],
-        decisions: [
-          "Phase 3'te legacy ekran görüntülerini taşımadan canlı dış linki kamu referansı olarak kullanmak.",
-        ],
-        outcomes: ["Seçili işler seti için uygun kamuya açık bir web projesi."],
         lessons: [
-          "Eğitim web siteleri görsel süslemeden önce net navigasyona ihtiyaç duyar.",
+          "Eğitim siteleri görsel süslemeden önce net gezinmeye ihtiyaç duyar.",
         ],
+        imageAlt: "ILC Language Centres web sitesinin ana sayfası",
       },
     },
   },
@@ -388,41 +343,64 @@ export const projects = [
     slug: "quiver-blog-support",
     category: "web",
     technologies: ["WordPress", "UI maintenance", "Content publishing"],
-    disciplines: ["Volunteer support", "Web maintenance", "Editorial systems"],
+    disciplines: ["Volunteer support", "Web maintenance"],
     featured: false,
     externalUrl: "https://quiver.blog/",
+    coverImage: "/images/projects/quiver-blog.webp",
     availableLocales: ["en", "no", "tr"],
     content: {
       en: {
-        title: "Quiver Blog Support",
+        title: "Quiver Blog",
         summary:
-          "Volunteer web support and UI maintenance for a public blog project in Norway.",
-        description:
-          "Legacy material identifies Quiver Blog as volunteer UI and maintenance work. It remains secondary to professional software work but helps show communication and care for public-facing content.",
+          "Volunteer UI improvements and maintenance for a Norwegian blogger's website.",
         role: "Volunteer web contributor",
         organization: "Quiver Blog",
         location: "Norway",
+        imageAlt: "Homepage of the Quiver Blog website",
       },
       no: {
-        title: "Quiver Blog-støtte",
+        title: "Quiver Blog",
         summary:
-          "Frivillig webstøtte og vedlikehold av brukergrensesnitt for et offentlig bloggprosjekt i Norge.",
-        description:
-          "Legacy-materialet beskriver Quiver Blog som frivillig UI- og vedlikeholdsarbeid. Det er sekundært til profesjonelt programvarearbeid, men viser kommunikasjon og omtanke for offentlig innhold.",
+          "Frivillige forbedringer av brukergrensesnitt og vedlikehold for en norsk bloggers nettsted.",
         role: "Frivillig webbidragsyter",
         organization: "Quiver Blog",
         location: "Norge",
+        imageAlt: "Forsiden til nettstedet Quiver Blog",
       },
       tr: {
-        title: "Quiver Blog Desteği",
+        title: "Quiver Blog",
         summary:
-          "Norveç'teki kamuya açık bir blog projesi için gönüllü web desteği ve arayüz bakımı.",
-        description:
-          "Legacy materyali Quiver Blog'u gönüllü UI ve bakım çalışması olarak tanımlar. Profesyonel yazılım işlerinin yanında ikincil kalır, ancak iletişim ve kamuya açık içerik özenini gösterir.",
+          "Norveçli bir blog yazarının sitesi için gönüllü arayüz iyileştirmeleri ve bakım.",
         role: "Gönüllü web katkısı",
         organization: "Quiver Blog",
         location: "Norveç",
+        imageAlt: "Quiver Blog web sitesinin ana sayfası",
       },
     },
   },
 ] as const satisfies readonly Project[];
+
+/** Curated order: the five featured projects lead, deeper work follows. */
+const projectOrder = [
+  "municipal-quality-system",
+  "snap360-photography",
+  "ilh-digital-platform",
+  "five-star-stitches-colchester",
+  "ilc-language-centre",
+  "llm-quiz-application",
+  "seller-flash",
+  "architech-cuix-agency",
+  "process-pdf-export",
+  "privacy-pii-workflow",
+];
+
+function rank(project: Project): number {
+  const index = projectOrder.indexOf(project.slug);
+  return index === -1 ? projectOrder.length : index;
+}
+
+export const projects: readonly Project[] = [
+  ...coreProjects,
+  ...clientProjects,
+  ...additionalProjects,
+].sort((a, b) => rank(a) - rank(b));

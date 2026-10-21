@@ -2,6 +2,7 @@
 @import "../styles/tokens.css";
 @import "../styles/hero.css";
 @import "../styles/footer.css";
+@import "../styles/cv.css";
 
 * {
   box-sizing: border-box;

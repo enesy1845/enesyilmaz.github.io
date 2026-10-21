@@ -1,7 +1,7 @@
 import { defaultLocale, locales, type Locale } from "@/i18n/config";
 
 export type RouteKey =
-  "home" | "work" | "notes" | "atelier" | "about" | "contact";
+  "home" | "work" | "notes" | "atelier" | "about" | "cv" | "contact";
 
 export type RouteDefinition = {
   key: RouteKey;
@@ -14,6 +14,7 @@ export const routes = [
   { key: "notes", segment: "notes" },
   { key: "atelier", segment: "atelier" },
   { key: "about", segment: "about" },
+  { key: "cv", segment: "cv" },
   { key: "contact", segment: "contact" },
 ] as const satisfies readonly RouteDefinition[];
 

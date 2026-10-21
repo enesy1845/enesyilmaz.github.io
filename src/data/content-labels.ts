@@ -8,6 +8,7 @@ export type ContentLabels = {
   technologies: string;
   disciplines: string;
   role: string;
+  status: string;
   context: string;
   responsibilities: string;
   challenges: string;
@@ -30,12 +31,14 @@ export const contentLabels: Record<Locale, ContentLabels> = {
       data: "Data",
       web: "Web",
       education: "Education",
+      ai: "Python / AI",
     },
     featured: "Featured",
     confidential: "Anonymized",
     technologies: "Technology",
     disciplines: "Disciplines",
     role: "Role",
+    status: "Status",
     context: "Context",
     responsibilities: "Responsibilities",
     challenges: "Challenges",
@@ -44,13 +47,13 @@ export const contentLabels: Record<Locale, ContentLabels> = {
     lessons: "Lessons",
     readCaseStudy: "Read case study",
     visitProject: "Visit project",
-    allProjects: "All verified projects",
-    additionalProjects: "Additional public work",
-    contactLinks: "Verified contact links",
+    allProjects: "All projects",
+    additionalProjects: "More work",
+    contactLinks: "Ways to reach me",
     noFormNotice:
-      "No contact form is active in this phase, so the site does not collect submitted personal data.",
+      "Email is the most direct way to reach me; my professional profiles are linked as well.",
     sourceNotice:
-      "Public-sector work is intentionally anonymized. Public web projects link only to verified public URLs.",
+      "Public-sector work is shown in anonymized form to protect internal details.",
   },
   no: {
     category: {
@@ -58,12 +61,14 @@ export const contentLabels: Record<Locale, ContentLabels> = {
       data: "Data",
       web: "Web",
       education: "Utdanning",
+      ai: "Python / KI",
     },
     featured: "Utvalgt",
     confidential: "Anonymisert",
     technologies: "Teknologi",
     disciplines: "Fagområder",
     role: "Rolle",
+    status: "Status",
     context: "Kontekst",
     responsibilities: "Ansvar",
     challenges: "Utfordringer",
@@ -72,13 +77,13 @@ export const contentLabels: Record<Locale, ContentLabels> = {
     lessons: "Læring",
     readCaseStudy: "Les case",
     visitProject: "Besøk prosjekt",
-    allProjects: "Alle verifiserte prosjekter",
-    additionalProjects: "Annet offentlig arbeid",
-    contactLinks: "Verifiserte kontaktlenker",
+    allProjects: "Alle prosjekter",
+    additionalProjects: "Mer arbeid",
+    contactLinks: "Slik når du meg",
     noFormNotice:
-      "Det finnes ikke kontaktskjema i denne fasen, så nettstedet samler ikke inn innsendte persondata.",
+      "E-post er den mest direkte måten å nå meg på, og profesjonelle profiler er også lenket.",
     sourceNotice:
-      "Offentlig sektor-arbeid er bevisst anonymisert. Offentlige webprosjekter lenker kun til verifiserte offentlige URL-er.",
+      "Arbeid i offentlig sektor vises anonymisert for å beskytte interne detaljer.",
   },
   tr: {
     category: {
@@ -86,12 +91,14 @@ export const contentLabels: Record<Locale, ContentLabels> = {
       data: "Veri",
       web: "Web",
       education: "Eğitim",
+      ai: "Python / YZ",
     },
     featured: "Seçili",
     confidential: "Anonimleştirilmiş",
     technologies: "Teknoloji",
     disciplines: "Disiplinler",
     role: "Rol",
+    status: "Durum",
     context: "Bağlam",
     responsibilities: "Sorumluluklar",
     challenges: "Zorluklar",
@@ -100,12 +107,12 @@ export const contentLabels: Record<Locale, ContentLabels> = {
     lessons: "Öğrenimler",
     readCaseStudy: "Vaka çalışmasını oku",
     visitProject: "Projeyi ziyaret et",
-    allProjects: "Tüm doğrulanmış projeler",
-    additionalProjects: "Diğer kamuya açık işler",
-    contactLinks: "Doğrulanmış iletişim bağlantıları",
+    allProjects: "Tüm projeler",
+    additionalProjects: "Diğer çalışmalar",
+    contactLinks: "Bana ulaşma yolları",
     noFormNotice:
-      "Bu fazda iletişim formu aktif değildir; site gönderilen kişisel veri toplamaz.",
+      "Bana ulaşmanın en doğrudan yolu e-posta; profesyonel profillerim de bağlantılı.",
     sourceNotice:
-      "Kamu sektörü çalışmaları bilinçli olarak anonimleştirilmiştir. Kamuya açık web projeleri yalnızca doğrulanmış URL'lere bağlanır.",
+      "Kamu sektörü çalışmaları, iç ayrıntıları korumak için anonimleştirilmiş olarak gösterilir.",
   },
 };
