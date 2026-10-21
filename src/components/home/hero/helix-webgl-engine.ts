@@ -23,6 +23,7 @@ import {
   Object3D,
   OrthographicCamera,
   PCFShadowMap,
+  PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
   PointLight,
@@ -32,7 +33,11 @@ import {
   TubeGeometry,
   Vector3,
   WebGLRenderer,
+  type BufferGeometry,
+  type Material,
+  type WebGLRenderTarget,
 } from "three";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 import type { HelixQuality } from "@/components/home/hero/hero.types";
 import {
@@ -51,6 +56,7 @@ export type HelixRenderer = {
 };
 
 const TAU = Math.PI * 2;
+const ENVIRONMENT_SIZE = 256;
 const PANEL_HALF_WIDTH = 0.194;
 const PANEL_THICKNESS = 0.087;
 const MARKS_PER_PANEL = 4;
@@ -96,8 +102,78 @@ function createPanelGeometry(inner: number, outer: number) {
   return geometry;
 }
 
+/**
+ * Splits setup into separate tasks so the browser can paint (and respond to
+ * input) between the context, geometry and first-frame steps.
+ */
+function yieldToMain() {
+  return new Promise<void>((resolve) => {
+    window.setTimeout(resolve, 0);
+  });
+}
+
+/** PMREMGenerator internals of the pinned three version (see prewarmPmrem). */
+type PmremInternals = {
+  _setSize?: (cubeSize: number) => void;
+  _allocateTargets?: () => WebGLRenderTarget;
+  _pingPongRenderTarget?: WebGLRenderTarget | null;
+  _lodMeshes?: Mesh[];
+  _blurMaterial?: Material | null;
+  _ggxMaterial?: Material | null;
+};
+
+/**
+ * PMREM compiles its blur and GGX shaders synchronously, which blocked the
+ * main thread for ~1.3 s on Windows/ANGLE. Compile the generator's own
+ * materials in parallel first, with the same geometry and render target, so
+ * fromScene hits the program cache. If a three upgrade changes these
+ * internals, this is skipped and fromScene compiles synchronously as before.
+ */
+async function prewarmPmrem(
+  renderer: WebGLRenderer,
+  pmrem: PMREMGenerator,
+  studio: Scene,
+) {
+  const internals = pmrem as unknown as PmremInternals;
+  if (
+    typeof internals._setSize !== "function" ||
+    typeof internals._allocateTargets !== "function"
+  ) {
+    return;
+  }
+  internals._setSize(ENVIRONMENT_SIZE);
+  internals._allocateTargets().dispose();
+  const geometry = internals._lodMeshes?.[0]?.geometry;
+  const materials = [internals._blurMaterial, internals._ggxMaterial];
+  if (
+    !geometry ||
+    !internals._pingPongRenderTarget ||
+    materials.includes(null)
+  ) {
+    return;
+  }
+  const previous = renderer.getRenderTarget();
+  renderer.setRenderTarget(internals._pingPongRenderTarget);
+  // Program parameters are captured synchronously; only completion is awaited.
+  const pending = [
+    ...materials.flatMap((material) =>
+      material
+        ? [
+            renderer.compileAsync(
+              new Mesh(geometry, material),
+              new OrthographicCamera(),
+            ),
+          ]
+        : [],
+    ),
+    renderer.compileAsync(studio, new PerspectiveCamera(90, 1, 0.1, 100)),
+  ];
+  renderer.setRenderTarget(previous);
+  await Promise.all(pending);
+}
+
 /** Neutral softbox reflections without an HDR download. */
-function createStudioEnvironment(renderer: WebGLRenderer) {
+async function createStudioEnvironment(renderer: WebGLRenderer) {
   const studio = new Scene();
   studio.background = new Color(0xe8e8e2);
   const plane = new PlaneGeometry(1, 1);
@@ -118,11 +194,16 @@ function createStudioEnvironment(renderer: WebGLRenderer) {
     studio.add(softbox);
   }
   const pmrem = new PMREMGenerator(renderer);
-  const target = pmrem.fromScene(studio, 0.045);
-  pmrem.dispose();
-  plane.dispose();
-  glow.dispose();
-  return target;
+  try {
+    await prewarmPmrem(renderer, pmrem, studio);
+    return pmrem.fromScene(studio, 0.045, 0.1, 100, {
+      size: ENVIRONMENT_SIZE,
+    });
+  } finally {
+    pmrem.dispose();
+    plane.dispose();
+    glow.dispose();
+  }
 }
 
 function addLights(scene: Scene, quality: HelixQuality) {
@@ -196,17 +277,19 @@ function buildSculpture() {
   let lightCount = 0;
   const scratch = new Object3D();
   const local = new Vector3();
+  const glossyPanels: BufferGeometry[] = [];
+  const mattePanels: BufferGeometry[] = [];
 
   for (const panel of panels) {
-    const mesh = new Mesh(
-      createPanelGeometry(panel.innerRadius, panel.outerRadius),
-      panel.alternate ? porcelainMatte : porcelain,
-    );
-    mesh.position.y = panel.y;
-    mesh.rotation.y = -panel.angle;
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    sculpture.add(mesh);
+    // Panels are static relative to the sculpture, so bake each transform
+    // into its geometry; one merged mesh per material keeps draw calls low.
+    const geometry = createPanelGeometry(panel.innerRadius, panel.outerRadius);
+    scratch.position.set(0, panel.y, 0);
+    scratch.rotation.set(0, -panel.angle, 0);
+    scratch.scale.set(1, 1, 1);
+    scratch.updateMatrix();
+    geometry.applyMatrix4(scratch.matrix);
+    (panel.alternate ? mattePanels : glossyPanels).push(geometry);
 
     // Barely raised inlays read as source code without literal syntax colour.
     const pattern = STROKE_PATTERNS[panel.index % STROKE_PATTERNS.length] ?? [];
@@ -232,6 +315,8 @@ function buildSculpture() {
       offset += length + 0.065 * fraction;
     });
   }
+  addMerged(sculpture, glossyPanels, porcelain);
+  addMerged(sculpture, mattePanels, porcelainMatte);
   darkMarks.count = darkCount;
   lightMarks.count = lightCount;
   for (const marks of [darkMarks, lightMarks]) {
@@ -241,7 +326,7 @@ function buildSculpture() {
   }
 
   // Curved connective ribs trace the same two turns as the panels.
-  for (const rib of RIBS) {
+  const ribs = RIBS.map((rib) => {
     const points = Array.from({ length: 251 }, (_, k) => {
       const t = k / 250;
       const angle = t * TAU * HELIX_TURNS + HELIX_ANGLE_OFFSET + rib.offset;
@@ -251,22 +336,33 @@ function buildSculpture() {
         rib.radius * Math.sin(angle),
       );
     });
-    const mesh = new Mesh(
-      new TubeGeometry(
-        new CatmullRomCurve3(points),
-        260,
-        rib.thickness,
-        6,
-        false,
-      ),
-      ribMaterial,
+    return new TubeGeometry(
+      new CatmullRomCurve3(points),
+      260,
+      rib.thickness,
+      6,
+      false,
     );
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    sculpture.add(mesh);
-  }
+  });
+  addMerged(sculpture, ribs, ribMaterial);
 
   return sculpture;
+}
+
+function addMerged(
+  parent: Group,
+  geometries: BufferGeometry[],
+  material: MeshPhysicalMaterial,
+) {
+  const merged = mergeGeometries(geometries);
+  for (const geometry of geometries) geometry.dispose();
+  if (!merged) {
+    throw new Error("Helix geometry could not be merged.");
+  }
+  const mesh = new Mesh(merged, material);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  parent.add(mesh);
 }
 
 function disposeTree(root: Object3D) {
@@ -291,13 +387,15 @@ function disposeTree(root: Object3D) {
 }
 
 /**
- * Throws when WebGL cannot be initialised (unsupported, blocklisted or
+ * Rejects when WebGL cannot be initialised (unsupported, blocklisted or
  * software-only), so the caller can fall back to the Canvas 2D sculpture.
+ * Shaders compile in parallel (KHR_parallel_shader_compile) before the first
+ * frame, so compilation never blocks the main thread.
  */
-export function createHelixRenderer(
+export async function createHelixRenderer(
   canvas: HTMLCanvasElement,
   quality: HelixQuality,
-): HelixRenderer {
+): Promise<HelixRenderer> {
   const renderer = new WebGLRenderer({
     canvas,
     alpha: true,
@@ -315,17 +413,30 @@ export function createHelixRenderer(
   renderer.shadowMap.type = PCFShadowMap;
 
   const scene = new Scene();
-  const environment = createStudioEnvironment(renderer);
-  scene.environment = environment.texture;
-  scene.environmentIntensity = 0.44;
+  let environment: WebGLRenderTarget | null = null;
   const key = addLights(scene, quality);
-
-  const sculpture = buildSculpture();
+  const sculpture = new Group();
   scene.add(sculpture);
 
   const camera = new OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
   camera.position.set(0, 2.4, 15);
   camera.lookAt(0, 0, 0);
+
+  try {
+    // Environment shaders compile in parallel while the geometry is built.
+    const environmentReady = createStudioEnvironment(renderer);
+    await yieldToMain();
+    sculpture.add(buildSculpture());
+    await yieldToMain();
+    environment = await environmentReady;
+    await yieldToMain();
+    scene.environment = environment.texture;
+    scene.environmentIntensity = 0.44;
+    await renderer.compileAsync(scene, camera);
+  } catch (error) {
+    dispose();
+    throw error;
+  }
 
   function setSize(width: number, height: number, dpr: number) {
     const framing = getHelixFraming(width, height);
@@ -350,7 +461,7 @@ export function createHelixRenderer(
   function dispose() {
     disposeTree(scene);
     key.shadow.dispose();
-    environment.dispose();
+    environment?.dispose();
     scene.environment = null;
     renderer.renderLists.dispose();
     renderer.dispose();

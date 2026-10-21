@@ -125,18 +125,18 @@ export default function HeroSculptureWebgl({
       failureRef.current();
     }
 
-    // Deferred one frame: the static hero paints first, and React Strict
-    // Mode's immediate unmount cancels this before any context is created.
-    const initFrame = window.requestAnimationFrame(() => {
+    async function init() {
       const element = document.createElement("canvas");
       canvas = element;
       element.setAttribute("aria-hidden", "true");
       element.className = "absolute inset-0 h-full w-full";
       element.dataset.sculptureCanvas = "";
       element.addEventListener("webglcontextlost", onContextLost);
+      let created: HelixRenderer;
       try {
-        engine = createHelixRenderer(element, quality);
+        created = await createHelixRenderer(element, quality);
       } catch (error) {
+        if (disposed) return;
         if (process.env.NODE_ENV !== "production") {
           console.warn("WebGL sculpture unavailable; using Canvas 2D.", error);
         }
@@ -144,6 +144,11 @@ export default function HeroSculptureWebgl({
         failureRef.current();
         return;
       }
+      if (disposed) {
+        created.dispose();
+        return;
+      }
+      engine = created;
       hostElement.appendChild(element);
       resize();
       element.dataset.sculptureRenderer = "webgl";
@@ -152,10 +157,52 @@ export default function HeroSculptureWebgl({
       document.addEventListener("visibilitychange", onVisibilityChange);
       startRef.current = start;
       start();
-    });
+    }
+
+    // The backdrop is hidden while the preloader runs, so WebGL setup waits
+    // for the intro to finish and the main thread to go idle. It then never
+    // competes with the intro animation or the largest contentful paint.
+    const root = document.documentElement;
+    let disposed = false;
+    let idleHandle: number | null = null;
+    let paintFrame: number | null = null;
+    const introObserver = new MutationObserver(scheduleInit);
+
+    function introRunning() {
+      return (
+        root.dataset.heroIntro === "loading" ||
+        root.dataset.heroIntro === "reveal"
+      );
+    }
+
+    function scheduleInit() {
+      if (disposed || paintFrame !== null || introRunning()) return;
+      introObserver.disconnect();
+      const run = () => void init();
+      // Two frames let the final intro frame (the LCP candidate) paint first.
+      paintFrame = window.requestAnimationFrame(() => {
+        paintFrame = window.requestAnimationFrame(() => {
+          idleHandle =
+            typeof window.requestIdleCallback === "function"
+              ? window.requestIdleCallback(run, { timeout: 1500 })
+              : window.setTimeout(run, 200);
+        });
+      });
+    }
+
+    introObserver.observe(root, { attributeFilter: ["data-hero-intro"] });
+    scheduleInit();
 
     return () => {
-      window.cancelAnimationFrame(initFrame);
+      disposed = true;
+      introObserver.disconnect();
+      if (paintFrame !== null) window.cancelAnimationFrame(paintFrame);
+      if (idleHandle !== null) {
+        if (typeof window.cancelIdleCallback === "function") {
+          window.cancelIdleCallback(idleHandle);
+        }
+        window.clearTimeout(idleHandle);
+      }
       teardown();
     };
   }, []);
