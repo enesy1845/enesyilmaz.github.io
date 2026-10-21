@@ -80,31 +80,6 @@ export function getGridStep(letterHeight: number, rows: number): number {
   return Math.max(4, letterHeight / rows);
 }
 
-/**
- * Share of a dot cell covered by ink. Testing area instead of the centre
- * pixel keeps antialiased edges from adding stray dots on one side only.
- */
-function getInkCoverage(
-  pixels: Uint8ClampedArray,
-  width: number,
-  height: number,
-  x: number,
-  y: number,
-  half: number,
-): number {
-  const samples = 5;
-  let inked = 0;
-  for (let row = 0; row < samples; row += 1) {
-    for (let column = 0; column < samples; column += 1) {
-      const px = Math.round(x - half + ((column + 0.5) * 2 * half) / samples);
-      const py = Math.round(y - half + ((row + 0.5) * 2 * half) / samples);
-      if (px < 0 || py < 0 || px >= width || py >= height) continue;
-      if ((pixels[(py * width + px) * 4 + 3] ?? 0) > 128) inked += 1;
-    }
-  }
-  return inked / (samples * samples);
-}
-
 export type GridBounds = {
   left: number;
   top: number;
@@ -113,26 +88,24 @@ export type GridBounds = {
 };
 
 /**
- * Dot centres for one shape on the shared grid: the pitch is identical in
- * both directions for every letter, rows sit on lines common to the whole
- * mark (`rowOrigin`), and columns are centred within the shape.
+ * Dot centres for one shape: the pitch is identical in both directions for
+ * every letter, and the dots are centred within the shape on both axes, so
+ * symmetric outlines produce symmetric dot patterns. The n, o and i bodies
+ * share a height, so their rows still line up across the mark.
  */
 export function getGridCells(
   bounds: GridBounds,
   step: number,
-  rowOrigin: number,
 ): Array<[number, number]> {
   if (step <= 0 || bounds.width <= 0 || bounds.height <= 0) return [];
   const columns = Math.max(1, Math.round(bounds.width / step));
+  const rows = Math.max(1, Math.round(bounds.height / step));
   const firstX = bounds.left + (bounds.width - (columns - 1) * step) / 2;
-  const firstRow = Math.ceil((bounds.top - rowOrigin) / step - 0.5);
-  const lastRow = Math.floor(
-    (bounds.top + bounds.height - rowOrigin) / step - 0.5,
-  );
+  const firstY = bounds.top + (bounds.height - (rows - 1) * step) / 2;
   const cells: Array<[number, number]> = [];
-  for (let row = firstRow; row <= lastRow; row += 1) {
+  for (let row = 0; row < rows; row += 1) {
     for (let column = 0; column < columns; column += 1) {
-      cells.push([firstX + column * step, rowOrigin + (row + 0.5) * step]);
+      cells.push([firstX + column * step, firstY + row * step]);
     }
   }
   return cells;
@@ -150,42 +123,76 @@ function seededUnit(index: number): number {
   return value - Math.floor(value);
 }
 
-/**
- * Paints the rendered SVG letters into an offscreen canvas with their own
- * screen transforms, so particle targets match the CSS layout exactly.
- */
-function paintLetters(
-  context: CanvasRenderingContext2D,
-  shapes: SVGGraphicsElement[],
+type VectorShape = {
+  path: Path2D;
+  matrix: DOMMatrix;
+  bounds: GridBounds;
+};
+
+/** The rendered SVG outline in canvas coordinates, read from the layout. */
+function toVectorShape(
+  shape: SVGGraphicsElement,
   origin: DOMRect,
-) {
-  context.fillStyle = "#000";
-  for (const shape of shapes) {
-    const matrix = shape.getScreenCTM();
-    if (!matrix) continue;
-    context.setTransform(
-      matrix.a,
-      matrix.b,
-      matrix.c,
-      matrix.d,
-      matrix.e - origin.left,
-      matrix.f - origin.top,
+): VectorShape | null {
+  const ctm = shape.getScreenCTM();
+  if (!ctm) return null;
+  const path = new Path2D();
+  if (shape instanceof SVGPathElement) {
+    path.addPath(new Path2D(shape.getAttribute("d") ?? ""));
+  } else if (shape instanceof SVGCircleElement) {
+    path.arc(
+      shape.cx.baseVal.value,
+      shape.cy.baseVal.value,
+      shape.r.baseVal.value,
+      0,
+      Math.PI * 2,
     );
-    if (shape instanceof SVGPathElement) {
-      context.fill(new Path2D(shape.getAttribute("d") ?? ""));
-    } else if (shape instanceof SVGCircleElement) {
-      context.beginPath();
-      context.arc(
-        shape.cx.baseVal.value,
-        shape.cy.baseVal.value,
-        shape.r.baseVal.value,
-        0,
-        Math.PI * 2,
-      );
-      context.fill();
+  } else {
+    return null;
+  }
+  const rect = shape.getBoundingClientRect();
+  return {
+    path,
+    matrix: new DOMMatrix([
+      ctm.a,
+      ctm.b,
+      ctm.c,
+      ctm.d,
+      ctm.e - origin.left,
+      ctm.f - origin.top,
+    ]),
+    bounds: {
+      left: rect.left - origin.left,
+      top: rect.top - origin.top,
+      width: rect.width,
+      height: rect.height,
+    },
+  };
+}
+
+const COVERAGE_SAMPLES = 5;
+
+/**
+ * Share of a dot cell inside the vector outline. Points are tested against
+ * the exact path (no rasterised pixels), so mirror-symmetric letters always
+ * produce mirror-symmetric dots.
+ */
+function getCellCoverage(
+  context: CanvasRenderingContext2D,
+  path: Path2D,
+  x: number,
+  y: number,
+  step: number,
+): number {
+  let inside = 0;
+  for (let row = 0; row < COVERAGE_SAMPLES; row += 1) {
+    for (let column = 0; column < COVERAGE_SAMPLES; column += 1) {
+      const px = x + ((column + 0.5) / COVERAGE_SAMPLES - 0.5) * step;
+      const py = y + ((row + 0.5) / COVERAGE_SAMPLES - 0.5) * step;
+      if (context.isPointInPath(path, px, py)) inside += 1;
     }
   }
-  context.setTransform(1, 0, 0, 1, 0, 0);
+  return inside / (COVERAGE_SAMPLES * COVERAGE_SAMPLES);
 }
 
 export function buildFooterParticles(
@@ -193,39 +200,26 @@ export function buildFooterParticles(
   origin: DOMRect,
   config: FooterParticleConfig,
 ): FooterParticle[] {
-  const width = Math.max(1, Math.round(origin.width));
-  const height = Math.max(1, Math.round(origin.height));
-  const source = document.createElement("canvas");
-  source.width = width;
-  source.height = height;
-  const context = source.getContext("2d", { willReadFrequently: true });
+  const context = document.createElement("canvas").getContext("2d");
   if (!context || config.rows === 0) return [];
+  const vectors = shapes
+    .map((shape) => toVectorShape(shape, origin))
+    .filter((shape): shape is VectorShape => shape !== null);
+  if (vectors.length === 0) return [];
 
-  paintLetters(context, shapes, origin);
-  const pixels = context.getImageData(0, 0, width, height).data;
-  const bounds: GridBounds[] = shapes.map((shape) => {
-    const rect = shape.getBoundingClientRect();
-    return {
-      left: rect.left - origin.left,
-      top: rect.top - origin.top,
-      width: rect.width,
-      height: rect.height,
-    };
-  });
   // The pitch follows the main letter body, so dots scale with the mark.
   const step = getGridStep(
-    Math.max(0, ...bounds.map((bound) => bound.height)) * 0.75,
+    Math.max(...vectors.map((shape) => shape.bounds.height)) * 0.75,
     config.rows,
   );
-  const rowOrigin = Math.min(...bounds.map((bound) => bound.top));
   const radius = step * 0.36;
+  const height = origin.height;
 
   const particles: FooterParticle[] = [];
-  for (const bound of bounds) {
-    for (const [x, y] of getGridCells(bound, step, rowOrigin)) {
-      if (getInkCoverage(pixels, width, height, x, y, step / 2) < 0.5) {
-        continue;
-      }
+  for (const shape of vectors) {
+    context.setTransform(shape.matrix);
+    for (const [x, y] of getGridCells(shape.bounds, step)) {
+      if (getCellCoverage(context, shape.path, x, y, step) < 0.5) continue;
       const seed = particles.length + 1;
       // Start loosely scattered below the mark, so it assembles on arrival.
       const angle = seededUnit(seed) * Math.PI * 2;

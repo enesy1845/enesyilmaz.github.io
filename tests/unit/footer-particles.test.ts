@@ -39,24 +39,16 @@ describe("footer particles", () => {
     expect(getGridStep(0, 16)).toBe(0);
   });
 
-  it("keeps one pitch and shared rows across shapes", () => {
-    const first = getGridCells(
-      { left: 0, top: 0, width: 40, height: 30 },
-      10,
-      0,
-    );
-    const second = getGridCells(
-      { left: 100, top: 12, width: 25, height: 30 },
-      10,
-      0,
-    );
-    const rows = (cells: Array<[number, number]>) =>
-      new Set(cells.map(([, y]) => y));
+  it("centres one fixed pitch within each shape on both axes", () => {
+    const cells = getGridCells({ left: 0, top: 0, width: 42, height: 31 }, 10);
+    const xs = [...new Set(cells.map(([x]) => x))];
+    const ys = [...new Set(cells.map(([, y]) => y))];
 
-    expect(first[0]).toEqual([5, 5]);
-    expect(first[1]?.[0]).toBe(15);
-    expect([...rows(second)].every((y) => (y - 5) % 10 === 0)).toBe(true);
-    expect((second[1]?.[0] ?? 0) - (second[0]?.[0] ?? 0)).toBe(10);
+    expect(xs).toEqual([6, 16, 26, 36]);
+    expect(ys).toEqual([5.5, 15.5, 25.5]);
+    // Symmetric margins on both sides of the shape.
+    expect(xs[0]).toBe(42 - (xs.at(-1) ?? 0));
+    expect(ys[0]).toBe(31 - (ys.at(-1) ?? 0));
   });
 
   it("assembles scattered particles and reports when they settle", () => {
