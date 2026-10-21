@@ -52,7 +52,7 @@ export function getFooterParticleConfig(
   if (width < 640) {
     return {
       tier: "mobile",
-      rows: 12,
+      rows: 10,
       maxDpr: 1.5,
       interactionRadius: 0,
     };
@@ -60,14 +60,14 @@ export function getFooterParticleConfig(
   if (width < 1024) {
     return {
       tier: "tablet",
-      rows: 14,
+      rows: 10,
       maxDpr: 2,
       interactionRadius: interactive ? 70 : 0,
     };
   }
   return {
     tier: "desktop",
-    rows: 16,
+    rows: 10,
     maxDpr: 2,
     interactionRadius: interactive ? 110 : 0,
   };
@@ -80,28 +80,58 @@ export function getGridStep(letterHeight: number, rows: number): number {
 }
 
 /**
- * Cell centres for one shape's bounds. Columns and rows are fitted to the
- * shape, so every letter starts and ends on a full dot instead of a cut one.
+ * Share of a dot cell covered by ink. Testing area instead of the centre
+ * pixel keeps antialiased edges from adding stray dots on one side only.
  */
-export function getGridCells(
-  left: number,
-  top: number,
+function getInkCoverage(
+  pixels: Uint8ClampedArray,
   width: number,
   height: number,
+  x: number,
+  y: number,
+  half: number,
+): number {
+  const samples = 5;
+  let inked = 0;
+  for (let row = 0; row < samples; row += 1) {
+    for (let column = 0; column < samples; column += 1) {
+      const px = Math.round(x - half + ((column + 0.5) * 2 * half) / samples);
+      const py = Math.round(y - half + ((row + 0.5) * 2 * half) / samples);
+      if (px < 0 || py < 0 || px >= width || py >= height) continue;
+      if ((pixels[(py * width + px) * 4 + 3] ?? 0) > 128) inked += 1;
+    }
+  }
+  return inked / (samples * samples);
+}
+
+export type GridBounds = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
+
+/**
+ * Dot centres for one shape on the shared grid: the pitch is identical in
+ * both directions for every letter, rows sit on lines common to the whole
+ * mark (`rowOrigin`), and columns are centred within the shape.
+ */
+export function getGridCells(
+  bounds: GridBounds,
   step: number,
+  rowOrigin: number,
 ): Array<[number, number]> {
-  if (step <= 0 || width <= 0 || height <= 0) return [];
-  const columns = Math.max(1, Math.round(width / step));
-  const rows = Math.max(1, Math.round(height / step));
-  const cellWidth = width / columns;
-  const cellHeight = height / rows;
+  if (step <= 0 || bounds.width <= 0 || bounds.height <= 0) return [];
+  const columns = Math.max(1, Math.round(bounds.width / step));
+  const firstX = bounds.left + (bounds.width - (columns - 1) * step) / 2;
+  const firstRow = Math.ceil((bounds.top - rowOrigin) / step - 0.5);
+  const lastRow = Math.floor(
+    (bounds.top + bounds.height - rowOrigin) / step - 0.5,
+  );
   const cells: Array<[number, number]> = [];
-  for (let row = 0; row < rows; row += 1) {
+  for (let row = firstRow; row <= lastRow; row += 1) {
     for (let column = 0; column < columns; column += 1) {
-      cells.push([
-        left + (column + 0.5) * cellWidth,
-        top + (row + 0.5) * cellHeight,
-      ]);
+      cells.push([firstX + column * step, rowOrigin + (row + 0.5) * step]);
     }
   }
   return cells;
@@ -172,7 +202,7 @@ export function buildFooterParticles(
 
   paintLetters(context, shapes, origin);
   const pixels = context.getImageData(0, 0, width, height).data;
-  const bounds = shapes.map((shape) => {
+  const bounds: GridBounds[] = shapes.map((shape) => {
     const rect = shape.getBoundingClientRect();
     return {
       left: rect.left - origin.left,
@@ -186,21 +216,15 @@ export function buildFooterParticles(
     Math.max(0, ...bounds.map((bound) => bound.height)) * 0.75,
     config.rows,
   );
+  const rowOrigin = Math.min(...bounds.map((bound) => bound.top));
   const radius = step * 0.36;
 
   const particles: FooterParticle[] = [];
   for (const bound of bounds) {
-    for (const [x, y] of getGridCells(
-      bound.left,
-      bound.top,
-      bound.width,
-      bound.height,
-      step,
-    )) {
-      const px = Math.round(x);
-      const py = Math.round(y);
-      if (px < 0 || py < 0 || px >= width || py >= height) continue;
-      if ((pixels[(py * width + px) * 4 + 3] ?? 0) <= 128) continue;
+    for (const [x, y] of getGridCells(bound, step, rowOrigin)) {
+      if (getInkCoverage(pixels, width, height, x, y, step / 2) < 0.5) {
+        continue;
+      }
       const seed = particles.length + 1;
       // Start loosely scattered below the mark, so it assembles on arrival.
       const angle = seededUnit(seed) * Math.PI * 2;

@@ -39,12 +39,24 @@ describe("footer particles", () => {
     expect(getGridStep(0, 16)).toBe(0);
   });
 
-  it("fits whole cells to each shape, starting and ending on a dot", () => {
-    const cells = getGridCells(10, 20, 100, 50, 10);
+  it("keeps one pitch and shared rows across shapes", () => {
+    const first = getGridCells(
+      { left: 0, top: 0, width: 40, height: 30 },
+      10,
+      0,
+    );
+    const second = getGridCells(
+      { left: 100, top: 12, width: 25, height: 30 },
+      10,
+      0,
+    );
+    const rows = (cells: Array<[number, number]>) =>
+      new Set(cells.map(([, y]) => y));
 
-    expect(cells).toHaveLength(50);
-    expect(cells[0]).toEqual([15, 25]);
-    expect(cells.at(-1)).toEqual([105, 65]);
+    expect(first[0]).toEqual([5, 5]);
+    expect(first[1]?.[0]).toBe(15);
+    expect([...rows(second)].every((y) => (y - 5) % 10 === 0)).toBe(true);
+    expect((second[1]?.[0] ?? 0) - (second[0]?.[0] ?? 0)).toBe(10);
   });
 
   it("assembles scattered particles and reports when they settle", () => {

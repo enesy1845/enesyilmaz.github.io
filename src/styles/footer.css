@@ -1,18 +1,18 @@
-/* Footer wordmark: NOI letters spread across the wide layout, redrawn as a
-   dot-matrix by footer-particles-canvas when motion is allowed. */
+/* Footer wordmark in the left column, redrawn as a dot-matrix by
+   footer-particles-canvas when motion is allowed. */
 
 .footer-mark {
   position: relative;
-  padding: var(--space-12) var(--layout-gutter);
+  max-width: 30rem;
   color: var(--color-foreground);
+  container-type: inline-size;
 }
 
 .footer-mark__letters {
   display: flex;
   justify-content: space-between;
-  max-width: var(--layout-wide);
-  margin-inline: auto;
-  font-size: min(36vw, 40svh);
+  /* Sized to the footer column, so the mark fills it at any width. */
+  font-size: 34cqi;
   line-height: 0;
   transition: opacity var(--duration-slow) var(--ease-standard);
 }

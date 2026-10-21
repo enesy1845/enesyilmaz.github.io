@@ -21,34 +21,18 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
 
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-background-elevated)]">
-      {/* Decorative mark above the footer content; the particle layer
-          replaces it when motion is allowed, and the static letters remain
-          the fallback. */}
-      <FooterParticlesLoader>
-        <div className="footer-mark__letters" data-footer-mark-letters="">
-          {letters.map((letter) => (
-            <span className="footer-mark__letter" key={letter.index}>
-              <NoiLetter character={letter.character} />
-            </span>
-          ))}
-        </div>
-      </FooterParticlesLoader>
-
-      <Container className="grid gap-[var(--space-10)] border-t border-[var(--color-border)] py-[var(--space-12)] md:grid-cols-[minmax(0,1fr)_auto_auto]">
-        <div className="max-w-md">
-          <Link
-            className="font-serif text-[var(--font-size-xl)] no-underline"
-            href={createLocalePath(locale)}
-          >
-            {siteConfig.author}
-          </Link>
-          <p className="mt-[var(--space-4)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
-            {dictionary.footer.statement}
-          </p>
-          <p className="mt-[var(--space-3)] font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
-            {dictionary.footer.location}
-          </p>
-        </div>
+      <Container className="grid gap-[var(--space-10)] py-[var(--space-12)] md:grid-cols-[minmax(0,1fr)_auto_auto]">
+        {/* Decorative mark; the particle layer replaces it when motion is
+            allowed, and the static letters remain the fallback. */}
+        <FooterParticlesLoader>
+          <div className="footer-mark__letters" data-footer-mark-letters="">
+            {letters.map((letter) => (
+              <span className="footer-mark__letter" key={letter.index}>
+                <NoiLetter character={letter.character} />
+              </span>
+            ))}
+          </div>
+        </FooterParticlesLoader>
 
         <nav aria-label={dictionary.accessibility.footerNavigation}>
           <p className="font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
