@@ -21,7 +21,11 @@ function warn(message: string, error: unknown) {
   }
 }
 
-/** WebGL 2 is present and the device is not obviously low-power. */
+/**
+ * WebGL 2 is hardware accelerated and the device is not obviously low-power.
+ * Probing with the renderer's own `failIfMajorPerformanceCaveat` setting
+ * means software-only devices never download Three.js or log its errors.
+ */
 function prefersWebgl(): boolean {
   if (!("WebGL2RenderingContext" in window)) {
     return false;
@@ -29,10 +33,17 @@ function prefersWebgl(): boolean {
   const memory = (navigator as Navigator & { deviceMemory?: number })
     .deviceMemory;
   const cores = navigator.hardwareConcurrency;
-  return !(
+  if (
     (typeof memory === "number" && memory < 4) ||
     (typeof cores === "number" && cores > 0 && cores <= 2)
-  );
+  ) {
+    return false;
+  }
+  const probe = document
+    .createElement("canvas")
+    .getContext("webgl2", { failIfMajorPerformanceCaveat: true });
+  probe?.getExtension("WEBGL_lose_context")?.loseContext();
+  return probe !== null;
 }
 
 export function HeroSculptureLoader() {
