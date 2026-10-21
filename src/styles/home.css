@@ -1,0 +1,337 @@
+/* Home page components: fewer words on screen, detail on intent.
+   All motion is CSS (transform, opacity, color) and switches off for
+   reduced motion. */
+
+/* ---------- Statement that inks in on scroll ---------- */
+
+.ink-reveal {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4.2vw, 3.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  view-timeline-name: --ink;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .ink-reveal__word {
+      animation: ink-word linear both;
+      animation-range: cover calc(18% + var(--p, 0) * 30%) cover
+        calc(24% + var(--p, 0) * 30%);
+      animation-timeline: --ink;
+    }
+  }
+}
+
+@keyframes ink-word {
+  from {
+    color: var(--color-foreground-subtle);
+  }
+}
+
+/* ---------- Section entrance (movement only, full contrast) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-range: entry 0% entry 35%;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes reveal-rise {
+  from {
+    transform: translateY(2rem);
+  }
+}
+
+/* ---------- Project index ---------- */
+
+.pindex {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pindex__row {
+  position: relative;
+  border-top: 1px solid var(--color-border);
+  transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+.pindex__link {
+  display: grid;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  padding-block: var(--space-5);
+  color: var(--color-foreground);
+  text-decoration: none;
+}
+
+.pindex__num,
+.pindex__meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-foreground-subtle);
+}
+
+.pindex__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.4vw, 1.875rem);
+  line-height: 1.15;
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+
+.pindex__meta {
+  grid-column: 2;
+}
+
+.pindex__arrow {
+  grid-column: 3;
+  grid-row: 1;
+  opacity: 0;
+  transform: translateX(-0.5rem);
+  transition:
+    opacity var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
+}
+
+.pindex__link:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 4px;
+}
+
+/* Summary and stack stay collapsed; touch users open the case study. */
+.pindex__detail {
+  display: grid;
+  grid-template-rows: 0fr;
+}
+
+.pindex__detail > div {
+  overflow: hidden;
+}
+
+.pindex__detail p {
+  max-width: 34rem;
+  margin: 0 0 var(--space-2) calc(2.25rem + var(--space-4));
+  color: var(--color-foreground-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.pindex__detail .pindex__stack {
+  padding-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-foreground-subtle);
+}
+
+.pindex__preview {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .pindex__link {
+    grid-template-columns: 3rem minmax(0, 1fr) 14rem 1.5rem;
+  }
+
+  .pindex__meta {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .pindex__arrow {
+    grid-column: 4;
+  }
+
+  /* Leave the meta column free for the screenshot. */
+  .pindex__detail p {
+    max-width: min(34rem, calc(100% - 3rem - 17rem));
+    margin-left: calc(3rem + var(--space-4));
+  }
+}
+
+@media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
+  .pindex__detail {
+    transition: grid-template-rows var(--duration-slow) var(--ease-standard);
+  }
+
+  .pindex__row:is(:hover, :focus-within) .pindex__detail {
+    grid-template-rows: 1fr;
+  }
+
+  .pindex__row:is(:hover, :focus-within) .pindex__title {
+    transform: translateX(0.5rem);
+  }
+
+  .pindex__row:is(:hover, :focus-within) .pindex__arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Other rows step back while one is in focus. */
+  .pindex:has(.pindex__row:is(:hover, :focus-within))
+    .pindex__row:not(:hover, :focus-within) {
+    opacity: 0.4;
+  }
+
+  /* Screenshot floats beside the open row instead of adding page height. */
+  .pindex__preview {
+    position: absolute;
+    top: calc(var(--space-5) + 2.25rem);
+    right: 1.5rem;
+    display: block;
+    width: 14rem;
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-subtle);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.5rem) rotate(-1.5deg) scale(0.96);
+    transition:
+      opacity var(--duration-normal) var(--ease-standard),
+      transform var(--duration-slow) var(--ease-standard);
+  }
+
+  .pindex__row:is(:hover, :focus-within) .pindex__preview {
+    opacity: 1;
+    transform: rotate(-1.5deg);
+  }
+}
+
+/* ---------- Disciplines as large words ---------- */
+
+.disciplines {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.discipline {
+  display: block;
+  color: var(--color-foreground);
+  text-decoration: none;
+}
+
+.discipline__word {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+.discipline__word::after {
+  margin-left: 0.25em;
+  font-size: 0.4em;
+  opacity: 0;
+  content: "→";
+  transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+.discipline__text {
+  display: block;
+  max-width: 28rem;
+  margin-top: var(--space-2);
+  color: var(--color-foreground-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.discipline:hover .discipline__word,
+.discipline:focus-visible .discipline__word {
+  transform: translateX(0.75rem);
+}
+
+.discipline:hover .discipline__word::after,
+.discipline:focus-visible .discipline__word::after {
+  opacity: 1;
+}
+
+@media (min-width: 48rem) {
+  .disciplines {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Compact rows (expertise) ---------- */
+
+.label-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.label-rows li {
+  display: grid;
+  gap: var(--space-1) var(--space-6);
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.label-rows li:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.label-rows strong {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-foreground-subtle);
+}
+
+.label-rows span {
+  color: var(--color-foreground-muted);
+  font-size: var(--font-size-sm);
+}
+
+@media (min-width: 48rem) {
+  .label-rows li {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+/* ---------- Large mail link ---------- */
+
+.mail-link {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--color-foreground);
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 4.5vw, 3.25rem);
+  line-height: 1.1;
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px
+    no-repeat;
+  transition: background-size var(--duration-slow) var(--ease-standard);
+}
+
+.mail-link:hover,
+.mail-link:focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pindex__row,
+  .pindex__title,
+  .pindex__arrow,
+  .pindex__detail,
+  .pindex__preview,
+  .discipline__word,
+  .mail-link {
+    transition: none !important;
+  }
+}

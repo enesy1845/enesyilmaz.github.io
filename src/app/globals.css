@@ -3,6 +3,7 @@
 @import "../styles/hero.css";
 @import "../styles/footer.css";
 @import "../styles/cv.css";
+@import "../styles/home.css";
 
 * {
   box-sizing: border-box;

@@ -15,7 +15,7 @@ export function CaseStudySection({
 
   return (
     <section className="border-t border-[var(--color-border)] py-[var(--space-8)]">
-      <h2 className="font-serif text-[var(--font-size-xl)]">{title}</h2>
+      <h2 className="font-serif text-[length:var(--font-size-xl)]">{title}</h2>
       {body ? (
         <p className="mt-[var(--space-4)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
           {body}

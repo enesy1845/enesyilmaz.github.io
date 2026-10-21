@@ -30,14 +30,14 @@ export function PageIntro({
       <Container className="grid gap-[var(--space-10)] lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
         <div>
           {eyebrow ? (
-            <p className="font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-accent)] text-[var(--font-size-xs)]">
+            <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-accent)]">
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="mt-[var(--space-4)] max-w-4xl font-serif leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-balance text-[var(--font-size-display)]">
+          <h1 className="mt-[var(--space-4)] max-w-4xl font-serif text-[length:var(--font-size-display)] leading-[var(--line-height-tight)] tracking-[var(--letter-spacing-tight)] text-balance">
             {heading}
           </h1>
-          <p className="mt-[var(--space-6)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-lg)]">
+          <p className="mt-[var(--space-6)] max-w-[var(--layout-reading)] text-[length:var(--font-size-lg)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
             {description}
           </p>
           {actions.length > 0 ? (
@@ -54,8 +54,8 @@ export function PageIntro({
             </div>
           ) : null}
         </div>
-        <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)] shadow-[var(--shadow-subtle)]">
-          <p className="font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)] text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)] shadow-[var(--shadow-subtle)]">
+          <p className="font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
             /{locale}
           </p>
           {meta ? <p className="mt-[var(--space-3)]">{meta}</p> : null}

@@ -32,24 +32,24 @@ export function CvTimeline({ entries, copy, locale }: CvTimelineProps) {
             <p className="cv-timeline__period">{entry.period}</p>
             <article className="cv-timeline__card">
               <p className="cv-timeline__kind">{copy.kinds[entry.kind]}</p>
-              <h3 className="font-serif leading-[var(--line-height-heading)] text-[var(--font-size-lg)]">
+              <h3 className="font-serif text-[length:var(--font-size-lg)] leading-[var(--line-height-heading)]">
                 {entry.role[locale]}
               </h3>
-              <p className="mt-[var(--space-1)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+              <p className="mt-[var(--space-1)] text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
                 {entry.organization[locale]}
               </p>
               {entry.detail ? (
-                <p className="mt-[var(--space-2)] font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+                <p className="mt-[var(--space-2)] font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
                   {entry.detail[locale]}
                 </p>
               ) : null}
               {entry.description ? (
-                <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+                <p className="mt-[var(--space-3)] text-[length:var(--font-size-sm)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
                   {entry.description[locale]}
                 </p>
               ) : null}
               {related.length > 0 ? (
-                <p className="mt-[var(--space-4)] text-[var(--font-size-sm)]">
+                <p className="mt-[var(--space-4)] text-[length:var(--font-size-sm)]">
                   <span className="text-[var(--color-foreground-subtle)]">
                     {copy.relatedWork}:{" "}
                   </span>

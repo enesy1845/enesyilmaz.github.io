@@ -35,10 +35,10 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
         </FooterParticlesLoader>
 
         <nav aria-label={dictionary.accessibility.footerNavigation}>
-          <p className="font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+          <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
             {dictionary.accessibility.footerNavigation}
           </p>
-          <ul className="mt-[var(--space-4)] grid gap-2 text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+          <ul className="mt-[var(--space-4)] grid gap-2 text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
             {routes.map((route) => (
               <li key={route.key}>
                 <Link href={createLocalePath(locale, route.segment)}>
@@ -50,10 +50,10 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
         </nav>
 
         <div>
-          <p className="font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+          <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
             {dictionary.footer.professionalLinks}
           </p>
-          <ul className="mt-[var(--space-4)] grid gap-2 text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+          <ul className="mt-[var(--space-4)] grid gap-2 text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
             {socialLinks.map((link) => (
               <li key={link.key}>
                 <ExternalLink href={link.href}>{link.label}</ExternalLink>
@@ -62,7 +62,7 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
           </ul>
         </div>
 
-        <p className="border-t border-[var(--color-border)] pt-[var(--space-6)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)] md:col-span-3">
+        <p className="border-t border-[var(--color-border)] pt-[var(--space-6)] text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)] md:col-span-3">
           &copy; {new Date().getFullYear()} {siteConfig.author}.{" "}
           {dictionary.footer.copyright}
         </p>

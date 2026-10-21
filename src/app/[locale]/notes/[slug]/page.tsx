@@ -81,12 +81,12 @@ export default async function NotePage({ params }: PageProps) {
         meta={`${note.category} · ${published}`}
       />
       <Section container="reading">
-        <article className="grid gap-[var(--space-5)] font-serif leading-[var(--line-height-relaxed)] text-[var(--font-size-lg)]">
+        <article className="grid gap-[var(--space-5)] font-serif text-[length:var(--font-size-lg)] leading-[var(--line-height-relaxed)]">
           {note.paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </article>
-        <p className="mt-[var(--space-10)] border-t border-[var(--color-border)] pt-[var(--space-6)] text-[var(--font-size-sm)]">
+        <p className="mt-[var(--space-10)] border-t border-[var(--color-border)] pt-[var(--space-6)] text-[length:var(--font-size-sm)]">
           <Link href={createLocalePath(locale, "notes")}>
             {dictionary.navigation.notes}
           </Link>

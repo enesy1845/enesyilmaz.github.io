@@ -19,7 +19,7 @@ export function MainNavigation({ dictionary, locale }: MainNavigationProps) {
 
   return (
     <nav aria-label={dictionary.accessibility.mainNavigation}>
-      <ul className="flex flex-wrap gap-x-1 gap-y-2 text-[var(--font-size-sm)]">
+      <ul className="flex flex-wrap gap-x-1 gap-y-2 text-[length:var(--font-size-sm)]">
         {navigationRoutes.map((route) => (
           <li key={route.key}>
             <Link

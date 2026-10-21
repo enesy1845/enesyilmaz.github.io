@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { HomeHero } from "@/components/home/hero/home-hero";
 import { HomeImage } from "@/components/home/home-image";
-import { ProjectList } from "@/components/projects/project-list";
+import { InkReveal } from "@/components/home/ink-reveal";
+import { ProjectIndex } from "@/components/projects/project-index";
 import { ButtonLink } from "@/components/ui/button";
 import { ExternalLink } from "@/components/ui/external-link";
 import { Section } from "@/components/ui/section";
@@ -39,8 +40,9 @@ export default async function HomePage({ params }: PageProps) {
   const page = homeContent[locale];
   const featuredProjects = getFeaturedProjects();
   const featuredNote = notes[0];
-  const contactLinks = socialLinks.filter((link) =>
-    ["email", "github", "linkedin"].includes(link.key),
+  const email = socialLinks.find((link) => link.key === "email");
+  const profileLinks = socialLinks.filter((link) =>
+    ["linkedin", "github"].includes(link.key),
   );
   const mediumUrl =
     socialLinks.find((link) => link.key === "medium")?.href ?? "";
@@ -52,17 +54,17 @@ export default async function HomePage({ params }: PageProps) {
 
       <Section
         className="scroll-mt-[var(--layout-header-height)]"
-        container="reading"
         id="home-next"
       >
-        <SectionHeader
-          title={page.manifestoTitle}
-          description={page.manifestoText}
+        <h2 className="sr-only">{page.manifestoTitle}</h2>
+        <InkReveal
+          className="max-w-5xl"
+          text={`${page.manifestoTitle} ${page.manifestoText}`}
         />
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
-        <div className="grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
+        <div className="reveal grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
           <div>
             <SectionHeader
               title={page.selectedWorkTitle}
@@ -75,74 +77,56 @@ export default async function HomePage({ params }: PageProps) {
               {page.allWorkAction}
             </Link>
           </div>
-          <ProjectList projects={featuredProjects} locale={locale} />
+          <ProjectIndex projects={featuredProjects} locale={locale} />
         </div>
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
-        <div className="grid gap-[var(--space-8)] lg:grid-cols-[18rem_minmax(0,1fr)]">
+        <div className="reveal grid gap-[var(--space-8)] lg:grid-cols-[18rem_minmax(0,1fr)]">
           <SectionHeader title={page.expertiseTitle} />
-          <div className="grid gap-4 sm:grid-cols-2">
+          <ul className="label-rows">
             {evidenceItems.map((item) => {
               const content = item.content[locale];
               return (
-                <article
-                  className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]"
-                  key={item.key}
-                >
-                  <h3 className="font-serif text-[var(--font-size-lg)]">
-                    {content.title}
-                  </h3>
-                  <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
-                    {content.description}
-                  </p>
-                </article>
+                <li key={item.key}>
+                  <strong>{content.title}</strong>
+                  <span>{content.description}</span>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
-        <div className="grid gap-[var(--space-8)]">
+        <div className="reveal grid gap-[var(--space-10)]">
           <SectionHeader title={page.disciplinesTitle} />
-          <div className="grid gap-4 md:grid-cols-3">
+          <ul className="disciplines">
             {page.disciplines.map((item) => (
-              <article
-                className="border-t border-[var(--color-border)] pt-[var(--space-5)]"
-                key={item.title}
-              >
-                <h3 className="font-serif text-[var(--font-size-xl)]">
-                  {item.title}
-                </h3>
-                <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-                  {item.description}
-                </p>
+              <li key={item.title}>
                 <Link
-                  className="mt-[var(--space-4)] inline-block text-[var(--font-size-sm)]"
+                  className="discipline"
                   href={createLocalePath(locale, item.segment)}
                 >
-                  {item.action}
+                  <span className="discipline__word">{item.title}</span>
+                  <span className="discipline__text">{item.description}</span>
                 </Link>
-              </article>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
-        <div className="grid gap-[var(--space-6)] md:grid-cols-2">
+        <div className="reveal grid gap-[var(--space-10)] md:grid-cols-2">
           <article>
-            <h2 className="font-serif text-[var(--font-size-2xl)]">
+            <h2 className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
               {page.notesTitle}
             </h2>
-            <p className="mt-[var(--space-4)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-              {page.notesDescription}
-            </p>
             {featuredNote ? (
-              <p className="mt-[var(--space-5)]">
+              <h3 className="mt-[var(--space-4)] font-serif text-[length:var(--font-size-2xl)] leading-[var(--line-height-heading)] text-balance">
                 <Link
-                  className="font-serif text-[var(--font-size-lg)]"
+                  className="text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent-hover)]"
                   href={createLocalePath(
                     featuredNote.language,
                     `notes/${featuredNote.slug}`,
@@ -151,9 +135,9 @@ export default async function HomePage({ params }: PageProps) {
                 >
                   {featuredNote.title}
                 </Link>
-              </p>
+              </h3>
             ) : null}
-            <p className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)]">
+            <p className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)] text-[length:var(--font-size-sm)]">
               <Link href={createLocalePath(locale, "notes")}>
                 {page.notesAction}
               </Link>
@@ -165,19 +149,16 @@ export default async function HomePage({ params }: PageProps) {
             </p>
           </article>
           <article>
-            <h2 className="font-serif text-[var(--font-size-2xl)]">
+            <h2 className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
               {page.atelierTitle}
             </h2>
-            <p className="mt-[var(--space-4)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
-              {page.atelierDescription}
-            </p>
-            <ul className="mt-[var(--space-5)] grid gap-2 text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+            <ul className="mt-[var(--space-4)] font-serif text-[length:var(--font-size-2xl)] leading-[var(--line-height-heading)]">
               {page.atelierItems.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
             <Link
-              className="mt-[var(--space-5)] inline-block"
+              className="mt-[var(--space-5)] inline-block text-[length:var(--font-size-sm)]"
               href={createLocalePath(locale, "atelier")}
             >
               {page.atelierAction}
@@ -187,45 +168,53 @@ export default async function HomePage({ params }: PageProps) {
       </Section>
 
       <Section className="border-t border-[var(--color-border)]">
-        <div className="grid gap-[var(--space-8)] lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div className="reveal grid gap-[var(--space-10)] lg:grid-cols-[18rem_minmax(0,1fr)]">
+          <SectionHeader title={page.aboutTitle} />
           <div>
-            <SectionHeader
-              title={page.aboutTitle}
-              description={page.aboutDescription}
-            />
+            <p className="max-w-[var(--layout-reading)] text-[length:var(--font-size-lg)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
+              {page.aboutDescription}
+            </p>
             <Link
-              className="mt-[var(--space-6)] inline-block"
+              className="mt-[var(--space-5)] inline-block"
               href={createLocalePath(locale, "about")}
             >
               {page.aboutAction}
             </Link>
           </div>
-          <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]">
-            <h2 className="font-serif text-[var(--font-size-xl)]">
-              {page.contactTitle}
-            </h2>
-            <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
-              {page.contactDescription}
-            </p>
-            <div className="mt-[var(--space-5)] flex flex-wrap gap-3">
-              <ButtonLink href={createLocalePath(locale, "contact")}>
-                {page.contactAction}
-              </ButtonLink>
-              <ButtonLink
-                href={createLocalePath(locale, "cv")}
-                variant="secondary"
-              >
-                {page.cvAction}
-              </ButtonLink>
-            </div>
-            <ul className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)] text-[var(--font-size-sm)]">
-              {contactLinks.map((link) => (
+        </div>
+      </Section>
+
+      <Section className="border-t border-[var(--color-border)]">
+        <div className="reveal">
+          <h2 className="max-w-4xl font-serif text-[length:var(--font-size-display)] leading-[var(--line-height-tight)] text-balance">
+            {page.contactTitle}
+          </h2>
+          <p className="mt-[var(--space-5)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
+            {page.contactDescription}
+          </p>
+          {email ? (
+            <a className="mail-link mt-[var(--space-8)]" href={email.href}>
+              {email.description}
+            </a>
+          ) : null}
+          <div className="mt-[var(--space-8)] flex flex-wrap items-center gap-3">
+            <ButtonLink href={createLocalePath(locale, "contact")}>
+              {page.contactAction}
+            </ButtonLink>
+            <ButtonLink
+              href={createLocalePath(locale, "cv")}
+              variant="secondary"
+            >
+              {page.cvAction}
+            </ButtonLink>
+            <ul className="flex flex-wrap gap-[var(--space-4)] text-[length:var(--font-size-sm)] sm:ml-[var(--space-4)]">
+              {profileLinks.map((link) => (
                 <li key={link.key}>
                   <ExternalLink href={link.href}>{link.label}</ExternalLink>
                 </li>
               ))}
             </ul>
-          </aside>
+          </div>
         </div>
       </Section>
     </>

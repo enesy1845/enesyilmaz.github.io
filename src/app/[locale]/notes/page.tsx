@@ -53,13 +53,13 @@ export default async function NotesPage({ params }: PageProps) {
                 key={note.slug}
                 lang={note.language}
               >
-                <p className="font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+                <p className="font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
                   {note.category}
                   {note.language !== locale
                     ? ` · ${content.languageLabel[note.language]}`
                     : null}
                 </p>
-                <h2 className="mt-[var(--space-3)] font-serif leading-[var(--line-height-heading)] text-[var(--font-size-xl)]">
+                <h2 className="mt-[var(--space-3)] font-serif text-[length:var(--font-size-xl)] leading-[var(--line-height-heading)]">
                   <Link
                     className="text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent-hover)]"
                     href={createLocalePath(note.language, `notes/${note.slug}`)}

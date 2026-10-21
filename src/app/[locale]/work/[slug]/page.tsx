@@ -90,13 +90,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         ) : null}
         <div className="grid gap-[var(--space-6)]">
           <div>
-            <h2 className="font-serif text-[var(--font-size-xl)]">
+            <h2 className="font-serif text-[length:var(--font-size-xl)]">
               {labels.technologies}
             </h2>
             <ul className="mt-[var(--space-4)] flex flex-wrap gap-2">
               {project.technologies.map((technology) => (
                 <li
-                  className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[var(--color-foreground-muted)] text-[var(--font-size-xs)]"
+                  className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[length:var(--font-size-xs)] text-[var(--color-foreground-muted)]"
                   key={technology}
                 >
                   {technology}
@@ -105,7 +105,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             </ul>
           </div>
           {project.confidential ? (
-            <p className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-4)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+            <p className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-4)] text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
               {labels.sourceNotice}
             </p>
           ) : null}

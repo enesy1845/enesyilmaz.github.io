@@ -55,10 +55,10 @@ export default async function ContactPage({ params }: PageProps) {
                 className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]"
                 key={link.key}
               >
-                <h2 className="font-serif text-[var(--font-size-xl)]">
+                <h2 className="font-serif text-[length:var(--font-size-xl)]">
                   {link.label}
                 </h2>
-                <p className="mt-[var(--space-3)] break-words text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+                <p className="mt-[var(--space-3)] text-[length:var(--font-size-sm)] break-words text-[var(--color-foreground-muted)]">
                   {link.description}
                 </p>
                 <ExternalLink

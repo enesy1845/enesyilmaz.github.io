@@ -85,7 +85,7 @@ export function MobileNavigation({
       <button
         aria-controls={panelId}
         aria-expanded={isOpen}
-        className="menu-toggle inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 font-semibold text-[var(--color-foreground)] text-[var(--font-size-sm)] transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-accent)] sm:px-4"
+        className="menu-toggle inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[length:var(--font-size-sm)] font-semibold text-[var(--color-foreground)] transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-accent)] sm:px-4"
         onClick={() => setIsOpen((value) => !value)}
         ref={toggleRef}
         type="button"
@@ -108,7 +108,7 @@ export function MobileNavigation({
             role="dialog"
           >
             <div className="flex items-center justify-between gap-4">
-              <p className="font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+              <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
                 {dictionary.accessibility.mobileNavigation}
               </p>
               <button
@@ -136,7 +136,7 @@ export function MobileNavigation({
                       aria-current={
                         activeRoute.key === route.key ? "page" : undefined
                       }
-                      className="flex min-h-12 items-center justify-between rounded-[var(--radius-md)] border border-transparent px-3 text-[var(--color-foreground-muted)] text-[var(--font-size-lg)] no-underline transition-colors aria-current:border-[var(--color-border-strong)] aria-current:bg-[var(--color-surface)] aria-current:text-[var(--color-foreground)]"
+                      className="flex min-h-12 items-center justify-between rounded-[var(--radius-md)] border border-transparent px-3 text-[length:var(--font-size-lg)] text-[var(--color-foreground-muted)] no-underline transition-colors aria-current:border-[var(--color-border-strong)] aria-current:bg-[var(--color-surface)] aria-current:text-[var(--color-foreground)]"
                       href={createPathForRoute(locale, route)}
                       onClick={closeMenu}
                     >

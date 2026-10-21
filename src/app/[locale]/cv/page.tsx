@@ -48,8 +48,10 @@ export async function generateMetadata({
 function CredentialItem({ credential }: { credential: Credential }) {
   return (
     <>
-      <p className="font-serif text-[var(--font-size-md)]">{credential.name}</p>
-      <p className="mt-[var(--space-1)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+      <p className="font-serif text-[length:var(--font-size-md)]">
+        {credential.name}
+      </p>
+      <p className="mt-[var(--space-1)] text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
         {credential.issuer}
       </p>
     </>
@@ -113,13 +115,13 @@ export default async function CvPage({ params }: PageProps) {
           <div className="grid gap-[var(--space-6)] sm:grid-cols-2">
             {skillGroups.map((group) => (
               <div key={group.title.en}>
-                <h3 className="font-mono tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+                <h3 className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
                   {group.title[locale]}
                 </h3>
                 <ul className="mt-[var(--space-3)] flex flex-wrap gap-2">
                   {group.skills.map((skill) => (
                     <li
-                      className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[var(--color-foreground-muted)] text-[var(--font-size-xs)]"
+                      className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[length:var(--font-size-xs)] text-[var(--color-foreground-muted)]"
                       key={skill}
                     >
                       {skill}
@@ -142,10 +144,10 @@ export default async function CvPage({ params }: PageProps) {
                   className="border-t border-[var(--color-border)] pt-[var(--space-4)]"
                   key={item.title.en}
                 >
-                  <p className="font-serif text-[var(--font-size-md)]">
+                  <p className="font-serif text-[length:var(--font-size-md)]">
                     {item.title[locale]}
                   </p>
-                  <p className="mt-[var(--space-1)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+                  <p className="mt-[var(--space-1)] text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
                     {item.detail[locale]}
                   </p>
                 </li>
@@ -162,13 +164,13 @@ export default async function CvPage({ params }: PageProps) {
                 >
                   <CredentialItem credential={credential} />
                   {credential.note ? (
-                    <p className="mt-[var(--space-1)] font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+                    <p className="mt-[var(--space-1)] font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
                       {credential.note[locale]}
                     </p>
                   ) : null}
                   {credential.verifyUrl ? (
                     <ExternalLink
-                      className="mt-[var(--space-2)] inline-block text-[var(--font-size-sm)]"
+                      className="mt-[var(--space-2)] inline-block text-[length:var(--font-size-sm)]"
                       href={credential.verifyUrl}
                     >
                       {copy.verify}
@@ -216,18 +218,18 @@ export default async function CvPage({ params }: PageProps) {
                 className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--space-5)]"
                 key={reference.key}
               >
-                <p className="font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+                <p className="font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
                   {reference.field[locale]}
                 </p>
-                <h3 className="mt-[var(--space-2)] font-serif text-[var(--font-size-lg)]">
+                <h3 className="mt-[var(--space-2)] font-serif text-[length:var(--font-size-lg)]">
                   {reference.organization}
                 </h3>
-                <p className="mt-[var(--space-3)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-sm)]">
+                <p className="mt-[var(--space-3)] text-[length:var(--font-size-sm)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
                   {reference.description[locale]}
                 </p>
                 {reference.documentUrl ? (
                   <ExternalLink
-                    className="mt-[var(--space-4)] inline-block text-[var(--font-size-sm)]"
+                    className="mt-[var(--space-4)] inline-block text-[length:var(--font-size-sm)]"
                     href={reference.documentUrl}
                   >
                     {copy.viewDocument}
@@ -258,7 +260,7 @@ export default async function CvPage({ params }: PageProps) {
             {dictionary.navigation.work}
           </ButtonLink>
         </div>
-        <p className="mt-[var(--space-8)] font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+        <p className="mt-[var(--space-8)] font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
           {copy.lastUpdated}:{" "}
           <time dateTime={siteConfig.contentUpdatedAt}>{updated}</time>
         </p>

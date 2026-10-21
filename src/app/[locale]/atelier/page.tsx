@@ -61,7 +61,7 @@ export default async function AtelierPage({ params }: PageProps) {
                   ))}
                 </div>
               ) : null}
-              <h2 className="font-serif leading-[var(--line-height-heading)] text-[var(--font-size-xl)]">
+              <h2 className="font-serif text-[length:var(--font-size-xl)] leading-[var(--line-height-heading)]">
                 {area.title[locale]}
               </h2>
               <p className="mt-[var(--space-4)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">

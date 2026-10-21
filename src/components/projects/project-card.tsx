@@ -39,19 +39,19 @@ export function ProjectCard({
         {typeof index === "number" ? (
           <p
             aria-hidden="true"
-            className="font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-sm)]"
+            className="font-mono text-[length:var(--font-size-sm)] text-[var(--color-foreground-subtle)]"
           >
             {String(index + 1).padStart(2, "0")}
           </p>
         ) : null}
-        <p className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)] md:mt-[var(--space-3)]">
+        <p className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)] md:mt-[var(--space-3)]">
           {labels.category[project.category]}
         </p>
       </div>
 
       <div>
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="font-serif leading-[var(--line-height-heading)] text-[var(--font-size-xl)]">
+          <h3 className="font-serif text-[length:var(--font-size-xl)] leading-[var(--line-height-heading)]">
             <Link
               className="text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent-hover)]"
               href={href}
@@ -60,17 +60,17 @@ export function ProjectCard({
             </Link>
           </h3>
           {project.confidential ? (
-            <span className="rounded-[var(--radius-pill)] bg-[var(--color-surface-muted)] px-2.5 py-1 font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+            <span className="rounded-[var(--radius-pill)] bg-[var(--color-surface-muted)] px-2.5 py-1 font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-muted)]">
               {labels.confidential}
             </span>
           ) : null}
         </div>
 
-        <p className="mt-[var(--space-3)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)] text-[var(--font-size-md)]">
+        <p className="mt-[var(--space-3)] max-w-[var(--layout-reading)] text-[length:var(--font-size-md)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
           {content.summary}
         </p>
 
-        <p className="mt-[var(--space-4)] font-mono text-[var(--color-foreground-subtle)] text-[var(--font-size-xs)]">
+        <p className="mt-[var(--space-4)] font-mono text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)]">
           {labels.role}: {content.role}
           {content.status ? ` · ${content.status}` : null}
         </p>
@@ -82,7 +82,7 @@ export function ProjectCard({
           >
             {project.technologies.map((technology) => (
               <li
-                className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[var(--color-foreground-muted)] text-[var(--font-size-xs)]"
+                className="rounded-[var(--radius-pill)] border border-[var(--color-border)] px-3 py-1 text-[length:var(--font-size-xs)] text-[var(--color-foreground-muted)]"
                 key={technology}
               >
                 {technology}
@@ -91,7 +91,7 @@ export function ProjectCard({
           </ul>
         ) : null}
 
-        <div className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)] text-[var(--font-size-sm)]">
+        <div className="mt-[var(--space-5)] flex flex-wrap gap-[var(--space-4)] text-[length:var(--font-size-sm)]">
           <Link href={href}>{labels.readCaseStudy}</Link>
           {project.externalUrl ? (
             <ExternalLink href={project.externalUrl}>

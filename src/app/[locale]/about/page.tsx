@@ -46,7 +46,7 @@ export default async function AboutPage({ params }: PageProps) {
               className="border-t border-[var(--color-border)] pt-[var(--space-6)]"
               key={section.title}
             >
-              <h2 className="font-serif text-[var(--font-size-xl)]">
+              <h2 className="font-serif text-[length:var(--font-size-xl)]">
                 {section.title}
               </h2>
               <p className="mt-[var(--space-3)] max-w-[var(--layout-reading)] leading-[var(--line-height-relaxed)] text-[var(--color-foreground-muted)]">
