@@ -17,6 +17,9 @@ compares twelve references and records the applied visual refinements: CSS-only
 project previews, category studies, editorial Notes and asymmetric Atelier layouts.
 The foundation notes below describe the earlier Phase 3 baseline.
 
+The [editorial portrait refinement](docs/design/editorial-portrait.md) documents
+the shared monochrome portrait and the Home/About layouts using it.
+
 The current application is Phase 3. It has a multilingual technical foundation, a restrained visual design foundation, typed content records, real static Home content, selected projects, and improved Work/About/Contact pages. It is still not the final interactive portfolio experience.
 
 ## Status

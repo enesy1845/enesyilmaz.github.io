@@ -6,6 +6,7 @@ import { HomeHero } from "@/components/home/hero/home-hero";
 import { HomeImage } from "@/components/home/home-image";
 import { ProjectIndex } from "@/components/projects/project-index";
 import { MaterialStudy } from "@/components/media/material-study";
+import { ProfilePortrait } from "@/components/media/profile-portrait";
 import { CopyEmail } from "@/components/ui/copy-email";
 import { ExternalLink } from "@/components/ui/external-link";
 import { Section } from "@/components/ui/section";
@@ -205,12 +206,25 @@ export default async function HomePage({ params }: PageProps) {
 
       <Section className="home-about">
         <div className="about-strip reveal">
-          <h2>{page.aboutTitle}</h2>
-          <p>{page.aboutLead}</p>
-          <Link className="text-link" href={createLocalePath(locale, "cv")}>
-            {page.cvAction}
-            <span aria-hidden="true"> ↗</span>
-          </Link>
+          <ProfilePortrait locale={locale} />
+          <div className="about-strip__story">
+            <h2>{page.aboutTitle}</h2>
+            <p className="about-strip__lead">{page.aboutLead}</p>
+            <p>{page.aboutDescription}</p>
+            <div className="about-strip__links">
+              <Link
+                className="text-link"
+                href={createLocalePath(locale, "about")}
+              >
+                {page.aboutAction}
+                <span aria-hidden="true"> ↗</span>
+              </Link>
+              <Link className="text-link" href={createLocalePath(locale, "cv")}>
+                {page.cvAction}
+                <span aria-hidden="true"> ↗</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </Section>
 

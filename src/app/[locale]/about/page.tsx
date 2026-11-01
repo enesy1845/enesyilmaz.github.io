@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ClosingInvite } from "@/components/ui/closing-invite";
+import { ProfilePortrait } from "@/components/media/profile-portrait";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
 import { contentLabels } from "@/data/content-labels";
@@ -45,21 +46,24 @@ export default async function AboutPage({ params }: PageProps) {
       />
       <Section className="about-narrative">
         <div className="about-overview">
-          <nav
-            className="about-contents"
-            aria-label={contentLabels[locale].onThisPage}
-          >
-            <ol role="list">
-              {content.sections.map((section, index) => (
-                <li key={section.title}>
-                  <a href={`#about-${index + 1}`}>
-                    <span aria-hidden="true">0{index + 1}</span>
-                    <span>{section.title}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
+          <div className="about-sidebar">
+            <ProfilePortrait locale={locale} />
+            <nav
+              className="about-contents"
+              aria-label={contentLabels[locale].onThisPage}
+            >
+              <ol role="list">
+                {content.sections.map((section, index) => (
+                  <li key={section.title}>
+                    <a href={`#about-${index + 1}`}>
+                      <span aria-hidden="true">0{index + 1}</span>
+                      <span>{section.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </div>
           <div className="about-chapters">
             {content.sections.map((section, index) => {
               const destination = destinations[index];

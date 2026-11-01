@@ -510,8 +510,14 @@
 
 .about-strip {
   display: grid;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.about-strip__story {
+  display: grid;
+  justify-items: start;
   gap: var(--space-6);
-  align-items: baseline;
 }
 
 .about-strip h2 {
@@ -522,9 +528,24 @@
 
 .about-strip p {
   max-width: 42ch;
-  font-size: var(--font-size-xl);
+  color: var(--color-foreground-muted);
+  font-size: var(--font-size-base);
   line-height: var(--line-height-body);
   text-wrap: pretty;
+}
+
+.about-strip .about-strip__lead {
+  font-family: var(--font-editorial);
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-editorial);
+  color: var(--color-foreground);
+}
+
+.about-strip__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-8);
 }
 
 .contact-layout {
@@ -756,8 +777,8 @@
   }
 
   .about-strip {
-    grid-template-columns: 1fr 2fr auto;
-    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: var(--space-section);
   }
 }
 
