@@ -8,7 +8,7 @@
  *   node --experimental-strip-types scripts/build-content.ts          generate once
  *   node --experimental-strip-types scripts/build-content.ts --dev    generate, watch, run `next dev [args]`
  */
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { watch } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -156,6 +156,17 @@ export const notes: readonly Note[] = ${JSON.stringify(JSON.parse(JSON.stringify
   await mkdir(path.dirname(outputFile), { recursive: true });
   await writeFile(outputFile, source);
   console.log(`content: ${projects.length} projects, ${notes.length} notes`);
+
+  // Keep the readable copy in docs/content/site-content.md in step.
+  spawnSync(
+    process.execPath,
+    [
+      "--experimental-strip-types",
+      "--no-warnings=ExperimentalWarning",
+      path.join(root, "scripts/build-content-doc.ts"),
+    ],
+    { stdio: "inherit" },
+  );
 }
 
 await generate();

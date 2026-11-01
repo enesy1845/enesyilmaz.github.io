@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "content": "node --experimental-strip-types --no-warnings=ExperimentalWarning scripts/build-content.ts",
+    "content:doc": "npm run content",
     "dev": "npm run content -- --dev",
     "prebuild": "npm run content",
     "build": "next build --webpack",

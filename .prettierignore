@@ -9,3 +9,4 @@ package-lock.json
 AGENTS.md
 cloudflare-env.d.ts
 src/content/generated.ts
+docs/content/site-content.md

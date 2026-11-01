@@ -1,6 +1,6 @@
 # Phase 3 Content Foundation
 
-> **Historical.** This describes Phase 3 and is no longer current (content is now managed in `/keystatic`). For where each text lives today, see [content-map.md](content-map.md).
+> **Historical.** This describes Phase 3 and is no longer current (content is now managed in `/keystatic`). For all current page copy and its sources, see [site-content.md](site-content.md).
 
 ## Scope
 
