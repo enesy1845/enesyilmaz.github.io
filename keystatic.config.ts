@@ -185,6 +185,8 @@ export default config({
         }),
         technologies: fields.array(fields.text({ label: "Teknoloji" }), {
           label: "Teknolojiler",
+          description:
+            "Yalnızca özel isimler (React, WordPress, PostgreSQL…). Etiketler çevrilmez; “Responsive design” gibi açıklamaları dil alanlarına yaz.",
           itemLabel: (props) => props.value || "Yeni teknoloji",
         }),
         disciplines: fields.array(fields.text({ label: "Disiplin" }), {

@@ -77,7 +77,8 @@
   "contact": {
     "email": "E-posta",
     "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "github": "GitHub",
+    "youtubeDetail": "Eğitim ve programlama videoları"
   },
   "footer": {
     "location": "Asker, Norveç",
@@ -87,6 +88,6 @@
   "notFound": {
     "heading": "Sayfa bulunamadı",
     "description": "İstenen sayfa bu dilde mevcut değil.",
-    "homeLink": "İngilizce ana sayfaya git"
+    "homeLink": "Ana sayfaya dön"
   }
 }

@@ -84,7 +84,9 @@ export default async function ContactPage({ params }: PageProps) {
                     <span>
                       <strong>{link.label}</strong>
                       <span className="contact-channel__detail">
-                        {link.description}
+                        {link.key === "youtube"
+                          ? dictionary.contact.youtubeDetail
+                          : link.description}
                       </span>
                     </span>
                     <span aria-hidden="true" className="link-arrow">

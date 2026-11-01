@@ -7,9 +7,8 @@
   "confidential": true,
   "technologies": [
     "Python",
-    "PDF generation",
-    "SharePoint",
-    "Background jobs"
+    "PDF",
+    "SharePoint"
   ],
   "disciplines": [
     "Document automation",

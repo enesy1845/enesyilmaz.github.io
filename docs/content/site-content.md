@@ -181,7 +181,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Webflow Developer
 - **Organization:** ILC Language Centres
 - **Category:** Web
-- **Technologies:** Webflow, Responsive design, CMS
+- **Technologies:** Webflow, CMS
 - **Disciplines:** Webflow development, Content structure, Responsive UI
 - **Live site:** https://ilcentres.com/
 - **Cover:** /images/projects/ilc-language-centres.webp
@@ -238,7 +238,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Organization:** Anonymized public-sector context
 - **Location:** Norway
 - **Category:** Data
-- **Technologies:** Python, PDF generation, SharePoint, Background jobs
+- **Technologies:** Python, PDF, SharePoint
 - **Disciplines:** Document automation, Data transformation, File organization
 - **Confidential:** yes, anonymized
 - **Responsibilities:**
@@ -261,7 +261,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Organization:** Anonymized public-sector context
 - **Location:** Norway
 - **Category:** Software
-- **Technologies:** React, TypeScript, .NET, Access control
+- **Technologies:** React, TypeScript, .NET
 - **Disciplines:** Privacy review, Workflow design, User interface
 - **Confidential:** yes, anonymized
 - **Responsibilities:**
@@ -283,7 +283,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Organization:** Quiver Blog
 - **Location:** Norway
 - **Category:** Web
-- **Technologies:** WordPress, UI maintenance, Content publishing
+- **Technologies:** WordPress
 - **Disciplines:** Volunteer support, Web maintenance
 - **Live site:** https://quiver.blog/
 - **Cover:** /images/projects/quiver-blog.webp
@@ -295,7 +295,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Webflow Developer
 - **Organization:** ILC Accommodation
 - **Category:** Web
-- **Technologies:** Webflow, Responsive design
+- **Technologies:** Webflow
 - **Disciplines:** Web development
 - **Live site:** https://www.ilcaccommodation.com/
 - **Cover:** /images/projects/ilc-accommodation.webp
@@ -307,7 +307,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Freelance WordPress Developer
 - **Organization:** Yavuz Alemdar
 - **Category:** Web
-- **Technologies:** WordPress, Responsive design
+- **Technologies:** WordPress
 - **Disciplines:** Web development
 - **Live site:** https://www.yavuzalemdar.com/
 - **Cover:** /images/projects/yavuz-alemdar.webp
@@ -319,7 +319,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Freelance WordPress Developer
 - **Organization:** Alemdar Creative Studio
 - **Category:** Web
-- **Technologies:** WordPress, Responsive design
+- **Technologies:** WordPress
 - **Disciplines:** Web development
 - **Live site:** https://www.alemdarcreativestudio.com/
 - **Cover:** /images/projects/alemdar-creative-studio.webp
@@ -331,7 +331,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Freelance WordPress Developer
 - **Organization:** 5K Consultancy
 - **Category:** Web
-- **Technologies:** WordPress, Responsive design
+- **Technologies:** WordPress
 - **Disciplines:** Web development
 - **Live site:** https://5kconsultancy.co.uk/
 - **Cover:** /images/projects/5k-consultancy.webp
@@ -343,7 +343,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Freelance WordPress Developer
 - **Organization:** OmniTech Academy
 - **Category:** Web
-- **Technologies:** WordPress, Responsive design
+- **Technologies:** WordPress
 - **Disciplines:** Web development
 - **Live site:** https://omnitechacademy.com/
 - **Cover:** /images/projects/omnitech-academy.webp
@@ -355,7 +355,7 @@ _Source: `content/projects/*.json (admin panel → Work)`_
 - **Role:** Freelance WordPress Developer
 - **Organization:** Klasik Tesbih
 - **Category:** Web
-- **Technologies:** WordPress, Responsive design
+- **Technologies:** WordPress
 - **Disciplines:** Web development
 - **Live site:** http://klasiktesbih.com/
 - **Cover:** /images/projects/klasik-tesbih.webp

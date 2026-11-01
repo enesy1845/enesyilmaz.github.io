@@ -907,3 +907,26 @@ test("home and internal page have no obvious accessibility violations", async ({
     expect(results.violations).toEqual([]);
   }
 });
+
+test("unknown pages show a localized 404 inside the locale shell", async ({
+  page,
+}) => {
+  const response = await page.goto("/tr/bu-sayfa-yok");
+
+  expect(response?.status()).toBe(404);
+  await expect(page.locator("html")).toHaveAttribute("lang", "tr");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Sayfa bulunamadı" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Ana sayfaya dön" }),
+  ).toHaveAttribute("href", "/tr");
+});
+
+test("contact channel details are translated", async ({ page }) => {
+  await page.goto("/no/contact");
+
+  await expect(
+    page.getByText("Undervisnings- og programmeringsvideoer"),
+  ).toBeVisible();
+});

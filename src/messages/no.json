@@ -77,7 +77,8 @@
   "contact": {
     "email": "E-post",
     "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "github": "GitHub",
+    "youtubeDetail": "Undervisnings- og programmeringsvideoer"
   },
   "footer": {
     "location": "Asker, Norge",
@@ -87,6 +88,6 @@
   "notFound": {
     "heading": "Siden finnes ikke",
     "description": "Den forespurte siden finnes ikke på dette språket.",
-    "homeLink": "Gå til engelsk forside"
+    "homeLink": "Tilbake til forsiden"
   }
 }

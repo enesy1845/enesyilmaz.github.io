@@ -77,7 +77,8 @@
   "contact": {
     "email": "Email",
     "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "github": "GitHub",
+    "youtubeDetail": "Teaching and programming videos"
   },
   "footer": {
     "location": "Asker, Norway",
@@ -87,6 +88,6 @@
   "notFound": {
     "heading": "Page not found",
     "description": "The requested page does not exist in this language.",
-    "homeLink": "Go to the English home page"
+    "homeLink": "Back to the home page"
   }
 }
