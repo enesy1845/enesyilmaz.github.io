@@ -1,5 +1,7 @@
 # Phase 3 Content Foundation
 
+> **Historical.** This describes Phase 3 and is no longer current (content is now managed in `/keystatic`). For where each text lives today, see [content-map.md](content-map.md).
+
 ## Scope
 
 Phase 3 turns the design shell into a meaningful static portfolio experience. It adds typed project data, translated page copy, reusable project components, Home page content sections, Work page entries, minimal project detail pages, About content, Contact links, Notes preview, and Atelier preview.
