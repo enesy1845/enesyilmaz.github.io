@@ -930,3 +930,24 @@ test("contact channel details are translated", async ({ page }) => {
     page.getByText("Undervisnings- og programmeringsvideoer"),
   ).toBeVisible();
 });
+
+test("What is NOI reads in the page language and switches without reloading", async ({
+  page,
+}) => {
+  await page.goto("/tr");
+
+  const section = page.locator("#what-is-noi");
+  await expect(
+    section.getByRole("heading", { level: 2, name: "NOI nedir?" }),
+  ).toBeVisible();
+  await expect(section.getByRole("radio", { name: "TR" })).toBeChecked();
+  await expect(section.getByText("Niyet", { exact: true })).toBeVisible();
+
+  await section.getByText("EN", { exact: true }).click();
+  await expect(section.getByText("Notice", { exact: true })).toBeVisible();
+  await expect(section.getByText("Niyet", { exact: true })).toBeHidden();
+
+  await expect(
+    page.getByText("NOI — Enes Yılmaz'ın bağımsız üretim pratiği."),
+  ).toBeVisible();
+});

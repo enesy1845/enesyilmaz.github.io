@@ -4,6 +4,7 @@ import Link from "next/link";
 import { DisciplineMark } from "@/components/home/discipline-mark";
 import { HomeHero } from "@/components/home/hero/home-hero";
 import { HomeImage } from "@/components/home/home-image";
+import { NoiMeaning } from "@/components/home/noi-meaning";
 import { ProjectIndex } from "@/components/projects/project-index";
 import { MaterialStudy } from "@/components/media/material-study";
 import { ProfilePortrait } from "@/components/media/profile-portrait";
@@ -61,11 +62,13 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </Section>
 
+      <NoiMeaning index="02" locale={locale} />
+
       <Section className="home-work" id="selected-work">
         <div className="section-heading">
           <h2>
             <span aria-hidden="true" className="section-index">
-              02 /
+              03 /
             </span>
             {page.selectedWorkTitle}
           </h2>
@@ -82,7 +85,7 @@ export default async function HomePage({ params }: PageProps) {
           <div className="section-heading">
             <h2>
               <span aria-hidden="true" className="section-index">
-                03 /
+                04 /
               </span>
               {page.expertiseTitle}
             </h2>
@@ -110,7 +113,7 @@ export default async function HomePage({ params }: PageProps) {
         <div className="section-heading">
           <h2>
             <span aria-hidden="true" className="section-index">
-              04 /
+              05 /
             </span>
             {page.disciplinesTitle}
           </h2>

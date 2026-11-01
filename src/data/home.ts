@@ -47,7 +47,7 @@ export const homeContent: Record<Locale, HomeContent> = {
     role: "Python Developer & Software Engineer",
     position:
       "I turn complex problems into useful software — connecting code, data and people.",
-    support: "Building with curiosity, clarity and purpose.",
+    support: "NOI — a way of thinking, a way of making.",
     primaryAction: "Explore my work",
     secondaryAction: "My journey",
     manifestoTitle: "Code is rarely the whole problem.",
@@ -115,7 +115,7 @@ export const homeContent: Record<Locale, HomeContent> = {
     role: "Python-utvikler og programvareutvikler",
     position:
       "Jeg gjør komplekse problemer om til nyttig programvare — og knytter sammen kode, data og mennesker.",
-    support: "Jeg bygger med nysgjerrighet, klarhet og formål.",
+    support: "NOI — en måte å tenke på, en måte å skape på.",
     primaryAction: "Utforsk arbeidet mitt",
     secondaryAction: "Min reise",
     manifestoTitle: "Kode er sjelden hele problemet.",
@@ -183,7 +183,7 @@ export const homeContent: Record<Locale, HomeContent> = {
     role: "Python Geliştirici ve Yazılım Mühendisi",
     position:
       "Karmaşık problemleri faydalı yazılımlara dönüştürüyorum — kodu, veriyi ve insanları birbirine bağlayarak.",
-    support: "Merakla, netlikle ve amaçla üretiyorum.",
+    support: "NOI — bir düşünme biçimi, bir üretme biçimi.",
     primaryAction: "İşlerimi keşfet",
     secondaryAction: "Yolculuğum",
     manifestoTitle: "Kod nadiren problemin tamamıdır.",

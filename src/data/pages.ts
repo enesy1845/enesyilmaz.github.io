@@ -41,6 +41,11 @@ export const aboutPageContent: Record<Locale, AboutPageContent> = {
         title: "Beyond engineering",
         body: "Literature, education, craftsmanship and mathematical thinking influence how I see the world. I believe technical ability becomes more meaningful when combined with empathy, responsibility and a willingness to keep learning.",
       },
+      {
+        title: "The idea behind NOI",
+        lead: "NOI started as a name for the way I like to work.",
+        body: "I have never fitted neatly into one discipline. Mathematics, teaching, software and an interest in craft kept pointing to the same habit: notice what is really going on, give it structure, then build something that helps. NOI is the name I gave that habit. It is not a company, but an independent creative practice that keeps my projects, writing and experiments together.",
+      },
     ],
     closingTitle: "Looking forward",
     closingBody:
@@ -67,6 +72,11 @@ export const aboutPageContent: Record<Locale, AboutPageContent> = {
         title: "Utenfor teknologien",
         body: "Litteratur, utdanning, håndverk og matematisk tenkning påvirker hvordan jeg ser verden. Jeg tror teknisk dyktighet blir mer meningsfull når den kombineres med empati, ansvar og vilje til å fortsette å lære.",
       },
+      {
+        title: "Ideen bak NOI",
+        lead: "NOI begynte som et navn på hvordan jeg liker å jobbe.",
+        body: "Jeg har aldri passet pent inn i ett fagfelt. Matematikk, undervisning, programvare og interessen for håndverk pekte hele tiden mot den samme vanen: å legge merke til hva som egentlig skjer, gi det struktur og så bygge noe som hjelper. NOI er navnet jeg ga den vanen. Det er ikke et selskap, men en uavhengig, skapende praksis som holder prosjektene, tekstene og eksperimentene mine samlet.",
+      },
     ],
     closingTitle: "Veien videre",
     closingBody:
@@ -92,6 +102,11 @@ export const aboutPageContent: Record<Locale, AboutPageContent> = {
       {
         title: "Mühendisliğin ötesinde",
         body: "Edebiyat, eğitim, zanaat ve matematiksel düşünme dünyaya bakışımı etkiliyor. Teknik yeteneğin empati, sorumluluk ve öğrenmeye devam etme isteğiyle birleştiğinde daha anlamlı hâle geldiğine inanıyorum.",
+      },
+      {
+        title: "NOI fikri",
+        lead: "NOI, çalışma biçimime verdiğim bir isim olarak başladı.",
+        body: "Kendimi hiçbir zaman tek bir disipline sığdıramadım. Matematik, öğretmenlik, yazılım ve zanaata duyduğum ilgi hep aynı alışkanlığa çıkıyordu: gerçekte neler olup bittiğini fark etmek, ona bir yapı vermek ve sonra işe yarayan bir şey inşa etmek. NOI bu alışkanlığın adı. Bir şirket değil; projelerimi, yazılarımı ve denemelerimi bir arada tutan bağımsız bir üretim pratiği.",
       },
     ],
     closingTitle: "İleriye bakış",

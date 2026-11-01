@@ -25,6 +25,7 @@ import {
 } from "../src/data/cv.ts";
 import { evidenceItems } from "../src/data/experience.ts";
 import { homeContent } from "../src/data/home.ts";
+import { noiInterpretations, noiSectionContent } from "../src/data/noi.ts";
 import { aboutPageContent, contactPageContent } from "../src/data/pages.ts";
 import {
   atelierAreas,
@@ -145,6 +146,23 @@ line("### Manifesto");
 line(`**${home.manifestoTitle}**`);
 line();
 line(home.manifestoText);
+line();
+const noi = noiSectionContent.en;
+line(`### ${noi.title}`);
+source("src/data/noi.ts");
+line(`**${noi.tagline}**`);
+line();
+for (const paragraph of noi.paragraphs) {
+  line(paragraph);
+  line();
+}
+line(`**${noi.eyebrow}** (language tabs EN / NO / TR; ${noi.meaningNote})`);
+line();
+for (const reading of Object.values(noiInterpretations)) {
+  line(
+    `- ${reading.tab}: ${reading.letters.map((item) => `${item.letter} — ${item.word} (${item.line})`).join(" · ")}`,
+  );
+}
 line();
 line(`### ${home.selectedWorkTitle}`);
 line(home.selectedWorkDescription);

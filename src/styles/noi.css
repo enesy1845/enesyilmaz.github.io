@@ -1,0 +1,195 @@
+/* "What is NOI?" — brand introduction with a language-aware letter reading. */
+.home-noi {
+  border-top: 1px solid var(--color-border);
+}
+
+.noi-intro {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.noi-intro__story {
+  max-width: var(--layout-reading);
+}
+
+.noi-intro__story h2 {
+  margin-top: var(--space-5);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-3xl);
+  letter-spacing: var(--letter-spacing-editorial);
+  line-height: var(--line-height-tight);
+}
+
+.noi-intro__tagline {
+  margin-block: var(--space-4) var(--space-8);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-xl);
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.noi-intro__story p:not(.section-index, .noi-intro__tagline) {
+  color: var(--color-foreground-muted);
+  line-height: var(--line-height-relaxed);
+}
+
+.noi-intro__story p + p:not(.noi-intro__tagline) {
+  margin-top: var(--space-4);
+}
+
+.noi-meaning {
+  align-self: start;
+  padding: var(--space-8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.noi-meaning__tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.noi-meaning__tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding-inline: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-foreground-subtle);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.noi-meaning__tab:hover,
+.noi-meaning__tab:has(input:checked) {
+  color: var(--color-foreground);
+}
+
+.noi-meaning__tab:has(input:checked) {
+  border-color: var(--color-border-strong);
+}
+
+.noi-meaning__tab:has(input:focus-visible) {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.noi-meaning__title {
+  margin-block: var(--space-8) var(--space-6);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-display);
+  line-height: 1;
+  letter-spacing: var(--letter-spacing-editorial);
+}
+
+.noi-meaning__panel + .noi-meaning__panel {
+  margin-top: var(--space-8);
+}
+
+/* Show only the chosen reading where :has() is available. */
+.noi-meaning:has(input[value="en"]:checked)
+  .noi-meaning__panel:not([data-lang="en"]),
+.noi-meaning:has(input[value="no"]:checked)
+  .noi-meaning__panel:not([data-lang="no"]),
+.noi-meaning:has(input[value="tr"]:checked)
+  .noi-meaning__panel:not([data-lang="tr"]) {
+  display: none;
+}
+
+.noi-meaning:has(input:checked) .noi-meaning__panel + .noi-meaning__panel {
+  margin-top: 0;
+}
+
+.noi-meaning__letters {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.noi-meaning__row {
+  display: grid;
+  gap: var(--space-1);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.noi-meaning__row dt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.noi-meaning__glyph {
+  display: inline-flex;
+  width: 2.25rem;
+  font-size: var(--font-size-2xl);
+  color: var(--color-accent);
+}
+
+.noi-meaning__glyph .noi-letter {
+  fill: currentColor;
+}
+
+.noi-meaning__word {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-heading);
+}
+
+.noi-meaning__row dd {
+  margin: 0;
+  padding-left: calc(2.25rem + var(--space-4));
+  color: var(--color-foreground-muted);
+}
+
+.noi-meaning__motto {
+  margin-top: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-foreground-subtle);
+}
+
+.noi-meaning__note {
+  margin-top: var(--space-6);
+  font-size: var(--font-size-sm);
+  color: var(--color-foreground-subtle);
+}
+
+/* Switching language lifts the letters in one after another (transform
+   only, so text contrast is never reduced mid-animation). */
+@media (prefers-reduced-motion: no-preference) {
+  .noi-meaning__row {
+    animation: noi-letter-in var(--duration-slow) var(--ease-emphasized) both;
+  }
+
+  .noi-meaning__row:nth-child(2) {
+    animation-delay: 60ms;
+  }
+
+  .noi-meaning__row:nth-child(3) {
+    animation-delay: 120ms;
+  }
+}
+
+@keyframes noi-letter-in {
+  from {
+    transform: translateY(0.6rem);
+  }
+}
+
+@media (min-width: 64rem) {
+  .noi-intro {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--space-16);
+  }
+}

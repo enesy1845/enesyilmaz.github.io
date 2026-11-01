@@ -63,6 +63,9 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
         </div>
 
         <p className="border-t border-[var(--color-border)] pt-[var(--space-6)] text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)] md:col-span-3">
+          <span className="block text-[var(--color-foreground-muted)]">
+            {dictionary.footer.practice}
+          </span>
           &copy; {new Date().getFullYear()} {siteConfig.author}.{" "}
           {dictionary.footer.copyright}
         </p>

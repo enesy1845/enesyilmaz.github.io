@@ -16,6 +16,7 @@ _Source: `src/config/social.ts`, `src/messages/en.json`_
 - Asker, Norway
 - Professional links
 - All rights reserved.
+- NOI — An independent creative practice by Enes Yılmaz.
 
 ## Home `/en`
 _Source: `src/data/home.ts`, `src/data/experience.ts`_
@@ -30,13 +31,32 @@ _Source: `src/data/home.ts`, `src/data/experience.ts`_
 - **Name:** Enes Yılmaz
 - **Role:** Python Developer & Software Engineer
 - **Position:** I turn complex problems into useful software — connecting code, data and people.
-- **Support line:** Building with curiosity, clarity and purpose.
+- **Support line:** NOI — a way of thinking, a way of making.
 - **Buttons:** Explore my work · My journey
 
 ### Manifesto
 **Code is rarely the whole problem.**
 
 Behind every technical challenge are people, decisions and connected systems. I believe the best solutions begin with understanding those connections.
+
+### What is NOI?
+_Source: `src/data/noi.ts`_
+
+**A way of thinking. A way of making.**
+
+NOI is the name I give to the space between curiosity and creation.
+
+I believe meaningful solutions begin before the first line of code — by asking better questions, understanding people, and discovering connections between systems and ideas.
+
+NOI brings together my work in software engineering, data and digital experiences with my interests in mathematics, education, design and craftsmanship.
+
+Today, it's a personal creative practice by Enes Yılmaz. Over time, it may become a home for new ideas, products and collaborations.
+
+**The meaning of NOI** (language tabs EN / NO / TR; Each language reads the letters in its own way. These are interpretations, not translations.)
+
+- EN: N — Notice (See beyond the obvious.) · O — Organize (Find the structure within complexity.) · I — Invent (Turn understanding into something useful.)
+- NO: N — Nysgjerrighet (Still spørsmålet før du antar svaret.) · O — Oversikt (Finn strukturen i det komplekse.) · I — Iverksetting (Gjør forståelse om til noe nyttig.)
+- TR: N — Niyet (Neden yaptığını bilerek başla.) · O — Odak (Karmaşıklığın içindeki yapıyı bul.) · I — İnşa (Anlayışı işe yarar bir şeye dönüştür.)
 
 ### Selected Work
 Software systems, digital products and websites built to solve real problems.
@@ -442,6 +462,11 @@ I value analytical thinking, intellectual curiosity and the ability to question 
 
 ### Beyond engineering
 Literature, education, craftsmanship and mathematical thinking influence how I see the world. I believe technical ability becomes more meaningful when combined with empathy, responsibility and a willingness to keep learning.
+
+### The idea behind NOI
+**NOI started as a name for the way I like to work.**
+
+I have never fitted neatly into one discipline. Mathematics, teaching, software and an interest in craft kept pointing to the same habit: notice what is really going on, give it structure, then build something that helps. NOI is the name I gave that habit. It is not a company, but an independent creative practice that keeps my projects, writing and experiments together.
 
 ### Looking forward
 I'm interested in software engineering roles and collaborations where I can contribute, learn deeply and take ownership of meaningful problems.
