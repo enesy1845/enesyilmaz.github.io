@@ -276,9 +276,9 @@ export const timeline: readonly TimelineEntry[] = [
       "Orta Doğu Teknik Üniversitesi",
     ),
     role: t(
-      "Mathematics studies (not completed)",
-      "Matematikkstudier (ikke fullført)",
-      "Matematik öğrenimi (tamamlanmadı)",
+      "Mathematics studies",
+      "Matematikkstudier",
+      "Matematik öğrenimi",
     ),
   },
 ];
@@ -329,9 +329,9 @@ export const education: readonly { title: Text; detail: Text }[] = [
       "Orta Doğu Teknik Üniversitesi",
     ),
     detail: t(
-      "Mathematics studies, not completed",
-      "Matematikkstudier, ikke fullført",
-      "Matematik öğrenimi, tamamlanmadı",
+      "Mathematics studies, 2014–2017",
+      "Matematikkstudier, 2014–2017",
+      "Matematik öğrenimi, 2014–2017",
     ),
   },
   {

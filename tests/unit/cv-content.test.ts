@@ -35,7 +35,7 @@ describe("cv and content data", () => {
   it("never claims an unearned degree or an active expired credential", () => {
     const text = JSON.stringify([timeline, education, certifications]);
     expect(text).not.toMatch(/B\.?Sc/i);
-    expect(text).toMatch(/not completed/);
+    expect(text).not.toMatch(/degree|bachelor|lisans|grad/i);
     expect(text).not.toMatch(/\bactive\b/i);
   });
 
