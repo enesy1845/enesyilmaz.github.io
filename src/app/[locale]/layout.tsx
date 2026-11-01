@@ -7,6 +7,7 @@ import "@/app/globals.css";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { RouteProgress } from "@/components/navigation/route-progress";
 import { StructuredData } from "@/components/seo/structured-data";
 import { SkipLink } from "@/components/ui/skip-link";
 import { siteConfig } from "@/config/site";
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
     >
       <body>
         <SkipLink label={dictionary.accessibility.skipToContent} />
+        <RouteProgress />
         <SiteHeader dictionary={dictionary} locale={locale} />
         <main id="main-content" tabIndex={-1}>
           {children}

@@ -940,12 +940,16 @@ test("What is NOI reads in the page language and switches without reloading", as
   await expect(
     section.getByRole("heading", { level: 2, name: "NOI nedir?" }),
   ).toBeVisible();
-  await expect(section.getByRole("radio", { name: "TR" })).toBeChecked();
-  await expect(section.getByText("Niyet", { exact: true })).toBeVisible();
-
-  await section.getByText("EN", { exact: true }).click();
+  // Turkish has no reading of its own, so the English one opens first.
+  await expect(section.getByRole("radio")).toHaveCount(2);
+  await expect(section.getByRole("radio", { name: "EN" })).toBeChecked();
   await expect(section.getByText("Notice", { exact: true })).toBeVisible();
-  await expect(section.getByText("Niyet", { exact: true })).toBeHidden();
+
+  await section.getByText("NO", { exact: true }).click();
+  await expect(
+    section.getByText("Nysgjerrighet", { exact: true }),
+  ).toBeVisible();
+  await expect(section.getByText("Notice", { exact: true })).toBeHidden();
 
   await expect(
     page.getByText("NOI — Enes Yılmaz'ın bağımsız üretim pratiği."),

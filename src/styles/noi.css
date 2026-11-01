@@ -77,9 +77,7 @@
 .noi-meaning:has(input[value="en"]:checked)
   .noi-meaning__panel:not([data-lang="en"]),
 .noi-meaning:has(input[value="no"]:checked)
-  .noi-meaning__panel:not([data-lang="no"]),
-.noi-meaning:has(input[value="tr"]:checked)
-  .noi-meaning__panel:not([data-lang="tr"]) {
+  .noi-meaning__panel:not([data-lang="no"]) {
   display: none;
 }
 .noi-meaning__letters {

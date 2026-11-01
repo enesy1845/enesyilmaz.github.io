@@ -34,7 +34,10 @@ for (const width of [320, 1440]) {
       const section = page.locator("#what-is-noi");
       await expect(section.getByRole("heading", { level: 2 })).toHaveCount(1);
       await expect(
-        section.getByRole("radio", { name: locale.toUpperCase() }),
+        // Turkish has no reading of its own and opens on English.
+        section.getByRole("radio", {
+          name: locale === "tr" ? "EN" : locale.toUpperCase(),
+        }),
       ).toBeChecked();
       await section.getByText("EN", { exact: true }).click();
       const radio = section.getByRole("radio", { name: "EN" });

@@ -28,7 +28,15 @@ export type NoiSectionContent = {
   languagePicker: string;
 };
 
-export const noiInterpretations: Record<Locale, NoiInterpretation> = {
+/** Languages with their own reading; Turkish pages show the English one. */
+export const noiReadingLocales = ["en", "no"] as const;
+export type NoiReadingLocale = (typeof noiReadingLocales)[number];
+
+export function isNoiReadingLocale(locale: Locale): locale is NoiReadingLocale {
+  return (noiReadingLocales as readonly Locale[]).includes(locale);
+}
+
+export const noiInterpretations: Record<NoiReadingLocale, NoiInterpretation> = {
   en: {
     tab: "EN",
     letters: [
@@ -66,27 +74,6 @@ export const noiInterpretations: Record<Locale, NoiInterpretation> = {
       },
     ],
     motto: "Nysgjerrighet. Oversikt. Iverksetting.",
-  },
-  tr: {
-    tab: "TR",
-    letters: [
-      {
-        letter: "N",
-        word: "Niyet",
-        line: "Neden yaptığını bilerek başla.",
-      },
-      {
-        letter: "O",
-        word: "Odak",
-        line: "Karmaşıklığın içindeki yapıyı bul.",
-      },
-      {
-        letter: "I",
-        word: "İnşa",
-        line: "Anlayışı işe yarar bir şeye dönüştür.",
-      },
-    ],
-    motto: "Niyet. Odak. İnşa.",
   },
 };
 

@@ -56,7 +56,6 @@ Today, it's a personal creative practice by Enes Yılmaz. Over time, it may beco
 
 - EN: N — Notice (See beyond the obvious.) · O — Organize (Find the structure within complexity.) · I — Invent (Turn understanding into something useful.)
 - NO: N — Nysgjerrighet (Still spørsmålet før du antar svaret.) · O — Oversikt (Finn strukturen i det komplekse.) · I — Iverksetting (Gjør forståelse om til noe nyttig.)
-- TR: N — Niyet (Neden yaptığını bilerek başla.) · O — Odak (Karmaşıklığın içindeki yapıyı bul.) · I — İnşa (Anlayışı işe yarar bir şeye dönüştür.)
 
 ### Selected Work
 Software systems, digital products and websites built to solve real problems.

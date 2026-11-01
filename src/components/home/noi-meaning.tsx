@@ -1,7 +1,12 @@
 import { NoiLetter } from "@/components/brand/noi-letter";
 import { Section } from "@/components/ui/section";
-import { noiInterpretations, noiSectionContent } from "@/data/noi";
-import { locales, type Locale } from "@/i18n/config";
+import {
+  isNoiReadingLocale,
+  noiInterpretations,
+  noiReadingLocales,
+  noiSectionContent,
+} from "@/data/noi";
+import type { Locale } from "@/i18n/config";
 
 type NoiMeaningProps = {
   locale: Locale;
@@ -15,6 +20,7 @@ type NoiMeaningProps = {
  */
 export function NoiMeaning({ locale, index }: NoiMeaningProps) {
   const copy = noiSectionContent[locale];
+  const initialReading = isNoiReadingLocale(locale) ? locale : "en";
 
   return (
     <Section className="home-noi" id="what-is-noi">
@@ -37,11 +43,11 @@ export function NoiMeaning({ locale, index }: NoiMeaningProps) {
         <div className="noi-meaning" role="group" aria-labelledby="noi-heading">
           <fieldset className="noi-meaning__tabs">
             <legend className="sr-only">{copy.languagePicker}</legend>
-            {locales.map((option) => (
+            {noiReadingLocales.map((option) => (
               <label className="noi-meaning__tab" key={option} lang={option}>
                 <input
                   className="sr-only"
-                  defaultChecked={option === locale}
+                  defaultChecked={option === initialReading}
                   name="noi-language"
                   type="radio"
                   value={option}
@@ -51,7 +57,7 @@ export function NoiMeaning({ locale, index }: NoiMeaningProps) {
             ))}
           </fieldset>
 
-          {locales.map((option) => {
+          {noiReadingLocales.map((option) => {
             const reading = noiInterpretations[option];
             return (
               <div
