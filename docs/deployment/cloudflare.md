@@ -31,21 +31,21 @@ Cloudflare dashboard → **Workers & Pages** → **Create** → **Import a repos
 
 **Build variables** (Settings → Build → Variables and secrets):
 
-| Name                                    | Example                      |
-| --------------------------------------- | ---------------------------- |
-| `NODE_VERSION`                          | `22`                         |
-| `NEXT_PUBLIC_SITE_URL`                  | `https://<your-domain>`      |
-| `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` | the GitHub App slug (step 3) |
+| Name                                    | Example                                     |
+| --------------------------------------- | ------------------------------------------- |
+| `NODE_VERSION`                          | `22`                                        |
+| `NEXT_PUBLIC_SITE_URL`                  | `https://noiverse.com`, **only at go-live** |
+| `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` | the GitHub App slug (step 3)                |
 
-`NEXT_PUBLIC_*` values are inlined at build time, so they belong under **Build**, not runtime. While `NEXT_PUBLIC_SITE_URL` is unset, `robots.txt` blocks all indexing.
+`NEXT_PUBLIC_*` values are inlined at build time, so they belong under **Build**, not runtime. While `NEXT_PUBLIC_SITE_URL` is unset, `robots.txt` blocks all indexing and canonical URLs stay non-public. Leave it unset during the preview phase so the `workers.dev` copy is never indexed. Set it in step 5.
 
 ## 3. GitHub App for admin sign-in
 
 GitHub → Settings → Developer settings → **GitHub Apps** → **New GitHub App**:
 
-- Homepage URL: `https://<your-domain>`
+- Homepage URL: `https://noiverse.com`
 - Callback URLs (add each one you use):
-  - `https://<your-domain>/api/keystatic/github/oauth/callback`
+  - `https://noiverse.com/api/keystatic/github/oauth/callback` (works once the domain is connected)
   - `https://enesyilmaz-portfolio.<account>.workers.dev/api/keystatic/github/oauth/callback`
 - Webhook: off
 - Repository permissions: **Contents** read & write, **Metadata** read-only, **Pull requests** read & write
@@ -67,9 +67,18 @@ Worker → Settings → **Variables and secrets** (type: Secret):
 
 Then redeploy. `/keystatic` should offer "Log in with GitHub".
 
-## 5. Custom domain (later)
+## 5. Custom domain: noiverse.com (go-live only)
 
-Worker → Settings → Domains & Routes → **Add custom domain**. This changes DNS, so do it only when the site should go live. Then update `NEXT_PUBLIC_SITE_URL` and the GitHub App callback URL.
+The domain `noiverse.com` is registered. It is **not connected yet**, on purpose: connecting it changes DNS and makes the site public.
+
+When the site should go live:
+
+1. Add the domain to the Cloudflare account (Websites → Add a site), if it is not already there, and point the registrar's nameservers to Cloudflare.
+2. Worker → Settings → Domains & Routes → **Add custom domain** → `noiverse.com`. Optionally add `www.noiverse.com` and redirect it to the apex.
+3. Set the build variable `NEXT_PUBLIC_SITE_URL=https://noiverse.com` and redeploy. Canonical URLs, sitemap, hreflang and structured data then use the domain, and `robots.txt` allows indexing.
+4. Check that the GitHub App callback `https://noiverse.com/api/keystatic/github/oauth/callback` works.
+
+The domain is not configured in `wrangler.jsonc` (`routes` / `custom_domain`), because a deploy would then attach it automatically.
 
 ## Publishing flow
 

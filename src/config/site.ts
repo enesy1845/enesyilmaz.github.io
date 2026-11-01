@@ -19,5 +19,7 @@ export const siteConfig = {
   contentUpdatedAt: "2026-10-21",
   defaultLocale,
   locales,
+  /** Registered production domain. Builds use it only via NEXT_PUBLIC_SITE_URL (set at go-live). */
+  productionDomain: "noiverse.com",
   localUrl: "http://localhost:3000",
 } as const;
