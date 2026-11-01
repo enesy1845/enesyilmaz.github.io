@@ -73,13 +73,15 @@ export default async function CvPage({ params }: PageProps) {
   )}`;
 
   const actions = [
-    ...(cvDocument.href
-      ? [{ href: cvDocument.href, label: copy.downloadAction }]
-      : []),
+    {
+      href: cvDocument.href,
+      label: copy.downloadAction,
+      download: cvDocument.fileName,
+    },
     {
       href: "#references",
       label: copy.referencesAction,
-      variant: cvDocument.href ? ("secondary" as const) : ("primary" as const),
+      variant: "secondary" as const,
     },
     {
       href: createLocalePath(locale, "contact"),

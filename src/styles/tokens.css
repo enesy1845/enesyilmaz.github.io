@@ -73,6 +73,8 @@
   --font-size-display: clamp(3rem, 2.2rem + 3.2vw, 5.25rem);
   --font-size-page-title: clamp(3.25rem, 9vw, 8rem);
   --font-size-discipline: clamp(3.5rem, 8vw, 8rem);
+  --noi-specimen-size: clamp(5rem, 15vw, 11rem);
+  --noi-specimen-height: clamp(8rem, 23vw, 17rem);
 
   --line-height-tight: 1.05;
   --line-height-heading: 1.12;

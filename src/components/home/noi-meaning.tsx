@@ -18,19 +18,23 @@ export function NoiMeaning({ locale, index }: NoiMeaningProps) {
 
   return (
     <Section className="home-noi" id="what-is-noi">
-      <div className="noi-intro reveal">
-        <div className="noi-intro__story">
+      <div className="noi-intro">
+        <header className="noi-intro__heading">
           <p className="section-index">
             {index} / {copy.eyebrow}
           </p>
-          <h2>{copy.title}</h2>
+          <h2 id="noi-heading">{copy.title}</h2>
+        </header>
+        <div className="noi-intro__story">
           <p className="noi-intro__tagline">{copy.tagline}</p>
-          {copy.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+          <div className="noi-intro__copy">
+            {copy.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
         </div>
 
-        <div className="noi-meaning">
+        <div className="noi-meaning" role="group" aria-labelledby="noi-heading">
           <fieldset className="noi-meaning__tabs">
             <legend className="sr-only">{copy.languagePicker}</legend>
             {locales.map((option) => (
@@ -47,10 +51,6 @@ export function NoiMeaning({ locale, index }: NoiMeaningProps) {
             ))}
           </fieldset>
 
-          <p aria-hidden="true" className="noi-meaning__title">
-            {copy.meaningTitle}
-          </p>
-
           {locales.map((option) => {
             const reading = noiInterpretations[option];
             return (
@@ -61,7 +61,7 @@ export function NoiMeaning({ locale, index }: NoiMeaningProps) {
                 lang={option}
               >
                 <dl className="noi-meaning__letters">
-                  {reading.letters.map((item) => (
+                  {reading.letters.map((item, letterIndex) => (
                     <div className="noi-meaning__row" key={item.letter}>
                       <dt>
                         <span aria-hidden="true" className="noi-meaning__glyph">
@@ -70,7 +70,15 @@ export function NoiMeaning({ locale, index }: NoiMeaningProps) {
                             dotPosition="top"
                           />
                         </span>
-                        <span className="noi-meaning__word">{item.word}</span>
+                        <span className="noi-meaning__caption">
+                          <span
+                            aria-hidden="true"
+                            className="noi-meaning__step"
+                          >
+                            0{letterIndex + 1}
+                          </span>
+                          <span className="noi-meaning__word">{item.word}</span>
+                        </span>
                       </dt>
                       <dd>{item.line}</dd>
                     </div>

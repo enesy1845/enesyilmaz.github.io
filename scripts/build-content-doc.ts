@@ -309,10 +309,7 @@ line("## CV `/en/cv`");
 source("src/data/cv.ts");
 pageMeta("cv");
 field("Eyebrow", cv.eyebrow);
-field(
-  "Download button",
-  cvDocument.href ? cv.downloadAction : "hidden (no PDF yet)",
-);
+field("Download button", `${cv.downloadAction} (${cvDocument.href})`);
 line();
 line(`### ${cv.timelineTitle}`);
 for (const entry of timeline) {

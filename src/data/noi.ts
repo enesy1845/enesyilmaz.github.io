@@ -24,7 +24,6 @@ export type NoiSectionContent = {
   title: string;
   tagline: string;
   paragraphs: readonly string[];
-  meaningTitle: string;
   meaningNote: string;
   languagePicker: string;
 };
@@ -102,7 +101,6 @@ export const noiSectionContent: Record<Locale, NoiSectionContent> = {
       "NOI brings together my work in software engineering, data and digital experiences with my interests in mathematics, education, design and craftsmanship.",
       "Today, it's a personal creative practice by Enes Yılmaz. Over time, it may become a home for new ideas, products and collaborations.",
     ],
-    meaningTitle: "noi.",
     meaningNote:
       "Each language reads the letters in its own way. These are interpretations, not translations.",
     languagePicker: "Read NOI in",
@@ -117,7 +115,6 @@ export const noiSectionContent: Record<Locale, NoiSectionContent> = {
       "NOI samler arbeidet mitt med programvareutvikling, data og digitale opplevelser med interessene mine for matematikk, utdanning, design og håndverk.",
       "I dag er det en personlig, skapende praksis av Enes Yılmaz. Med tiden kan det bli et hjem for nye ideer, produkter og samarbeid.",
     ],
-    meaningTitle: "noi.",
     meaningNote:
       "Hvert språk leser bokstavene på sin egen måte. Dette er tolkninger, ikke oversettelser.",
     languagePicker: "Les NOI på",
@@ -132,7 +129,6 @@ export const noiSectionContent: Record<Locale, NoiSectionContent> = {
       "NOI; yazılım mühendisliği, veri ve dijital deneyimler alanındaki işlerimi matematik, eğitim, tasarım ve zanaat ilgilerimle bir araya getiriyor.",
       "Bugün Enes Yılmaz'ın kişisel üretim pratiği. Zamanla yeni fikirlere, ürünlere ve iş birliklerine ev sahipliği yapabilir.",
     ],
-    meaningTitle: "noi.",
     meaningNote:
       "Her dil harfleri kendi biçimiyle okur. Bunlar çeviri değil, yorumdur.",
     languagePicker: "NOI'yi şu dilde oku",

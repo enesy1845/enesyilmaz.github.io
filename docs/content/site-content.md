@@ -482,7 +482,7 @@ _Source: `src/data/cv.ts`_
 - **SEO description:** Explore Enes Yılmaz's professional journey, software engineering experience, technical skills, education, certifications and references.
 
 - **Eyebrow:** Professional Journey
-- **Download button:** hidden (no PDF yet)
+- **Download button:** Download CV (PDF) (/documents/Enes-Yilmaz-CV-EN.pdf)
 
 ### Experience
 - **2026** · Employment · Asker kommune — Digitalisering / IKT — Software Developer / Consultant (April–December 2026 · Fixed-term)

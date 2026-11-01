@@ -8,6 +8,7 @@ import { createLocalePath } from "@/i18n/routing";
 type PageIntroAction = {
   href: string;
   label: string;
+  download?: string;
   variant?: "primary" | "secondary" | "ghost" | "text";
 };
 
@@ -61,6 +62,7 @@ export function PageIntro({
                 {actions.map((action) => (
                   <ButtonLink
                     href={action.href}
+                    download={action.download}
                     key={action.href}
                     variant={action.variant}
                   >

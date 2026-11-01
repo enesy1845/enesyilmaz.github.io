@@ -20,6 +20,11 @@ The foundation notes below describe the earlier Phase 3 baseline.
 The [editorial portrait refinement](docs/design/editorial-portrait.md) documents
 the shared monochrome portrait and the Home/About layouts using it.
 
+The [NOI editorial and CV refinement](docs/design/noi-editorial-cv.md) records the
+open letter composition, About heading hierarchy and the English PDF download.
+Regenerate the public English CV PDF with `npm run cv:pdf` after changing CV data
+or contact details; review pagination and include the updated document.
+
 The current application is Phase 3. It has a multilingual technical foundation, a restrained visual design foundation, typed content records, real static Home content, selected projects, and improved Work/About/Contact pages. It is still not the final interactive portfolio experience.
 
 ## Status

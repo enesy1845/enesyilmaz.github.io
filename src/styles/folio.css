@@ -169,8 +169,8 @@
   margin-bottom: var(--space-6);
 }
 .about-chapter h2 {
-  font-family: var(--font-editorial);
-  font-size: var(--font-size-2xl);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-3xl);
   line-height: var(--line-height-heading);
   letter-spacing: var(--letter-spacing-editorial);
 }
@@ -183,7 +183,7 @@
 .about-chapter > .about-chapter__lead {
   max-width: 36ch;
   font-family: var(--font-editorial);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-lg);
   line-height: var(--line-height-body);
   color: var(--color-foreground);
   margin-bottom: var(--space-6);

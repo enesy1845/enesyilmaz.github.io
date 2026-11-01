@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 import sitemap from "@/app/sitemap";
 import { notes } from "@/lib/content/notes";
@@ -39,8 +41,14 @@ describe("cv and content data", () => {
     expect(text).not.toMatch(/\bactive\b/i);
   });
 
-  it("hides document links until approved files exist", () => {
-    expect(cvDocument.href).toBeUndefined();
+  it("provides a real English PDF and descriptive filename", () => {
+    expect(cvDocument.fileName).toBe("Enes-Yilmaz-CV-EN.pdf");
+    const file = readFileSync(resolve(`public${cvDocument.href}`));
+    expect(file.subarray(0, 5).toString()).toBe("%PDF-");
+    expect(file.length).toBeGreaterThan(5000);
+  });
+
+  it("keeps reference documents hidden until approved files exist", () => {
     for (const reference of references) {
       expect(reference.documentUrl).toBeUndefined();
     }

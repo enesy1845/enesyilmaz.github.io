@@ -71,13 +71,14 @@ export default async function AboutPage({ params }: PageProps) {
                 <article
                   className="about-chapter"
                   id={`about-${index + 1}`}
+                  aria-labelledby={`about-heading-${index + 1}`}
                   key={section.title}
                 >
                   <header>
                     <span aria-hidden="true" className="section-index">
                       0{index + 1}
                     </span>
-                    <h2>{section.title}</h2>
+                    <h2 id={`about-heading-${index + 1}`}>{section.title}</h2>
                   </header>
                   {section.lead ? (
                     <p className="about-chapter__lead">{section.lead}</p>

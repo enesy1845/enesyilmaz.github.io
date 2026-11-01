@@ -275,11 +275,7 @@ export const timeline: readonly TimelineEntry[] = [
       "Middle East Technical University (ODTÜ)",
       "Orta Doğu Teknik Üniversitesi",
     ),
-    role: t(
-      "Mathematics studies",
-      "Matematikkstudier",
-      "Matematik öğrenimi",
-    ),
+    role: t("Mathematics studies", "Matematikkstudier", "Matematik öğrenimi"),
   },
 ];
 
@@ -541,13 +537,10 @@ export const references: readonly Reference[] = [
   },
 ];
 
-/**
- * Standard ATS-friendly PDF CV. The download stays hidden until a real,
- * up-to-date file exists at this path under /public.
- */
-// TODO: add "/documents/enes-yilmaz-cv.pdf" once the approved PDF is ready.
-export const cvDocument: { href?: string; fileName: string } = {
-  fileName: "enes-yilmaz-cv.pdf",
+/** One English PDF, shared by every interface language. Run npm run cv:pdf. */
+export const cvDocument = {
+  href: "/documents/Enes-Yilmaz-CV-EN.pdf",
+  fileName: "Enes-Yilmaz-CV-EN.pdf",
 };
 
 export type CvPageCopy = {
@@ -576,7 +569,7 @@ export type CvPageCopy = {
 export const cvPageCopy: Record<Locale, CvPageCopy> = {
   en: {
     eyebrow: "Professional Journey",
-    downloadAction: "Download CV",
+    downloadAction: "Download CV (PDF)",
     referencesAction: "View References",
     contactAction: "Contact Me",
     timelineTitle: "Experience",
@@ -607,7 +600,7 @@ export const cvPageCopy: Record<Locale, CvPageCopy> = {
   },
   no: {
     eyebrow: "Profesjonell reise",
-    downloadAction: "Last ned CV",
+    downloadAction: "Last ned CV (PDF, engelsk)",
     referencesAction: "Se referanser",
     contactAction: "Kontakt meg",
     timelineTitle: "Erfaring",
@@ -638,7 +631,7 @@ export const cvPageCopy: Record<Locale, CvPageCopy> = {
   },
   tr: {
     eyebrow: "Profesyonel Yolculuk",
-    downloadAction: "Özgeçmişi indir",
+    downloadAction: "Özgeçmişi indir (PDF, İngilizce)",
     referencesAction: "Referansları gör",
     contactAction: "Bana ulaş",
     timelineTitle: "Deneyim",
