@@ -167,8 +167,19 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       );
 
       if (!canDock || from.length === 0) {
+        delete root.dataset.heroAtRest;
         return;
       }
+
+      // Fully settled at the top (intro and dot entrance finished): the CSS
+      // shows the natively painted hero letters instead of the magnified copy.
+      const atRest =
+        !introActive &&
+        position <= 0 &&
+        dotIntroElapsed >= NOI_MOTION_DURATION &&
+        root.dataset.heroIntro === "done";
+      if (atRest) root.dataset.heroAtRest = "true";
+      else delete root.dataset.heroAtRest;
 
       headerLetters.forEach((letter, index) => {
         const start = from[index];
@@ -458,6 +469,7 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
       headerDot?.removeAttribute("transform");
       delete root.dataset.heroState;
       delete root.dataset.heroDocked;
+      delete root.dataset.heroAtRest;
       delete root.dataset.heroMotion;
       delete root.dataset.heroLogoReady;
       if (root.dataset.heroIntro !== "done") {

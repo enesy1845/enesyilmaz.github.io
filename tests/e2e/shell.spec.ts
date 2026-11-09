@@ -656,6 +656,13 @@ test("hero vector stays sharp after docking and returning", async ({
   await page.addStyleTag({
     content: ".hero__backdrop { visibility: hidden; }",
   });
+  // At rest the natively painted hero letters replace the magnified copy;
+  // compare that settled state before and after a full dock round trip.
+  const atRest = () =>
+    expect(page.locator("html")).toHaveAttribute("data-hero-at-rest", "true", {
+      timeout: 8_000,
+    });
+  await atRest();
   const letter = page.locator("[data-header-letter]").first();
   const initialTransform = await letter.evaluate(
     (element) => element.style.transform,
@@ -679,6 +686,7 @@ test("hero vector stays sharp after docking and returning", async ({
   await expect
     .poll(() => letter.evaluate((element) => element.style.transform))
     .toBe(initialTransform);
+  await atRest();
   await expect(letter).toHaveCSS("will-change", "auto");
   await expect(page.locator("[data-header-identity]")).toHaveCSS(
     "opacity",

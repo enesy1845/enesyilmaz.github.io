@@ -19,10 +19,6 @@
   --island-glass: color-mix(in srgb, var(--color-dark) 5%, transparent);
   --island-blur: blur(var(--glass-blur));
   position: relative;
-  /* The magnified wordmark's i carries an empty orbit box past the right
-     edge on phones; clip it horizontally so the page never side-scrolls.
-     The fixed mobile menu is not clipped (the header is no containing block). */
-  overflow-x: clip;
   background: transparent;
   border-bottom: 1px solid transparent;
 }
@@ -251,6 +247,21 @@ html[data-hero-motion="full"][data-hero-logo-ready] .hero__letter {
   visibility: hidden;
 }
 
+/* At rest at the top, show the hero's own letters, painted at full size,
+   instead of the magnified header copy: some mobile browsers rasterize that
+   copy at header size and enlarge the bitmap. Both share the exact same
+   geometry, so the swap is invisible; the copy only shows while gliding. */
+html[data-hero-motion="full"][data-hero-logo-ready][data-hero-at-rest]
+  .hero__letter {
+  visibility: visible;
+  /* Appear in the final colour at once, exactly like the copy they replace. */
+  transition: none;
+}
+
+html[data-hero-at-rest] [data-header-letter] {
+  visibility: hidden;
+}
+
 /* Do not add will-change: transform here. It can freeze a small raster of
    these vectors and magnify that bitmap on the return to the hero. Let the
    browser rasterize the SVG at the current scale instead. */
@@ -413,7 +424,7 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 
 .hero__wordmark {
   /* AIR mobile: the mark spans the full width at roughly a third of it. */
-  --hero-letter-size: min(calc((100vw - 2 * var(--hero-gutter)) * 0.36), 22svh);
+  --hero-letter-size: min(calc((100vw - 2 * var(--hero-gutter)) * 0.32), 22svh);
 
   display: flex;
   flex: 1;
@@ -425,8 +436,6 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 .hero__letters {
   display: flex;
   flex-direction: column;
-  /* Absorbs the i's empty orbit overhang without page-wide horizontal scroll. */
-  overflow-x: clip;
 }
 
 .hero__word {
@@ -439,10 +448,12 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 }
 
 /* The i's box also holds the dot's orbit (700 units, glyph about 210), so on
-   mobile the empty right part would leave the spread mark off-centre. Letting
-   that slack overhang the edge puts the stem on the gutter, matching the n. */
+   mobile its empty right part left the spread mark off-centre. Mirroring that
+   slack on the left centres the visible glyphs. Nothing overflows or needs
+   clipping (some iOS Safari versions clip both axes for overflow-x: clip,
+   which hid the magnified logo). */
 .hero__word:last-child {
-  margin-inline-end: -0.49em;
+  padding-inline-start: 0.49em;
 }
 
 .hero__word + .hero__word {
@@ -581,7 +592,7 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
   }
 
   .hero__word:last-child {
-    margin-inline-end: 0;
+    padding-inline-start: 0;
   }
 
   .hero__lead {
