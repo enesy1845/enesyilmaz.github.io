@@ -868,12 +868,18 @@ for (const viewport of [
   }) => {
     await page.setViewportSize(viewport);
     await page.goto("/tr");
+    // Glyphs fly in during the intro; measure where they come to rest.
+    await page.waitForFunction(
+      () => document.documentElement.dataset.heroIntro === "done",
+    );
 
     const metrics = await page.evaluate(() => {
       const stage = document.querySelector(".hero__stage");
+      // Measure the visible glyphs, not the i's box: that box also holds the
+      // dot's empty orbit, which is allowed to overhang (and is clipped).
       const letters = Array.from(
-        document.querySelectorAll("[data-hero-letter]"),
-        (letter) => letter.getBoundingClientRect(),
+        document.querySelectorAll("[data-hero-letter] path"),
+        (glyph) => glyph.getBoundingClientRect(),
       );
       return {
         overflowX: document.documentElement.scrollWidth > window.innerWidth,

@@ -19,6 +19,10 @@
   --island-glass: color-mix(in srgb, var(--color-dark) 5%, transparent);
   --island-blur: blur(var(--glass-blur));
   position: relative;
+  /* The magnified wordmark's i carries an empty orbit box past the right
+     edge on phones; clip it horizontally so the page never side-scrolls.
+     The fixed mobile menu is not clipped (the header is no containing block). */
+  overflow-x: clip;
   background: transparent;
   border-bottom: 1px solid transparent;
 }
@@ -421,6 +425,8 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 .hero__letters {
   display: flex;
   flex-direction: column;
+  /* Absorbs the i's empty orbit overhang without page-wide horizontal scroll. */
+  overflow-x: clip;
 }
 
 .hero__word {
@@ -430,6 +436,13 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1;
+}
+
+/* The i's box also holds the dot's orbit (700 units, glyph about 210), so on
+   mobile the empty right part would leave the spread mark off-centre. Letting
+   that slack overhang the edge puts the stem on the gutter, matching the n. */
+.hero__word:last-child {
+  margin-inline-end: -0.49em;
 }
 
 .hero__word + .hero__word {
@@ -565,6 +578,10 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
   .hero__letters,
   .hero__lead {
     grid-area: 1 / 1;
+  }
+
+  .hero__word:last-child {
+    margin-inline-end: 0;
   }
 
   .hero__lead {

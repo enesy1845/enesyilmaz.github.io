@@ -186,9 +186,13 @@ export function HeroMotion({ heroId }: HeroMotionProps) {
             stagger,
           ),
         );
+        // A 2D transform on purpose: translate3d promotes each letter to its
+        // own compositor layer, which mobile browsers rasterize at header
+        // size and then magnify (blurred, pixelated mark). In 2D the vector
+        // is painted at its current scale and stays sharp.
         const value = docked
           ? "none"
-          : `translate3d(${transform.x.toFixed(2)}px, ${transform.y.toFixed(2)}px, 0) scale(${transform.scale.toFixed(6)})`;
+          : `translate(${transform.x.toFixed(2)}px, ${transform.y.toFixed(2)}px) scale(${transform.scale.toFixed(6)})`;
         // Once docked, keep the same element/layer and stop rewriting it.
         if (letter.style.transform !== value) letter.style.transform = value;
         letter.style.setProperty(
