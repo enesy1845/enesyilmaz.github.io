@@ -1,0 +1,68 @@
+{
+  "name": "OmniTech Academy",
+  "draft": false,
+  "featured": false,
+  "order": 160,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "WordPress"
+  ],
+  "disciplines": [
+    "Web development"
+  ],
+  "externalUrl": "https://omnitechacademy.com/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/omnitech-academy.webp",
+  "en": {
+    "title": "OmniTech Academy",
+    "shortTitle": "",
+    "summary": "A WordPress site for an online training platform with a varied course catalogue.",
+    "description": "",
+    "role": "Freelance WordPress Developer",
+    "organization": "OmniTech Academy",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the OmniTech Academy website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "OmniTech Academy",
+    "shortTitle": "",
+    "summary": "Et WordPress-nettsted for en nettbasert opplæringsplattform med et variert kurstilbud.",
+    "description": "",
+    "role": "Frilans WordPress-utvikler",
+    "organization": "OmniTech Academy",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet OmniTech Academy",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "OmniTech Academy",
+    "shortTitle": "",
+    "summary": "Çeşitli kurslar sunan bir çevrim içi eğitim platformu için WordPress sitesi.",
+    "description": "",
+    "role": "Serbest WordPress Geliştirici",
+    "organization": "OmniTech Academy",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "OmniTech Academy web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

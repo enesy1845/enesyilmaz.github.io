@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# OpenNext / Cloudflare local output
+.open-next/
+.wrangler/
+
+# tests
+playwright-report/
+test-results/
+coverage/
+tsconfig.tsbuildinfo
+
+# env
+.env
+.env*.local
+.dev.vars
+
+# system
+.DS_Store
+Thumbs.db
+
+# generated content (scripts/build-content.ts)
+src/content/generated.ts

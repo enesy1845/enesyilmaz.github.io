@@ -1,0 +1,68 @@
+{
+  "name": "Yavuz Alemdar",
+  "draft": false,
+  "featured": false,
+  "order": 130,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "WordPress"
+  ],
+  "disciplines": [
+    "Web development"
+  ],
+  "externalUrl": "https://www.yavuzalemdar.com/",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/yavuz-alemdar.webp",
+  "en": {
+    "title": "Yavuz Alemdar",
+    "shortTitle": "",
+    "summary": "One of three WordPress sites for a US-based graphic designer, balancing aesthetics and usability.",
+    "description": "",
+    "role": "Freelance WordPress Developer",
+    "organization": "Yavuz Alemdar",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Homepage of the Yavuz Alemdar website",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Yavuz Alemdar",
+    "shortTitle": "",
+    "summary": "Ett av tre WordPress-nettsteder for en USA-basert grafisk designer, med balanse mellom estetikk og brukervennlighet.",
+    "description": "",
+    "role": "Frilans WordPress-utvikler",
+    "organization": "Yavuz Alemdar",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Forsiden til nettstedet Yavuz Alemdar",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Yavuz Alemdar",
+    "shortTitle": "",
+    "summary": "ABD merkezli bir grafik tasarımcı için geliştirdiğim üç WordPress sitesinden biri; estetik ile kullanılabilirliği dengeliyor.",
+    "description": "",
+    "role": "Serbest WordPress Geliştirici",
+    "organization": "Yavuz Alemdar",
+    "period": "",
+    "location": "",
+    "status": "",
+    "imageAlt": "Yavuz Alemdar web sitesinin ana sayfası",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

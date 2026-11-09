@@ -1,0 +1,102 @@
+{
+  "name": "Privacy And PII Workflow",
+  "draft": false,
+  "featured": false,
+  "order": 100,
+  "category": "software",
+  "confidential": true,
+  "technologies": [
+    "React",
+    "TypeScript",
+    ".NET"
+  ],
+  "disciplines": [
+    "Privacy review",
+    "Workflow design",
+    "User interface"
+  ],
+  "externalUrl": null,
+  "repositoryUrl": null,
+  "coverImage": null,
+  "en": {
+    "title": "Privacy And PII Workflow",
+    "shortTitle": "PII Workflow",
+    "summary": "Workflow support for reviewing sensitive information before submitted cases move forward.",
+    "description": "Worked on parts of a privacy-aware workflow where users needed clearer handling of submitted case information.",
+    "role": "Software developer contributor",
+    "organization": "Anonymized public-sector context",
+    "period": "",
+    "location": "Norway",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Supported interface and workflow behavior for sensitive-information review.",
+      "Worked within access-control and privacy constraints.",
+      "Kept the public case study intentionally high level to avoid exposing sensitive workflows."
+    ],
+    "challenges": [
+      "Designing a practical user path around information that should not be casually exposed."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "A safer and clearer workflow foundation for handling privacy-sensitive submissions."
+    ],
+    "lessons": [
+      "Privacy work benefits from small interface decisions that reduce ambiguity for users."
+    ]
+  },
+  "no": {
+    "title": "Personvern- og PII-flyt",
+    "shortTitle": "PII-flyt",
+    "summary": "Arbeidsflytstøtte for gjennomgang av sensitiv informasjon før innsendte saker går videre.",
+    "description": "Arbeidet med deler av en personvernbevisst flyt der brukere trengte tydeligere håndtering av innsendt saksinformasjon.",
+    "role": "Bidragsyter som programvareutvikler",
+    "organization": "Anonymisert offentlig kontekst",
+    "period": "",
+    "location": "Norge",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Støttet grensesnitt- og arbeidsflytatferd for gjennomgang av sensitiv informasjon.",
+      "Arbeidet innenfor tilgangskontroll og personvernrammer.",
+      "Holdt den offentlige casen på et bevisst overordnet nivå."
+    ],
+    "challenges": [
+      "Å lage en praktisk brukerflyt rundt informasjon som ikke bør eksponeres tilfeldig."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "Et tryggere og tydeligere grunnlag for håndtering av personvernsensitive innsendinger."
+    ],
+    "lessons": [
+      "Personvernarbeid styrkes av små grensesnittvalg som reduserer tvetydighet for brukere."
+    ]
+  },
+  "tr": {
+    "title": "Gizlilik ve PII İş Akışı",
+    "shortTitle": "PII İş Akışı",
+    "summary": "Gönderilen vakalar ilerlemeden önce hassas bilgilerin incelenmesini destekleyen iş akışı.",
+    "description": "Kullanıcıların gönderilen vaka bilgisini daha net ele almasını gerektiren gizlilik odaklı bir akışın bazı bölümlerinde çalıştı.",
+    "role": "Yazılım geliştirici katkısı",
+    "organization": "Anonimleştirilmiş kamu bağlamı",
+    "period": "",
+    "location": "Norveç",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Hassas bilgi incelemesi için arayüz ve iş akışı davranışını destekledi.",
+      "Erişim kontrolü ve gizlilik sınırları içinde çalıştı.",
+      "Kamusal vaka anlatımını bilinçli olarak üst düzeyde tuttu."
+    ],
+    "challenges": [
+      "Rastgele açığa çıkmaması gereken bilgi etrafında pratik bir kullanıcı yolu tasarlamak."
+    ],
+    "decisions": [],
+    "outcomes": [
+      "Gizlilik hassasiyetli başvurular için daha güvenli ve net bir iş akışı temeli."
+    ],
+    "lessons": [
+      "Gizlilik çalışması, kullanıcı belirsizliğini azaltan küçük arayüz kararlarıyla güçlenir."
+    ]
+  }
+}

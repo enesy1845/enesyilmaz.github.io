@@ -1,0 +1,94 @@
+{
+  "site": {
+    "name": "Enes Yılmaz",
+    "role": "Yazılım Geliştirici",
+    "description": "Python, React, .NET, veri mühendisliği ve modern web uygulamalarıyla çalışan, Norveç'te yaşayan yazılım geliştirici."
+  },
+  "navigation": {
+    "home": "Ana sayfa",
+    "work": "İşler",
+    "notes": "Notlar",
+    "atelier": "Atölye",
+    "about": "Hakkında",
+    "cv": "CV",
+    "contact": "İletişim"
+  },
+  "accessibility": {
+    "skipToContent": "İçeriğe geç",
+    "mainNavigation": "Ana gezinme",
+    "mobileNavigation": "Mobil gezinme",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "languageSwitcher": "Dil seç",
+    "currentLanguage": "Geçerli dil",
+    "footerNavigation": "Alt bilgi gezinmesi",
+    "heroLinks": "Giriş bölümü bağlantıları"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norsk",
+    "tr": "Türkçe"
+  },
+  "pages": {
+    "home": {
+      "heading": "Enes Yılmaz",
+      "description": "Norveç'te yaşayan; Python, React, .NET, veri mühendisliği ve modern web uygulamalarıyla çalışan bir yazılım geliştirici.",
+      "metaTitle": "Enes Yılmaz | Yazılım Geliştirici ve Python Mühendisi",
+      "metaDescription": "Enes Yılmaz, Norveç'te yaşayan; Python, React, .NET, veri mühendisliği ve modern web uygulamalarıyla çalışan bir yazılım geliştiricidir."
+    },
+    "work": {
+      "heading": "İşler",
+      "description": "Gerçek problemleri çözmek için geliştirilmiş yazılım sistemleri, dijital ürünler ve web siteleri.",
+      "featuredDescription": "Geliştirdiğim veya katkı verdiğim kamu sektörü yazılımları, müşteri platformları ve web siteleri.",
+      "metaTitle": "İşler ve Projeler",
+      "metaDescription": "Enes Yılmaz'ın kamu sektörü sistemlerinden müşteri platformlarına ve web sitelerine uzanan yazılım, veri ve web projeleri."
+    },
+    "notes": {
+      "heading": "Notlar",
+      "description": "Yazılım, eğitim, matematiksel düşünme, teknoloji ve insani gelişim üzerine düşünceler.",
+      "metaTitle": "Notlar",
+      "metaDescription": "Enes Yılmaz'ın yazılım, eğitim, matematiksel düşünme, teknoloji ve insani gelişim üzerine yazıları."
+    },
+    "atelier": {
+      "heading": "Atölye",
+      "description": "Beni en çok etkileyen şeylerin bazıları dijital değil: fiziksel nesneler, hassas mekanizmalar ve bir şeyi iyi yapmanın sessiz disiplini.",
+      "metaTitle": "Atölye",
+      "metaDescription": "Enes Yılmaz'ın zanaat ilgileri: tesbih, ahşap işçiliği, mekanik saatler ve görsel anlatım."
+    },
+    "about": {
+      "heading": "Hakkımda",
+      "description": "Yazılım mühendisliği, veri ve insan odaklı problem çözmenin kesiştiği noktada çalışıyorum.",
+      "metaTitle": "Hakkımda",
+      "metaDescription": "Enes Yılmaz, Asker'de (Norveç) matematik, programlama eğitimi, full-stack geliştirme ve veri mühendisliğini birleştiren bir yazılım geliştiricidir."
+    },
+    "cv": {
+      "heading": "Merakla şekillenen bir yolculuk.",
+      "description": "Matematik ve eğitimden yazılım mühendisliğine, veriye ve dijital ürünlere — öğrenmenin, üretmenin ve fikirleri birbirine bağlamanın yolculuğu.",
+      "metaTitle": "Özgeçmiş ve Deneyim | Enes Yılmaz — Yazılım Geliştirici",
+      "metaDescription": "Enes Yılmaz'ın profesyonel yolculuğunu, yazılım deneyimini, teknik becerilerini, eğitimini, sertifikalarını ve referanslarını keşfedin."
+    },
+    "contact": {
+      "heading": "İletişim",
+      "description": "Anlamlı iş birliklerine, yazılım mühendisliği fırsatlarına ve üretmeye değer fikirler üzerine sohbetlere açığım.",
+      "metaTitle": "İletişim",
+      "metaDescription": "Norveç'teki yazılım geliştirici Enes Yılmaz'a e-posta, LinkedIn veya GitHub üzerinden ulaşın."
+    }
+  },
+  "contact": {
+    "email": "E-posta",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "youtubeDetail": "Eğitim ve programlama videoları"
+  },
+  "footer": {
+    "location": "Asker, Norveç",
+    "professionalLinks": "Profesyonel bağlantılar",
+    "copyright": "Tüm hakları saklıdır.",
+    "practice": "NOI — Enes Yılmaz'ın bağımsız üretim pratiği."
+  },
+  "notFound": {
+    "heading": "Sayfa bulunamadı",
+    "description": "İstenen sayfa bu dilde mevcut değil.",
+    "homeLink": "Ana sayfaya dön"
+  }
+}

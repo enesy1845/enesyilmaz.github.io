@@ -1,0 +1,42 @@
+/* Footer wordmark in the left column, redrawn as a dot-matrix by
+   footer-particles-canvas when motion is allowed. */
+
+.footer-mark {
+  position: relative;
+  max-width: 30rem;
+  color: var(--color-foreground);
+  container-type: inline-size;
+}
+
+.footer-mark__letters {
+  display: flex;
+  justify-content: space-between;
+  /* Sized to the footer column, so the mark fills it at any width. */
+  font-size: 34cqi;
+  line-height: 0;
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+/* The canvas bleeds past the mark so pushed dots are never clipped: up to the
+   page edge at the sides (no horizontal scroll) and a little above and below. */
+.footer-mark__canvas {
+  --footer-mark-bleed-y: var(--space-12);
+
+  position: absolute;
+  top: calc(-1 * var(--footer-mark-bleed-y));
+  left: calc(-1 * var(--layout-gutter));
+  width: calc(100% + 2 * var(--layout-gutter));
+  height: calc(100% + 2 * var(--footer-mark-bleed-y));
+  pointer-events: none;
+}
+
+.footer-mark__letter {
+  display: block;
+  line-height: 0;
+}
+
+/* The particles start scattered and assemble, so the outline dissolves into
+   them instead of being duplicated. */
+.footer-mark[data-footer-mark-ready="true"] .footer-mark__letters {
+  opacity: 0;
+}

@@ -1,0 +1,73 @@
+{
+  "name": "Seller Flash",
+  "draft": false,
+  "featured": false,
+  "order": 70,
+  "category": "software",
+  "confidential": false,
+  "technologies": [
+    "C#",
+    ".NET",
+    "Vue.js",
+    "Docker",
+    "PostgreSQL"
+  ],
+  "disciplines": [
+    "Full-stack development",
+    "Scrum"
+  ],
+  "externalUrl": null,
+  "repositoryUrl": null,
+  "coverImage": null,
+  "en": {
+    "title": "Seller Flash",
+    "shortTitle": "",
+    "summary": "Contributing to frontend and backend development for an e-commerce automation application.",
+    "description": "Work across C#/.NET and Vue.js on dropshipping automation, in a team using Scrum and Jira.",
+    "role": "Junior Full-stack Developer",
+    "organization": "Seller Flash",
+    "period": "2022",
+    "location": "",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Seller Flash",
+    "shortTitle": "",
+    "summary": "Bidrag til frontend- og backendutvikling for en applikasjon for automatisering av netthandel.",
+    "description": "Arbeid med C#/.NET og Vue.js på automatisering av dropshipping, i et team som brukte Scrum og Jira.",
+    "role": "Junior full-stack-utvikler",
+    "organization": "Seller Flash",
+    "period": "2022",
+    "location": "",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Seller Flash",
+    "shortTitle": "",
+    "summary": "Bir e-ticaret otomasyon uygulamasının frontend ve backend geliştirmesine katkı.",
+    "description": "Scrum ve Jira kullanan bir ekipte, dropshipping otomasyonu için C#/.NET ve Vue.js ile çalıştım.",
+    "role": "Junior Full-stack Geliştirici",
+    "organization": "Seller Flash",
+    "period": "2022",
+    "location": "",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

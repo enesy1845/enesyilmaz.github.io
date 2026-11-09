@@ -1,0 +1,93 @@
+{
+  "name": "5 Star Stitches Colchester",
+  "draft": false,
+  "featured": true,
+  "order": 40,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "Next.js",
+    "TypeScript",
+    "Cloudflare"
+  ],
+  "disciplines": [
+    "Web engineering",
+    "Local SEO",
+    "Accessibility"
+  ],
+  "externalUrl": "https://5starstitchescolchester.co.uk",
+  "repositoryUrl": null,
+  "coverImage": null,
+  "en": {
+    "title": "5 Star Stitches Colchester",
+    "shortTitle": "",
+    "summary": "Building a fast, mobile-first digital presence for a local tailoring business, with clear customer journeys and search visibility in mind.",
+    "description": "",
+    "role": "Web Developer",
+    "organization": "5 Star Stitches",
+    "period": "",
+    "location": "Colchester, United Kingdom",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Responsive web development",
+      "Service-focused information architecture",
+      "Local SEO",
+      "Contact and conversion paths",
+      "Performance and accessibility",
+      "Cloudflare deployment configuration"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "5 Star Stitches Colchester",
+    "shortTitle": "",
+    "summary": "Jeg bygger en rask, mobilvennlig digital tilstedeværelse for en lokal skredderbedrift, med tydelige kundereiser og synlighet i søk.",
+    "description": "",
+    "role": "Webutvikler",
+    "organization": "5 Star Stitches",
+    "period": "",
+    "location": "Colchester, Storbritannia",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Responsiv webutvikling",
+      "Tjenestefokusert informasjonsarkitektur",
+      "Lokal søkemotoroptimalisering",
+      "Kontakt- og konverteringsveier",
+      "Ytelse og universell utforming",
+      "Oppsett av publisering på Cloudflare"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "5 Star Stitches Colchester",
+    "shortTitle": "",
+    "summary": "Yerel bir terzi işletmesi için net müşteri yolculukları ve arama görünürlüğü düşünülerek hızlı, mobil öncelikli bir dijital varlık geliştiriyorum.",
+    "description": "",
+    "role": "Web Geliştirici",
+    "organization": "5 Star Stitches",
+    "period": "",
+    "location": "Colchester, Birleşik Krallık",
+    "status": "",
+    "imageAlt": "",
+    "responsibilities": [
+      "Responsive web geliştirme",
+      "Hizmet odaklı bilgi mimarisi",
+      "Yerel SEO",
+      "İletişim ve dönüşüm yolları",
+      "Performans ve erişilebilirlik",
+      "Cloudflare yayın yapılandırması"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

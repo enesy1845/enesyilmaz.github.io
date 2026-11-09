@@ -1,0 +1,140 @@
+:root {
+  color-scheme: light;
+
+  --color-light: #f3f4ef;
+  --color-dark: #161e1d;
+  --color-inverse-muted: #b4bdb7;
+  --color-inverse-border: #47514c;
+  --color-background: var(--color-light);
+  --color-background-elevated: color-mix(
+    in srgb,
+    var(--color-dark) 2%,
+    var(--color-light)
+  );
+  --color-surface: color-mix(in srgb, var(--color-dark) 4%, var(--color-light));
+  --color-surface-muted: color-mix(
+    in srgb,
+    var(--color-dark) 8%,
+    var(--color-light)
+  );
+  --color-foreground: var(--color-dark);
+  --color-foreground-muted: color-mix(
+    in srgb,
+    var(--color-dark) 75%,
+    var(--color-light)
+  );
+  --color-foreground-subtle: color-mix(
+    in srgb,
+    var(--color-dark) 65%,
+    var(--color-light)
+  );
+  --color-border: color-mix(in srgb, var(--color-dark) 12%, var(--color-light));
+  --color-border-strong: color-mix(
+    in srgb,
+    var(--color-dark) 22%,
+    var(--color-light)
+  );
+  --color-accent: var(--color-dark);
+  --color-accent-hover: color-mix(
+    in srgb,
+    var(--color-dark) 85%,
+    var(--color-light)
+  );
+  --color-accent-foreground: var(--color-light);
+  --color-focus: var(--color-dark);
+  --color-selection: var(--color-border);
+  --color-overlay: color-mix(in srgb, var(--color-dark) 20%, transparent);
+  --color-grid: color-mix(in srgb, var(--color-dark) 4%, transparent);
+  --color-success: #2f7d4f;
+  --color-warning: #9a6400;
+  --color-error: #b42318;
+  --color-code: #3d5a80;
+  --color-thought: #5c5c5c;
+  --color-craft: #7a5c3e;
+
+  --font-sans:
+    var(--font-display), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-editorial:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+
+  --font-size-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+  --font-size-sm: clamp(0.875rem, 0.84rem + 0.14vw, 0.9375rem);
+  --font-size-base: clamp(1rem, 0.96rem + 0.16vw, 1.0625rem);
+  --font-size-md: clamp(1.0625rem, 1rem + 0.28vw, 1.1875rem);
+  --font-size-lg: clamp(1.1875rem, 1.1rem + 0.42vw, 1.375rem);
+  --font-size-xl: clamp(1.375rem, 1.24rem + 0.68vw, 1.75rem);
+  --font-size-2xl: clamp(1.75rem, 1.5rem + 1.05vw, 2.25rem);
+  --font-size-3xl: clamp(2.125rem, 1.78rem + 1.55vw, 3rem);
+  --font-size-4xl: clamp(2.625rem, 2.15rem + 2vw, 4rem);
+  --font-size-display: clamp(3rem, 2.2rem + 3.2vw, 5.25rem);
+  --font-size-page-title: clamp(3.25rem, 9vw, 8rem);
+  --font-size-discipline: clamp(3.5rem, 8vw, 8rem);
+  --noi-specimen-size: clamp(5rem, 15vw, 11rem);
+  --noi-specimen-height: clamp(8rem, 23vw, 17rem);
+
+  --line-height-tight: 1.05;
+  --line-height-heading: 1.12;
+  --line-height-body: 1.65;
+  --line-height-relaxed: 1.8;
+
+  --letter-spacing-tight: 0;
+  --letter-spacing-editorial: -0.035em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-label: 0.08em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-section: clamp(3rem, 8vw, 7rem);
+
+  --layout-max: 76rem;
+  --layout-wide: 88rem;
+  --layout-reading: 44rem;
+  --layout-gutter: clamp(1rem, 4vw, 2.5rem);
+  --layout-header-height: 4.75rem;
+  --work-thumbnail: clamp(4rem, 9vw, 7rem);
+  --work-preview-height: 40rem;
+  --max-content-width: var(--layout-max);
+  --space-page-x: var(--layout-gutter);
+  --space-section-y: var(--space-section);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-pill: 999rem;
+  --border-width: 1px;
+
+  --shadow-subtle: 0 1rem 2.5rem
+    color-mix(in srgb, var(--color-dark) 6%, transparent);
+  --shadow-elevated: 0 1.5rem 4rem
+    color-mix(in srgb, var(--color-dark) 12%, transparent);
+
+  --duration-fast: 140ms;
+  --glass-blur: 20px;
+  --duration-normal: 220ms;
+  --duration-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-navigation: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+}

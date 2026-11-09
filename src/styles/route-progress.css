@@ -1,0 +1,44 @@
+/* Top loading bar for page transitions (see route-progress.tsx). */
+.route-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-toast);
+  height: 2px;
+  pointer-events: none;
+}
+
+.route-progress__bar {
+  height: 100%;
+  background: var(--color-accent);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* One long ease-out: quick at first, then creeping toward 90%. */
+.route-progress[data-phase="loading"] .route-progress__bar {
+  opacity: 1;
+  transform: scaleX(0.9);
+  transition:
+    opacity var(--duration-fast) var(--ease-standard),
+    transform 10s cubic-bezier(0.08, 0.8, 0.2, 1);
+}
+
+.route-progress[data-phase="done"] .route-progress__bar {
+  opacity: 0;
+  transform: scaleX(1);
+  transition:
+    transform 200ms var(--ease-standard),
+    opacity 250ms var(--ease-exit) 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-progress[data-phase="loading"] .route-progress__bar {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .route-progress[data-phase="done"] .route-progress__bar {
+    transition: none;
+  }
+}

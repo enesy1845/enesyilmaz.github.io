@@ -1,0 +1,688 @@
+/*
+ * Home hero, modelled on the AIR business center intro (aircenter.space):
+ * a full-bleed light stage, a wordmark spread edge to edge, centred uppercase
+ * copy, and letters that dock into the header logo while scrolling.
+ *
+ * The mark ("noi", see siteConfig.wordmark) always sits on one row spread
+ * edge to edge. On phones and portrait tablets the lead copy goes below it;
+ * on desktop and landscape it sits in the gap before the last letter, like
+ * the AIR "A  I  R" composition.
+ */
+
+/* ---------- Header wordmark (all pages) ---------- */
+
+/* Transparent at the top; the original glass island takes over after the
+   image reaches the viewport. Preserve the hero's docking geometry. */
+.site-header {
+  --header-ink: var(--color-dark);
+  --header-muted: var(--color-foreground-muted);
+  --island-glass: color-mix(in srgb, var(--color-dark) 5%, transparent);
+  --island-blur: blur(var(--glass-blur));
+  position: relative;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+html[data-header-tone-ready] .site-header {
+  position: sticky;
+}
+
+html[data-header-inverse] .site-header {
+  --header-ink: var(--color-light);
+  --header-muted: var(--color-light);
+}
+
+.site-header__island {
+  padding: var(--space-1);
+}
+
+.header-island-marker {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+}
+
+[data-header-identity],
+.site-header__extra {
+  transition:
+    opacity var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
+}
+
+html[data-header-hidden] .site-header {
+  pointer-events: none;
+}
+
+html[data-header-hidden] [data-header-identity],
+html[data-header-hidden] .site-header__extra {
+  opacity: 0;
+  transform: translateY(-120%);
+  visibility: hidden;
+}
+
+html[data-header-hidden] .site-header__island,
+html[data-header-hidden] .site-header .menu-toggle {
+  pointer-events: auto;
+  border-color: transparent;
+  border-radius: var(--radius-pill);
+  background-color: var(--island-glass);
+  box-shadow: none;
+  -webkit-backdrop-filter: var(--island-blur);
+  backdrop-filter: var(--island-blur);
+}
+
+html[data-header-hidden] .site-header__island {
+  position: fixed;
+  top: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
+  animation: island-in var(--duration-normal) var(--ease-standard) both;
+}
+
+html[data-header-hidden] .site-header [role="dialog"] {
+  pointer-events: auto;
+}
+
+@keyframes island-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-1 * var(--space-3))) scale(0.96);
+  }
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .site-header {
+    --island-glass: var(--color-background);
+  }
+
+  html[data-header-inverse] .site-header {
+    --island-glass: var(--color-dark);
+  }
+}
+
+.site-header .language-switcher__toggle,
+.site-header .menu-toggle {
+  color: var(--header-ink);
+  background: transparent;
+  border-color: transparent;
+}
+
+.site-header :is(a, button):focus-visible {
+  outline-color: var(--header-ink);
+}
+
+.main-navigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+}
+
+.main-navigation__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--header-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.main-navigation__link:hover {
+  color: var(--header-ink);
+}
+
+.main-navigation__link[aria-current="page"] {
+  color: var(--header-ink);
+}
+
+.main-navigation__link::after {
+  position: absolute;
+  bottom: var(--space-1);
+  inset-inline: var(--space-3);
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+
+.main-navigation__link:is(
+    :hover,
+    :focus-visible,
+    [aria-current="page"]
+  )::after {
+  transform: scaleX(1);
+}
+
+.language-switcher__code {
+  padding-left: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+}
+
+.language-switcher__chevron {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+[aria-expanded="true"] > .language-switcher__chevron {
+  transform: rotate(180deg);
+}
+
+.language-switcher__panel {
+  --header-ink: var(--color-dark);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--island-glass);
+  -webkit-backdrop-filter: var(--island-blur);
+  backdrop-filter: var(--island-blur);
+}
+
+.language-switcher__item:hover,
+.language-switcher__item:focus-visible {
+  background-color: color-mix(in srgb, var(--color-dark) 6%, transparent);
+}
+
+.site-wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--header-ink);
+  font-family: var(--font-display), var(--font-sans);
+}
+
+.site-wordmark__letters {
+  display: inline-flex;
+  gap: 0.3em;
+  font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.site-wordmark__word {
+  display: inline-flex;
+  gap: 0.22em;
+}
+
+/* Vector outlines stay sharp at small sizes; the dot shares their coordinates. */
+.noi-letter {
+  display: block;
+  overflow: visible;
+  flex: none;
+  fill: currentColor;
+}
+
+[data-header-letter] {
+  display: inline-block;
+  line-height: 1;
+  transform-origin: 0 0;
+  transition: none;
+}
+
+.site-wordmark__letter-inner {
+  display: block;
+  line-height: 0;
+}
+
+/* A single visible logo lives in the header throughout the scroll. The hero
+   letters only provide layout geometry and the no-JS/static fallback. */
+html[data-hero-motion="full"]:has([data-home-hero]):not([data-hero-logo-ready])
+  [data-header-letter] {
+  opacity: 0;
+  transition: none;
+}
+
+html[data-hero-motion="full"][data-hero-logo-ready] .hero__letter {
+  visibility: hidden;
+}
+
+/* Do not add will-change: transform here. It can freeze a small raster of
+   these vectors and magnify that bitmap on the return to the hero. Let the
+   browser rasterize the SVG at the current scale instead. */
+
+/* Once the header turns dark, letters still gliding in take its colour. */
+html[data-hero-state="hero-passed"] .hero__letter {
+  color: var(--color-foreground);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  --hero-bg: var(--color-light);
+  --hero-ink: var(--color-dark);
+  --hero-muted: var(--color-foreground-subtle);
+  --hero-chip: var(--color-surface-muted);
+  --hero-gutter: clamp(1rem, 1.4vw, 1.5rem);
+  --hero-ease: cubic-bezier(0.7, 0, 0.3, 1);
+  --hero-header-offset: calc(var(--layout-header-height) + 1px);
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin-top: calc(-1 * var(--hero-header-offset));
+  overflow: clip;
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+  font-family: var(--font-display), var(--font-sans);
+}
+
+.hero ::selection {
+  background: var(--color-dark);
+  color: var(--color-light);
+}
+
+.hero :focus-visible {
+  outline-color: var(--hero-ink);
+}
+
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-sculpture {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    60% 48% at 42% 46%,
+    var(--color-surface),
+    transparent 72%
+  );
+  opacity: calc(1 - var(--hero-fade, 0));
+  transform: translateY(calc(var(--hero-fade, 0) * 6svh));
+}
+
+.hero-sculpture canvas {
+  animation: hero-fade-in 1.6s var(--hero-ease) both;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.hero__stage {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: calc(var(--hero-header-offset) + clamp(1.25rem, 6svh, 4rem))
+    var(--hero-gutter) var(--hero-gutter);
+}
+
+/* Pinned layer (letters + copy). Without JavaScript or with reduced motion
+   it simply scrolls with the hero; with motion it is fixed to the viewport
+   and the following sections slide over it. */
+.hero__pinned {
+  position: absolute;
+  inset: 0 0 auto;
+  pointer-events: none;
+}
+
+.hero__pinned a,
+.hero__pinned button {
+  pointer-events: auto;
+}
+
+.hero__flow {
+  z-index: 1;
+  justify-content: flex-end;
+}
+
+.hero__footer-space {
+  height: 2.5rem;
+  flex: none;
+}
+
+html[data-hero-motion="full"] .hero__pinned,
+html[data-hero-motion="full"] .hero__backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100vh;
+  height: 100svh;
+}
+
+html[data-hero-motion="full"] [data-home-hero] ~ *,
+html[data-hero-motion="full"] body:has([data-home-hero]) > footer {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-hero-motion="full"] [data-home-hero] ~ * {
+  background-color: var(--color-background);
+}
+
+[data-hero-fade] {
+  opacity: calc(1 - var(--hero-fade, 0) * 2.2);
+  transform: translateY(calc(var(--hero-fade, 0) * 8svh));
+}
+
+/* The actions only fade: moving them would push them under the next section
+   while they are still reachable by scroll or keyboard. */
+.hero__footer[data-hero-fade] {
+  opacity: calc(1 - var(--hero-fade, 0));
+  transform: none;
+}
+
+/* The subtitle sits closest to the header, so it clears out first. */
+.hero__subtitle[data-hero-fade] {
+  opacity: calc(1 - var(--hero-fade, 0) * 3);
+}
+
+.hero:focus-within [data-hero-fade] {
+  opacity: 1;
+}
+
+.hero__subtitle {
+  text-align: center;
+}
+
+.hero__subtitle p {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  font-size: clamp(1.25rem, 5.6vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hero__wordmark {
+  /* AIR mobile: the mark spans the full width at roughly a third of it. */
+  --hero-letter-size: min(calc((100vw - 2 * var(--hero-gutter)) * 0.36), 22svh);
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.25rem, 5svh, 3rem);
+}
+
+.hero__letters {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__word {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--hero-letter-size);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.hero__word + .hero__word {
+  margin-top: 0.06em;
+}
+
+.hero__letter {
+  display: block;
+  line-height: 0;
+  transform-origin: 0 0;
+  transition: color var(--duration-normal) var(--ease-standard);
+}
+
+.hero__letter-inner {
+  /* No inline baseline/descender gap: FLIP must measure the SVG alone,
+     matching the header. Extra line-box height causes a size jump on handoff. */
+  display: block;
+  line-height: 0;
+}
+
+.hero__lead {
+  margin-top: clamp(1.5rem, 7svh, 4rem);
+  text-align: center;
+}
+
+.hero__lead p {
+  max-width: 17rem;
+  margin: 0 auto;
+  color: var(--hero-muted);
+  font-size: clamp(0.875rem, 3.8vw, 1rem);
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Secondary statement: same voice as the lead, quieter and on its own line. */
+.hero__support {
+  display: block;
+  margin-top: 0.75em;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.hero__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hero__button {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.875rem;
+  border-radius: 0.3125rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color var(--duration-normal) var(--ease-standard),
+    color var(--duration-normal) var(--ease-standard);
+}
+
+.hero__button--primary {
+  background: var(--hero-ink);
+  color: var(--color-light);
+}
+
+.hero__button--primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.hero__button--secondary {
+  background: var(--hero-chip);
+  color: var(--hero-ink);
+}
+
+.hero__button--secondary:hover {
+  background: var(--color-border-strong);
+}
+
+.hero__next {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3125rem;
+  background: var(--hero-chip);
+  color: var(--hero-ink);
+  transition: background-color var(--duration-normal) var(--ease-standard);
+}
+
+.hero__next:hover {
+  background: var(--color-border-strong);
+}
+
+@media (min-width: 64rem),
+  (orientation: landscape) and (min-width: 40rem) and (max-height: 40rem) {
+  .hero__stage {
+    padding-top: calc(var(--hero-header-offset) + clamp(0.75rem, 4svh, 2.5rem));
+  }
+
+  .hero__subtitle p {
+    font-size: clamp(1.25rem, 2.1vw, 2.25rem);
+  }
+
+  /* AIR desktop: letters spread edge to edge, the lead copy centred in the
+     gap between the middle and the last letter. */
+  .hero__wordmark {
+    --hero-letter-size: min(13.5vw, 34svh);
+
+    display: grid;
+    align-content: center;
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+    padding-block: clamp(0.5rem, 3svh, 2rem);
+  }
+
+  .hero__letters,
+  .hero__lead {
+    grid-area: 1 / 1;
+  }
+
+  .hero__lead {
+    width: calc(50% - var(--hero-letter-size) * 0.45);
+    margin-top: 0;
+    justify-self: end;
+    padding-inline-end: calc(var(--hero-letter-size) * 0.3);
+  }
+
+  .hero__lead p {
+    max-width: 16rem;
+    font-size: clamp(0.8125rem, 0.95vw, 1.0625rem);
+  }
+}
+
+/* ---------- Preloader (each full home-page load) ---------- */
+
+.hero__progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+  width: 100%;
+  height: 2px;
+  background: var(--hero-ink);
+  pointer-events: none;
+  transform: translateX(-100%);
+}
+
+html[data-hero-intro="loading"] .hero__progress {
+  display: block;
+  transform: translateX(calc(var(--hero-intro, 0) * 100% - 100%));
+}
+
+html[data-hero-intro="reveal"] .hero__progress {
+  display: block;
+  transform: translateX(100%);
+  transition: transform 1.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+/* Letters fly in from the left. Later letters travel a little faster so they
+   always stay ahead of their neighbours and never overlap on the way in. */
+html[data-hero-intro="loading"] .hero__letter-inner {
+  transform: translateX(
+    calc(
+      (clamp(0, var(--hero-intro, 0) * (1 + var(--i, 0) * 0.06), 1) - 1) * 110vw
+    )
+  );
+}
+
+html[data-hero-intro="loading"] .site-wordmark__letter-inner {
+  transform: translateX(
+    calc(
+      (clamp(0, var(--hero-intro, 0) * (1 + var(--i, 0) * 0.06), 1) - 1) *
+        110vw / var(--hero-logo-scale, 1)
+    )
+  );
+}
+
+html[data-hero-intro="loading"] .hero__reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+}
+
+html[data-hero-intro="loading"] .hero__reveal-bottom {
+  transform: translateY(calc(100% + var(--hero-gutter)));
+}
+
+html[data-hero-intro="loading"] .hero__backdrop {
+  opacity: 0;
+}
+
+html[data-hero-intro="loading"]:has([data-home-hero])
+  .site-header
+  > div
+  > :not([data-header-identity]) {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+html[data-hero-intro="reveal"] .hero__reveal,
+html[data-hero-intro="reveal"] .hero__reveal-bottom,
+html[data-hero-intro="reveal"] .hero__backdrop {
+  transition:
+    opacity 1.4s cubic-bezier(0.7, 0, 0.3, 1),
+    transform 1.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+html[data-hero-intro="reveal"]:has([data-home-hero])
+  .site-header
+  > div
+  > :not([data-header-identity]) {
+  transition:
+    transform 1.4s cubic-bezier(0.7, 0, 0.3, 1),
+    opacity 1.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.hero__reveal {
+  display: block;
+}
+
+/* ---------- Reduced motion ---------- */
+
+html[data-hero-motion="reduced"] [data-hero-fade],
+html[data-hero-motion="reduced"] .hero-sculpture {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-fade],
+  .hero-sculpture {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero__letter {
+    transform: none !important;
+  }
+}

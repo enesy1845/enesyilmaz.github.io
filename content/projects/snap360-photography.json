@@ -1,0 +1,90 @@
+{
+  "name": "Snap360 Photography",
+  "draft": false,
+  "featured": true,
+  "order": 20,
+  "category": "web",
+  "confidential": false,
+  "technologies": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Cloudflare"
+  ],
+  "disciplines": [
+    "Full-stack web development",
+    "Information architecture"
+  ],
+  "externalUrl": "https://snap360photography.com",
+  "repositoryUrl": null,
+  "coverImage": "/images/projects/snap360-photography.webp",
+  "en": {
+    "title": "Snap360 Photography",
+    "shortTitle": "",
+    "summary": "Developing a modern digital experience for a photography business, connecting visual storytelling with structured services and a scalable web architecture.",
+    "description": "I first built the company's WordPress website and am now redeveloping it on Next.js and Cloudflare.",
+    "role": "Web Developer",
+    "organization": "Snap360 Photography",
+    "period": "",
+    "location": "",
+    "status": "Ongoing redevelopment",
+    "imageAlt": "Homepage of the Snap360 Photography website",
+    "responsibilities": [
+      "Website modernization",
+      "Service presentation",
+      "Photography and media organization",
+      "Product and quotation experience planning",
+      "Cloudflare-based architecture"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "no": {
+    "title": "Snap360 Photography",
+    "shortTitle": "",
+    "summary": "Jeg utvikler en moderne digital opplevelse for en fotobedrift, der visuell historiefortelling møter strukturerte tjenester og en skalerbar webarkitektur.",
+    "description": "Jeg bygde først bedriftens WordPress-nettsted og utvikler det nå på nytt med Next.js og Cloudflare.",
+    "role": "Webutvikler",
+    "organization": "Snap360 Photography",
+    "period": "",
+    "location": "",
+    "status": "Nyutvikling pågår",
+    "imageAlt": "Forsiden til nettstedet Snap360 Photography",
+    "responsibilities": [
+      "Modernisering av nettstedet",
+      "Presentasjon av tjenester",
+      "Organisering av foto og medier",
+      "Planlegging av produkt- og tilbudsopplevelse",
+      "Cloudflare-basert arkitektur"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  },
+  "tr": {
+    "title": "Snap360 Photography",
+    "shortTitle": "",
+    "summary": "Bir fotoğrafçılık işletmesi için görsel anlatımı yapılandırılmış hizmetler ve ölçeklenebilir bir web mimarisiyle buluşturan modern bir dijital deneyim geliştiriyorum.",
+    "description": "Şirketin WordPress sitesini ilk olarak ben kurdum; şimdi Next.js ve Cloudflare ile yeniden geliştiriyorum.",
+    "role": "Web Geliştirici",
+    "organization": "Snap360 Photography",
+    "period": "",
+    "location": "",
+    "status": "Yeniden geliştirme sürüyor",
+    "imageAlt": "Snap360 Photography web sitesinin ana sayfası",
+    "responsibilities": [
+      "Web sitesinin modernizasyonu",
+      "Hizmetlerin sunumu",
+      "Fotoğraf ve medya düzeni",
+      "Ürün ve teklif deneyiminin planlanması",
+      "Cloudflare tabanlı mimari"
+    ],
+    "challenges": [],
+    "decisions": [],
+    "outcomes": [],
+    "lessons": []
+  }
+}

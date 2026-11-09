@@ -1,0 +1,94 @@
+{
+  "site": {
+    "name": "Enes Yılmaz",
+    "role": "Programvareutvikler",
+    "description": "Programvareutvikler i Norge som arbeider med Python, React, .NET, datautvikling og moderne webapplikasjoner."
+  },
+  "navigation": {
+    "home": "Hjem",
+    "work": "Arbeid",
+    "notes": "Notater",
+    "atelier": "Atelier",
+    "about": "Om",
+    "cv": "CV",
+    "contact": "Kontakt"
+  },
+  "accessibility": {
+    "skipToContent": "Gå til innhold",
+    "mainNavigation": "Hovednavigasjon",
+    "mobileNavigation": "Mobilnavigasjon",
+    "openMenu": "Åpne meny",
+    "closeMenu": "Lukk meny",
+    "languageSwitcher": "Velg språk",
+    "currentLanguage": "Gjeldende språk",
+    "footerNavigation": "Bunnnavigasjon",
+    "heroLinks": "Lenker i introduksjonen"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norsk",
+    "tr": "Türkçe"
+  },
+  "pages": {
+    "home": {
+      "heading": "Enes Yılmaz",
+      "description": "Programvareutvikler i Norge som arbeider med Python, React, .NET, datautvikling og moderne webapplikasjoner.",
+      "metaTitle": "Enes Yılmaz | Programvareutvikler og Python-utvikler",
+      "metaDescription": "Enes Yılmaz er programvareutvikler i Norge og arbeider med Python, React, .NET, datautvikling og moderne webapplikasjoner."
+    },
+    "work": {
+      "heading": "Arbeid",
+      "description": "Programvaresystemer, digitale produkter og nettsteder laget for å løse reelle problemer.",
+      "featuredDescription": "Programvare i offentlig sektor, kundeplattformer og nettsteder jeg har bygget eller bidratt til.",
+      "metaTitle": "Arbeid og prosjekter",
+      "metaDescription": "Programvare-, data- og webprosjekter av Enes Yılmaz, fra systemer i offentlig sektor til kundeplattformer og nettsteder."
+    },
+    "notes": {
+      "heading": "Notater",
+      "description": "Refleksjoner om programvare, utdanning, matematisk tenkning, teknologi og menneskelig utvikling.",
+      "metaTitle": "Notater",
+      "metaDescription": "Tekster og refleksjoner av Enes Yılmaz om programvare, utdanning, matematisk tenkning, teknologi og menneskelig utvikling."
+    },
+    "atelier": {
+      "heading": "Atelier",
+      "description": "Noe av det som fascinerer meg mest, er ikke digitalt. Det er fysiske gjenstander, presise mekanismer og den stille disiplinen i å lage noe godt.",
+      "metaTitle": "Atelier",
+      "metaDescription": "Håndverksinteressene til Enes Yılmaz: bønnekjeder, trearbeid, mekaniske klokker og visuell historiefortelling."
+    },
+    "about": {
+      "heading": "Om meg",
+      "description": "Jeg arbeider i skjæringspunktet mellom programvareutvikling, data og menneskesentrert problemløsning.",
+      "metaTitle": "Om meg",
+      "metaDescription": "Enes Yılmaz er programvareutvikler i Asker og kombinerer matematikk, programmeringsundervisning, full-stack-utvikling og datautvikling."
+    },
+    "cv": {
+      "heading": "En reise formet av nysgjerrighet.",
+      "description": "Fra matematikk og undervisning til programvareutvikling, data og digitale produkter — en reise med læring, bygging og nye forbindelser mellom ideer.",
+      "metaTitle": "CV og erfaring | Enes Yılmaz — programvareutvikler",
+      "metaDescription": "Se den profesjonelle reisen til Enes Yılmaz: erfaring med programvareutvikling, tekniske ferdigheter, utdanning, sertifiseringer og referanser."
+    },
+    "contact": {
+      "heading": "Kontakt",
+      "description": "Jeg er åpen for meningsfulle samarbeid, muligheter innen programvareutvikling og samtaler om ideer som er verdt å bygge.",
+      "metaTitle": "Kontakt",
+      "metaDescription": "Kontakt Enes Yılmaz, programvareutvikler i Norge, på e-post, LinkedIn eller GitHub."
+    }
+  },
+  "contact": {
+    "email": "E-post",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "youtubeDetail": "Undervisnings- og programmeringsvideoer"
+  },
+  "footer": {
+    "location": "Asker, Norge",
+    "professionalLinks": "Profesjonelle lenker",
+    "copyright": "Alle rettigheter forbeholdt.",
+    "practice": "NOI — en uavhengig, skapende praksis av Enes Yılmaz."
+  },
+  "notFound": {
+    "heading": "Siden finnes ikke",
+    "description": "Den forespurte siden finnes ikke på dette språket.",
+    "homeLink": "Tilbake til forsiden"
+  }
+}

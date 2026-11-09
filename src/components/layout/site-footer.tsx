@@ -1,0 +1,75 @@
+import Link from "next/link";
+
+import { NoiLetter } from "@/components/brand/noi-letter";
+import { FooterParticlesLoader } from "@/components/layout/footer-particles-loader";
+import { Container } from "@/components/ui/container";
+import { ExternalLink } from "@/components/ui/external-link";
+import { socialLinks } from "@/config/social";
+import { siteConfig } from "@/config/site";
+import type { Locale } from "@/i18n/config";
+import { createLocalePath, routes } from "@/i18n/routing";
+import type { Dictionary } from "@/i18n/types";
+import { getWordmarkWords } from "@/lib/utils/wordmark";
+
+type SiteFooterProps = {
+  dictionary: Dictionary;
+  locale: Locale;
+};
+
+export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
+  const letters = getWordmarkWords(siteConfig.wordmark).flat();
+
+  return (
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-background-elevated)]">
+      <Container className="grid gap-[var(--space-10)] py-[var(--space-12)] md:grid-cols-[minmax(0,1fr)_auto_auto]">
+        {/* Decorative mark; the particle layer replaces it when motion is
+            allowed, and the static letters remain the fallback. */}
+        <FooterParticlesLoader>
+          <div className="footer-mark__letters" data-footer-mark-letters="">
+            {letters.map((letter) => (
+              <span className="footer-mark__letter" key={letter.index}>
+                <NoiLetter character={letter.character} />
+              </span>
+            ))}
+          </div>
+        </FooterParticlesLoader>
+
+        <nav aria-label={dictionary.accessibility.footerNavigation}>
+          <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
+            {dictionary.accessibility.footerNavigation}
+          </p>
+          <ul className="mt-[var(--space-4)] grid gap-2 text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
+            {routes.map((route) => (
+              <li key={route.key}>
+                <Link href={createLocalePath(locale, route.segment)}>
+                  {dictionary.navigation[route.key]}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <p className="font-mono text-[length:var(--font-size-xs)] tracking-[var(--letter-spacing-label)] text-[var(--color-foreground-subtle)]">
+            {dictionary.footer.professionalLinks}
+          </p>
+          <ul className="mt-[var(--space-4)] grid gap-2 text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
+            {socialLinks.map((link) => (
+              <li key={link.key}>
+                <ExternalLink href={link.href}>{link.label}</ExternalLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="border-t border-[var(--color-border)] pt-[var(--space-6)] text-[length:var(--font-size-xs)] text-[var(--color-foreground-subtle)] md:col-span-3">
+          <span className="block text-[var(--color-foreground-muted)]">
+            {dictionary.footer.practice}
+          </span>
+          &copy; {new Date().getFullYear()} {siteConfig.author}.{" "}
+          {dictionary.footer.copyright}
+        </p>
+      </Container>
+    </footer>
+  );
+}

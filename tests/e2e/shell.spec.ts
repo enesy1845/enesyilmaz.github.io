@@ -1,0 +1,957 @@
+import AxeBuilder from "@axe-core/playwright";
+import { expect, test } from "@playwright/test";
+
+test("root redirects to English", async ({ page }) => {
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/en$/);
+});
+
+for (const locale of ["en", "no", "tr"] as const) {
+  test(`${locale} home renders exactly one h1`, async ({ page }) => {
+    await page.goto(`/${locale}`);
+    await expect(page.locator("h1")).toHaveCount(1);
+  });
+}
+
+test("home page sections render in English", async ({ page }) => {
+  await page.goto("/en");
+
+  for (const heading of [
+    "Selected Work",
+    "What I work with",
+    "Different disciplines. One way of thinking.",
+    "Thinking out loud",
+    "Beyond the screen",
+    "A little about me",
+    "Have something interesting in mind?",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+
+  await expect(
+    page.getByRole("link", { name: "Quality System" }),
+  ).toBeVisible();
+});
+
+test("home page sections render in Norwegian", async ({ page }) => {
+  await page.goto("/no");
+
+  await expect(
+    page.getByRole("heading", { name: "Utvalgt arbeid" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Det jeg jobber med" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Ulike fagfelt. Én måte å tenke på." }),
+  ).toBeVisible();
+});
+
+test("home page sections render in Turkish", async ({ page }) => {
+  await page.goto("/tr");
+
+  await expect(
+    page.getByRole("heading", { name: "Seçili İşler" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Neyle çalışıyorum" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "Farklı disiplinler. Tek bir düşünme biçimi.",
+    }),
+  ).toBeVisible();
+});
+
+test("English home renders shared header and footer", async ({ page }) => {
+  await page.goto("/en");
+
+  await expect(page.getByRole("banner")).toBeVisible();
+  await expect(page.getByRole("contentinfo")).toBeVisible();
+  await expect(
+    page.getByRole("banner").getByRole("link", { name: /Enes Yılmaz/ }),
+  ).toHaveAttribute("href", "/en");
+});
+
+test("Norwegian route renders translated navigation", async ({ page }) => {
+  await page.goto("/no");
+
+  await expect(
+    page.getByRole("link", { name: "Arbeid" }).first(),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Kontakt" }).first(),
+  ).toBeVisible();
+});
+
+test("Turkish route renders translated navigation", async ({ page }) => {
+  await page.goto("/tr");
+
+  await expect(page.getByRole("link", { name: "İşler" }).first()).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "İletişim" }).first(),
+  ).toBeVisible();
+});
+
+test("Work navigation works and preserves locale", async ({ page }) => {
+  await page.goto("/tr");
+  await page.getByRole("link", { name: "İşler" }).first().click();
+
+  await expect(page).toHaveURL(/\/tr\/work$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("İşler");
+  await expect(
+    page.getByRole("link", { name: "Kalite Sistemi" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "İşler" }).first(),
+  ).toHaveAttribute("aria-current", "page");
+});
+
+test("Project links preserve locale", async ({ page }) => {
+  await page.goto("/no/work");
+  await page.getByRole("link", { name: "Kvalitetssystem" }).first().click();
+
+  await expect(page).toHaveURL(/\/no\/work\/municipal-quality-system$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Kommunalt kvalitetssystem",
+  );
+});
+
+test("language switching preserves equivalent project route", async ({
+  page,
+}) => {
+  await page.goto("/en/work/municipal-quality-system");
+  await page
+    .getByRole("banner")
+    .getByRole("button", { name: /Choose language/ })
+    .first()
+    .click();
+  await page.getByRole("link", { name: "Norsk" }).first().click();
+
+  await expect(page).toHaveURL(/\/no\/work\/municipal-quality-system$/);
+});
+
+test("About page loads", async ({ page }) => {
+  await page.goto("/en/about");
+
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("About");
+  await expect(page.getByRole("heading", { name: "My path" })).toBeVisible();
+});
+
+test("Contact page loads verified links", async ({ page }) => {
+  await page.goto("/en/contact");
+
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Contact");
+  const main = page.getByRole("main");
+  await expect(main.getByRole("link", { name: "Email" })).toHaveAttribute(
+    "href",
+    "mailto:enes.yilmaz1845@gmail.com",
+  );
+  await expect(main.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
+    "href",
+    "https://www.linkedin.com/in/enes-yilmaz-026249286",
+  );
+});
+
+test("skip link moves focus to main content", async ({ page }) => {
+  await page.goto("/en");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Skip to content" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+
+  await expect(page.locator("#main-content")).toBeFocused();
+});
+
+test("desktop navigation is keyboard usable", async ({ page }) => {
+  await page.goto("/en");
+
+  const homeLink = page.getByRole("link", { name: "Home" }).first();
+
+  for (let index = 0; index < 10; index += 1) {
+    await page.keyboard.press("Tab");
+    if (
+      await homeLink.evaluate((element) => element === document.activeElement)
+    ) {
+      break;
+    }
+  }
+
+  await expect(homeLink).toBeFocused();
+});
+
+test("mobile navigation opens and closes with Escape", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/en");
+
+  const openButton = page.getByRole("button", { name: "Open menu" });
+  await openButton.click();
+  await expect(openButton).toHaveAttribute("aria-expanded", "true");
+  await expect(
+    page.getByRole("dialog", { name: "Mobile navigation" }),
+  ).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(openButton).toHaveAttribute("aria-expanded", "false");
+});
+
+test("mobile navigation link changes route and closes menu", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/en");
+
+  const openButton = page.getByRole("button", { name: "Open menu" });
+  await openButton.click();
+  await page
+    .getByRole("dialog", { name: "Mobile navigation" })
+    .getByRole("link", { name: "Work" })
+    .click();
+
+  await expect(page).toHaveURL(/\/en\/work$/);
+  await expect(openButton).toHaveAttribute("aria-expanded", "false");
+});
+
+for (const width of [320, 375] as const) {
+  test(`no obvious horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 812 });
+    await page.goto("/tr/contact");
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    );
+    expect(overflow).toBe(false);
+  });
+}
+
+test("tested pages contain one h1", async ({ page }) => {
+  for (const path of [
+    "/en",
+    "/en/work",
+    "/en/about",
+    "/en/contact",
+    "/en/cv",
+    "/no/cv",
+    "/tr/cv",
+    "/en/notes",
+    "/en/notes/the-ideal-human",
+    "/en/atelier",
+  ]) {
+    await page.goto(path);
+    await expect(page.locator("h1")).toHaveCount(1);
+  }
+});
+
+test("main content remains usable without animation", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/en");
+
+  await expect(page.locator("canvas")).toHaveCount(0);
+  await expect(page.locator("[data-sculpture-host]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-motion",
+    "reduced",
+  );
+  await expect(
+    page.getByRole("banner").locator("[data-header-letter]").first(),
+  ).toHaveCSS("opacity", "1");
+  await expect(page.getByRole("main")).toContainText("Selected Work");
+});
+
+test("home content remains usable when JavaScript is disabled", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto("/en");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Enes Yılmaz",
+  );
+  await expect(page.locator("canvas")).toHaveCount(0);
+  await expect(
+    page.getByRole("banner").locator("[data-header-letter]").first(),
+  ).toHaveCSS("opacity", "1");
+  await expect(
+    page.getByRole("link", { name: "Explore my work" }),
+  ).toBeVisible();
+  await expect(page.getByRole("main")).toContainText("Selected Work");
+
+  await context.close();
+});
+
+test("hero sculpture is lazy, decorative and limited to the home route", async ({
+  page,
+}) => {
+  await page.goto("/en/work");
+  await expect(page.locator("[data-sculpture-host]")).toHaveCount(0);
+
+  await page.goto("/en");
+  await expect(page.locator("[data-sculpture-host]")).toHaveAttribute(
+    "data-sculpture-visible",
+    "true",
+  );
+  await expect(page.locator("[data-sculpture-canvas]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+});
+
+test("footer wordmark turns into particles only when reached", async ({
+  page,
+}) => {
+  await page.goto("/en/work");
+  const mark = page.locator("[data-footer-mark]");
+  await expect(mark).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator("[data-footer-particles]")).toHaveCount(0);
+
+  await mark.scrollIntoViewIfNeeded();
+  await expect(mark).toHaveAttribute("data-footer-mark-ready", "true");
+  await expect(page.locator("[data-footer-particles]")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+});
+
+test("footer wordmark particles react to the mouse", async ({ page }) => {
+  await page.goto("/en/work");
+  const mark = page.locator("[data-footer-mark]");
+  await mark.scrollIntoViewIfNeeded();
+  await expect(mark).toHaveAttribute("data-footer-mark-ready", "true");
+  const canvas = page.locator("[data-footer-particles]");
+  // Let the assembly settle so any later change comes from the pointer.
+  await page.waitForTimeout(3000);
+  const before = await canvas.evaluate((element: HTMLCanvasElement) =>
+    element.toDataURL(),
+  );
+  const box = await canvas.boundingBox();
+  if (!box) throw new Error("Missing footer canvas bounds");
+  for (let step = 0; step <= 10; step += 1) {
+    await page.mouse.move(
+      box.x + box.width * (0.05 + step * 0.04),
+      box.y + box.height / 2,
+    );
+  }
+  await expect
+    .poll(() =>
+      canvas.evaluate((element: HTMLCanvasElement) => element.toDataURL()),
+    )
+    .not.toBe(before);
+});
+
+test("footer wordmark stays static with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/en/work");
+  const mark = page.locator("[data-footer-mark]");
+  await mark.scrollIntoViewIfNeeded();
+  await expect(mark.locator("[data-noi-letter]")).toHaveCount(3);
+  await expect(page.locator("[data-footer-particles]")).toHaveCount(0);
+  await expect(mark.locator("[data-footer-mark-letters]")).toHaveCSS(
+    "opacity",
+    "1",
+  );
+});
+
+test("hero sculpture falls back to Canvas 2D without WebGL", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Reflect.deleteProperty(window, "WebGL2RenderingContext");
+  });
+  await page.goto("/en");
+  const host = page.locator("[data-sculpture-host]");
+  await expect(host).toHaveAttribute("data-sculpture-renderer", "canvas2d");
+  await expect(page.locator("canvas")).toHaveCount(1);
+});
+
+test("one header logo moves from the hero and stays mounted on scroll", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+
+  const headerLetter = page
+    .getByRole("banner")
+    .locator("[data-header-letter]")
+    .first();
+  const heroLetter = page.locator("[data-hero-letter]").first();
+
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-state",
+    "hero-top",
+  );
+  await expect(headerLetter).toHaveCSS("opacity", "1");
+  await expect(heroLetter).toHaveCSS("visibility", "hidden");
+  const originalLogo = await headerLetter.elementHandle();
+  const largeSize = await headerLetter.boundingBox();
+
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.25));
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-state",
+    "hero-passed",
+  );
+  await expect(headerLetter).toHaveCSS("opacity", "1");
+  await expect(heroLetter).toHaveCSS("visibility", "hidden");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+
+  expect(
+    await headerLetter.evaluate(
+      (element, original) => element === original,
+      originalLogo,
+    ),
+  ).toBe(true);
+  const matrix = await headerLetter.evaluate((element) => {
+    const matrix = new DOMMatrix(getComputedStyle(element).transform);
+    return { x: matrix.m41, y: matrix.m42, scale: matrix.m11 };
+  });
+  expect(matrix).toEqual({ x: 0, y: 0, scale: 1 });
+  const dockedSize = await headerLetter.evaluate((element) => {
+    const { width, height } = element.getBoundingClientRect();
+    return { width, height };
+  });
+  for (const offset of [1.8, 1.15, 2]) {
+    await page.evaluate(
+      (offset) =>
+        window.scrollTo({
+          top: window.innerHeight * offset,
+          behavior: "instant",
+        }),
+      offset,
+    );
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-hero-docked",
+      "true",
+    );
+    // The island deliberately hides the identity later in the page, but
+    // the same vector remains mounted at its settled dimensions.
+    const size = await headerLetter.evaluate((element) => {
+      const { width, height } = element.getBoundingClientRect();
+      return { width, height };
+    });
+    expect(size.width).toBe(dockedSize.width);
+    expect(size.height).toBe(dockedSize.height);
+  }
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-state",
+    "hero-top",
+  );
+  await expect(headerLetter).toHaveCSS("opacity", "1");
+  await expect
+    .poll(async () => (await headerLetter.boundingBox())?.width)
+    .toBeGreaterThan((dockedSize?.width ?? 0) * 2);
+  expect(largeSize?.width).toBeGreaterThan((dockedSize?.width ?? 0) * 2);
+});
+
+test("intro settles to the nearest endpoint and fresh input interrupts it", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  const height = await page
+    .locator("[data-home-hero]")
+    .evaluate((element) => (element as HTMLElement).offsetHeight);
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.4, behavior: "instant" }),
+    height,
+  );
+  await expect
+    .poll(() => page.evaluate(() => scrollY), { timeout: 4000 })
+    .toBeLessThan(2);
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.6, behavior: "instant" }),
+    height,
+  );
+  await expect
+    .poll(() => page.evaluate((height) => Math.abs(scrollY - height), height), {
+      timeout: 4000,
+    })
+    .toBeLessThan(2);
+  await expect(page.locator("[data-header-letter]").first()).toHaveCSS(
+    "transform",
+    "none",
+  );
+
+  // Interrupt on the actual scroll event so polling cannot miss the short
+  // intermediate range on a fast machine.
+  const interrupted = await page.evaluate(
+    (height) =>
+      new Promise<number>((resolve, reject) => {
+        const timeout = window.setTimeout(() => {
+          window.removeEventListener("scroll", onScroll);
+          reject(new Error("Intro did not begin settling"));
+        }, 5000);
+        function onScroll() {
+          if (scrollY < height * 0.35 && scrollY > height * 0.05) {
+            window.dispatchEvent(
+              new KeyboardEvent("keydown", { key: "Escape" }),
+            );
+            window.clearTimeout(timeout);
+            window.removeEventListener("scroll", onScroll);
+            resolve(scrollY);
+          }
+        }
+        window.addEventListener("scroll", onScroll);
+        window.scrollTo({ top: height * 0.4, behavior: "instant" });
+      }),
+    height,
+  );
+  await page.waitForTimeout(500);
+  expect(
+    Math.abs((await page.evaluate(() => scrollY)) - interrupted),
+  ).toBeLessThan(2);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-motion",
+    "reduced",
+  );
+  await page.evaluate(
+    (height) => window.scrollTo({ top: height * 0.4, behavior: "instant" }),
+    height,
+  );
+  const stationary = await page.evaluate(() => scrollY);
+  await page.waitForTimeout(1400);
+  expect(
+    Math.abs((await page.evaluate(() => scrollY)) - stationary),
+  ).toBeLessThan(2);
+});
+
+test("docked logo stays visible while scrolling across the hero boundary", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.3, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+
+  const frames = await page.evaluate(async () => {
+    const hero = document.querySelector<HTMLElement>("[data-home-hero]");
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    const letter = document.querySelector("[data-header-letter]");
+    if (!hero || !header || !letter) throw new Error("Missing logo geometry");
+    const boundary = hero.offsetHeight - header.offsetHeight;
+    const samples: { docked: boolean; opacity: string }[] = [];
+    for (const offset of [2, -2, 3, -3, 1, -1, 4]) {
+      window.scrollTo({ top: boundary + offset, behavior: "instant" });
+      for (let frame = 0; frame < 3; frame += 1) {
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => resolve()),
+        );
+        samples.push({
+          docked: document.documentElement.dataset.heroDocked === "true",
+          opacity: getComputedStyle(letter).opacity,
+        });
+      }
+    }
+    return samples;
+  });
+  for (const frame of frames) {
+    expect(frame.docked).toBe(true);
+    expect(frame.opacity).toBe("1");
+  }
+});
+
+test("hero preloader shows left-to-right entrance on each full load", async ({
+  page,
+}) => {
+  await page.goto("/en");
+
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  await expect(page.getByRole("banner")).toBeInViewport();
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "loading",
+  );
+  await expect(page.locator(".hero__progress")).toBeVisible();
+  expect(
+    await page
+      .locator(".site-wordmark__letter-inner")
+      .first()
+      .evaluate(
+        (element) => new DOMMatrix(getComputedStyle(element).transform).m41,
+      ),
+  ).toBeLessThan(0);
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+});
+
+test("dot bounces only on opening then follows reversible logo docking", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  const dot = page.locator("[data-site-header] [data-noi-dot]");
+  await expect(dot).toHaveAttribute("transform", "translate(0.000 947.000)", {
+    timeout: 8_000,
+  });
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.5, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  await expect(dot).toHaveAttribute("cy", "-56");
+  await expect(dot).not.toHaveAttribute("transform", /./);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect(dot).toHaveAttribute("transform", "translate(0.000 947.000)");
+  const positions = await dot.evaluate(async (element) => {
+    const positions = [];
+    for (let frame = 0; frame < 15; frame += 1) {
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      positions.push(element.getAttribute("transform"));
+    }
+    return positions;
+  });
+  expect(new Set(positions)).toEqual(new Set(["translate(0.000 947.000)"]));
+});
+
+test("hero vector stays sharp after docking and returning", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1865, height: 780 });
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  // Isolate the letter from the independently moving sculpture behind it.
+  await page.addStyleTag({
+    content: ".hero__backdrop { visibility: hidden; }",
+  });
+  const letter = page.locator("[data-header-letter]").first();
+  const initialTransform = await letter.evaluate(
+    (element) => element.style.transform,
+  );
+  const box = await letter.boundingBox();
+  if (!box) throw new Error("Missing letter bounds");
+  const cdp = await page.context().newCDPSession(page);
+  const before = await cdp.send("Page.captureScreenshot", {
+    format: "png",
+    fromSurface: true,
+    captureBeyondViewport: false,
+  });
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 1.5, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect
+    .poll(() => letter.evaluate((element) => element.style.transform))
+    .toBe(initialTransform);
+  await expect(letter).toHaveCSS("will-change", "auto");
+  await expect(page.locator("[data-header-identity]")).toHaveCSS(
+    "opacity",
+    "1",
+  );
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  const after = await cdp.send("Page.captureScreenshot", {
+    format: "png",
+    fromSurface: true,
+    captureBeyondViewport: false,
+  });
+  await cdp.detach();
+  const changed = await page.evaluate(
+    async ({ before, after, box }) => {
+      const read = async (data: string) => {
+        const image = new Image();
+        image.src = `data:image/png;base64,${data}`;
+        await image.decode();
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext("2d");
+        if (!context)
+          throw new Error("Canvas unavailable for visual verification");
+        context.drawImage(image, 0, 0);
+        return context.getImageData(
+          Math.ceil(box.x),
+          Math.ceil(box.y),
+          Math.floor(box.width) - 1,
+          Math.floor(box.height) - 1,
+        ).data;
+      };
+      const first = await read(before);
+      const returned = await read(after);
+      let changed = 0;
+      for (let index = 0; index < first.length; index += 4) {
+        if (Math.abs((first[index] ?? 0) - (returned[index] ?? 0)) > 30)
+          changed += 1;
+      }
+      return changed / (first.length / 4);
+    },
+    { before: before.data, after: after.data, box },
+  );
+  // The old cached bitmap changed >7% of this region; allow tiny AA variance.
+  expect(changed).toBeLessThan(0.005);
+});
+
+test("docked logo stays painted before the island threshold and hides on deep reload", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8_000 },
+  );
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight * 0.95, behavior: "instant" }),
+  );
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  const box = await page.locator("[data-header-letter]").first().boundingBox();
+  if (!box) throw new Error("Missing logo bounds");
+  const cdp = await page.context().newCDPSession(page);
+  let baseline = 0;
+  for (const delta of [0, 4, -4, 6, -6, 2]) {
+    await page.mouse.wheel(0, delta);
+    // Capture the actual compositor viewport, avoiding document-clip offsets
+    // that ordinary screenshots can race with during asynchronous wheel scroll.
+    const shot = await cdp.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true,
+      captureBeyondViewport: false,
+    });
+    const ink = await page.evaluate(
+      async ({ data, box }) => {
+        const image = new Image();
+        image.src = `data:image/png;base64,${data}`;
+        await image.decode();
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext("2d");
+        if (!context)
+          throw new Error("Canvas unavailable for visual verification");
+        context.drawImage(image, 0, 0);
+        const scale = image.naturalWidth / innerWidth;
+        const pixels = context.getImageData(
+          box.x * scale,
+          box.y * scale,
+          box.width * scale,
+          box.height * scale,
+        ).data;
+        let dark = 0;
+        for (let i = 0; i < pixels.length; i += 4) {
+          if (
+            (pixels[i] ?? 255) < 60 &&
+            (pixels[i + 1] ?? 255) < 60 &&
+            (pixels[i + 2] ?? 255) < 60
+          )
+            dark += 1;
+        }
+        return dark;
+      },
+      { data: shot.data, box },
+    );
+    if (delta === 0) baseline = ink;
+    expect(ink).toBeGreaterThan(100);
+    expect(ink).toBeGreaterThanOrEqual(baseline * 0.95);
+  }
+  await cdp.detach();
+  await page.locator(".home-work").scrollIntoViewIfNeeded();
+  await expect(page.locator("html")).toHaveAttribute("data-header-hidden", "");
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(800);
+  await expect(page.locator("html")).toHaveAttribute("data-hero-intro", "done");
+  await expect(page.locator("[data-header-identity]")).toBeHidden();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-docked",
+    "true",
+  );
+  await expect(page.locator("[data-header-letter]").first()).toHaveCSS(
+    "transform",
+    "none",
+  );
+  await expect(page.locator(".site-wordmark__letter-inner").first()).toHaveCSS(
+    "transform",
+    "none",
+  );
+});
+
+test("hero scroll transition updates header state without blocking navigation", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-hero-intro",
+    "done",
+    { timeout: 8000 },
+  );
+  await page
+    .getByRole("link", { name: "Explore my work" })
+    .click({ trial: true });
+
+  await page.evaluate(() =>
+    window.scrollTo({ top: window.innerHeight * 1.25, behavior: "instant" }),
+  );
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.dataset.heroState))
+    .toBe("hero-passed");
+
+  await page.getByRole("link", { name: "Explore my work" }).click();
+  await expect(page).toHaveURL(/\/en\/work$/);
+});
+
+test("hero state does not leak into other routes after client navigation", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await page.getByRole("link", { name: "Explore my work" }).click();
+  await expect(page).toHaveURL(/\/en\/work$/);
+
+  await expect(page.locator("html")).not.toHaveAttribute(
+    "data-hero-state",
+    /.+/,
+  );
+  await expect(
+    page.getByRole("banner").locator("[data-header-letter]").first(),
+  ).toHaveCSS("opacity", "1");
+});
+
+for (const viewport of [
+  { width: 320, height: 568 },
+  { width: 375, height: 667 },
+  { width: 390, height: 844 },
+  { width: 844, height: 390 },
+] as const) {
+  test(`hero fits ${viewport.width}x${viewport.height} without overflow`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/tr");
+
+    const metrics = await page.evaluate(() => {
+      const stage = document.querySelector(".hero__stage");
+      const letters = Array.from(
+        document.querySelectorAll("[data-hero-letter]"),
+        (letter) => letter.getBoundingClientRect(),
+      );
+      return {
+        overflowX: document.documentElement.scrollWidth > window.innerWidth,
+        stageHeight: stage?.getBoundingClientRect().height ?? 0,
+        lettersRight: Math.max(...letters.map((rect) => rect.right)),
+        lettersLeft: Math.min(...letters.map((rect) => rect.left)),
+        viewportHeight: window.innerHeight,
+        viewportWidth: window.innerWidth,
+      };
+    });
+
+    expect(metrics.overflowX).toBe(false);
+    expect(metrics.lettersLeft).toBeGreaterThanOrEqual(0);
+    expect(metrics.lettersRight).toBeLessThanOrEqual(metrics.viewportWidth);
+    expect(metrics.stageHeight).toBeLessThanOrEqual(metrics.viewportHeight + 1);
+  });
+}
+
+test("home and internal page have no obvious accessibility violations", async ({
+  page,
+}) => {
+  for (const path of [
+    "/en",
+    "/en/work",
+    "/en/work/municipal-quality-system",
+    "/en/cv",
+    "/en/notes/the-ideal-human",
+  ]) {
+    await page.goto(path);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations).toEqual([]);
+  }
+});
+
+test("unknown pages show a localized 404 inside the locale shell", async ({
+  page,
+}) => {
+  const response = await page.goto("/tr/bu-sayfa-yok");
+
+  expect(response?.status()).toBe(404);
+  await expect(page.locator("html")).toHaveAttribute("lang", "tr");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Sayfa bulunamadı" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Ana sayfaya dön" }),
+  ).toHaveAttribute("href", "/tr");
+});
+
+test("contact channel details are translated", async ({ page }) => {
+  await page.goto("/no/contact");
+
+  await expect(
+    page.getByText("Undervisnings- og programmeringsvideoer"),
+  ).toBeVisible();
+});
+
+test("What is NOI reads in the page language and switches without reloading", async ({
+  page,
+}) => {
+  await page.goto("/tr");
+
+  const section = page.locator("#what-is-noi");
+  await expect(
+    section.getByRole("heading", { level: 2, name: "NOI nedir?" }),
+  ).toBeVisible();
+  // Turkish has no reading of its own, so the English one opens first.
+  await expect(section.getByRole("radio")).toHaveCount(2);
+  await expect(section.getByRole("radio", { name: "EN" })).toBeChecked();
+  await expect(section.getByText("Notice", { exact: true })).toBeVisible();
+
+  await section.getByText("NO", { exact: true }).click();
+  await expect(
+    section.getByText("Nysgjerrighet", { exact: true }),
+  ).toBeVisible();
+  await expect(section.getByText("Notice", { exact: true })).toBeHidden();
+
+  await expect(
+    page.getByText("NOI — Enes Yılmaz'ın bağımsız üretim pratiği."),
+  ).toBeVisible();
+});

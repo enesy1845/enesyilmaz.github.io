@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#f3f4ef"/>
+<title>NOI — Code Helix / Studio 3D</title>
+<style>
+:root{--paper:#f3f4ef;--ink:#161e1d;--secondary:#5f6662;--border:#dddfd9}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}button,a{font:inherit}button{cursor:pointer}
+.landing{height:100svh;min-height:640px;position:relative;background:#f3f4ef;isolation:isolate;overflow:hidden}
+.landing:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 48% 56% at 33% 48%,rgba(255,255,255,.68),rgba(255,255,255,.18) 48%,transparent 73%);pointer-events:none}
+.kinetic{position:absolute;width:clamp(660px,49vw,950px);height:132%;left:clamp(50px,3vw,90px);top:-16%;z-index:1;pointer-events:none;will-change:transform}
+#sculpture{width:100%;height:100%;display:block}
+.header{position:absolute;left:0;right:0;top:0;z-index:8;padding:30px clamp(30px,6.8vw,130px) 12px 30px;display:flex;align-items:center;justify-content:flex-end;gap:28px}
+.nav{display:flex;align-items:center;gap:clamp(20px,1.9vw,37px);white-space:nowrap}
+.nav a{font-size:clamp(13px,1.17vw,21px);line-height:1.2;text-decoration:none;color:#4c5653;transition:color .2s}.nav a:hover,.nav a:focus-visible{color:#101917}
+.nav a.active{color:#4b5451}.nav a.active:after{content:' •';color:#161e1d}
+.lang{display:flex;gap:9px;white-space:nowrap}.lang button{background:transparent;border:1px solid var(--border);border-radius:100px;color:#5d6763;padding:11px 17px;font-size:clamp(13px,1.05vw,19px);transition:background .2s,border .2s}.lang button.selected{background:#f8f8f4;color:#1f2724;border-color:#aeb4ad}
+.headline{position:absolute;top:14.7%;left:36%;z-index:4;font-weight:400;text-align:center;font-size:clamp(27px,2.18vw,42px);line-height:.99;letter-spacing:-.035em;width:27%;min-width:400px;margin:0}
+.letter{position:absolute;color:#161e1d;z-index:3;font-family:Arial,Helvetica,sans-serif;font-weight:700;line-height:.78;letter-spacing:-.095em;user-select:none;pointer-events:none}
+.letter-n{font-size:clamp(150px,14.2vw,273px);left:.8%;top:43%;}
+.letter-o{font-size:clamp(150px,14.2vw,273px);left:45%;top:43%;}
+.letter-i{position:absolute;z-index:3;right:8.55%;top:46%;height:210px;width:67px;display:flex;flex-direction:column;align-items:center;gap:13px}
+.letter-i .stem{display:block;background:#161e1d;width:48px;height:174px;clip-path:polygon(0 0,23% 0,47% 5%,73% 0,100% 0,100% 100%,73% 100%,49% 94%,26% 100%,0 100%)}
+.letter-i .dot{display:block;background:#161e1d;width:46px;height:46px;border-radius:100%}
+.description{position:absolute;top:54.6%;left:68.1%;z-index:5;width:19%;margin:0;text-align:center;font-size:clamp(13px,1vw,20px);line-height:1.12;color:#58615e;font-weight:500;letter-spacing:-.035em}
+.ctas{position:absolute;left:1.35%;bottom:2.15%;z-index:8;display:flex;gap:9px}
+.ctas a{display:flex;gap:22px;align-items:center;justify-content:space-between;min-height:47px;padding:12px 18px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:-.01em;transition:transform .18s}
+.ctas a:hover{transform:translateY(-2px)}.primary{background:#161e1d;color:white;min-width:250px}.secondary{background:#eff1eb;color:#121c18;min-width:122px}
+.ctas .plus{font-size:25px;font-weight:200;line-height:1}.scroll-down{position:absolute;bottom:2%;right:1.8%;width:51px;height:49px;border-radius:6px;background:#eff1eb;color:#161e1d;display:grid;place-items:center;text-decoration:none;z-index:8;font-size:29px;transition:background .2s}.scroll-down:hover{background:#ccd4cb}
+.control-toggle{position:absolute;right:6%;bottom:2.3%;border:none;color:#6f7973;z-index:10;font:500 10px/1.2 ui-monospace,monospace;letter-spacing:.06em;background:#f7f8f4e6;border-radius:30px;padding:11px 13px;opacity:.75}.control-toggle:hover{opacity:1}
+.control-panel{position:absolute;bottom:71px;right:26px;z-index:10;background:#fffffff2;box-shadow:0 20px 50px rgba(20,37,29,.10);border:1px solid #e7e9e3;border-radius:12px;padding:9px;display:none;align-items:center;gap:8px}
+.control-panel.visible{display:flex}.control-panel button{border:0;background:#f4f5f1;color:#28322f;border-radius:8px;padding:10px 13px;text-transform:uppercase;letter-spacing:.02em;font:600 10px ui-monospace,monospace}.control-panel button:hover{background:#eceee9}.control-panel button[aria-pressed="true"]{background:#ecefe9}.control-note{font:600 9px ui-monospace,monospace;color:#717773;white-space:nowrap;padding:0 5px}.live-led{display:inline-block;background:#c7cdc6;width:6px;height:6px;border-radius:50%}
+.section{min-height:55vh;background:#f7f8f5;padding:100px clamp(28px,7vw,140px);border-top:1px solid #e2e6de}.section:nth-child(odd){background:#edf0eb}.section .index{color:#89958b;font:600 12px ui-monospace,monospace;letter-spacing:.14em}.section h2{font-size:clamp(42px,7vw,116px);font-weight:400;letter-spacing:-.07em;margin:20px 0}.section p{max-width:500px;font-size:20px;line-height:1.6;color:#616e63}.section a{color:#283f31}
+@media(max-width:1200px){.headline{left:35%;min-width:320px;top:17%;font-size:clamp(26px,3vw,37px)}.kinetic{left:3%;width:58vw;top:-12%;height:125%}.letter-n{left:1%;top:49%}.letter-o{left:46%;top:49%}.letter-i{right:6%;top:48%}.description{left:69%;width:22%;top:60%}.header{padding-right:25px;gap:20px}.nav{gap:17px}.lang{gap:5px}.lang button{padding:9px 12px}}
+@media(max-width:800px){.landing{min-height:720px}.header{padding:20px 18px;gap:8px;justify-content:space-between}.nav{gap:14px;max-width:60%;overflow:auto;scrollbar-width:none}.nav a{font-size:13px}.nav a:nth-child(n+4){display:none}.lang{gap:4px}.lang button{font-size:11px;padding:7px 10px}.headline{top:16%;left:14%;width:72%;min-width:0;font-size:clamp(26px,6vw,41px);line-height:1.06;z-index:5}.kinetic{left:3%;width:100vw;height:69%;top:23%;opacity:.92;mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 73%,transparent 97%)}.letter-n{left:4%;top:47%;font-size:30vw;z-index:3}.letter-o{left:68%;top:47%;font-size:30vw;z-index:3}.letter-i{display:none}.description{top:auto;bottom:16.5%;left:21%;width:60%;font-size:13px;line-height:1.3;background:#f3f4efe8;border-radius:7px;padding:10px;backdrop-filter:blur(4px)}.ctas{left:18px;bottom:21px;gap:7px}.ctas a{font-size:10px;min-height:42px;padding:10px 12px;gap:6px}.primary{min-width:154px}.secondary{min-width:87px}.scroll-down{bottom:21px;right:17px;width:41px;height:43px;font-size:20px}.control-toggle{right:17px;bottom:83px}.control-panel{bottom:120px;right:18px;left:18px;justify-content:space-between}.control-panel button{font-size:9px;padding:8px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Studio render is an enhancement, not a replacement for the CPU fallback. */
+.kinetic{filter:drop-shadow(8px 22px 29px rgba(76,82,75,.085));}
+.kinetic::after{content:"";position:absolute;left:20%;width:58%;height:16%;top:44%;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse,rgba(126,132,121,.105),transparent 71%);filter:blur(38px);z-index:-1}
+#sculpture-3d{width:100%;height:100%;position:absolute;inset:0;opacity:0;display:block;transition:opacity .7s ease;pointer-events:none}
+#sculpture-3d.ready{opacity:1}
+.kinetic.is-3d #sculpture{visibility:hidden}
+.render-state{position:absolute;bottom:72px;left:1.65%;z-index:9;color:#818680;font:500 10px/1.5 ui-monospace,monospace;letter-spacing:.08em;pointer-events:none;opacity:.72}
+@media(max-width:800px){.render-state{bottom:80px;left:19px;font-size:9px;max-width:220px}}
+</style>
+</head>
+<body>
+<main>
+<section class="landing" id="home" aria-label="NOI homepage interactive hero concept">
+ <div class="kinetic"><canvas id="sculpture" role="img" aria-label="Dikey beyaz Code Helix formu, 16 saniyelik sonsuz döngü"></canvas><canvas id="sculpture-3d" aria-hidden="true"></canvas></div>
+ <header class="header"><nav class="nav" aria-label="Main navigation"><a href="#home" data-i18n="home" class="active">Home</a><a href="#work" data-i18n="work">Work</a><a href="#notes" data-i18n="notes">Notes</a><a href="#atelier" data-i18n="atelier">Atelier</a><a href="#about" data-i18n="about">About</a><a href="#contact" data-i18n="contact">Contact</a></nav><div class="lang" role="group" aria-label="Language"><button type="button" class="selected" data-language="en" aria-pressed="true">English</button><button type="button" data-language="no" aria-pressed="false">Norsk</button><button type="button" data-language="tr" aria-pressed="false">Türkçe</button></div></header>
+ <h1 class="headline" id="headline">SOFTWARE DEVELOPER<br>CODE / THOUGHT / CRAFT</h1>
+ <div class="letter letter-n" aria-hidden="true">n</div><div class="letter letter-o" aria-hidden="true">o</div><div class="letter-i" aria-label="i" role="img"><span class="stem"></span><span class="dot"></span></div>
+ <p class="description" id="description">I BUILD THOUGHTFUL<br>SOFTWARE SYSTEMS ACROSS<br>PYTHON, DATA AND THE WEB.</p>
+ <div class="ctas"><a class="primary" href="#work"><span id="workCta">VIEW SELECTED WORK</span><span class="plus">＋</span></a><a class="secondary" href="#about" id="aboutCta">ABOUT ME</a></div>
+ <a class="scroll-down" href="#work" aria-label="Scroll to selected work">↓</a>
+ <div class="render-state" id="renderState">SCULPTURAL CODE / STUDIO EDITION</div>
+ <button class="control-toggle" id="controlToggle" type="button" aria-expanded="false" aria-controls="controls">ANIMATION · SETTINGS</button>
+ <div class="control-panel" id="controls" role="group" aria-label="Animation controls"><span class="live-led" id="led"></span><span class="control-note" id="status">LIVE / 16S LOOP</span><button type="button" id="detailBtn" aria-pressed="true">SYNTAX ON</button><button type="button" id="pauseBtn" aria-pressed="false">PAUSE Ⅱ</button><button type="button" id="exportBtn">SNAP ↗</button></div>
+</section>
+<section class="section" id="work"><div class="index">01 / SELECTED WORK</div><h2>Selected work.</h2><p>Python, data, and web — a space for projects built with curiosity and care.</p><a href="#home">Back to top ↑</a></section>
+<section class="section" id="notes"><div class="index">02 / NOTES</div><h2>Notes.</h2><p>Ideas, experiments, and what they teach us.</p><a href="#home">Back to top ↑</a></section>
+<section class="section" id="atelier"><div class="index">03 / ATELIER</div><h2>Atelier.</h2><p>Where creative exploration meets engineering.</p><a href="#home">Back to top ↑</a></section>
+<section class="section" id="about"><div class="index">04 / ABOUT</div><h2>About.</h2><p>Building bridges between code, thought, and craft.</p><a href="#home">Back to top ↑</a></section>
+<section class="section" id="contact"><div class="index">05 / CONTACT</div><h2>Let's connect.</h2><p>Let's create something useful, thoughtful, and lasting.</p><a href="#home">Back to top ↑</a></section>
+</main>
+<script>
+const translations={en:{home:'Home',work:'Work',notes:'Notes',atelier:'Atelier',about:'About',contact:'Contact',headline:'SOFTWARE DEVELOPER<br>CODE / THOUGHT / CRAFT',description:'I BUILD THOUGHTFUL<br>SOFTWARE SYSTEMS ACROSS<br>PYTHON, DATA AND THE WEB.',workCta:'VIEW SELECTED WORK',aboutCta:'ABOUT ME'},no:{home:'Hjem',work:'Arbeid',notes:'Notater',atelier:'Atelier',about:'Om meg',contact:'Kontakt',headline:'PROGRAMVAREUTVIKLER<br>KODE / TANKE / HÅNDVERK',description:'JEG BYGGER GJENNOMTENKTE<br>PROGRAMVARESYSTEMER MED<br>PYTHON, DATA OG WEB.',workCta:'SE UTVALGTE PROSJEKTER',aboutCta:'OM MEG'},tr:{home:'Ana Sayfa',work:'Projeler',notes:'Notlar',atelier:'Atölye',about:'Hakkımda',contact:'İletişim',headline:'YAZILIM GELİŞTİRİCİ<br>KOD / DÜŞÜNCE / ÜRETİM',description:'PYTHON, VERİ VE WEB ALANLARINDA<br>ÖZENLE TASARLANMIŞ<br>YAZILIM SİSTEMLERİ GELİŞTİRİYORUM.',workCta:'SEÇİLMİŞ PROJELER',aboutCta:'HAKKIMDA'}};
+document.querySelectorAll('[data-language]').forEach(btn=>btn.addEventListener('click',()=>{let l=btn.dataset.language;document.documentElement.lang=l==='no'?'nb':l;document.querySelectorAll('[data-language]').forEach(b=>{let s=b===btn;b.classList.toggle('selected',s);b.setAttribute('aria-pressed',String(s));});document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=translations[l][el.dataset.i18n]});document.getElementById('headline').innerHTML=translations[l].headline;document.getElementById('description').innerHTML=translations[l].description;document.getElementById('workCta').textContent=translations[l].workCta;document.getElementById('aboutCta').textContent=translations[l].aboutCta;}));
+document.getElementById('controlToggle').addEventListener('click',()=>{let p=document.getElementById('controls');let show=p.classList.toggle('visible');document.getElementById('controlToggle').setAttribute('aria-expanded',String(show));});
+(() => {
+    'use strict';
+    // NOI / Code Helix. Self-contained Canvas2D parametric 3D renderer.
+    // No Blender, no Three.js dependency, no external assets. Suitable for a standalone prototype.
+    const canvas = document.getElementById('sculpture');
+    const ctx = canvas.getContext('2d', { alpha: true, desynchronized: false });
+    if (!ctx) return;
+    const pauseBtn = document.getElementById('pauseBtn');
+    const detailBtn = document.getElementById('detailBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const status = document.getElementById('status');
+    const led = document.getElementById('led');
+    const TAU = Math.PI * 2;
+    const PERIOD = 16000; // exact 16-second periodic loop
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SCULPTURE_HEIGHT = 6.7;
+    const STEP_COUNT = 51;
+    let showSyntax = true;
+    let paused = REDUCED;
+    let accumulated = 0;
+    let started = performance.now();
+    let pauseStarted = 0;
+    let cssWidth = 560, cssHeight = 700, dpr = 1;
+    let mouse = {x:0, y:0};
+    let smoothMouse = {x:0, y:0};
+    const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+    const mix = (a,b,t) => a+(b-a)*t;
+    const vec=(x,y,z)=>({x,y,z});
+    const add=(a,b)=>vec(a.x+b.x,a.y+b.y,a.z+b.z);
+    const sub=(a,b)=>vec(a.x-b.x,a.y-b.y,a.z-b.z);
+    const cross=(a,b)=>vec(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z,a.x*b.y-a.y*b.x);
+    const dot=(a,b)=>a.x*b.x+a.y*b.y+a.z*b.z;
+    const unit=v=>{ const s=Math.hypot(v.x,v.y,v.z)||1;return vec(v.x/s,v.y/s,v.z/s); };
+    const hex2rgb=h=>{let s=h.replace('#','');return [parseInt(s.slice(0,2),16),parseInt(s.slice(2,4),16),parseInt(s.slice(4,6),16)];};
+    const tint=(hex, amt)=>{let c=hex2rgb(hex);return `rgb(${c.map(v=>clamp(Math.round(v+amt),0,255)).join(',')})`;};
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      cssWidth = Math.max(120, rect.width); cssHeight=Math.max(120,rect.height);
+      dpr=Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width=Math.round(cssWidth*dpr); canvas.height=Math.round(cssHeight*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      if (paused) draw(currentPhase());
+    }
+    new ResizeObserver(resize).observe(canvas);
+    function frameScale() {return Math.min(cssHeight/7.7,cssWidth/5.7)*1.17;}
+    let wobbleX=0,wobbleY=0;
+    function transform(p) {
+      // Subtle non-animated camera angle, with minor pointer parallax; periodic rotation is in geometry.
+      const rx=-0.065 + wobbleY * .055;
+      const rz=.045 + wobbleX * .025;
+      const c=Math.cos(rx),s=Math.sin(rx);
+      const p1=vec(p.x,p.y*c-p.z*s,p.y*s+p.z*c);
+      return vec(p1.x*Math.cos(rz)-p1.y*Math.sin(rz),p1.x*Math.sin(rz)+p1.y*Math.cos(rz),p1.z);
+    }
+    function project(p) {
+      const v=transform(p), zscale=10/(10-v.z);
+      const scale=frameScale();
+      return { x:cssWidth*.5 + v.x*scale*zscale, y:cssHeight*.50-v.y*scale*zscale, z:v.z, perspective:zscale };
+    }
+    function curvePath(points,stroke,width,opacity=1) {
+      if(points.length<2)return;
+      ctx.save(); ctx.globalAlpha=opacity; ctx.strokeStyle=stroke;ctx.lineWidth=width;
+      ctx.lineCap='round';ctx.lineJoin='round';
+      ctx.beginPath();ctx.moveTo(points[0].x,points[0].y);
+      for(let i=1;i<points.length-1;i++){
+        const m={x:(points[i].x+points[i+1].x)/2,y:(points[i].y+points[i+1].y)/2};
+        ctx.quadraticCurveTo(points[i].x,points[i].y,m.x,m.y);
+      }
+      const q=points[points.length-1];ctx.lineTo(q.x,q.y);ctx.stroke();ctx.restore();
+    }
+    function drawPoly(points,fill,outline,weight=.7,opacity=1) {
+      if(points.some(p=>!Number.isFinite(p.x)||!Number.isFinite(p.y)))return;
+      ctx.save();ctx.globalAlpha=opacity;
+      ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();
+      ctx.fillStyle=fill;ctx.fill();
+      if(outline){ctx.lineWidth=weight;ctx.strokeStyle=outline;ctx.stroke();}
+      ctx.restore();
+    }
+    function enqueueFace(commands, pts, base, edge, alpha=1) {
+      const pr=pts.map(project);
+      let n=unit(cross(sub(pts[1],pts[0]),sub(pts[2],pts[0])));
+      let light=dot(n,unit(vec(-.45,.75,1.1)));
+      const bright = Math.round(light*11 + 2);
+      const dep=pr.reduce((sum,p)=>sum+p.z,0)/pr.length;
+      commands.push({kind:'poly',depth:dep,pts:pr,fill:tint(base,bright),stroke:edge,alpha});
+    }
+    function makeBoxFaces(commands,corners,palette,opacity=1) {
+      const faceIndices=[
+        [0,3,2,1], // lower
+        [4,5,6,7], // top
+        [0,1,5,4], // side
+        [1,2,6,5],
+        [2,3,7,6],
+        [3,0,4,7]
+      ];
+      const facePal=[palette.bottom,palette.top,palette.side,palette.end,palette.side,palette.end];
+      for(let f=0;f<faceIndices.length;f++) enqueueFace(commands,faceIndices[f].map(i=>corners[i]),facePal[f],palette.stroke,opacity);
+    }
+    function beamPoint(angle,q,v,dy,by,shift) {
+      const c=Math.cos(angle),s=Math.sin(angle);
+      return vec(c*q - s*v + shift, by +dy, s*q + c*v);
+    }
+    function cuboidCorners(angle,q0,q1,v0,v1,y0,y1,baseY,shift=0) {
+      return [
+        beamPoint(angle,q0,v0,y0,baseY,shift),
+        beamPoint(angle,q1,v0,y0,baseY,shift),
+        beamPoint(angle,q1,v1,y0,baseY,shift),
+        beamPoint(angle,q0,v1,y0,baseY,shift),
+        beamPoint(angle,q0,v0,y1,baseY,shift),
+        beamPoint(angle,q1,v0,y1,baseY,shift),
+        beamPoint(angle,q1,v1,y1,baseY,shift),
+        beamPoint(angle,q0,v1,y1,baseY,shift)
+      ];
+    }
+    function addStatement(commands,i,phase) {
+      const t=i/(STEP_COUNT-1);
+      const bottomT = t-.5;
+      // A code statement is a horizontal "rung"; rungs form a double turn climbing in Y.
+      const angle = t*TAU*2 + phase*TAU + .3;
+      const y=bottomT*SCULPTURE_HEIGHT;
+      const taper=.84+.16*Math.sin(t*Math.PI);
+      const indent=[0, .08, .22, .12, .04, .17, .1][i%7];
+      const q0=.18+indent, q1=(1.85+.08*Math.sin(t*TAU*3 + phase*TAU)+.08*Math.sin(i*2.1))*taper;
+      const w=.22;
+      const shift=.09*Math.sin(t*TAU*2 + phase*TAU);
+      const base = cuboidCorners(angle,q0,q1,-w,w,-.055,.055,y,shift);
+      makeBoxFaces(commands,base,{
+        top:'#fcfcfa', bottom:'#e1e4de',side:'#f2f4ef',end:'#e8ebe5',stroke:'#dde2db'
+      });
+      // A staggered syntax grammar: token lengths and position follow a deterministic code-like pattern.
+      const patterns=[ [.17,.28,.10,.27,.12], [.1,.16,.24,.1,.22], [.23,.1,.17,.13,.14], [.12,.26,.15,.1,.19], [.19,.14,.21,.11,.13] ];
+      const pattern=patterns[i%patterns.length];
+      const usable=q1-q0-.16;
+      const total=pattern.reduce((a,b)=>a+b,0);
+      let x=q0+.09;
+      const fac=usable/(total+.10*(pattern.length-1));
+      for(let j=0;j<pattern.length;j++) {
+        const len=pattern[j]*fac;
+        // Narrow, elevated strips are code tokens embedded physically within each white step.
+        if(showSyntax){
+          const color = (i+j)%8===0 ? '#c7cdc5' : (i+j)%3===0 ? '#dde1da' : '#eff1ed';
+          const token=cuboidCorners(angle,x,x+len,-.095,-.028,.059,.072,y,shift);
+          makeBoxFaces(commands,token,{top:color,bottom:color,side:color,end:color,stroke:null},.93);
+        }
+        x+=len+fac*.10;
+      }
+      // A precise end-stop on selected rungs, like punctuation in code.
+      if(i%7===0 && showSyntax){
+        const token=cuboidCorners(angle,q1-.09,q1-.045,.072,.12,.058,.076,y,shift);
+        makeBoxFaces(commands,token,{top:'#b6bcb4',bottom:'#b6bcb4',side:'#b6bcb4',end:'#b6bcb4',stroke:null},.88);
+      }
+    }
+    function addRailSegments(commands,phase) {
+      // Rail is not a static image: parametric control curve traverses exactly two rotations.
+      const samples=172;
+      for(let rail=0;rail<3;rail++){
+        let prev=null;
+        for(let i=0;i<=samples;i++){
+          const t=i/samples;
+          const theta=t*TAU*2+phase*TAU+.3+(rail===1?Math.PI:rail===2?Math.PI*.52:0);
+          const r=rail===2?.33:rail===1?.39:.46;
+          const y=(t-.5)*SCULPTURE_HEIGHT;
+          const p=vec(Math.cos(theta)*r,y,Math.sin(theta)*r);
+          const pp=project(p);
+          if(prev){
+            commands.push({kind:'line',depth:(prev.z+pp.z)/2, a:prev,b:pp,
+              color:rail===2?'#d8ddd7':rail===1?'#d0d6cf':'#c7cec6',
+              width:rail===2?1.3:rail===1?1.8:2.1,
+              alpha:rail===2?.27:rail===1?.38:.47 });
+          }
+          prev=pp;
+        }
+      }
+    }
+    function addFunctionalSyntax(commands,phase) {
+      // Monospaced punctuation floats at a small number of nodes — not an overwhelming Matrix effect.
+      const labels=['{ }','=>','</>','[ ]','fn','()'];
+      for(let i=0;i<labels.length;i++) {
+        const t=(i+.75)/(labels.length+.6);
+        const ang=t*TAU*2+phase*TAU+.3 + .7;
+        const r=2.05;
+        const pos=project(vec(Math.cos(ang)*r,(t-.5)*SCULPTURE_HEIGHT,Math.sin(ang)*r));
+        const front=clamp((pos.z+.25)/1.5,0,1);
+        commands.push({kind:'glyph',depth:pos.z, p:pos, text:labels[i], alpha:.13+front*.44});
+      }
+    }
+    function draw(phase) {
+      const w=cssWidth,h=cssHeight;
+      ctx.clearRect(0,0,w,h);
+      smoothMouse.x=mix(smoothMouse.x,mouse.x,.035);smoothMouse.y=mix(smoothMouse.y,mouse.y,.035);
+      wobbleX=0;wobbleY=0;
+      const commands=[];
+      addRailSegments(commands,phase);
+      for(let i=0;i<STEP_COUNT;i++)addStatement(commands,i,phase);
+      if(showSyntax)addFunctionalSyntax(commands,phase);
+      commands.sort((a,b)=>a.depth-b.depth);
+      // Painter's algorithm: far elements first, closest surfaces last.
+      for(const cmd of commands){
+        if(cmd.kind==='poly')drawPoly(cmd.pts,cmd.fill,cmd.stroke,.53,cmd.alpha);
+        else if(cmd.kind==='line'){
+          ctx.save();ctx.strokeStyle=cmd.color;ctx.globalAlpha=cmd.alpha;ctx.lineWidth=cmd.width;
+          ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cmd.a.x,cmd.a.y);ctx.lineTo(cmd.b.x,cmd.b.y);ctx.stroke();ctx.restore();
+        } else if(cmd.kind==='glyph'){
+          ctx.save();ctx.globalAlpha=cmd.alpha;ctx.fillStyle='#bcc3bb';
+          ctx.font=`500 ${Math.max(9,Math.min(12,frameScale()*.14))}px ui-monospace, Consolas, monospace`;
+          ctx.textAlign='center'; ctx.textBaseline='middle';ctx.fillText(cmd.text,cmd.p.x,cmd.p.y);
+          ctx.restore();
+        }
+      }
+      // Lightweight vignette within the scene only: makes the vertical silhouette emerge from the paper.
+      const mist=ctx.createLinearGradient(0,0,0,h);
+      mist.addColorStop(0,'rgba(243,244,239,.56)');mist.addColorStop(.13,'rgba(247,248,244,0)');
+      mist.addColorStop(.86,'rgba(247,248,244,0)');mist.addColorStop(1,'rgba(243,244,239,.65)');
+      ctx.fillStyle=mist;ctx.fillRect(0,0,w,h);
+    }
+    function currentPhase(){
+      const elapsed=paused ? pauseStarted : (performance.now()-started+accumulated);
+      return ((elapsed%PERIOD)+PERIOD)%PERIOD/PERIOD;
+    }
+    function loop(now){ if(window.__NOI_3D_READY) return; if(!paused){draw(currentPhase());requestAnimationFrame(loop);} }
+    pauseBtn.addEventListener('click',()=>{
+      if(paused){paused=false; started=performance.now();accumulated=pauseStarted;
+        pauseBtn.innerHTML='PAUSE <span aria-hidden="true">Ⅱ</span>';pauseBtn.setAttribute('aria-pressed','false');
+        led.style.background='#819f86';status.textContent='LIVE / 16S LOOP';requestAnimationFrame(loop);
+      }else{pauseStarted=performance.now()-started+accumulated;paused=true;
+        pauseBtn.innerHTML='PLAY <span aria-hidden="true">▷</span>';pauseBtn.setAttribute('aria-pressed','true');
+        led.style.background='#b5bcb2';status.textContent='PAUSED / FRAME';draw(currentPhase());}
+    });
+    detailBtn.addEventListener('click',()=>{showSyntax=!showSyntax;detailBtn.textContent=showSyntax?'SYNTAX ON':'SYNTAX OFF';detailBtn.setAttribute('aria-pressed',String(showSyntax));if(paused)draw(currentPhase());});
+    exportBtn.addEventListener('click',()=>{
+      if(window.__NOI_3D_READY) return;
+      draw(currentPhase());
+      const link=document.createElement('a');link.download='noi-code-helix-frame.png';link.href=canvas.toDataURL('image/png');link.click();
+    });
+    // Pointer movement is deliberately tiny and does not interrupt the mathematically seamless loop.
+    document.querySelector('.landing').addEventListener('pointermove',e=>{
+      if(e.pointerType==='touch')return;
+      const rect=canvas.getBoundingClientRect();
+      mouse.x=clamp((e.clientX-rect.left)/rect.width*2-1,-1,1);
+      mouse.y=clamp((e.clientY-rect.top)/rect.height*2-1,-1,1);
+    });
+    document.querySelector('.landing').addEventListener('pointerleave',()=>{mouse.x=0;mouse.y=0;});
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden && !paused){pauseStarted=performance.now()-started+accumulated;paused=true;}
+      else if(!document.hidden && !REDUCED && paused && pauseBtn.getAttribute('aria-pressed')==='false'){
+        paused=false;started=performance.now();accumulated=pauseStarted;requestAnimationFrame(loop);
+      }
+    });
+    window.__NOI__={ renderAt:phase=>draw(((phase%1)+1)%1),getPhase:currentPhase };
+    window.__NOI_2D = { stop:()=>{paused=true;}, status:()=>paused }; 
+    if(REDUCED){pauseBtn.innerHTML='PLAY <span aria-hidden="true">▷</span>';pauseBtn.setAttribute('aria-pressed','true');status.textContent='STILL / REDUCED MOTION';}
+    resize(); if(!paused)requestAnimationFrame(loop);else draw(.17);
+  })();
+</script>
+<script type="module">
+
+/*
+ * NOI Code Helix / Studio Edition — physical 3D implementation
+ * Three.js 0.180.0, loaded only when available. Blender / external 3D assets not required.
+ * Form, syntax, and loop are deterministic. Full revolution in exactly 16 seconds.
+ * This block is intentionally independent of the original 2D fallback.
+ */
+const TAU = Math.PI * 2;
+const DURATION = 16000;
+const canvas = document.getElementById('sculpture-3d');
+const holder = document.querySelector('.kinetic');
+const renderLabel = document.getElementById('renderState');
+const statusLabel = document.getElementById('status');
+const pauseButton = document.getElementById('pauseBtn');
+const syntaxButton = document.getElementById('detailBtn');
+const snapButton = document.getElementById('exportBtn');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let THREE;
+try {
+  // Pinned ESM version with relative internal imports (three.core.js).
+  THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+} catch (firstError) {
+  try {
+    THREE = await import('https://unpkg.com/three@0.180.0/build/three.module.js');
+  } catch (secondError) {
+    console.warn('[NOI] 3D library could not load; original 2D animation remains active.', secondError);
+    renderLabel.textContent = 'CODE HELIX / CLASSIC RENDER';
+  }
+}
+if (THREE) {
+  try {
+    buildStudioScene(THREE);
+  } catch (error) {
+    console.warn('[NOI] WebGL unavailable; displaying self-contained 2D fallback.', error);
+    renderLabel.textContent = 'CODE HELIX / CLASSIC RENDER';
+  }
+}
+function buildStudioScene(THREE) {
+  const renderer = new THREE.WebGLRenderer({
+    canvas, alpha:true, antialias:true, powerPreference:'high-performance',
+    preserveDrawingBuffer:true
+  });
+  renderer.setClearAlpha(0);
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 800 ? 1.4 : 1.7));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.02;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-3.7,3.7,4.9,-4.9,0.1,100);
+  camera.position.set(0,2.4,15);
+  camera.lookAt(0,0,0);
+
+  // Studio softboxes; porcelain must read white, never mint.
+  scene.add(new THREE.HemisphereLight(0xffffff,0xc7c6bf,1.25));
+  const key=new THREE.DirectionalLight(0xffffff,2.4);
+  key.position.set(-4,7,8);
+  key.castShadow=true;
+  key.shadow.mapSize.set(innerWidth < 800 ? 1024 : 2048, innerWidth < 800 ? 1024 : 2048);
+  key.shadow.camera.left=-6;key.shadow.camera.right=6;
+  key.shadow.camera.top=7;key.shadow.camera.bottom=-7;
+  key.shadow.camera.near=.5;key.shadow.camera.far=30;
+  key.shadow.bias=-0.00016;
+  key.shadow.normalBias=.025;
+  key.shadow.radius=3.5;
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xf9fafb,.7);
+  fill.position.set(5,0,6);scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xffffff,1.15);
+  rim.position.set(1,1,-6);scene.add(rim);
+
+  // No HDR file needed: generate neutral softbox reflections from three softly glowing planes.
+  const studio = new THREE.Scene();
+  studio.background = new THREE.Color(0xe8e8e2);
+  function softbox(w,h,x,y,z,rotation,intensity){
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(w,h),
+      new THREE.MeshBasicMaterial({color:0xffffff, side:THREE.DoubleSide,toneMapped:false})
+    );
+    mesh.position.set(x,y,z);
+    mesh.rotation.y=rotation;
+    mesh.scale.multiplyScalar(intensity);
+    studio.add(mesh);
+  }
+  softbox(7,9,-6,3,3,-.7,1);
+  softbox(4,9,5,0,1,.9,1);
+  softbox(4,6,0,6,-7,0,1);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const reflection=pmrem.fromScene(studio, .045);
+  scene.environment=reflection.texture;
+  scene.environmentIntensity=.44;
+  pmrem.dispose();
+
+  const porcelain = new THREE.MeshPhysicalMaterial({
+    color:0xfafbf8, roughness:.39, metalness:0, clearcoat:.08,
+    clearcoatRoughness:.58, envMapIntensity:.50,
+  });
+  const otherPorcelain = new THREE.MeshPhysicalMaterial({
+    color:0xf5f6f2, roughness:.48, metalness:0,
+    clearcoat:.05, clearcoatRoughness:.6, envMapIntensity:.38,
+  });
+  const inlayMat = new THREE.MeshStandardMaterial({
+    color:0xd6d9d2, roughness:.82, metalness:0,
+  });
+  const inlayLight = new THREE.MeshStandardMaterial({
+    color:0xe8eae5, roughness:.91, metalness:0,
+  });
+  const spineMaterial = new THREE.MeshPhysicalMaterial({
+    color:0xe7e9e3, roughness:.55, metalness:.02,
+  });
+
+  const sculpture = new THREE.Group();
+  scene.add(sculpture);
+  sculpture.rotation.x=-.035;
+  sculpture.rotation.z=.04;
+
+  // Exact same underlying code/rung grammar as concept 02, now beveled physical geometry.
+  const blades=[];
+  const codeMarks = new THREE.Group();
+  sculpture.add(codeMarks);
+  const SEGMENTS = 54;
+  const HEIGHT=7.8;
+  const MARKS_PER_BLADE=4;
+  const markerBox=new THREE.BoxGeometry(1,1,1);
+  const inlay1=new THREE.InstancedMesh(markerBox,inlayMat,SEGMENTS*MARKS_PER_BLADE);
+  const inlay2=new THREE.InstancedMesh(markerBox,inlayLight,SEGMENTS*MARKS_PER_BLADE);
+  inlay1.castShadow=false;inlay2.castShadow=false;
+  inlay1.receiveShadow=false;inlay2.receiveShadow=false;
+  inlay1.frustumCulled=false;inlay2.frustumCulled=false;
+  let count1=0,count2=0;
+  const scratch=new THREE.Object3D();
+  const strokePatterns = [
+    [.10,.29,.16,.21], [.21,.12,.16,.29], [.14,.24,.11,.24],
+    [.26,.13,.23,.12], [.12,.16,.27,.15], [.18,.22,.17,.20]
+  ];
+  function roundedPanel(q0,q1,w,thickness=.087){
+    const s=new THREE.Shape();
+    const r=.035;
+    const a=q0, b=q1;
+    s.moveTo(a+r,-w); s.lineTo(b-r,-w);
+    s.quadraticCurveTo(b,-w,b,-w+r);
+    s.lineTo(b,w-r);s.quadraticCurveTo(b,w,b-r,w);
+    s.lineTo(a+r,w);s.quadraticCurveTo(a,w,a,w-r);
+    s.lineTo(a,-w+r);s.quadraticCurveTo(a,-w,a+r,-w);
+    const geo=new THREE.ExtrudeGeometry(s,{depth:thickness,bevelEnabled:true,
+      bevelSegments:3,bevelThickness:.014,bevelSize:.014,steps:1,curveSegments:3});
+    geo.translate(0,0,-thickness/2);
+    geo.rotateX(-Math.PI/2);
+    geo.computeVertexNormals();
+    return geo;
+  }
+  for(let i=0;i<SEGMENTS;i++){
+    const t=i/(SEGMENTS-1);
+    const a=t*TAU*2+.35;
+    const indent=[0,.08,.20,.13,.04,.18,.1][i%7];
+    const q0=.18+indent;
+    const q1=(1.90+.10*Math.sin(i*2.1))*(.82+.18*Math.sin(Math.PI*t));
+    const y=(t-.5)*HEIGHT;
+    const group=new THREE.Group();
+    group.position.y=y;
+    group.rotation.y=-a;
+    const blade = new THREE.Mesh(roundedPanel(q0,q1,.194), i%6===0?otherPorcelain:porcelain);
+    blade.castShadow=true;blade.receiveShadow=true;
+    group.add(blade);
+    sculpture.add(group);
+    blades.push({group,i,t,a,y});
+
+    // Barely raised tone-on-tone inlays = source code without literal neon syntax.
+    const pattern=strokePatterns[i%strokePatterns.length];
+    const usable=q1-q0-.25;
+    const total=pattern.reduce((s,v)=>s+v,0);
+    let offset=q0+.12;
+    const fraction=usable/(total+.065*3);
+    for(let k=0;k<MARKS_PER_BLADE;k++){
+      const len=pattern[k]*fraction;
+      const light=((i+k)%5!==0);
+      scratch.position.set(0,y,0);scratch.rotation.set(0,-a,0);
+      scratch.updateMatrix();
+      // World position: same Y and angular orientation as the individual blade.
+      const local=new THREE.Vector3(offset+len/2,.061, -.055 + (k%2)*.039);
+      local.applyMatrix4(scratch.matrix);
+      scratch.position.copy(local);
+      scratch.rotation.set(0,-a,0);
+      scratch.scale.set(Math.max(.03,len),.008,.021);
+      scratch.updateMatrix();
+      if(light)inlay2.setMatrixAt(count2++,scratch.matrix);
+      else inlay1.setMatrixAt(count1++,scratch.matrix);
+      offset+=len+.065*fraction;
+    }
+  }
+  inlay1.count=count1;inlay2.count=count2;
+  inlay1.instanceMatrix.needsUpdate=true;
+  inlay2.instanceMatrix.needsUpdate=true;
+  codeMarks.add(inlay1,inlay2);
+
+  // Curved connective ribs: elegant data flow, not a literal architectural staircase.
+  for(let rail=0;rail<3;rail++) {
+    const points=[];
+    const off=[0,Math.PI,.9][rail];
+    const radius=[.45,.42,.31][rail];
+    for(let k=0;k<=250;k++){
+      const t=k/250;
+      const angle=t*TAU*2+.35+off;
+      points.push(new THREE.Vector3(
+        radius*Math.cos(angle), (t-.5)*HEIGHT, radius*Math.sin(angle)
+      ));
+    }
+    const curve=new THREE.CatmullRomCurve3(points);
+    const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,260,rail===2?.008:.012,6,false), spineMaterial);
+    mesh.castShadow=true;mesh.receiveShadow=true;
+    sculpture.add(mesh);
+  }
+  // Concentrated extra highlights on bevel edges can feel more like porcelain than chrome.
+  const accentLight = new THREE.PointLight(0xffffff,1.8,12,2.1);
+  accentLight.position.set(-3.5,4.5,4);
+  scene.add(accentLight);
+
+  const pauseByUser=()=>pauseButton.getAttribute('aria-pressed')==='true';
+  let elapsedMs = reducedMotion ? DURATION*.175 : DURATION*.08;
+  let prior=performance.now();
+  let active=true;
+  let heldSyntax=true;
+  function resize() {
+    const width=Math.max(1,holder.clientWidth),height=Math.max(1,holder.clientHeight);
+    const aspect=width/height;
+    const HALF=4.95;
+    camera.top=HALF;camera.bottom=-HALF;
+    camera.left=-HALF*aspect;camera.right=HALF*aspect;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width,height,false);
+    renderAt(elapsedMs / DURATION);
+  }
+  function renderAt(phase) {
+    const p=((phase%1)+1)%1;
+    const spin=p*TAU;
+    const wave=Math.sin(spin);
+    sculpture.rotation.y=spin + .2;
+    sculpture.rotation.x=-.035+.015*Math.sin(spin);
+    sculpture.position.y=.048*Math.sin(spin);
+    const breathe=1+.012*Math.sin(spin);
+    sculpture.scale.set(breathe,1,breathe);
+    // Periodic deformation; syntax stays attached to the sculpture and survives loop boundary.
+    // Slow non-geometric rotations rely on group transform only, not per-frame topology edits.
+    renderer.render(scene,camera);
+  }
+  function tick(now){
+    if(!active) return;
+    const delta=Math.max(0,Math.min(80,now-prior));
+    prior=now;
+    if(!document.hidden&&!pauseByUser()&&!reducedMotion) elapsedMs+=delta;
+    renderAt(elapsedMs / DURATION);
+    requestAnimationFrame(tick);
+  }
+  const observer=new ResizeObserver(resize);observer.observe(holder);
+  document.addEventListener('visibilitychange',()=>{prior=performance.now();});
+  syntaxButton.addEventListener('click',()=>{
+    heldSyntax=syntaxButton.getAttribute('aria-pressed')==='true';
+    codeMarks.visible=heldSyntax;
+    renderAt(elapsedMs / DURATION);
+  });
+  snapButton.addEventListener('click',()=>{
+    renderAt(elapsedMs / DURATION);
+    const a=document.createElement('a');
+    a.download='noi-code-helix-studio.png';a.href=canvas.toDataURL('image/png');a.click();
+  });
+  // Diagnostic access for exact-loop tests and controllable frame export.
+  window.__NOI_STUDIO__={
+    renderAt,
+    getPhase:()=>((elapsedMs%DURATION)+DURATION)%DURATION/DURATION,
+    renderer,scene,camera,sculpture,
+    dispose:()=>{active=false;observer.disconnect();renderer.dispose();reflection.dispose();}
+  };
+  // Render first, then swap canvas: no blank frame on slow networks.
+  resize();
+  window.__NOI_3D_READY=true;
+  window.__NOI_2D?.stop();
+  holder.classList.add('is-3d');
+  canvas.classList.add('ready');
+  renderLabel.textContent='CODE HELIX / PHYSICAL STUDIO RENDER';
+  statusLabel.textContent=reducedMotion?'STILL / 3D':'LIVE / 16S · 3D';
+  requestAnimationFrame(tick);
+}
+
+</script>
+</body>
+</html>

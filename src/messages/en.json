@@ -1,0 +1,94 @@
+{
+  "site": {
+    "name": "Enes Yılmaz",
+    "role": "Software Developer",
+    "description": "Software developer in Norway working with Python, React, .NET, data engineering and modern web applications."
+  },
+  "navigation": {
+    "home": "Home",
+    "work": "Work",
+    "notes": "Notes",
+    "atelier": "Atelier",
+    "about": "About",
+    "cv": "CV",
+    "contact": "Contact"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageSwitcher": "Choose language",
+    "currentLanguage": "Current language",
+    "footerNavigation": "Footer navigation",
+    "heroLinks": "Hero links"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norsk",
+    "tr": "Türkçe"
+  },
+  "pages": {
+    "home": {
+      "heading": "Enes Yılmaz",
+      "description": "Software developer based in Norway, working with Python, React, .NET, data engineering and modern web applications.",
+      "metaTitle": "Enes Yılmaz | Software Developer & Python Engineer",
+      "metaDescription": "Enes Yılmaz is a software developer based in Norway, working with Python, React, .NET, data engineering and modern web applications."
+    },
+    "work": {
+      "heading": "Work",
+      "description": "Software systems, digital products and websites built to solve real problems.",
+      "featuredDescription": "Public-sector software, client platforms and websites I have built or contributed to.",
+      "metaTitle": "Work & Projects",
+      "metaDescription": "Software, data and web projects by Enes Yılmaz, from public-sector systems to client platforms and websites."
+    },
+    "notes": {
+      "heading": "Notes",
+      "description": "Reflections on software, education, mathematical thinking, technology and human development.",
+      "metaTitle": "Notes",
+      "metaDescription": "Essays and reflections by Enes Yılmaz on software, education, mathematical thinking, technology and human development."
+    },
+    "atelier": {
+      "heading": "Atelier",
+      "description": "Some of the things that fascinate me most are not digital. They are physical objects, precise mechanisms and the quiet discipline of making something well.",
+      "metaTitle": "Atelier",
+      "metaDescription": "Craft interests of Enes Yılmaz: prayer beads, woodworking, mechanical watches and visual storytelling."
+    },
+    "about": {
+      "heading": "About",
+      "description": "I work at the intersection of software engineering, data and human-centered problem-solving.",
+      "metaTitle": "About",
+      "metaDescription": "Enes Yılmaz is a software developer in Asker, Norway, connecting mathematics, programming education, full-stack development and data engineering."
+    },
+    "cv": {
+      "heading": "A journey shaped by curiosity.",
+      "description": "From mathematics and education to software engineering, data and digital products — a journey of learning, building and connecting ideas.",
+      "metaTitle": "CV & Experience | Enes Yılmaz — Software Developer",
+      "metaDescription": "Explore Enes Yılmaz's professional journey, software engineering experience, technical skills, education, certifications and references."
+    },
+    "contact": {
+      "heading": "Contact",
+      "description": "I'm open to meaningful collaborations, software engineering opportunities and conversations about ideas worth building.",
+      "metaTitle": "Contact",
+      "metaDescription": "Contact Enes Yılmaz, software developer in Norway, by email, LinkedIn or GitHub."
+    }
+  },
+  "contact": {
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "youtubeDetail": "Teaching and programming videos"
+  },
+  "footer": {
+    "location": "Asker, Norway",
+    "professionalLinks": "Professional links",
+    "copyright": "All rights reserved.",
+    "practice": "NOI — An independent creative practice by Enes Yılmaz."
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "description": "The requested page does not exist in this language.",
+    "homeLink": "Back to the home page"
+  }
+}
