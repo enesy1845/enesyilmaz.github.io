@@ -7,7 +7,8 @@ import { ExternalLink } from "@/components/ui/external-link";
 import { socialLinks } from "@/config/social";
 import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/config";
-import { createLocalePath, routes } from "@/i18n/routing";
+import { navigationRoutes } from "@/config/navigation";
+import { createLocalePath } from "@/i18n/routing";
 import type { Dictionary } from "@/i18n/types";
 import { getWordmarkWords } from "@/lib/utils/wordmark";
 
@@ -39,7 +40,7 @@ export function SiteFooter({ dictionary, locale }: SiteFooterProps) {
             {dictionary.accessibility.footerNavigation}
           </p>
           <ul className="mt-[var(--space-4)] grid gap-2 text-[length:var(--font-size-sm)] text-[var(--color-foreground-muted)]">
-            {routes.map((route) => (
+            {navigationRoutes.map((route) => (
               <li key={route.key}>
                 <Link href={createLocalePath(locale, route.segment)}>
                   {dictionary.navigation[route.key]}

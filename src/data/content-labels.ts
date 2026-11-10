@@ -17,6 +17,7 @@ export type ContentLabels = {
   lessons: string;
   readCaseStudy: string;
   visitProject: string;
+  siteOffline: string;
   allProjects: string;
   additionalProjects: string;
   contactLinks: string;
@@ -67,6 +68,7 @@ export const contentLabels: Record<Locale, ContentLabels> = {
     lessons: "Lessons",
     readCaseStudy: "Read case study",
     visitProject: "Visit project",
+    siteOffline: "Site no longer in use",
     allProjects: "All projects",
     additionalProjects: "More work",
     contactLinks: "Ways to reach me",
@@ -107,6 +109,7 @@ export const contentLabels: Record<Locale, ContentLabels> = {
     lessons: "Læring",
     readCaseStudy: "Les case",
     visitProject: "Besøk prosjekt",
+    siteOffline: "Nettstedet er ikke lenger i bruk",
     allProjects: "Alle prosjekter",
     additionalProjects: "Mer arbeid",
     contactLinks: "Slik når du meg",
@@ -147,6 +150,7 @@ export const contentLabels: Record<Locale, ContentLabels> = {
     lessons: "Öğrenimler",
     readCaseStudy: "Vaka çalışmasını oku",
     visitProject: "Projeyi ziyaret et",
+    siteOffline: "Site kullanımda değil",
     allProjects: "Tüm projeler",
     additionalProjects: "Diğer çalışmalar",
     contactLinks: "Bana ulaşma yolları",

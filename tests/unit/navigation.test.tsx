@@ -20,16 +20,11 @@ describe("navigation shell", () => {
   it("renders all route labels", () => {
     render(<MainNavigation dictionary={en} locale="en" />);
 
-    for (const label of [
-      "Home",
-      "Work",
-      "Notes",
-      "Atelier",
-      "About",
-      "Contact",
-    ]) {
+    for (const label of ["Home", "Work", "Notes", "About", "Contact"]) {
       expect(screen.getByRole("link", { name: label })).toBeInTheDocument();
     }
+    // Switched off in src/config/features.ts until it is published.
+    expect(screen.queryByRole("link", { name: "Atelier" })).toBeNull();
   });
 
   it("marks the current page semantically", () => {

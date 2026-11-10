@@ -71,7 +71,10 @@ test("compact work links and discipline composition remain usable on mobile", as
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await page.locator(".discipline--atelier").click();
-    await expect(page).toHaveURL(new RegExp(`/${locale}/atelier$`));
+    // Craft stays in the triad but does not link while the atelier is off.
+    await expect(page.locator(".discipline--atelier")).toHaveCount(1);
+    await expect(page.locator("a.discipline--atelier")).toHaveCount(0);
+    const atelier = await page.goto(`/${locale}/atelier`);
+    expect(atelier?.status()).toBe(404);
   }
 });

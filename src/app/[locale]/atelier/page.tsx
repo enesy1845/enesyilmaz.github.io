@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { MaterialStudy } from "@/components/media/material-study";
 
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
+import { isRouteEnabled } from "@/config/features";
 import { atelierAreas } from "@/data/supporting-content";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -26,6 +28,8 @@ export async function generateMetadata({
 }
 
 export default async function AtelierPage({ params }: PageProps) {
+  // Switched off in features.ts until the section is ready to publish.
+  if (!isRouteEnabled("atelier")) notFound();
   const { locale: localeParam } = await params;
   const dictionary = await getDictionary(localeParam);
   const locale = isLocale(localeParam) ? localeParam : "en";

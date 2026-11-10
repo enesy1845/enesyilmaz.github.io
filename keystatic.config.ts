@@ -194,6 +194,12 @@ export default config({
           itemLabel: (props) => props.value || "Yeni disiplin",
         }),
         externalUrl: fields.url({ label: "Canlı site" }),
+        siteOffline: fields.checkbox({
+          label: "Site kullanımda değil",
+          description:
+            "Canlı site artık yayında değilse işaretle: bağlantı gösterilmez, yerine “Kullanımda değil” notu çıkar.",
+          defaultValue: false,
+        }),
         repositoryUrl: fields.url({ label: "Kod deposu" }),
         coverImage: fields.image({
           label: "Kapak görseli",

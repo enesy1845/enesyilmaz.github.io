@@ -5,13 +5,10 @@
   "order": 140,
   "category": "web",
   "confidential": false,
-  "technologies": [
-    "WordPress"
-  ],
-  "disciplines": [
-    "Web development"
-  ],
+  "technologies": ["WordPress"],
+  "disciplines": ["Web development"],
   "externalUrl": "https://www.alemdarcreativestudio.com/",
+  "siteOffline": true,
   "repositoryUrl": null,
   "coverImage": "/images/projects/alemdar-creative-studio.webp",
   "en": {

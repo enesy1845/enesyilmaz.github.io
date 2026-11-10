@@ -21,12 +21,15 @@ test("home page sections render in English", async ({ page }) => {
     "What I work with",
     "Different disciplines. One way of thinking.",
     "Thinking out loud",
-    "Beyond the screen",
     "A little about me",
     "Have something interesting in mind?",
   ]) {
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
   }
+  // The atelier preview is switched off in src/config/features.ts.
+  await expect(
+    page.getByRole("heading", { name: "Beyond the screen" }),
+  ).toHaveCount(0);
 
   await expect(
     page.getByRole("link", { name: "Quality System" }),
@@ -236,7 +239,6 @@ test("tested pages contain one h1", async ({ page }) => {
     "/tr/cv",
     "/en/notes",
     "/en/notes/the-ideal-human",
-    "/en/atelier",
   ]) {
     await page.goto(path);
     await expect(page.locator("h1")).toHaveCount(1);

@@ -5,19 +5,11 @@
   "order": 40,
   "category": "web",
   "confidential": false,
-  "technologies": [
-    "Next.js",
-    "TypeScript",
-    "Cloudflare"
-  ],
-  "disciplines": [
-    "Web engineering",
-    "Local SEO",
-    "Accessibility"
-  ],
+  "technologies": ["Next.js", "TypeScript", "Cloudflare"],
+  "disciplines": ["Web engineering", "Local SEO", "Accessibility"],
   "externalUrl": "https://5starstitchescolchester.co.uk",
   "repositoryUrl": null,
-  "coverImage": null,
+  "coverImage": "/images/projects/five-star-stitches-colchester.webp",
   "en": {
     "title": "5 Star Stitches Colchester",
     "shortTitle": "",
@@ -28,7 +20,7 @@
     "period": "",
     "location": "Colchester, United Kingdom",
     "status": "",
-    "imageAlt": "",
+    "imageAlt": "Homepage of the 5 Star Stitches Colchester website",
     "responsibilities": [
       "Responsive web development",
       "Service-focused information architecture",
@@ -52,7 +44,7 @@
     "period": "",
     "location": "Colchester, Storbritannia",
     "status": "",
-    "imageAlt": "",
+    "imageAlt": "Forsiden til nettstedet 5 Star Stitches Colchester",
     "responsibilities": [
       "Responsiv webutvikling",
       "Tjenestefokusert informasjonsarkitektur",
@@ -76,7 +68,7 @@
     "period": "",
     "location": "Colchester, Birleşik Krallık",
     "status": "",
-    "imageAlt": "",
+    "imageAlt": "5 Star Stitches Colchester web sitesinin ana sayfası",
     "responsibilities": [
       "Responsive web geliştirme",
       "Hizmet odaklı bilgi mimarisi",
