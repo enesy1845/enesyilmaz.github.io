@@ -11,6 +11,7 @@ import { ProfilePortrait } from "@/components/media/profile-portrait";
 import { CopyEmail } from "@/components/ui/copy-email";
 import { ExternalLink } from "@/components/ui/external-link";
 import { Section } from "@/components/ui/section";
+import { isRouteEnabled } from "@/config/features";
 import { socialLinks } from "@/config/social";
 import { notes } from "@/lib/content/notes";
 import { evidenceItems } from "@/data/experience";
@@ -119,26 +120,41 @@ export default async function HomePage({ params }: PageProps) {
           </h2>
         </div>
         <ul className="disciplines">
-          {page.disciplines.map((item, index) => (
-            <li key={item.segment}>
-              <Link
-                className={`discipline discipline--${item.segment}`}
-                href={createLocalePath(locale, item.segment)}
-              >
+          {page.disciplines.map((item, index) => {
+            const body = (
+              <>
                 <span aria-hidden="true" className="discipline__index">
                   0{index + 1}
                 </span>
                 <DisciplineMark kind={item.segment} />
                 <span className="discipline__word">{item.title}</span>
-                <span className="discipline__action">
-                  {item.action}
-                  <span aria-hidden="true" className="link-arrow">
-                    ↗
-                  </span>
-                </span>
-              </Link>
-            </li>
-          ))}
+              </>
+            );
+            // A discipline whose section is not published yet stays part of
+            // the triad, but without a link or call to action.
+            return (
+              <li key={item.segment}>
+                {isRouteEnabled(item.segment) ? (
+                  <Link
+                    className={`discipline discipline--${item.segment}`}
+                    href={createLocalePath(locale, item.segment)}
+                  >
+                    {body}
+                    <span className="discipline__action">
+                      {item.action}
+                      <span aria-hidden="true" className="link-arrow">
+                        ↗
+                      </span>
+                    </span>
+                  </Link>
+                ) : (
+                  <div className={`discipline discipline--${item.segment}`}>
+                    {body}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </Section>
 
@@ -178,32 +194,34 @@ export default async function HomePage({ params }: PageProps) {
               <span aria-hidden="true"> ↗</span>
             </Link>
           </article>
-          <article className="journal-entry journal-entry--atelier">
-            <div className="journal-entry__meta">
-              <h2>{page.atelierTitle}</h2>
-              <span aria-hidden="true">↘</span>
-            </div>
-            <div className="material-index">
-              <MaterialStudy kind="wood" />
-              <ul className="material-list">
-                {page.atelierItems.map((item, index) => (
-                  <li key={item}>
-                    <span aria-hidden="true" className="section-index">
-                      0{index + 1}
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <Link
-              className="text-link"
-              href={createLocalePath(locale, "atelier")}
-            >
-              {page.atelierAction}
-              <span aria-hidden="true"> ↗</span>
-            </Link>
-          </article>
+          {isRouteEnabled("atelier") ? (
+            <article className="journal-entry journal-entry--atelier">
+              <div className="journal-entry__meta">
+                <h2>{page.atelierTitle}</h2>
+                <span aria-hidden="true">↘</span>
+              </div>
+              <div className="material-index">
+                <MaterialStudy kind="wood" />
+                <ul className="material-list">
+                  {page.atelierItems.map((item, index) => (
+                    <li key={item}>
+                      <span aria-hidden="true" className="section-index">
+                        0{index + 1}
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Link
+                className="text-link"
+                href={createLocalePath(locale, "atelier")}
+              >
+                {page.atelierAction}
+                <span aria-hidden="true"> ↗</span>
+              </Link>
+            </article>
+          ) : null}
         </div>
       </Section>
 

@@ -6,6 +6,7 @@ import { ProfilePortrait } from "@/components/media/profile-portrait";
 import { PageIntro } from "@/components/ui/page-intro";
 import { Section } from "@/components/ui/section";
 import { contentLabels } from "@/data/content-labels";
+import { isRouteEnabled } from "@/config/features";
 import { siteConfig } from "@/config/site";
 import { aboutPageContent } from "@/data/pages";
 import { isLocale, type Locale } from "@/i18n/config";
@@ -33,7 +34,9 @@ export default async function AboutPage({ params }: PageProps) {
   const dictionary = await getDictionary(localeParam);
   const locale = isLocale(localeParam) ? localeParam : "en";
   const content = aboutPageContent[locale];
-  const destinations = ["cv", "work", "notes", "atelier"] as const;
+  const destinations = (["cv", "work", "notes", "atelier"] as const).map(
+    (key) => (isRouteEnabled(key) ? key : undefined),
+  );
 
   return (
     <div className="about-page">

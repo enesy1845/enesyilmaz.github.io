@@ -5,13 +5,10 @@
   "order": 150,
   "category": "web",
   "confidential": false,
-  "technologies": [
-    "WordPress"
-  ],
-  "disciplines": [
-    "Web development"
-  ],
+  "technologies": ["WordPress"],
+  "disciplines": ["Web development"],
   "externalUrl": "https://5kconsultancy.co.uk/",
+  "siteOffline": true,
   "repositoryUrl": null,
   "coverImage": "/images/projects/5k-consultancy.webp",
   "en": {

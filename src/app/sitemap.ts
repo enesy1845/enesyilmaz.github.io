@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 
+import { navigationRoutes } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { notes } from "@/lib/content/notes";
 import { locales, type Locale } from "@/i18n/config";
-import { createLocalePath, routes } from "@/i18n/routing";
+import { createLocalePath } from "@/i18n/routing";
 import { getProjects } from "@/lib/content/projects";
 import { absoluteUrl } from "@/lib/utils/url";
 
@@ -21,7 +22,7 @@ function languages(segment: string, available: readonly Locale[] = locales) {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = locales.flatMap((locale) =>
-    routes.map((route) => ({
+    navigationRoutes.map((route) => ({
       url: absoluteUrl(createLocalePath(locale, route.segment)),
       lastModified: updated,
       changeFrequency: "monthly" as const,

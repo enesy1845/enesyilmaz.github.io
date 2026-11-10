@@ -482,6 +482,14 @@
   margin-top: var(--space-3);
   font-size: var(--font-size-sm);
 }
+/* Shown in place of the "visit" link when a project's site is offline. */
+.project-offline {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-foreground-subtle);
+}
+
 .project-disclosure {
   border-left: 2px solid var(--color-border-strong);
   padding-left: var(--space-5);

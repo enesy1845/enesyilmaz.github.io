@@ -97,6 +97,8 @@ export function ProjectCard({
             <ExternalLink href={project.externalUrl}>
               {labels.visitProject}
             </ExternalLink>
+          ) : project.siteOffline ? (
+            <span className="project-offline">{labels.siteOffline}</span>
           ) : null}
         </div>
       </div>

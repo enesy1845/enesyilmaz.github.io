@@ -5,7 +5,6 @@ const innerRoutes = [
   "work",
   "about",
   "notes",
-  "atelier",
   "contact",
   "cv",
   "work/municipal-quality-system",
@@ -23,7 +22,6 @@ for (const width of [320, 1440]) {
       "work",
       "about",
       "notes",
-      "atelier",
       "contact",
       "cv",
       "work/municipal-quality-system",
@@ -196,7 +194,7 @@ test("folio pages remain readable at 320px in every interface locale", async ({
   await page.setViewportSize({ width: 320, height: 740 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const locale of ["en", "no", "tr"]) {
-    for (const route of ["work", "about", "notes", "atelier", "contact"]) {
+    for (const route of ["work", "about", "notes", "contact"]) {
       await page.goto(`/${locale}/${route}`);
       expect(
         await page.evaluate(
@@ -216,7 +214,6 @@ test("folio pages have no obvious accessibility violations", async ({
     "work",
     "about",
     "notes",
-    "atelier",
     "contact",
     "work/municipal-quality-system",
     "notes/the-ideal-human",

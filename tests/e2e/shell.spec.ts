@@ -236,7 +236,6 @@ test("tested pages contain one h1", async ({ page }) => {
     "/tr/cv",
     "/en/notes",
     "/en/notes/the-ideal-human",
-    "/en/atelier",
   ]) {
     await page.goto(path);
     await expect(page.locator("h1")).toHaveCount(1);

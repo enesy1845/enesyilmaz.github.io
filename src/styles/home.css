@@ -397,7 +397,7 @@
   font-size: var(--font-size-sm);
   color: var(--color-foreground-subtle);
 }
-.discipline:is(:hover, :focus-visible) > .discipline-mark {
+a.discipline:is(:hover, :focus-visible) > .discipline-mark {
   transform: translateX(var(--space-2));
 }
 
@@ -424,7 +424,7 @@
   transform: translateX(calc(-1 * var(--space-2)));
 }
 
-.discipline--atelier:is(:hover, :focus-visible) .discipline-mark__hand {
+a.discipline--atelier:is(:hover, :focus-visible) .discipline-mark__hand {
   transform: rotate(20deg);
 }
 
@@ -432,6 +432,11 @@
 .journal-grid {
   display: grid;
   gap: var(--space-12);
+}
+
+/* With the atelier preview switched off, notes take the full row. */
+.journal-entry:only-child {
+  grid-column: 1 / -1;
 }
 
 .journal-entry {
@@ -629,7 +634,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .discipline:is(:hover, :focus-visible) > .discipline-mark,
+  a.discipline:is(:hover, :focus-visible) > .discipline-mark,
   .discipline-mark__paths,
   .discipline-mark__idea-a,
   .discipline-mark__idea-b,

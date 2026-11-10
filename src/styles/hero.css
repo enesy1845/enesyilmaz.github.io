@@ -434,6 +434,12 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 }
 
 .hero__letters {
+  /* The letter box reserves 230 units above the glyphs for the dot's top
+     position, so the visible mark (86–978 of -230–1110) sat 0.092em below
+     the centre of its box. Lift it optically on mobile; a relative offset
+     leaves the surrounding layout alone and the docking geometry follows. */
+  position: relative;
+  top: calc(var(--hero-letter-size) * -0.092);
   display: flex;
   flex-direction: column;
 }
@@ -593,6 +599,10 @@ html[data-hero-motion="full"] [data-home-hero] ~ * {
 
   .hero__word:last-child {
     padding-inline-start: 0;
+  }
+
+  .hero__letters {
+    top: 0;
   }
 
   .hero__lead {

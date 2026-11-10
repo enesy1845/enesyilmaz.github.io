@@ -30,6 +30,8 @@ export type Project = {
   confidential?: boolean;
   /** Public URL only; omit until a real link is confirmed (never "#"). */
   externalUrl?: string;
+  /** The public site is no longer online: show a note instead of a link. */
+  siteOffline?: true;
   repositoryUrl?: string;
   /** Path under /public; cards and case studies render nothing without it. */
   coverImage?: string;

@@ -95,7 +95,12 @@ async function readProjects() {
       disciplines: entry.disciplines.map((item) => item.trim()).filter(Boolean),
       featured: entry.featured,
       ...(entry.confidential ? { confidential: true } : {}),
-      ...(entry.externalUrl ? { externalUrl: entry.externalUrl } : {}),
+      // An offline site keeps its URL in the content file but is never linked.
+      ...(entry.siteOffline
+        ? { siteOffline: true }
+        : entry.externalUrl
+          ? { externalUrl: entry.externalUrl }
+          : {}),
       ...(entry.repositoryUrl ? { repositoryUrl: entry.repositoryUrl } : {}),
       ...(entry.coverImage ? { coverImage: entry.coverImage } : {}),
       availableLocales,
